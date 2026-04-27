@@ -147,14 +147,15 @@
                 @endif
 
                 {{-- ── FORM ── --}}
-                <form method="POST" action="{{ route('login') }}" class="space-y-5">
-                    @csrf
+                <form method="POST" action="{{ route('login') }}" class="space-y-6">
+                @csrf
 
-                    {{-- Username --}}
-                    <div>
-                        <label for="username" class="mt-4 text-sm text-white leading-relaxed font-medium">
-                            Username
-                        </label>
+                {{-- Username --}}
+                <div>
+                    <label for="username" class="block mb-2 text-sm font-semibold text-white/90">
+                        Username
+                    </label>
+                    <div class="relative group">
                         <input
                             id="username"
                             type="text"
@@ -163,85 +164,79 @@
                             placeholder="Masukkan username"
                             autofocus
                             autocomplete="username"
-                            class="glass-input w-full px-4 py-3 rounded-xl text-sm font-medium"
+                            class="w-full px-4 py-3 rounded-xl text-sm font-medium text-white bg-white/10 border border-white/20 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white/20 transition-all duration-300"
                         >
                     </div>
+                </div>
 
-                    {{-- Password --}}
-                    <div>
-                        <label for="password" class="mt-4 text-sm text-white leading-relaxed font-medium">
-                            Password
-                        </label>
-                        <div class="relative">
-                            <input
-                                id="password"
-                                type="password"
-                                name="password"
-                                placeholder="Masukkan password"
-                                autocomplete="current-password"
-                                class="glass-input w-full px-4 py-3 pr-12 rounded-xl text-sm font-medium"
-                            >
-                            {{-- Toggle show/hide password --}}
-                            <button
-                                type="button"
-                                onclick="togglePassword()"
-                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 transition-colors"
-                                aria-label="Tampilkan password"
-                            >
-                                <svg id="icon-eye" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7
-                                             -1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                </svg>
-                                <svg id="icon-eye-off" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none"
-                                     viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7
-                                             a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243
-                                             M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532
-                                             l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5
-                                             c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411
-                                             m0 0L21 21"/>
-                                </svg>
-                            </button>
-                        </div>
+                {{-- Password --}}
+                <div>
+                    <label for="password" class="block mb-2 text-sm font-semibold text-white/90">
+                        Password
+                    </label>
+                    <div class="relative group">
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Masukkan password"
+                            autocomplete="current-password"
+                            class="w-full px-4 py-3 pr-12 rounded-xl text-sm font-medium text-white bg-white/10 border border-white/20 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white/20 transition-all duration-300"
+                        >
+
+                        {{-- Toggle show/hide password dengan kontras tinggi --}}
+                        <button
+                            type="button"
+                            onclick="togglePassword()"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-white/60 hover:text-white hover:bg-white/10 active:scale-95 transition-all"
+                            aria-label="Tampilkan password"
+                        >
+                            <svg id="icon-eye" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            <svg id="icon-eye-off" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none"
+                                 viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                      d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                            </svg>
+                        </button>
                     </div>
+                </div>
 
-                    {{-- Remember Me & Lupa Password --}}
-                    <div class="flex items-center justify-between">
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                name="remember"
-                                class="w-4 h-4 rounded border-slate-400 accent-blue-600"
-                            >
-                            <span class="text-sm text-white leading-relaxed font-medium">Ingat saya</span>
-                        </label>
+    {{-- Remember Me & Lupa Password --}}
+    <div class="flex items-center justify-between pt-1">
+        <label class="flex items-center group cursor-pointer">
+            <div class="relative flex items-center">
+                <input
+                    type="checkbox"
+                    name="remember"
+                    class="peer appearance-none w-4 h-4 rounded border border-white/30 checked:bg-blue-600 checked:border-transparent transition-all cursor-pointer"
+                >
+                <svg class="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 pointer-events-none ml-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                    <path d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <span class="ml-2 text-sm text-white/80 group-hover:text-white transition-colors">Ingat saya</span>
+        </label>
 
-                        <!-- {{-- Uncomment jika fitur lupa password aktif:
-                        <a href="{{ route('password.request') }}"
-                           class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">
-                            Lupa password?
-                        </a>
-                        --}} -->
-                        <a href="{{ route('password.request') }}"
-                            class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">
-                            Lupa password?
-                        </a>
-                    </div>
+        <a href="{{ route('password.request') }}"
+            class="text-sm font-semibold text-blue-400 hover:text-blue-300 hover:underline transition-all">
+            Lupa password?
+        </a>
+    </div>
 
-                    {{-- Tombol Login --}}
-                    <button
-                        type="submit"
-                        class="btn-login w-full py-3.5 rounded-xl text-white font-bold text-sm tracking-wide shadow-lg"
-                    >
-                        Login
-                    </button>
-
-                </form>
+    {{-- Tombol Login --}}
+    <button
+        type="submit"
+        class="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm tracking-wide shadow-[0_0_15px_rgba(37,99,235,0.4)] hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] active:scale-[0.98] transition-all duration-200"
+    >
+        LOGIN
+    </button>
+</form>
             </div>
         </div>
     </div>
