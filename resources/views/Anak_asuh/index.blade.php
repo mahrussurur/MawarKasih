@@ -11,7 +11,8 @@
     <div class="flex min-h-screen">
         <aside class="w-64 bg-[#2D3748] text-gray-300 flex flex-col">
             <div class="p-6 flex items-center gap-3">
-                <div class="w-10 h-10 bg-gray-600 rounded-full"></div> <span class="font-bold text-white text-lg leading-tight">Yayasan<br>Mawar Kasih</span>
+                <div class="w-10 h-10 bg-gray-600 rounded-full"></div> 
+                <span class="font-bold text-white text-lg leading-tight">Yayasan<br>Mawar Kasih</span>
             </div>
 
             <nav class="mt-6 flex-1 px-4 space-y-2">
@@ -49,12 +50,13 @@
             </header>
 
             <div class="flex justify-between mb-6">
-                <button class="bg-[#78ace2] hover:bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold shadow-md transition">
+                <a href="{{ route('anak-asuh.create') }}" class="bg-[#78ace2] hover:bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold shadow-md transition flex items-center">
                     + Tambah Anak Asuh
-                </button>
-                <button class="bg-gray-100 border border-gray-300 px-6 py-2 rounded-lg font-semibold text-gray-700 hover:bg-white shadow-sm transition flex items-center gap-2">
+                </a>
+                
+                <a href="{{ route('anak-asuh.cetak') }}" target="_blank" class="bg-gray-100 border border-gray-300 px-6 py-2 rounded-lg font-semibold text-gray-700 hover:bg-white shadow-sm transition flex items-center gap-2">
                    <span>📄</span> Cetak Laporan
-                </button>
+                </a>
             </div>
 
             <div class="bg-white rounded-3xl shadow-xl p-8">
@@ -81,7 +83,9 @@
                             <tr class="hover:bg-gray-50 transition">
                                 <td class="p-4 border text-center">{{ $key + 1 }}</td>
                                 <td class="p-4 border font-medium">{{ $anak->nama }}</td>
-                                <td class="p-4 border">{{ $anak->tempat_lahir }}, {{ \Carbon\Carbon::parse($anak->tanggal_lahir)->format('d - m - Y') }}</td>
+                                <td class="p-4 border">
+                                    {{ $anak->tempat_lahir }}, {{ \Carbon\Carbon::parse($anak->tanggal_lahir)->format('d - m - Y') }}
+                                </td>
                                 <td class="p-4 border text-center">{{ $anak->jenis_kelamin }}</td>
                                 <td class="p-4 border text-center">
                                     @if($anak->foto)
@@ -91,8 +95,17 @@
                                     @endif
                                 </td>
                                 <td class="p-4 border text-center space-y-2">
-                                    <button class="w-full bg-[#f6ad55] text-white px-3 py-1 rounded-md text-sm font-bold shadow hover:bg-orange-400 transition">Edit</button>
-                                    <button class="w-full bg-[#f56565] text-white px-3 py-1 rounded-md text-sm font-bold shadow hover:bg-red-600 transition">Hapus</button>
+                                    <a href="{{ route('anak-asuh.edit', $anak->id) }}" class="inline-block w-full bg-[#f6ad55] text-white px-3 py-1 rounded-md text-sm font-bold shadow hover:bg-orange-400 transition text-center">
+                                        Edit
+                                    </a>
+
+                                    <form action="{{ route('anak-asuh.destroy', $anak->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="w-full bg-[#f56565] text-white px-3 py-1 rounded-md text-sm font-bold shadow hover:bg-red-600 transition">
+                                            Hapus
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                             @empty

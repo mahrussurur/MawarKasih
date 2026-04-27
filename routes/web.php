@@ -13,6 +13,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::middleware('auth')->group(function () {
+    Route::get('/anak-asuh', [AnakAsuhController::class, 'index'])->name('anak-asuh.index');
+    Route::get('/anak-asuh/create', [AnakAsuhController::class, 'create'])->name('anak-asuh.create');
+    Route::post('/anak-asuh', [AnakAsuhController::class, 'store'])->name('anak-asuh.store');
+    Route::get('/anak-asuh/cetak', [AnakAsuhController::class, 'cetak'])->name('anak-asuh.cetak');
+    Route::resource('anak-asuh', AnakAsuhController::class);
+});
+
 // --- Grup Route yang perlu Login ---
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
