@@ -21,30 +21,30 @@ class AnakAsuhController extends Controller
     }
 
     public function store(Request $request)
-{
-    // 1. Validasi semua field yang ada di model agar tidak ada data kosong yang lolos ke database
-    $validated = $request->validate([
-        'nama'               => 'required|string|max:255',
-        'tempat_lahir'       => 'required|string|max:255',
-        'tanggal_lahir'      => 'required|date',
-        'jenis_kelamin'      => 'required|in:L,P',
-        'status_social_anak' => 'nullable|string',
-        'nama_ayah'          => 'nullable|string|max:255',
-        'nama_ibu'           => 'nullable|string|max:255',
-        'foto'               => 'required|image|mimes:jpeg,png,jpg|max:2048',
-    ]);
+    {
+        // 1. Validasi semua field yang ada di model agar tidak ada data kosong yang lolos ke database
+        $validated = $request->validate([
+            'nama'               => 'required|string|max:255',
+            'tempat_lahir'       => 'required|string|max:255',
+            'tanggal_lahir'      => 'required|date',
+            'jenis_kelamin'      => 'required|in:L,P',
+            'status_social_anak' => 'nullable|string',
+            'nama_ayah'          => 'nullable|string|max:255',
+            'nama_ibu'           => 'nullable|string|max:255',
+            'foto'               => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
-    // 2. Proses upload foto
-    if ($request->hasFile('foto')) {
-        $validated['foto'] = $request->file('foto')->store('anak_asuh', 'public');
+        // 2. Proses upload foto
+        if ($request->hasFile('foto')) {
+            $validated['foto'] = $request->file('foto')->store('anak_asuh', 'public');
+        }
+
+        // 3. Simpan data menggunakan variabel $validated yang sudah lengkap
+        \App\Models\AnakAsuh::create($validated);
+
+        // 4. Redirect ke index agar user bisa langsung melihat hasil datanya di tabel
+        return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil ditambahkan');
     }
-
-    // 3. Simpan data menggunakan variabel $validated yang sudah lengkap
-    \App\Models\AnakAsuh::create($validated);
-
-    // 4. Redirect ke index agar user bisa langsung melihat hasil datanya di tabel
-    return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil ditambahkan');
-}
 
     public function destroy($id)
     {

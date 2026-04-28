@@ -11,7 +11,13 @@ class AnakAsuh extends Model
 
     protected $table = 'anak_asuh';
     protected $fillable = [
-        'foto', 'nama', 'tempat_lahir', 'tanggal_lahir', 
-        'jenis_kelamin', 'status_social_anak', 'nama_ayah', 'nama_ibu'
+        'foto',
+        'nama',
+        'tempat_lahir',
+        'tanggal_lahir', 
+        'jenis_kelamin',
+        'status_social_anak',
+        'nama_ayah',
+        'nama_ibu'
     ];
 }

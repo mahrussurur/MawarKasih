@@ -1,6 +1,5 @@
 {{--
     PARTIAL: partials/header.blade.php
-    Taruh di: resources/views/partials/header.blade.php
 --}}
 <style>
     .header-inner {

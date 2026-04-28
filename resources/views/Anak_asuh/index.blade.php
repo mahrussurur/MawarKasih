@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('page-title', 'Data Anak Asuh')
 
 @section('content')
 <div class="p-6 bg-gray-100 min-h-screen">
@@ -56,7 +57,10 @@
             <td class="p-4 border">{{ $item->nama_ibu }}</td>
             <td class="p-4 border text-center">
                 <div class="flex flex-col gap-2 items-center">
-                    <button class="bg-orange-400 text-white px-4 py-1 rounded w-24 text-sm">Edit</button>
+                    <button class="bg-green-600 text-white px-4 py-1 rounded w-24 text-sm">Lihat</button>
+                        <button class="bg-orange-400 text-white px-4 py-1 rounded w-24 text-sm">
+                            Edit
+                        </button>
                     <form action="{{ route('anak-asuh.destroy', $item->id) }}" method="POST">
                         @csrf @method('DELETE')
                         <button type="submit" class="bg-red-400 text-white px-4 py-1 rounded w-24 text-sm">Hapus</button>
