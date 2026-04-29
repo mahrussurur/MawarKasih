@@ -46,12 +46,48 @@ class AnakAsuhController extends Controller
         return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil ditambahkan');
     }
 
+    public function show(AnakAsuh $anakAsuh)
+    {
+        return view('anak_asuh.show', compact('anakAsuh'));
+    }
+
+    public function edit(AnakAsuh $anakAsuh)
+    {
+        return view('anak_asuh.edit', compact('anakAsuh'));
+    }
+
+    public function update(Request $request, AnakAsuh $anakAsuh)
+    {
+        $validated = $request->validate([
+            'nama'               => 'required|string|max:255',
+            'tempat_lahir'       => 'required|string|max:255',
+            'tanggal_lahir'      => 'required|date',
+            'jenis_kelamin'      => 'required|in:L,P',
+            'status_social_anak' => 'nullable|string',
+            'nama_ayah'          => 'nullable|string|max:255',
+            'nama_ibu'           => 'nullable|string|max:255',
+            'foto'               => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            if ($anakAsuh->foto) {
+                Storage::disk('public')->delete($anakAsuh->foto);
+            }
+            $validated['foto'] = $request->file('foto')->store('anak_asuh', 'public');
+        }
+
+        $anakAsuh->update($validated);
+
+        return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil diupdate');
+    }
+
     public function destroy($id)
     {
         $anak = AnakAsuh::findOrFail($id);
         if($anak->foto) Storage::disk('public')->delete($anak->foto);
         $anak->delete();
-        return redirect()->back()->with('success', 'Data berhasil dihapus');
+        // return redirect()->back()->with('success', 'Data berhasil dihapus');
+        return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil dihapus');
     }
 
     public function cetak()

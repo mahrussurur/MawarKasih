@@ -57,14 +57,13 @@
             <td class="p-4 border">{{ $item->nama_ibu }}</td>
             <td class="p-4 border text-center">
                 <div class="flex flex-col gap-2 items-center">
-                    <button class="bg-green-600 text-white px-4 py-1 rounded w-24 text-sm">Lihat</button>
-                        <button class="bg-orange-400 text-white px-4 py-1 rounded w-24 text-sm">
-                            Edit
-                        </button>
-                    <form action="{{ route('anak-asuh.destroy', $item->id) }}" method="POST">
-                        @csrf @method('DELETE')
-                        <button type="submit" class="bg-red-400 text-white px-4 py-1 rounded w-24 text-sm">Hapus</button>
-                    </form>
+                    <a href="{{ route('anak-asuh.show', $item->id) }}" class="bg-green-600 text-white px-4 py-1 rounded w-24 text-sm inline-block">
+                        Lihat
+                    </a>
+                    <a href="{{ route('anak-asuh.edit', $item->id) }}" class="bg-orange-400 text-white px-4 py-1 rounded w-24 text-sm inline-block">
+                        Edit
+                    </a>
+                    <button onclick="openDeleteModal({{ $item->id }})" class="bg-red-400 text-white px-4 py-1 rounded w-24 text-sm">Hapus</button>
                 </div>
             </td>
         </tr>
@@ -77,4 +76,34 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Konfirmasi Hapus -->
+<div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+            <h3 class="text-lg font-medium text-gray-900">Konfirmasi Hapus</h3>
+            <div class="mt-2 px-7 py-3">
+                <p class="text-sm text-gray-500">Apakah Anda yakin ingin menghapus data anak asuh ini?</p>
+            </div>
+            <div class="flex items-center px-4 py-3 gap-3">
+                <button onclick="closeDeleteModal()" class="py-2 bg-gray-500 text-white text-base font-medium rounded-md flex-1 shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">Batal</button>
+                <form id="deleteForm" method="POST" class="flex-1">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="w-full px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">Hapus</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function openDeleteModal(id) {
+    document.getElementById('deleteForm').action = '{{ url("anak-asuh") }}/' + id;
+    document.getElementById('deleteModal').classList.remove('hidden');
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.add('hidden');
+}
+</script>
 @endsection
