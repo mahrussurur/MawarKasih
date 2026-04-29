@@ -3,17 +3,15 @@
 
 @section('content')
 <div class="p-6 bg-gray-100 min-h-screen">
-    <!-- <h2 class="text-2xl font-bold mb-4">Data Anak Asuh</h2> -->
-
     <div class="flex justify-between mb-4">
-        <button class="bg-blue-400 text-white px-4 py-2 rounded-lg flex items-center">
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center hover:bg-blue-600 transition shadow-sm">
             <a href="{{ route('anak-asuh.create') }}">
                 <span class="mr-2">+</span>Tambah Anak Asuh
             </a>
         </button>
         <div class="flex gap-2">
             <a href="{{ route('anak-asuh.cetak') }}" target="_blank" class="bg-white rounded-lg flex items-center hover:bg-gray-50">
-                <button class="bg-white border px-4 py-2 rounded-lg flex items-center">
+                <button class="bg-white border-[1px] border-gray-500 px-4 py-2 rounded-lg flex items-center hover:bg-gray-100">
                     <i class="fas fa-print mr-2"></i> Cetak Laporan
                 </button>
             </a>

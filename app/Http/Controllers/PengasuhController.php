@@ -2,63 +2,88 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengasuh;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PengasuhController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $data = Pengasuh::latest()->paginate(10);
+        return view('pengasuh.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('pengasuh.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nama'          => 'required|string|max:255',
+            'jabatan'       => 'required|string|max:255',
+            'jenis_kelamin' => 'required|in:L,P',
+            'no_hp'         => 'required|string|max:20',
+            'foto'          => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            $validated['foto'] = $request->file('foto')->store('pengasuh', 'public');
+        }
+
+        Pengasuh::create($validated);
+
+        return redirect()->route('pengasuh.index')->with('success', 'Data berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Pengasuh $pengasuh)
     {
-        //
+        return view('pengasuh.show', compact('pengasuh'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Pengasuh $pengasuh)
     {
-        //
+        return view('pengasuh.edit', compact('pengasuh'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Pengasuh $pengasuh)
     {
-        //
+        $validated = $request->validate([
+            'nama'          => 'required|string|max:255',
+            'jabatan'       => 'required|string|max:255',
+            'jenis_kelamin' => 'required|in:L,P',
+            'no_hp'         => 'required|string|max:20',
+            'foto'          => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            if ($pengasuh->foto) {
+                Storage::disk('public')->delete($pengasuh->foto);
+            }
+            $validated['foto'] = $request->file('foto')->store('pengasuh', 'public');
+        }
+
+        $pengasuh->update($validated);
+
+        return redirect()->route('pengasuh.index')->with('success', 'Data berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $pengasuh = Pengasuh::findOrFail($id);
+        if($pengasuh->foto) Storage::disk('public')->delete($pengasuh->foto);
+        $pengasuh->delete();
+        
+        return redirect()->route('pengasuh.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function cetak()
+    {
+        $data = Pengasuh::all();
+        $pdf = Pdf::loadView('pengasuh.cetak', compact('data'));
+        return $pdf->stream('Laporan_Data_Pengasuh_Mawar_Kasih.pdf');
     }
 }

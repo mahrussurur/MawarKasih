@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\AnakAsuh;
-// use App\Models\Pengasuh;
+use App\Models\Pengasuh;
 // use App\Models\Donasi;
 // use App\Models\Kegiatan;
 
@@ -15,7 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         $totalAnak = AnakAsuh::count();
-        // $totalPengasuh = Pengasuh::count();
+        $totalPengasuh = Pengasuh::count();
         // $totalKegiatan = Kegiatan::count();
         // $totalDonatur  = Donasi::distinct('nama_donatur')->count();
 
@@ -23,7 +23,6 @@ class DashboardController extends Controller
         // $donasiTerbaru  = Donasi::latest()->take(5)->get();
         // $kegiatanTerbaru = Kegiatan::latest('tanggal')->take(5)->get();
 
-        $totalPengasuh   = 0;
         $totalKegiatan   = 0;
         $totalDonatur    = 0;
         $donasiTerbaru   = collect(); // collection kosong

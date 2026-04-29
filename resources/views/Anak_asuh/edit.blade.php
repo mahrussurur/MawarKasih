@@ -70,8 +70,12 @@
             </div>
 
             <div class="flex justify-between items-center pt-6 border-t border-gray-200 mt-6 pb-2">
-                <a href="{{ route('anak-asuh.index') }}" class="bg-gray-200 text-gray-700 border border-gray-300 px-8 py-2 rounded-lg font-medium hover:bg-gray-300 transition">Batal</a>
-                <button type="submit" class="bg-[#4CAF50] text-white px-8 py-2 rounded-lg font-medium hover:bg-green-600 transition shadow-sm">Update</button>
+                <a href="{{ route('anak-asuh.index') }}" class="bg-gray-200 text-gray-700 border border-gray-300 px-8 py-2 rounded-lg font-medium hover:bg-gray-300 transition">
+                    Batal
+                </a>
+                <button type="submit" class="bg-blue-500 text-white px-8 py-2 rounded-lg font-medium hover:bg-blue-400 transition shadow-sm">
+                    Update
+                </button>
             </div>
         </form>
     </div>
