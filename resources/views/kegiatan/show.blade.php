@@ -54,7 +54,7 @@
             <div class="prose max-w-none text-gray-700 leading-relaxed">
                 <h3 class="text-lg font-bold text-gray-800 mb-3">Deskripsi Kegiatan:</h3>
                 <!-- nl2br digunakan agar enter/paragraf yang diketik admin terbaca rapi -->
-                <p>{!! nl2br(e($kegiatan->deskripsi)) !!}</p> 
+                <p class="text-gray-700 leading-relaxed whitespace-pre-wrap break-words">{!! nl2br(e($kegiatan->deskripsi)) !!}</p> 
             </div>
 
         </div>

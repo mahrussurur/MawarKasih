@@ -21,11 +21,10 @@ class DashboardController extends Controller
 
         // ── Data Terbaru ──
         // $donasiTerbaru  = Donasi::latest()->take(5)->get();
-        // $kegiatanTerbaru = Kegiatan::latest('tanggal')->take(5)->get();
+        $kegiatanTerbaru = Kegiatan::latest()->take(5)->get();
 
         $totalDonatur    = 0;
         $donasiTerbaru   = collect(); // collection kosong
-        $kegiatanTerbaru = collect(); // collection kosong
 
         return view('dashboard', compact(
             'totalAnak',

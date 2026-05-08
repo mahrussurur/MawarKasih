@@ -78,9 +78,9 @@
                             <td class="px-4 py-4 whitespace-nowrap">
                             <span class="text-gray-500">{{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->format('d - m - Y') }}</span>
                             </td>
-                            <td class="px-4 py-4">
+                            <td class="px-4 py-4 max-w-4">
                                 <!-- Memotong deskripsi agar tidak merusak tabel -->
-                                <span class="line-clamp-2">{{ $kegiatan->deskripsi }}</span>
+                                <span class="line-clamp-2 break-words">{{ $kegiatan->deskripsi }}</span>
                             </td>
                             <td class="px-4 py-4">
                                 <div class="flex justify-center space-x-2">

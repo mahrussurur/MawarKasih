@@ -7,7 +7,6 @@
         padding: 18px 20px;
         border-bottom: 1px solid rgba(255,255,255,0.08);
         display: flex; align-items: center; gap: 12px;
-        text-decoration: none;
     }
     .sidebar-brand-logo {
         width: 44px; height: 44px; border-radius: 10px;
@@ -52,7 +51,7 @@
 
 <aside class="sidebar">
     {{-- Brand --}}
-    <a href="{{ route('dashboard') }}" class="sidebar-brand">
+    <div class="sidebar-brand">
         <div class="sidebar-brand-logo">
             <img src="/images/logo.png" alt="Logo MTK"
                  onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:rgba(255,255,255,0.7);font-size:11px;font-weight:800;\'>MTK</span>'">
@@ -61,7 +60,7 @@
             <div class="org">Yayasan</div>
             <div class="name">Mawar Kasih</div>
         </div>
-    </a>
+    </div>
 
     {{-- Nav --}}
     <nav class="sidebar-nav">
