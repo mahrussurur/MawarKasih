@@ -2,10 +2,13 @@
 @section('page-title', 'Data Anak Asuh')
 
 @section('content')
-<div class="p-6 bg-gray-100 min-h-screen flex justify-center items-start">
-    <div class="w-full max-w-3xl bg-white rounded-xl shadow-md p-8 border border-gray-200 mt-4">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit Data Anak Asuh</h2>
-
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md border border-gray-100 p-8">
+        <div class="mb-8 border-b border-gray-100 pb-4">
+            <h2 class="text-2xl font-bold text-gray-800">Edit Anak Asuh</h2>
+            <p class="text-gray-500 text-sm mt-1">Ubah detail data anak asuh di bawah ini.</p>
+        </div>
+        
         <form action="{{ route('anak-asuh.update', $anakAsuh->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
@@ -62,18 +65,27 @@
                 </div>
             </div>
 
-            <div class="mb-5">
-                <label class="block text-gray-800 font-semibold mb-2">Foto Saat Ini</label>
-                <img src="{{ asset('storage/'.$anakAsuh->foto) }}" alt="Foto {{ $anakAsuh->nama }}" class="w-36 h-36 object-cover rounded-lg border mb-4">
-                <label class="block text-gray-800 font-semibold mb-2">Ganti Foto</label>
-                <input type="file" name="foto" class="w-full text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-gray-200 file:text-gray-700 hover:file:bg-gray-300 cursor-pointer">
+            <!-- Input Foto -->
+            <div class="mb-8">
+                <label class="block text-gray-700 font-semibold mb-2">Foto Dokumentasi</label>
+                
+                <!-- Menampilkan preview foto lama jika ada -->
+                @if($anakAsuh->foto)
+                    <div class="mb-3">
+                        <p class="text-sm text-gray-500 mb-1">Foto saat ini:</p>
+                        <img src="{{ asset('storage/' . $anakAsuh->foto) }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
+                    </div>
+                @endif
+
+                <input type="file" name="foto_dokumentasi" accept="image/*" class="w-full rounded-md file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer">
+                <p class="text-xs text-gray-500 mt-2">Biarkan kosong jika tidak ingin mengubah foto. Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
             </div>
 
-            <div class="flex justify-between items-center pt-6 border-t border-gray-200 mt-6 pb-2">
-                <a href="{{ route('anak-asuh.index') }}" class="bg-gray-200 text-gray-700 border border-gray-300 px-8 py-2 rounded-lg font-medium hover:bg-gray-300 transition">
+            <div class="flex justify-between items-center pt-6 border-t border-gray-200 mt-6 pb-1">
+                <a href="{{ route('anak-asuh.index') }}" class="bg-gray-200 text-gray-700 border border-gray-300 px-8 py-2 rounded-lg font-semibold hover:bg-gray-300 transition">
                     Batal
                 </a>
-                <button type="submit" class="bg-blue-500 text-white px-8 py-2 rounded-lg font-medium hover:bg-blue-400 transition shadow-sm">
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-400 transition shadow-sm">
                     Update
                 </button>
             </div>

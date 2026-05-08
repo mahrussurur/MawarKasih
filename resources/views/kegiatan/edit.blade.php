@@ -1,4 +1,5 @@
 @extends('layouts.app') 
+@section('page-title', 'Data Kegiatan')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
@@ -46,14 +47,18 @@
                     </div>
                 @endif
 
-                <input type="file" name="foto_dokumentasi" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100">
+                <input type="file" name="foto_dokumentasi" accept="image/*" class="w-full rounded-md file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer">
                 <p class="text-xs text-gray-500 mt-2">Biarkan kosong jika tidak ingin mengubah foto. Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
             </div>
 
             <!-- Tombol Aksi -->
-            <div class="flex justify-end space-x-3">
-                <a href="{{ route('kegiatan.index') }}" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-semibold transition-colors">Batal</a>
-                <button type="submit" class="px-6 py-2 bg-[#1a56db] hover:bg-blue-800 text-white rounded-lg font-semibold transition-colors">Update Kegiatan</button>
+            <div class="flex justify-between items-center pt-6 border-t border-gray-200 mt-6 pb-1">
+                <a href="{{ route('kegiatan.index') }}" class="bg-gray-200 text-gray-700 border border-gray-300 px-8 py-2 rounded-lg font-semibold hover:bg-gray-300 transition">
+                    Batal
+                </a>
+                <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-400 transition shadow-sm">
+                    Update
+                </button>
             </div>
         </form>
 

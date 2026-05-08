@@ -1,4 +1,5 @@
-@extends('layouts.app') <!-- Sesuaikan dengan layout dashboard kalian -->
+@extends('layouts.app')
+@section('page-title', 'Data Kegiatan')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
@@ -6,12 +7,15 @@
         
         <!-- Header / Tombol Kembali -->
         <div class="bg-gray-50 border-b border-gray-100 px-6 py-4 flex justify-between items-center">
-            <h2 class="text-lg font-bold text-gray-800">Detail Kegiatan</h2>
-            <a href="{{ route('kegiatan.index') }}" class="text-sm font-semibold text-gray-600 hover:text-[#1a56db] flex items-center transition-colors">
+            <div>
+                <h2 class="text-lg font-bold text-gray-800">Detail Kegiatan</h2>
+                <p class="text-sm text-gray-500">Informasi lengkap kegiatan.</p>
+            </div>
+            <a href="{{ route('kegiatan.index') }}" class="text-sm font-semibold text-gray-600 hover:text-gray-800 flex items-center transition-colors">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
-                Kembali ke Tabel
+                Kembali
             </a>
         </div>
 

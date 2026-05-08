@@ -6,10 +6,15 @@
     <div class="max-w-4xl mx-auto bg-white rounded-xl shadow overflow-hidden">
         <div class="p-6 border-b border-gray-200 flex justify-between items-center">
             <div>
-                <h2 class="text-2xl font-bold text-gray-900">Detail Pengasuh</h2>
-                <p class="text-gray-500">Informasi lengkap pengasuh.</p>
+                <h2 class="text-lg font-bold text-gray-900">Detail Pengasuh</h2>
+                <p class="text-sm text-gray-500">Informasi lengkap pengasuh.</p>
             </div>
-            <a href="{{ route('pengasuh.index') }}" class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">Kembali</a>
+            <a href="{{ route('anak-asuh.index') }}" class="text-sm font-semibold text-gray-600 hover:text-gray-800 flex items-center transition-colors">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Kembali
+            </a>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
@@ -40,10 +45,10 @@
                 </div>
 
                 <div class="flex gap-3">
-                    <a href="{{ route('pengasuh.edit', $pengasuh->id) }}" class="bg-orange-400 text-white px-8 py-2 rounded-lg hover:bg-orange-500">
+                    <a href="{{ route('pengasuh.edit', $pengasuh->id) }}" class="font-semibold bg-orange-400 text-white px-8 py-2 rounded-lg hover:bg-orange-500">
                         Edit
                     </a>
-                    <button onclick="openDeleteModal({{ $pengasuh->id }})" class="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600">
+                    <button onclick="openDeleteModal({{ $pengasuh->id }})" class="font-semibold bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600">
                         Hapus
                     </button>
                 </div>
