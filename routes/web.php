@@ -1,38 +1,27 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController; //ridho
-use App\Http\Controllers\AnakAsuhController; //alfan
-use App\Http\Controllers\PengasuhController; //aca
-use App\Http\Controllers\KegiatanController; //Mahrus
-use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes - Entry Point
+|--------------------------------------------------------------------------
+| File ini hanya sebagai pintu masuk. Semua route dipecah ke:
+|   - routes/admin.php   → panel admin (butuh login)
+|   - routes/public_web.php → web profile (bisa diakses semua)
+|   - routes/auth.php    → login, register (bawaan Laravel)
+*/
+
+// Redirect root ke halaman utama web profile
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// --- Grup Route yang perlu Login ---
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/anak-asuh/cetak', [AnakAsuhController::class, 'cetak'])->name('anak-asuh.cetak');
-    Route::get('/pengasuh/cetak', [PengasuhController::class, 'cetak'])->name('pengasuh.cetak');
+// Load route admin (panel pengelolaan data)
+require __DIR__ . '/admin.php';
 
-    Route::resource('anak-asuh', AnakAsuhController::class);
-    Route::resource('pengasuh', PengasuhController::class);
-    Route::resource('donasi', \App\Http\Controllers\DonasiController::class);
-    Route::resource('kegiatan', KegiatanController::class);
-    Route::resource('galeri', \App\Http\Controllers\GaleriController::class);
-    
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Load route web profile publik
+require __DIR__ . '/public.php';
 
-// --- Route Lupa Password ---
-Route::get('/forgot-password', [ForgotPasswordController::class, 'showForm'])->name('password.request');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.email');
-Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
-
-require __DIR__.'/auth.php';
+// Load route autentikasi bawaan Laravel (login, register, dsb.)
+require __DIR__ . '/auth.php';

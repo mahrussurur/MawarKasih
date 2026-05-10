@@ -5,7 +5,7 @@
     <p class="text-sm text-gray-500 text-center mb-6">
         Masukkan password baru Anda
     </p>
-    <form method="POST" action="/reset-password" class="space-y-5">
+    <form method="POST" action="{{ route('password.store') }}" class="space-y-5">
         @csrf
         <input type="hidden" name="token" value="{{ $token }}">
         <div>
@@ -15,6 +15,7 @@
             <input 
                 type="email" 
                 name="email" 
+                value="{{ old('email', $request->email) }}"
                 required
                 placeholder="Masukkan email"
                 class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
@@ -58,6 +59,10 @@
     </p>
 
     @error('email')
+        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
+    @enderror
+
+    @error('password')
         <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
     @enderror
 </x-guest-layout>
