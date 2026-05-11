@@ -9,7 +9,7 @@
                 <h2 class="text-lg font-bold text-gray-900">Detail Pengasuh</h2>
                 <p class="text-sm text-gray-500">Informasi lengkap pengasuh.</p>
             </div>
-            <a href="{{ route('anak-asuh.index') }}" class="text-sm font-semibold text-gray-600 hover:text-gray-800 flex items-center transition-colors">
+            <a href="{{ route('pengasuh.index') }}" class="text-sm font-semibold text-gray-600 hover:text-gray-800 flex items-center transition-colors">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
@@ -78,7 +78,7 @@
 
 <script>
 function openDeleteModal(id) {
-    document.getElementById('deleteForm').action = '{{ url("anak-asuh") }}/' + id;
+    document.getElementById('deleteForm').action = '{{ route("pengasuh.destroy", ["pengasuh" => ":id"]) }}'.replace(':id', id);
     document.getElementById('deleteModal').classList.remove('hidden');
 }
 

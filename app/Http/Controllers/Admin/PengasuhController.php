@@ -18,7 +18,7 @@ class PengasuhController extends Controller
 
     public function create()
     {
-        return view('admin.pengasuh.create');
+        return view('pengasuh.create');
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class PengasuhController extends Controller
 
         Pengasuh::create($validated);
 
-        return redirect()->route('admin.pengasuh.index')->with('success', 'Data berhasil ditambahkan');
+        return redirect()->route('pengasuh.index')->with('success', 'Data berhasil ditambahkan');
     }
 
     public function show(Pengasuh $pengasuh)
@@ -69,7 +69,7 @@ class PengasuhController extends Controller
 
         $pengasuh->update($validated);
 
-        return redirect()->route('admin.pengasuh.index')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('pengasuh.index')->with('success', 'Data berhasil diupdate');
     }
 
     public function destroy($id)
@@ -78,7 +78,7 @@ class PengasuhController extends Controller
         if($pengasuh->foto) Storage::disk('public')->delete($pengasuh->foto);
         $pengasuh->delete();
         
-        return redirect()->route('admin.pengasuh.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('pengasuh.index')->with('success', 'Data berhasil dihapus');
     }
 
     public function cetak()

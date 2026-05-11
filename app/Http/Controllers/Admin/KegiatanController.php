@@ -70,7 +70,7 @@ class KegiatanController extends Controller
         ]);
 
         // 5. Kembalikan admin ke halaman tabel dengan pesan sukses
-        return redirect()->route('admin.kegiatan.index')->with('success', 'Kegiatan berhasil ditambahkan!');
+        return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil ditambahkan!');
     }
 
     public function show($id)
@@ -129,7 +129,7 @@ class KegiatanController extends Controller
         ]);
 
         // 5. Kembalikan ke halaman tabel dengan pesan sukses
-        return redirect()->route('admin.kegiatan.index')->with('success', 'Data kegiatan berhasil diperbarui!');
+        return redirect()->route('kegiatan.index')->with('success', 'Data kegiatan berhasil diperbarui!');
     }
 
     public function destroy($id)
@@ -146,6 +146,6 @@ class KegiatanController extends Controller
         $kegiatan->delete();
 
         // 4. Kembalikan ke halaman tabel dengan pesan sukses
-        return redirect()->route('admin.kegiatan.index')->with('success', 'Data kegiatan berhasil dihapus!');
+        return redirect()->route('kegiatan.index')->with('success', 'Data kegiatan berhasil dihapus!');
     }
 }

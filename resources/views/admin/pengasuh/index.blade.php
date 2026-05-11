@@ -144,7 +144,7 @@
 
 <script>
 function openDeleteModal(id) {
-    document.getElementById('deleteForm').action = '/pengasuh/' + id;
+    document.getElementById('deleteForm').action = '{{ route("pengasuh.destroy", ["pengasuh" => ":id"]) }}'.replace(':id', id);
     document.getElementById('deleteModal').classList.remove('hidden');
 }
 

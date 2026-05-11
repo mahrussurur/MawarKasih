@@ -106,7 +106,9 @@
                                         </svg>
                                     </a>
                                     <button
-                                        onclick="openDeleteModal({{ $kegiatan->id }})"
+                                        type="button"
+                                        onclick="openDeleteModal(this)"
+                                        data-action="{{ route('kegiatan.destroy', $kegiatan->id) }}"
                                         class="p-2 text-white bg-red-500 hover:bg-red-600 rounded transition-colors shadow-sm"
                                         title="Hapus">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,8 +153,9 @@
 </div>
 
 <script>
-function openDeleteModal(id) {
-    document.getElementById('deleteForm').action = '{{ url("kegiatan") }}/' + id;
+function openDeleteModal(button) {
+    const action = button.dataset.action;
+    document.getElementById('deleteForm').action = action;
     document.getElementById('deleteModal').classList.remove('hidden');
 }
 
