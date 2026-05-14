@@ -18,7 +18,7 @@ class PengasuhController extends Controller
 
     public function create()
     {
-        return view('pengasuh.create');
+        return view('admin.pengasuh.create');
     }
 
     public function store(Request $request)

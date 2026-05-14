@@ -15,23 +15,17 @@ class KegiatanController extends Controller
     {
         // 1. Tangkap apa yang diketik/dipilih oleh admin
         $search = $request->input('search');
-        $tahun = $request->input('tahun');
 
         // 2. Siapkan pondasi query database
-        $query = Kegiatan::query();
+        $query = Kegiatan::query()->latest();
 
         // 3. Jika admin mengetik di kotak pencarian, saring berdasarkan judul
         if ($search) {
             $query->where('nama_kegiatan', 'like', '%' . $search . '%');
         }
 
-        // 4. Jika admin memilih tahun (dan bukan "Semua Tahun"), saring berdasarkan tahun
-        if ($tahun && $tahun != '') {
-            $query->whereYear('tanggal_pelaksanaan', $tahun);
-        }
-
         // 5. Eksekusi query-nya dan urutkan dari yang terbaru
-        $kegiatans = $query->latest()->get();
+        $kegiatans = $query->latest()->paginate(10);
 
         // 6. Kirim datanya ke halaman View
         return view('admin.kegiatan.index', compact('kegiatans'));

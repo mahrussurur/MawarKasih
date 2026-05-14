@@ -79,7 +79,7 @@ class AnakAsuhController extends Controller
 
         $anakAsuh->update($validated);
 
-        return redirect()->route('admin.anak-asuh.index')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil diupdate');
     }
 
     public function destroy($id)
@@ -88,7 +88,7 @@ class AnakAsuhController extends Controller
         if($anak->foto) Storage::disk('public')->delete($anak->foto);
         $anak->delete();
         // return redirect()->back()->with('success', 'Data berhasil dihapus');
-        return redirect()->route('admin.anak-asuh.index')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil dihapus');
     }
 
     public function cetak()

@@ -46,6 +46,23 @@ Route::prefix('admin')
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('galeri',  GaleriController::class);
 
+        // Cetak laporan donasi valid (PDF)
+Route::get('donasi/cetak', [DonasiController::class, 'cetak'])->name('donasi.cetak');
+ 
+// Validasi donasi (pending → valid)
+Route::patch('donasi/{donasi}/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
+ 
+// Tolak donasi (pending → ditolak)
+Route::patch('donasi/{donasi}/tolak', [DonasiController::class, 'tolak'])->name('donasi.tolak');
+ 
+// Resource standar (index, create, store, show, edit, update, destroy)
+Route::resource('donasi', DonasiController::class);
+ 
+// ── ROUTE PUBLIK (di luar middleware auth) ──
+// Cek status donasi untuk donatur via kode_donasi
+Route::get('cek-donasi', [DonasiController::class, 'cekStatus'])->name('donasi.cek');
+ 
+
         // Profile pengguna yang sedang login
         Route::get('/profile',    [ProfileController::class, 'edit'])
             ->name('profile.edit');
