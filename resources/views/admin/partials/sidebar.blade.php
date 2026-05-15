@@ -1,23 +1,22 @@
-{{--
-    PARTIAL: partials/sidebar.blade.php
-    Taruh di: resources/views/partials/sidebar.blade.php
---}}
 <style>
     .sidebar-brand {
-        padding: 18px 20px;
+        padding: 9.5px 14px;
         border-bottom: 1px solid rgba(255,255,255,0.08);
         display: flex; align-items: center; gap: 12px;
     }
     .sidebar-brand-logo {
         width: 44px; height: 44px; border-radius: 10px;
-        overflow: hidden; background: rgba(255,255,255,0.1);
+        overflow: hidden; background: transparent;
         display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .sidebar-brand-logo img { width: 100%; height: 100%; object-fit: contain; }
+    .sidebar-brand-logo img {
+        width: 100%; height: 100%; object-fit: contain; display: block;
+        background: transparent;
+    }
     .sidebar-brand-text .org { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; text-transform: uppercase; }
-    .sidebar-brand-text .name { font-size: 15px; font-weight: 800; color: #fff; line-height: 1.2; margin-top: 1px; }
+    .sidebar-brand-text .name { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.2; margin-top: 1px; }
 
-    .sidebar-nav { flex: 1; padding: 14px 12px; overflow-y: auto; }
+    .sidebar-nav { flex: 1; padding: 14px 14px; overflow-y: auto; }
     .sidebar-nav::-webkit-scrollbar { display: none; }
 
     .nav-label { font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.28); letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 10px 4px; }
@@ -50,11 +49,11 @@
 </style>
 
 <aside class="sidebar">
-    {{-- Brand --}}
+    <!-- Brand -->
     <div class="sidebar-brand">
         <div class="sidebar-brand-logo">
             <img src="/images/logo.png" alt="Logo MTK"
-                 onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:rgba(255,255,255,0.7);font-size:11px;font-weight:800;\'>MTK</span>'">
+                onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:rgba(255,255,255,0.7);font-size:11px;font-weight:800;\'>MTK</span>'">
         </div>
         <div class="sidebar-brand-text">
             <div class="org">Yayasan</div>
@@ -62,8 +61,8 @@
         </div>
     </div>
 
-    {{-- Nav --}}
-    <nav class="sidebar-nav">
+    <!-- Nav -->
+    <nav class="sidebar-nav" >
         <div class="nav-label">Menu Utama</div>
 
         <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">

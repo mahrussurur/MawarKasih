@@ -15,7 +15,7 @@
         :root {
             --sidebar-width: 260px;
             --header-height: 64px;
-            --sidebar-bg: #1e2a3a;
+            --sidebar-bg: #0c3f81;
             --sidebar-hover: #2d3f54;
             --sidebar-active-bg: rgba(59,130,246,0.18);
             --accent-blue: #3b82f6;
@@ -54,10 +54,10 @@
         }
         .page-content { flex: 1; padding: 28px 32px; }
 
-        @keyframes fadeInUp {
+        /* @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(16px); }
             to   { opacity: 1; transform: translateY(0); }
-        }
+        } */
         .page-content { animation: fadeInUp 0.35s ease both; }
 
         /* Mobile */

@@ -1,6 +1,3 @@
-{{--
-    PARTIAL: partials/header.blade.php
---}}
 <style>
     .header-inner {
         height: 64px;
@@ -41,6 +38,11 @@
     .profile-chevron { color: #64748b; }
     .profile-chevron svg { width: 16px; height: 16px; }
 
+    @media (max-width: 768px) {
+        .profile-btn { padding: 6px; gap: 8px; }
+        .profile-name { display: none; }
+    }
+
     /* Dropdown */
     .profile-dropdown {
         position: absolute; right: 0; top: calc(100% + 8px);
@@ -72,23 +74,23 @@
 <header class="main-header">
     <div class="header-inner">
 
-        {{-- Kiri: Hamburger + Judul --}}
+        <!-- Kiri: Hamburger + Judul -->
         <div class="header-left">
-            {{-- Tombol hamburger (mobile only) --}}
+            <!-- Tombol hamburger (mobile only) -->
             <button class="btn-hamburger" onclick="openSidebar()" aria-label="Buka menu">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
 
-            {{-- Judul halaman dinamis --}}
+            <!-- Judul halaman dinamis -->
             <h1 class="header-page-title">@yield('page-title', 'Dashboard')</h1>
         </div>
 
-        {{-- Kanan: Profil Admin --}}
+        <!-- Kanan: Profil Admin -->
         <div class="header-profile">
             <button id="profileBtn" class="profile-btn" onclick="toggleDropdown()" aria-label="Menu profil">
-                {{-- Avatar --}}
+                <!-- Avatar -->
                 <div class="profile-avatar">
                     <img src="/images/avatar-admin.png" alt="Avatar"
                          onerror="this.style.display='none';this.parentElement.innerHTML='<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'#3b82f6\' style=\'width:24px;height:24px;\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'1.5\' d=\'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z\'/></svg>'">
@@ -101,28 +103,35 @@
                 </span>
             </button>
 
-            {{-- Dropdown Menu --}}
+            <!-- Dropdown Menu -->
             <div id="profileDropdown" class="profile-dropdown hidden">
                 <div class="dropdown-header">
                     <div class="d-name">{{ Auth::user()->name }}</div>
                     <div class="d-role">Administrator</div>
                 </div>
 
-                <!-- <a href="#" class="dropdown-item">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                <a href="#" class="dropdown-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
                     Profil Saya
                 </a>
                 <a href="#" class="dropdown-item">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
                     Pengaturan
-                </a> -->
+                </a>
 
-                <!-- <div class="dropdown-divider"></div> -->
+                <div class="dropdown-divider"></div>
 
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="dropdown-item danger">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
                         Logout
                     </button>
                 </form>

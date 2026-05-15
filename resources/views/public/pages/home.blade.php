@@ -200,7 +200,7 @@
 
         {{-- Foto anak — ganti dengan asset nyata jika ada --}}
         <div class="hidden lg:block absolute right-0 top-0 bottom-0 w-72 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1594608661623-aa0bd3a69799?w=600&auto=format&fit=crop"
+            <img src="/images/logo.png"
                  alt="Anak asuh" class="h-full w-full object-cover opacity-30">
         </div>
 
