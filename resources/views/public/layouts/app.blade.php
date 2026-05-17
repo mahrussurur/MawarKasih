@@ -1,103 +1,217 @@
+{{--
+    ============================================================
+    LAYOUT UTAMA PUBLIC - resources/views/public/layouts/app.blade.php
+    ============================================================
+    Layout ini digunakan oleh SEMUA halaman publik.
+
+    CARA PENGGUNAAN di halaman child:
+        @extends('public.layouts.app')
+
+        @section('title', 'Judul Halaman')
+
+        @section('content')
+            ... isi konten halaman ...
+        @endsection
+
+    SECTION TERSEDIA:
+        - title        : Judul tab browser
+        - meta_desc    : Meta description SEO (opsional)
+        - content      : Konten utama halaman (WAJIB)
+        - extra_styles : CSS tambahan khusus halaman (opsional)
+        - extra_scripts: JS tambahan khusus halaman (opsional)
+
+    DEPENDENCY:
+        - Tailwind CSS via CDN
+        - Font: Plus Jakarta Sans (Google Fonts)
+        - Lucide Icons via CDN
+        - AOS (Animate On Scroll) via CDN
+    ============================================================
+--}}
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Panti Asuhan Mawar Kasih')</title>
-    <meta name="description" content="@yield('meta_description', 'Panti Asuhan Mawar Kasih - Menebar Kasih, Merangkai Harapan')">
 
-    {{-- Tailwind CSS via CDN --}}
+    {{-- ======================================================
+         SEO META TAGS
+         Ubah default di sini jika perlu.
+    ====================================================== --}}
+    <title>@yield('title', 'Beranda') | Panti Asuhan Mawar Kasih</title>
+    <meta name="description" content="@yield('meta_desc', 'Panti Asuhan Mawar Kasih - Bersama kita hadirkan cinta, pendidikan, dan masa depan yang lebih baik untuk mereka.')">
+    <meta name="keywords" content="panti asuhan, mawar kasih, bandung, donasi, anak yatim">
+
+    {{-- Open Graph (untuk share sosial media) --}}
+    <meta property="og:title" content="@yield('title', 'Beranda') | Panti Asuhan Mawar Kasih">
+    <meta property="og:description" content="@yield('meta_desc', 'Bersama kita hadirkan cinta, pendidikan, dan masa depan yang lebih baik.')">
+    <meta property="og:image" content="{{ asset('images/og-image.jpg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+
+    {{-- ======================================================
+         FAVICON
+         Ganti path sesuai file favicon Anda di public/images/
+    ====================================================== --}}
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+
+    {{-- ======================================================
+         FONTS - Plus Jakarta Sans
+         Digunakan sebagai font utama seluruh website.
+         Ganti di sini jika ingin mengganti font global.
+    ====================================================== --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    {{-- ======================================================
+         TAILWIND CSS
+         Jika sudah pakai Vite/Mix, hapus CDN ini dan
+         ganti dengan: @vite(['resources/css/app.css'])
+    ====================================================== --}}
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // ======================================================
+        // TAILWIND CONFIG - Warna & Font Kustom
+        // Ubah warna brand di sini jika perlu.
+        // ======================================================
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
                     colors: {
-                        primary: {
+                        brand: {
                             50:  '#eff6ff',
                             100: '#dbeafe',
                             200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
                             500: '#3b82f6',
-                            600: '#2563eb',
+                            600: '#2563eb', // Warna utama biru
                             700: '#1d4ed8',
                             800: '#1e40af',
                             900: '#1e3a8a',
                         },
-                    },
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        display: ['Playfair Display', 'serif'],
-                    },
+                    }
                 }
             }
         }
     </script>
 
-    {{-- Google Fonts --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    {{-- ======================================================
+         AOS - Animate On Scroll
+         Library animasi saat elemen muncul di viewport.
+         Hapus jika tidak ingin animasi scroll.
+    ====================================================== --}}
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 
-    {{-- Font Awesome untuk ikon --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    {{-- Lucide Icons CDN --}}
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
+    {{-- ======================================================
+         GLOBAL STYLES
+         CSS global yang berlaku di seluruh website.
+    ====================================================== --}}
     <style>
-        /* Smooth scroll global */
+        /* Scrollbar kustom */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #3e3e3e; border-radius: 1px; }
+
+        /* Smooth scroll untuk anchor link */
         html { scroll-behavior: smooth; }
 
-        /* Animasi fade-up saat halaman load */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-up { animation: fadeUp .6s ease both; }
-        .delay-100 { animation-delay: .1s; }
-        .delay-200 { animation-delay: .2s; }
-        .delay-300 { animation-delay: .3s; }
+        /* Transisi halaman */
+        body { opacity: 0; transition: opacity 0.3s ease; }
+        body.loaded { opacity: 1; }
 
-        /* Garis bawah aktif di navbar */
-        .nav-link-active { border-bottom: 2px solid #2563eb; color: #2563eb; }
+        /* Utility: line clamp (untuk judul/deskripsi yang panjang) */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
     </style>
 
-    @stack('styles')
+    {{-- Section untuk CSS tambahan per halaman --}}
+    @yield('extra_styles')
 </head>
-<body class="font-sans text-gray-800 bg-white antialiased">
+<body class="font-sans bg-white text-gray-800 antialiased">
 
-    {{-- =====================================================================
-         NAVBAR
-         File : resources/views/public/layouts/navbar.blade.php
-         ===================================================================== --}}
-    @include('public.layouts.navbar')
+    {{-- ======================================================
+         NAVBAR - Include komponen navbar
+         File: resources/views/public/components/navbar.blade.php
+    ====================================================== --}}
+    @include('public.components.navbar')
 
-    {{-- =====================================================================
-         KONTEN UTAMA — diisi oleh masing-masing halaman
-         ===================================================================== --}}
+    {{-- ======================================================
+         KONTEN UTAMA HALAMAN
+         Diisi oleh masing-masing halaman child.
+    ====================================================== --}}
     <main>
         @yield('content')
     </main>
 
-    {{-- =====================================================================
-         FOOTER
-         File : resources/views/public/layouts/footer.blade.php
-         ===================================================================== --}}
-    @include('public.layouts.footer')
+    {{-- ======================================================
+         FOOTER - Include komponen footer
+         File: resources/views/public/components/footer.blade.php
+    ====================================================== --}}
+    @include('public.components.footer')
 
-    {{-- Script global: toggle mobile menu --}}
+    {{-- ======================================================
+         SCROLL TO TOP BUTTON
+         Muncul otomatis saat scroll ke bawah.
+    ====================================================== --}}
+    <button id="scrollTopBtn"
+        class="fixed bottom-6 right-6 z-50 w-11 h-11 bg-brand-600 text-white rounded-full border-2 border-gray-900 shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-brand-700"
+        onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        aria-label="Kembali ke atas">
+        <i data-lucide="chevron-up" class="w-5 h-5"></i>
+    </button>
+
+    {{-- ======================================================
+         SCRIPTS GLOBAL
+    ====================================================== --}}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Toggle mobile menu
-        const btn  = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        if (btn && menu) {
-            btn.addEventListener('click', () => menu.classList.toggle('hidden'));
-        }
+        // Inisialisasi AOS (animasi scroll)
+        AOS.init({
+            duration: 700,      // durasi animasi (ms)
+            easing: 'ease-out-cubic',
+            once: true,         // animasi hanya sekali
+            offset: 60,
+        });
 
-        // Highlight nav link aktif berdasarkan URL
-        document.querySelectorAll('.nav-link').forEach(link => {
-            if (link.href === window.location.href) {
-                link.classList.add('nav-link-active');
+        // Inisialisasi Lucide Icons
+        lucide.createIcons();
+
+        // Tampilkan body setelah load
+        document.body.classList.add('loaded');
+
+        // Scroll to top button
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('scrollTopBtn');
+            if (window.scrollY > 400) {
+                btn.classList.remove('opacity-0', 'invisible');
+                btn.classList.add('opacity-100', 'visible');
+            } else {
+                btn.classList.add('opacity-0', 'invisible');
+                btn.classList.remove('opacity-100', 'visible');
             }
         });
+
+        // Navbar scroll effect (handled in navbar component)
     </script>
 
-    @stack('scripts')
+    {{-- Section untuk JS tambahan per halaman --}}
+    @yield('extra_scripts')
+
 </body>
 </html>

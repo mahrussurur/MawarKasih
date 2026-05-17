@@ -1,68 +1,67 @@
+<!-- {{--
+    ============================================================
+    REFERENSI ROUTES - routes/web.php (bagian publik)
+    ============================================================
+    Tambahkan route berikut ke file routes/web.php Anda.
+    Semua route publik dikelompokkan dalam prefix 'public.'.
+
+    CARA PAKAI:
+    Salin blok Route::group di bawah dan tempel ke web.php Anda.
+    ============================================================
+--}}
+
+{{-- ========================================================
+     TAMBAHKAN INI KE routes/web.php
+     ======================================================== --}} -->
+
 <?php
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Public\HomeController;
-use App\Http\Controllers\Public\GaleriPublicController;
-use App\Http\Controllers\Public\KegiatanPublicController;
-use App\Http\Controllers\Public\DonasiPublicController;
-use App\Http\Controllers\Public\ProfilOrfanatController;
-use App\Http\Controllers\Auth\ForgotPasswordController;
-
 /*
 |--------------------------------------------------------------------------
-| Public Web Routes (Web Profile)
+| PUBLIC ROUTES - Website Publik Panti Asuhan Mawar Kasih
 |--------------------------------------------------------------------------
-| Semua route di sini bisa diakses tanpa login (guest maupun yang sudah
-| login). Ini adalah halaman tampilan publik / web profile organisasi.
-|
-| Name prefix: public.
-|
-| Contoh akses:
-|   URL  → /
-|   Name → route('public.home')
+| Semua route halaman publik (tidak perlu login)
+| Controller ada di App\Http\Controllers\Public\
+|--------------------------------------------------------------------------
 */
 
-Route::name('public.')->group(function () {
+use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\KegiatanController;
+use App\Http\Controllers\Public\DonasiController;
+use App\Http\Controllers\Public\TentangController;
+use App\Http\Controllers\Public\FasilitasController;
 
-    // Beranda
-    Route::get('/home', [HomeController::class, 'index'])
-        ->name('home');
+Route::prefix('')->name('public.')->group(function () {
 
-    // Tentang kami / profil panti
-    Route::get('/tentang', [ProfilOrfanatController::class, 'index'])
-        ->name('tentang');
+    // ── Beranda ─────────────────────────────────────────────
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // Galeri foto kegiatan
-    Route::get('/galeri', [GaleriPublicController::class, 'index'])
-        ->name('galeri');
+    // ── Kegiatan ────────────────────────────────────────────
+    Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::get('/kegiatan/{id}', [KegiatanController::class, 'show'])->name('kegiatan.show');
 
-    // Kegiatan
-    Route::get('/kegiatan', [KegiatanPublicController::class, 'index'])
-        ->name('kegiatan');
-    Route::get('/kegiatan/{id}', [KegiatanPublicController::class, 'show'])
-        ->name('kegiatan.show');
+    // ── Donasi ──────────────────────────────────────────────
+    Route::get('/donasi', [DonasiController::class, 'form'])->name('donasi.form');
+    Route::get('/donasi/rekening', [DonasiController::class, 'rekening'])->name('donasi.rekening');
+    Route::get('/donasi/tutorial', [DonasiController::class, 'tutorial'])->name('donasi.tutorial');
+    Route::get('/donasi/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
+    Route::get('/donasi/registrasi', [DonasiController::class, 'registrasi'])->name('donasi.registrasi');
+    Route::post('/donasi/kirim', [DonasiController::class, 'kirim'])->name('donasi.kirim');
 
-    // Donasi - halaman info & form donasi publik
-    Route::get('/donasi', [DonasiPublicController::class, 'index'])
-        ->name('donasi');
-    Route::post('/donasi', [DonasiPublicController::class, 'store'])
-        ->name('donasi.store');
+    // ── Tentang Kami ─────────────────────────────────────────
+    Route::get('/tentang/profil', [TentangController::class, 'profil'])->name('tentang.profil');
+    Route::get('/tentang/visi-misi', [TentangController::class, 'visiMisi'])->name('tentang.visi-misi');
+
+    // ── Fasilitas ────────────────────────────────────────────
+    Route::get('/fasilitas', [FasilitasController::class, 'index'])->name('fasilitas');
+
+    // ── Galeri ───────────────────────────────────────────────
+    Route::get('/galeri', [TentangController::class, 'galeri'])->name('galeri');
+
+    // ── Kontak ───────────────────────────────────────────────
+    Route::get('/kontak', [TentangController::class, 'kontak'])->name('kontak');
+
+    // ── Legal ────────────────────────────────────────────────
+    Route::get('/kebijakan-privasi', fn() => view('public.pages.kebijakan'))->name('kebijakan');
+    Route::get('/syarat-ketentuan', fn() => view('public.pages.syarat'))->name('syarat');
 
 });
-
-/*
-|--------------------------------------------------------------------------
-| Forgot Password Routes
-|--------------------------------------------------------------------------
-| Diletakkan di sini (bukan admin.php) karena tidak butuh login —
-| justru diakses saat pengguna BELUM bisa masuk.
-*/
-
-Route::get('/forgot-password', [ForgotPasswordController::class, 'showForm'])
-    ->name('password.request');
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])
-    ->name('password.email');
-Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])
-    ->name('password.reset');
-Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])
-    ->name('password.update');
