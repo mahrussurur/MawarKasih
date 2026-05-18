@@ -1,25 +1,3 @@
-{{--
-    ============================================================
-    FOOTER - resources/views/public/components/footer.blade.php
-    ============================================================
-    Footer website Panti Asuhan Mawar Kasih.
-
-    STRUKTUR:
-    - Kolom 1 : Logo + deskripsi + sosial media
-    - Kolom 2 : Menu navigasi utama
-    - Kolom 3 : Link seputar Donasi
-    - Kolom 4 : Link Tentang Kami
-    - Kolom 5 : Kontak (alamat, telepon, email)
-    - Baris bawah: copyright + kebijakan
-
-    CARA MODIFIKASI:
-    - Sosial media : Ubah href pada bagian "SOSIAL MEDIA"
-    - Alamat/kontak: Cari bagian "KONTAK INFO" dan ubah teksnya
-    - Tambah link  : Duplikat <li> di kolom yang sesuai
-    - Warna footer : Ubah bg-gray-900 menjadi warna lain
-    ============================================================
---}}
-
 <footer class="bg-brand-600 text-gray-300">
 
     {{-- ===== FOOTER MAIN ===== --}}

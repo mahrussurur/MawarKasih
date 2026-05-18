@@ -1,58 +1,3 @@
-{{--
-    ============================================================
-    HALAMAN BERANDA - resources/views/public/pages/home.blade.php
-    ============================================================
-    Halaman utama (home) website publik Panti Asuhan Mawar Kasih.
-
-    DATA YANG DIBUTUHKAN DARI CONTROLLER:
-    ─────────────────────────────────────────────────────────────
-    Controller : App\Http\Controllers\Public\HomeController
-    Method     : index()
-
-    VARIABEL YANG DIKIRIM KE VIEW:
-    ┌─────────────────┬───────────────────────────────────────────────────────┐
-    │ Variable        │ Keterangan                                            │
-    ├─────────────────┼───────────────────────────────────────────────────────┤
-    │ $stats          │ Array statistik: total_anak, total_pengurus,          │
-    │                 │ total_kegiatan, total_donatur                         │
-    │                 │ Contoh: $stats['total_anak'] = 42                     │
-    ├─────────────────┼───────────────────────────────────────────────────────┤
-    │ $kegiatanTerbaru│ Collection kegiatan terbaru (4 item)                  │
-    │                 │ Field: id, judul, tanggal, gambar,                    │
-    │                 │        deskripsi_singkat, kategori                    │
-    ├─────────────────┼───────────────────────────────────────────────────────┤
-    │ $fasilitas      │ Array statis (tidak dari DB) — sudah di-hardcode      │
-    │                 │ di bawah di bagian "FASILITAS SECTION"                │
-    └─────────────────┴───────────────────────────────────────────────────────┘
-
-    CONTOH CONTROLLER (HomeController@index):
-    ─────────────────────────────────────────────────────────────
-    public function index()
-    {
-        $stats = [
-            'total_anak'      => AnakAsuh::where('status', 'aktif')->count(),
-            'total_pengurus'  => Pengurus::where('aktif', true)->count(),
-            'total_kegiatan'  => Kegiatan::count(),
-            'total_donatur'   => Donatur::count(),
-        ];
-
-        $kegiatanTerbaru = Kegiatan::latest('tanggal')
-            ->take(4)
-            ->get();
-
-        return view('public.pages.home', compact('stats', 'kegiatanTerbaru'));
-    }
-    ─────────────────────────────────────────────────────────────
-
-    SECTIONS DALAM FILE INI:
-    1. HERO          - Banner utama dengan foto & tagline
-    2. STATISTIK     - Counter angka: anak, pengurus, kegiatan, donatur
-    3. KEGIATAN      - Grid 4 kartu kegiatan terbaru (dari DB admin)
-    4. FASILITAS     - Grid 8 kartu fasilitas (statis, tidak dari DB)
-    5. CTA BANNER    - Banner ajak donasi
-    ============================================================
---}}
-
 @extends('public.layouts.app')
 
 @section('title', 'Beranda')
@@ -153,12 +98,12 @@
 
             {{-- Anak Asuh --}}
             <div class="flex items-center gap-4 p-4">
-                <div class="w-12 h-12 bg-brand-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="users" class="w-6 h-6 text-brand-600"></i>
+                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="users" class="w-6 h-6 text-blue-600"></i>
                 </div>
                 <div>
-                    {{-- Angka dari controller: $stats['total_anak'] --}}
-                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['total_anak'] ?? '42' }}+</div>
+                    {{-- Angka dari controller: $stats['totalAnakAsuh'] --}}
+                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['totalAnakAsuh'] ?? '44' }}+</div>
                     <div class="text-sm font-semibold text-gray-700">Anak Asuh</div>
                     <div class="text-xs text-gray-400">sedang kami bina dengan kasih</div>
                 </div>
@@ -167,11 +112,11 @@
             {{-- Pengurus --}}
             <div class="flex items-center gap-4 p-4">
                 <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="heart-handshake" class="w-6 h-6 text-blue-600"></i>
+                    <i data-lucide="user-check" class="w-6 h-6 text-blue-600"></i>
                 </div>
                 <div>
-                    {{-- Angka dari controller: $stats['total_pengurus'] --}}
-                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['total_pengurus'] ?? '15' }}+</div>
+                    {{-- Angka dari controller: $stats['totalPengasuh'] --}}
+                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['totalPengasuh'] ?? '6' }}+</div>
                     <div class="text-sm font-semibold text-gray-700">Pengurus</div>
                     <div class="text-xs text-gray-400">berdedikasi melayani</div>
                 </div>
@@ -179,12 +124,12 @@
 
             {{-- Kegiatan Aktif --}}
             <div class="flex items-center gap-4 p-4">
-                <div class="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="calendar-check" class="w-6 h-6 text-indigo-600"></i>
+                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="calendar-check" class="w-6 h-6 text-blue-600"></i>
                 </div>
                 <div>
-                    {{-- Angka dari controller: $stats['total_kegiatan'] --}}
-                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['total_kegiatan'] ?? '28' }}+</div>
+                    {{-- Angka dari controller: $stats['totalKegiatan'] --}}
+                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['totalKegiatan'] ?? '10' }}+</div>
                     <div class="text-sm font-semibold text-gray-700">Kegiatan Aktif</div>
                     <div class="text-xs text-gray-400">sepanjang tahun</div>
                 </div>
@@ -192,12 +137,12 @@
 
             {{-- Donatur --}}
             <div class="flex items-center gap-4 p-4">
-                <div class="w-12 h-12 bg-sky-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="user-check" class="w-6 h-6 text-sky-600"></i>
+                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i data-lucide="heart-handshake" class="w-6 h-6 text-blue-600"></i>
                 </div>
                 <div>
-                    {{-- Angka dari controller: $stats['total_donatur'] --}}
-                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['total_donatur'] ?? '120' }}+</div>
+                    {{-- Angka dari controller: $stats['totalDonatur'] --}}
+                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['totalDonatur'] ?? '0' }}+</div>
                     <div class="text-sm font-semibold text-gray-700">Donatur</div>
                     <div class="text-xs text-gray-400">berbagi kebaikan bersama kami</div>
                 </div>
@@ -209,27 +154,27 @@
 
 
 {{-- ============================================================
-     3. KEGIATAN TERBARU SECTION
+     3. KEGIATAN SECTION
      ─────────────────────────────────────────────────────────
-     Grid 4 kartu kegiatan.
-     DATA: $kegiatanTerbaru — Collection dari tabel kegiatan
-           (dikelola dari panel admin).
+     Grid kartu kegiatan.
+     DATA: $kegiatans — Collection semua kegiatan dari tabel kegiatan
+           yang dikelola di panel admin.
 
      FIELD YANG DIAKSES:
      - $kegiatan->id
      - $kegiatan->judul
-     - $kegiatan->tanggal         (format: Y-m-d)
-     - $kegiatan->gambar          (path file, relatif dari storage)
+     - $kegiatan->tanggal_pelaksanaan  (format: Y-m-d)
+     - $kegiatan->foto_dokumentasi      (path file, relatif dari storage)
      - $kegiatan->deskripsi_singkat
-     - $kegiatan->kategori        (label: 'Kegiatan Harian', dll)
+     - $kegiatan->kategori             (label: 'Kegiatan Harian', dll)
 
      CONTOH SEEDER / FACTORY:
      Kegiatan::create([
-         'judul'              => 'Belajar Bersama',
-         'tanggal'            => '2024-05-18',
-         'gambar'             => 'kegiatan/belajar.jpg',
-         'deskripsi_singkat'  => 'Kegiatan belajar rutin...',
-         'kategori'           => 'Kegiatan Harian',
+         'judul'               => 'Belajar Bersama',
+         'tanggal_pelaksanaan' => '2024-05-18',
+         'gambar'              => 'kegiatan/belajar.jpg',
+         'deskripsi_singkat'   => 'Kegiatan belajar rutin...',
+         'kategori'            => 'Kegiatan Harian',
      ]);
      ============================================================ --}}
 <section class="py-14 bg-gray-50">
@@ -237,7 +182,7 @@
 
         {{-- Header section --}}
         <div class="flex items-center justify-between mb-8" data-aos="fade-up">
-            <h2 class="text-2xl font-bold text-gray-900">Kegiatan Terbaru</h2>
+            <h2 class="text-2xl font-bold text-gray-900">Semua Kegiatan</h2>
             <a href="{{ route('public.kegiatan.index') }}"
                 class="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 hover:text-brand-700 transition group">
                 Lihat Semua Kegiatan
@@ -248,23 +193,18 @@
         {{-- Grid kartu kegiatan --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
 
-            {{-- ======================================================
-                 LOOPING DATA KEGIATAN DARI ADMIN
-                 $kegiatanTerbaru dikirim dari HomeController@index
-                 Ganti 'sample_data' dengan loop nyata setelah DB siap.
-            ====================================================== --}}
-            @forelse ($kegiatanTerbaru ?? [] as $kegiatan)
+            @forelse ($kegiatans ?? [] as $kegiatan)
             <article class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 group"
                 data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
 
                 {{-- Gambar kegiatan --}}
                 <div class="aspect-[4/3] overflow-hidden bg-gray-100">
-                    @if($kegiatan->gambar)
+                    @if($kegiatan->foto_dokumentasi)
                         {{--
-                            Gambar disimpan di storage/app/public/kegiatan/
+                            Foto dokumentasi disimpan di storage/app/public/kegiatan/
                             Pastikan sudah menjalankan: php artisan storage:link
                         --}}
-                        <img src="{{ Storage::url($kegiatan->gambar) }}"
+                        <img src="{{ Storage::url($kegiatan->foto_dokumentasi) }}"
                             alt="{{ $kegiatan->judul }}"
                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy">
@@ -280,8 +220,8 @@
                 <div class="p-4">
                     {{-- Tanggal --}}
                     <time class="text-xs text-gray-400 mb-1 block"
-                        datetime="{{ \Carbon\Carbon::parse($kegiatan->tanggal)->format('Y-m-d') }}">
-                        {{ \Carbon\Carbon::parse($kegiatan->tanggal)->translatedFormat('d F Y') }}
+                        datetime="{{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->format('Y-m-d') }}">
+                        {{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->translatedFormat('d F Y') }}
                     </time>
                     {{-- Judul --}}
                     <h3 class="font-bold text-gray-900 mb-1.5 line-clamp-2 group-hover:text-brand-600 transition-colors">
@@ -303,7 +243,7 @@
             @empty
             {{--
                 TAMPILAN SAAT DATA KOSONG
-                Ini muncul jika $kegiatanTerbaru kosong atau null.
+                Ini muncul jika $kegiatans kosong atau null.
                 Hapus/ubah sesuai kebutuhan.
             --}}
             <div class="lg:col-span-4 py-12 text-center text-gray-400">

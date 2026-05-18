@@ -1,32 +1,3 @@
-{{--
-    ============================================================
-    LAYOUT UTAMA PUBLIC - resources/views/public/layouts/app.blade.php
-    ============================================================
-    Layout ini digunakan oleh SEMUA halaman publik.
-
-    CARA PENGGUNAAN di halaman child:
-        @extends('public.layouts.app')
-
-        @section('title', 'Judul Halaman')
-
-        @section('content')
-            ... isi konten halaman ...
-        @endsection
-
-    SECTION TERSEDIA:
-        - title        : Judul tab browser
-        - meta_desc    : Meta description SEO (opsional)
-        - content      : Konten utama halaman (WAJIB)
-        - extra_styles : CSS tambahan khusus halaman (opsional)
-        - extra_scripts: JS tambahan khusus halaman (opsional)
-
-    DEPENDENCY:
-        - Tailwind CSS via CDN
-        - Font: Plus Jakarta Sans (Google Fonts)
-        - Lucide Icons via CDN
-        - AOS (Animate On Scroll) via CDN
-    ============================================================
---}}
 <!DOCTYPE html>
 <html lang="id">
 <head>

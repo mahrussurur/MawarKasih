@@ -8,7 +8,7 @@
  *
  * DATA YANG DIKIRIM KE VIEW:
  * - $stats          : Array angka statistik (dari model masing-masing)
- * - $kegiatanTerbaru: 4 kegiatan terbaru (dari tabel kegiatan)
+ * - $kegiatans      : Collection semua kegiatan yang dikelola admin
  *
  * CARA PAKAI:
  * Buat folder: app/Http/Controllers/Public/
@@ -50,21 +50,21 @@ class HomeController extends Controller
             'totalAnakAsuh'  => AnakAsuh::count(),
             'totalPengasuh'  => Pengasuh::count(),
             'totalKegiatan'  => Kegiatan::count(),
-            'total_donatur'  => Donasi::count(),
+            'totalDonatur'  => Donasi::count(),
         ];
 
         // ======================================================
-        // KEGIATAN TERBARU (4 terbaru)
-        // Sesuaikan nama kolom 'tanggal' dengan kolom tanggal
-        // di tabel kegiatan Anda (bisa juga 'created_at').
+        // DAFTAR KEGIATAN
+        // Ambil semua kegiatan yang ada di admin.
+        // Urutkan berdasarkan tanggal pelaksanaan paling terbaru.
         //
         // Field yang diakses di view:
-        // - id, judul, tanggal, gambar, deskripsi_singkat, kategori
+        // - id, judul, tanggal_pelaksanaan, gambar, deskripsi_singkat, kategori
         // ======================================================
-        $kegiatanTerbaru = Kegiatan::latest('tanggal_pelaksanaan')
-            ->take(4)
+
+        $kegiatans = Kegiatan::latest('tanggal_pelaksanaan')
             ->get();
 
-        return view('public.pages.home', compact('stats', 'kegiatanTerbaru'));
+        return view('public.pages.home', compact('stats', 'kegiatans'));
     }
 }

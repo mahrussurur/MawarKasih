@@ -1,19 +1,3 @@
-<!-- {{--
-    ============================================================
-    REFERENSI ROUTES - routes/web.php (bagian publik)
-    ============================================================
-    Tambahkan route berikut ke file routes/web.php Anda.
-    Semua route publik dikelompokkan dalam prefix 'public.'.
-
-    CARA PAKAI:
-    Salin blok Route::group di bawah dan tempel ke web.php Anda.
-    ============================================================
---}}
-
-{{-- ========================================================
-     TAMBAHKAN INI KE routes/web.php
-     ======================================================== --}} -->
-
 <?php
 /*
 |--------------------------------------------------------------------------

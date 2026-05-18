@@ -1,24 +1,3 @@
-{{--
-    ============================================================
-    NAVBAR - resources/views/public/components/navbar.blade.php
-    ============================================================
-    Komponen navigasi utama website.
-
-    FITUR:
-    - Sticky navbar (menempel saat scroll)
-    - Background berubah saat scroll (transparan → putih)
-    - Aktif state otomatis sesuai route saat ini
-    - Dropdown menu untuk Donasi, Kegiatan, Tentang Kami
-    - Mobile responsive (hamburger menu)
-    - Tombol CTA "Registrasi Donatur Tetap"
-
-    CARA MODIFIKASI:
-    - Tambah menu baru: duplikat salah satu <li> dan sesuaikan route/label
-    - Ganti warna CTA: ubah class bg-brand-600 pada tombol terakhir
-    - Ubah logo: ganti src pada <img> tag
-    ============================================================
---}}
-
 <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > 20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 lg:h-[70px]">
