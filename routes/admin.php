@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AnakAsuhController;    // alfan
 use App\Http\Controllers\Admin\PengasuhController;    // aca
 use App\Http\Controllers\Admin\KegiatanController;    // mahrus
 use App\Http\Controllers\Admin\DonasiController;
+use App\Http\Controllers\Admin\DonaturController;
 use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\ProfileController;
 
@@ -40,6 +41,11 @@ Route::prefix('admin')
         Route::get('/pengasuh/cetak', [PengasuhController::class, 'cetak'])
             ->name('pengasuh.cetak');
         Route::resource('pengasuh', PengasuhController::class);
+
+        // Donatur - route cetak didahulukan
+        Route::get('/donatur/cetak', [DonaturController::class, 'cetak'])
+            ->name('donatur.cetak');
+        Route::resource('donatur', DonaturController::class);
 
         // Resource lainnya
         Route::resource('donasi',  DonasiController::class);

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Donatur;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer(['public.*', 'public.components.*'], function ($view) {
+            $donatur = null;
+            if (session()->has('donatur_id')) {
+                $donatur = Donatur::find(session('donatur_id'));
+                if (!$donatur) {
+                    session()->forget('donatur_id');
+                    $donatur = null;
+                }
+            }
+            $view->with('currentDonatur', $donatur);
+        });
     }
 }

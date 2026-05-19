@@ -29,7 +29,7 @@ use Illuminate\Http\Request;
 use App\Models\AnakAsuh;   // Model tabel anak_asuhs
 use App\Models\Pengasuh;   // Model tabel penguruses
 use App\Models\Kegiatan;   // Model tabel kegiatans
-use App\Models\Donasi;    // Model tabel donaturs
+use App\Models\Donatur;   // Model tabel donaturs
 
 class HomeController extends Controller
 {
@@ -50,7 +50,7 @@ class HomeController extends Controller
             'totalAnakAsuh'  => AnakAsuh::count(),
             'totalPengasuh'  => Pengasuh::count(),
             'totalKegiatan'  => Kegiatan::count(),
-            'totalDonatur'  => Donasi::count(),
+            'totalDonatur'  => Donatur::count(),
         ];
 
         // ======================================================

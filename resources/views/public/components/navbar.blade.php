@@ -93,16 +93,24 @@
 
             {{-- ===== TOMBOL CTA ===== --}}
             <div class="hidden lg:flex items-center gap-3">
-                {{--
-                    Tombol utama CTA - "Registrasi Donatur Tetap"
-                    Arahkan ke route registrasi donatur.
-                    Ubah warna: ganti bg-brand-600 dengan warna lain.
-                --}}
-                <a href="{{ route('public.donasi.registrasi') }}"
-                    class="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all duration-200 shadow-sm hover:shadow-md">
-                    <i data-lucide="heart" class="w-4 h-4"></i>
-                    Registrasi Donatur Tetap
-                </a>
+                @if(!empty($currentDonatur))
+                    <div class="relative">
+                        <button id="donaturMenuButton" type="button" onclick="toggleDonaturMenu()" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
+                            <span>{{ $currentDonatur->nama }}</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="donaturMenu" class="absolute right-0 mt-2 w-56 rounded-2xl border border-gray-200 bg-white shadow-lg opacity-0 invisible transition-all duration-200 z-50">
+                            <a href="{{ route('public.donatur.profile') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">Detail Profil</a>
+                            <a href="{{ route('public.donatur.history') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">Riwayat Donasi</a>
+                            <form method="POST" action="{{ route('public.donatur.logout') }}">
+                                @csrf
+                                <button type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <a href="{{ route('public.donasi.login') }}" class="flex items-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-2.5 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">Login Donatur</a>
+                @endif
             </div>
 
             {{-- ===== HAMBURGER MOBILE ===== --}}
@@ -157,11 +165,25 @@
             </div>
 
             <div class="pt-2">
-                <a href="{{ route('public.donasi.registrasi') }}"
-                    class="flex items-center justify-center gap-2 bg-brand-600 text-white text-sm font-semibold px-5 py-3 rounded-full">
-                    <i data-lucide="heart" class="w-4 h-4"></i>
-                    Registrasi Donatur Tetap
-                </a>
+                @if(!empty($currentDonatur))
+                    <div class="rounded-3xl border border-gray-200 bg-white p-3">
+                        <a href="{{ route('public.donatur.profile') }}" class="flex items-center justify-between text-sm font-semibold text-gray-700 hover:text-brand-600">
+                            <span>{{ $currentDonatur->nama }}</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </a>
+                        <div class="mt-3 space-y-2">
+                            <a href="{{ route('public.donatur.history') }}" class="block rounded-full bg-brand-50 px-4 py-3 text-sm font-semibold text-brand-700 hover:bg-brand-100">Riwayat Donasi</a>
+                            <form action="{{ route('public.donatur.logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="w-full rounded-full bg-red-500 px-4 py-3 text-sm font-semibold text-white hover:bg-red-600">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <div class="space-y-3">
+                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-3 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">Login Donatur</a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -193,6 +215,26 @@
         const menu = document.getElementById('mobileMenu');
         menu.classList.toggle('hidden');
     }
+
+    function toggleDonaturMenu() {
+        const menu = document.getElementById('donaturMenu');
+        if (!menu) return;
+        menu.classList.toggle('hidden');
+        menu.classList.toggle('opacity-0');
+        menu.classList.toggle('invisible');
+        menu.classList.toggle('opacity-100');
+        menu.classList.toggle('visible');
+    }
+
+    document.addEventListener('click', function (event) {
+        const button = document.getElementById('donaturMenuButton');
+        const menu = document.getElementById('donaturMenu');
+        if (!button || !menu) return;
+        if (!button.contains(event.target) && !menu.contains(event.target)) {
+            menu.classList.add('hidden', 'opacity-0', 'invisible');
+            menu.classList.remove('opacity-100', 'visible');
+        }
+    });
 
     // Toggle accordion mobile
     function toggleAccordion(id, btn) {

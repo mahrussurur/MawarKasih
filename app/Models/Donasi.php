@@ -22,6 +22,7 @@ class Donasi extends Model
         'status',
         'catatan_admin',
         'keterangan',
+        'donatur_id',
     ];
 
     protected $casts = [
