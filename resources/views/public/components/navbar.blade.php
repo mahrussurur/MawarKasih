@@ -1,19 +1,16 @@
-<nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" x-data="{ open: false, scrolled: false }" @scroll.window="scrolled = window.scrollY > 20">
+<nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 lg:h-[70px]">
 
             {{-- ===== LOGO ===== --}}
-            <a href="{{ route('public.home') }}" class="flex items-center gap-3 flex-shrink-0">
-                {{--
-                    Ganti src dengan path logo Anda.
-                    Logo sebaiknya tersimpan di: public/images/logo.png
-                --}}
+            <div class="flex items-center gap-3 flex-shrink-0">
+
                 <img src="{{ asset('images/logo.png') }}" alt="Panti Asuhan Mawar Kasih" class="h-10 w-auto">
                 <div class="hidden sm:block leading-tight">
                     <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Panti Asuhan</div>
                     <div class="text-base font-bold text-brand-700">Mawar Kasih</div>
                 </div>
-            </a>
+            </div>
 
             {{-- ===== MENU DESKTOP ===== --}}
             <ul class="hidden lg:flex items-center gap-1 text-sm font-medium text-gray-700">
@@ -109,7 +106,9 @@
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('public.donasi.login') }}" class="flex items-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-2.5 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">Login Donatur</a>
+                    <a href="{{ route('public.donasi.login') }}" class="flex items-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-2.5 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">
+                        Login
+                    </a>
                 @endif
             </div>
 
@@ -193,23 +192,6 @@
 <div class="h-16 lg:h-[70px]"></div>
 
 <script>
-    // ======================================================
-    // NAVBAR SCROLL EFFECT
-    // Navbar transparan di atas, putih + shadow saat scroll
-    // ======================================================
-    const nav = document.getElementById('mainNav');
-    function updateNav() {
-        if (window.scrollY > 20) {
-            nav.classList.add('bg-white', 'shadow-sm');
-            nav.classList.remove('bg-transparent');
-        } else {
-            nav.classList.remove('bg-white', 'shadow-sm');
-            nav.classList.add('bg-transparent');
-        }
-    }
-    window.addEventListener('scroll', updateNav);
-    updateNav(); // Jalankan saat load
-
     // Toggle mobile menu
     function toggleMobileMenu() {
         const menu = document.getElementById('mobileMenu');
