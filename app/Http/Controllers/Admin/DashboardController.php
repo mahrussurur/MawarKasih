@@ -10,6 +10,7 @@ use App\Models\AnakAsuh;
 use App\Models\Pengasuh;
 use App\Models\Donasi;
 use App\Models\Kegiatan;
+use App\Models\Donatur;
 
 class DashboardController extends Controller
 {
@@ -18,7 +19,8 @@ class DashboardController extends Controller
         $totalAnak = AnakAsuh::count();
         $totalPengasuh = Pengasuh::count();
         $totalKegiatan = Kegiatan::count();
-        $totalDonatur  = Donasi::distinct('nama_donatur')->count();
+        $totalDonatur = Donatur::count();
+        // $totalDonasi  = Donasi::distinct('nama_donatur')->count();
 
         // ── Data Terbaru ──
         $donasiTerbaru  = Donasi::latest()->take(5)->get();
@@ -31,6 +33,7 @@ class DashboardController extends Controller
             'totalPengasuh',
             'totalKegiatan',
             'totalDonatur',
+            // 'totalDonasi',
             'donasiTerbaru',
             'kegiatanTerbaru'
         ));

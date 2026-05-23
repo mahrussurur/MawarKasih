@@ -200,11 +200,11 @@
                     <span class="stat-icon-placeholder">🤝</span>
                 </div>
                 <div class="stat-info">
-                    <p class="stat-label">Total Donasi</p>
+                    <p class="stat-label">Total Donatur</p>
                     <p class="stat-value">{{ $totalDonatur ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('donasi.index') }}" class="btn-lihat">Lihat Data</a>
+            <a href="{{ route('donatur.index') }}" class="btn-lihat">Lihat Data</a>
         </div>
 
     </div>

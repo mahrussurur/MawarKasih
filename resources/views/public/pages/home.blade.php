@@ -5,7 +5,7 @@
 
 @section('content')
 
-<section id="heroCarousel" class="relative h-[530px] lg:h-[630px] overflow-hidden bg-gray-900" data-aos="fade">
+<section id="heroCarousel" class="group relative h-[530px] lg:h-[630px] overflow-hidden bg-gray-900" data-aos="fade">
 
     {{-- Carousel slides container --}}
     <div id="carouselTrack" class="relative w-full h-full flex transition-transform duration-700 ease-out">
@@ -90,13 +90,14 @@
     </div>
 
     {{-- Tombol Prev --}}
-    <button id="prevBtn" onclick="prevSlide()" class="absolute left-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 group">
-        <i data-lucide="chevron-left" class="w-6 h-6 text-white group-hover:scale-110 transition-transform"></i>
+    <button id="prevBtn" onclick="prevSlide()" class="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-40 w-8 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-lg items-center justify-center transition-all duration-200 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto">
+        <i data-lucide="chevron-left" class="w-6 h-6 text-white transition-transform hover:scale-110"></i>
     </button>
 
     {{-- Tombol Next --}}
-    <button id="nextBtn" onclick="nextSlide()" class="absolute right-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-200 group">
-        <i data-lucide="chevron-right" class="w-6 h-6 text-white group-hover:scale-110 transition-transform"></i>
+    <button id="nextBtn" onclick="nextSlide()"
+    class="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-40 w-8 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-lg items-center justify-center transition-all duration-200 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto">
+        <i data-lucide="chevron-right" class="w-6 h-6 text-white transition-transform hover:scale-110"></i>
     </button>
 
 </section>
@@ -199,15 +200,6 @@
 
     // Mulai auto-slide saat halaman dimuat
     window.addEventListener('load', resetAutoSlide);
-
-    // Pause auto-slide saat user hover (optional)
-    document.getElementById('heroCarousel').addEventListener('mouseenter', () => {
-        clearInterval(autoSlideInterval);
-    });
-
-    document.getElementById('heroCarousel').addEventListener('mouseleave', () => {
-        resetAutoSlide();
-    });
 </script>
 
 <section class="py-10 bg-white border-b border-gray-100">
@@ -574,10 +566,10 @@
                 <p class="text-gray-500 text-sm lg:text-base leading-relaxed mb-8">
                     Setiap bantuan Anda sangat berarti untuk masa depan anak-anak Panti Asuhan Mawar Kasih.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-3">
+                <div class="flex flex-col sm:flex-row gap-5">
                     {{-- Tombol utama --}}
                     <a href="{{ route('public.donasi.form') }}"
-                        class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-7 py-3.5 rounded-full transition shadow-lg hover:shadow-brand-600/30">
+                        class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-7 py-3.5 rounded-full transition shadow-lg hover:shadow-brand-600/30">
                         <i data-lucide="heart" class="w-4 h-4"></i>
                         Donasi Sekarang
                     </a>
