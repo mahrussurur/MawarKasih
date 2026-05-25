@@ -20,7 +20,15 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
             <!-- Foto -->
             <div class="col-span-1 flex flex-col items-center gap-2">
-                <img src="{{ asset('storage/'.$pengasuh->foto) }}" class="w-48 h-48 rounded-lg object-cover border-2 border-gray-200">
+                <button type="button"
+                        class="inline-flex"
+                        onclick="openImagePreview('{{ asset('storage/'.$pengasuh->foto) }}')"
+                        aria-label="Perbesar foto {{ $pengasuh->nama }}">
+                    <img src="{{ asset('storage/'.$pengasuh->foto) }}"
+                         class="w-48 h-48 rounded-lg object-cover border-2 border-gray-200 cursor-pointer transition duration-200 hover:scale-105"
+                         alt="Foto {{ $pengasuh->nama }}"
+                         title="Klik untuk perbesar">
+                </button>
                 <span class="text-lg font-bold text-gray-700">{{ $pengasuh->nama }}</span>
                 <span class="text-sm text-gray-700">{{ $pengasuh->jabatan }}</span>
             </div>
@@ -58,6 +66,18 @@
 </div>
 
 <!-- Modal Konfirmasi Hapus -->
+<div id="imagePreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
+    <div class="relative max-h-[90vh] max-w-[90vw]" onclick="event.stopPropagation()">
+        <button type="button"
+                class="absolute -right-3 -top-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-700 shadow-lg transition hover:bg-slate-100"
+                onclick="closeImagePreview()"
+                aria-label="Tutup preview gambar">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <img id="imagePreview" src="" alt="Preview foto" class="max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/70 bg-white object-contain shadow-2xl">
+    </div>
+</div>
+
 <div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
     <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
         <div class="mt-3 text-center">
@@ -77,6 +97,21 @@
 </div>
 
 <script>
+const imagePreviewModal = document.getElementById('imagePreviewModal');
+const imagePreview = document.getElementById('imagePreview');
+
+function openImagePreview(src) {
+    imagePreview.src = src;
+    imagePreviewModal.classList.remove('hidden');
+    imagePreviewModal.classList.add('flex');
+}
+
+function closeImagePreview() {
+    imagePreviewModal.classList.add('hidden');
+    imagePreviewModal.classList.remove('flex');
+    imagePreview.src = '';
+}
+
 function openDeleteModal(id) {
     document.getElementById('deleteForm').action = '{{ route("pengasuh.destroy", ["pengasuh" => ":id"]) }}'.replace(':id', id);
     document.getElementById('deleteModal').classList.remove('hidden');
@@ -85,5 +120,11 @@ function openDeleteModal(id) {
 function closeDeleteModal() {
     document.getElementById('deleteModal').classList.add('hidden');
 }
+
+imagePreviewModal.addEventListener('click', function (event) {
+    if (event.target === imagePreviewModal) {
+        closeImagePreview();
+    }
+});
 </script>
 @endsection

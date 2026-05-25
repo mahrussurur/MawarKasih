@@ -48,8 +48,15 @@
                             <td class="px-4 py-4 text-center">{{ $index + 1 }}</td>
                             <td class="px-4 py-4">
                                 @if($kegiatan->foto_dokumentasi)
-                                    <img src="{{ asset('storage/' . $kegiatan->foto_dokumentasi) }}"
-                                        class="w-12 h-12 object-cover rounded shadow-sm">
+                                    <button type="button"
+                                            class="inline-flex"
+                                            onclick="openImagePreview('{{ asset('storage/' . $kegiatan->foto_dokumentasi) }}')"
+                                            aria-label="Perbesar foto kegiatan {{ $kegiatan->nama_kegiatan }}">
+                                        <img src="{{ asset('storage/' . $kegiatan->foto_dokumentasi) }}"
+                                             class="w-12 h-12 object-cover rounded shadow-sm cursor-pointer transition duration-200 hover:scale-105"
+                                             alt="Foto kegiatan {{ $kegiatan->nama_kegiatan }}"
+                                             title="Klik untuk perbesar">
+                                    </button>
                                 @else
                                     <div
                                         class="w-12 h-12 bg-gray-100 rounded flex items-center justify-center text-xs text-gray-400 border border-gray-200">
@@ -106,7 +113,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-4 py-10 text-center text-gray-500">
-                                Belum ada data kegiatan. Silakan tambah kegiatan baru.
+                                Belum ada data kegiatan.
                             </td>
                         </tr>
                     @endforelse
@@ -114,41 +121,79 @@
             </table>
         </div>
 
-        <div class="p-4 flex justify-end">
+        <div class="border-t p-4 flex justify-end">
             {{ $kegiatans->links() }}
         </div>
 
     </div>
 </div>
 
-<!-- Modal Konfirmasi Hapus -->
-<div id="deleteModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50">
-    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
-        <div class="mt-3 text-center">
-            <h3 class="text-lg font-medium text-gray-900">Konfirmasi Hapus</h3>
-            <div class="mt-2 px-7 py-3">
-                <p class="text-sm text-gray-500">Apakah Anda yakin ingin menghapus data kegiatan ini?</p>
+<div id="imagePreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
+    <div class="relative max-h-[90vh] max-w-[90vw]" onclick="event.stopPropagation()">
+        <button type="button"
+                class="absolute -right-3 -top-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-700 shadow-lg transition hover:bg-slate-100"
+                onclick="closeImagePreview()"
+                aria-label="Tutup preview gambar">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <img id="imagePreview" src="" alt="Preview foto kegiatan" class="max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/70 bg-white object-contain shadow-2xl">
+    </div>
+</div>
+
+<div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
+    <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
+        <div class="flex items-start justify-between gap-4">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Konfirmasi Hapus</p>
+                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus data kegiatan?</h3>
             </div>
-            <div class="flex items-center px-4 py-3 gap-3">
-                <button onclick="closeDeleteModal()" class="py-2 bg-gray-500 text-white text-base font-medium rounded-md flex-1 shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">Batal</button>
-                <form id="deleteForm" method="POST" class="flex-1">
-                    @csrf @method('DELETE')
-                    <button type="submit" class="w-full px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">Hapus</button>
-                </form>
-            </div>
+            <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeDeleteModal()" aria-label="Tutup modal hapus">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
         </div>
+        <p class="mt-4 text-sm text-slate-600">Tindakan ini tidak dapat dibatalkan. Pastikan data kegiatan sudah tidak diperlukan lagi.</p>
+
+        <form id="deleteForm" method="POST" class="mt-5 flex justify-end gap-3">
+            @csrf
+            @method('DELETE')
+            <button type="button" class="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onclick="closeDeleteModal()">Batal</button>
+            <button type="submit" class="rounded-2xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700">Hapus</button>
+        </form>
     </div>
 </div>
 
 <script>
+const imagePreviewModal = document.getElementById('imagePreviewModal');
+const imagePreview = document.getElementById('imagePreview');
+
+function openImagePreview(src) {
+    imagePreview.src = src;
+    imagePreviewModal.classList.remove('hidden');
+    imagePreviewModal.classList.add('flex');
+}
+
+function closeImagePreview() {
+    imagePreviewModal.classList.add('hidden');
+    imagePreviewModal.classList.remove('flex');
+    imagePreview.src = '';
+}
+
 function openDeleteModal(button) {
     const action = button.dataset.action;
     document.getElementById('deleteForm').action = action;
     document.getElementById('deleteModal').classList.remove('hidden');
+    document.getElementById('deleteModal').classList.add('flex');
 }
 
 function closeDeleteModal() {
     document.getElementById('deleteModal').classList.add('hidden');
+    document.getElementById('deleteModal').classList.remove('flex');
 }
+
+imagePreviewModal.addEventListener('click', function (event) {
+    if (event.target === imagePreviewModal) {
+        closeImagePreview();
+    }
+});
 </script>
 @endsection

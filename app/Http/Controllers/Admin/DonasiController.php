@@ -78,7 +78,7 @@ class DonasiController extends Controller
      */
     public function show(Donasi $donasi)
     {
-        return view('donasi.show', compact('donasi'));
+        return view('admin.donasi.show', compact('donasi'));
     }
 
     /**

@@ -101,7 +101,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="px-4 py-8 text-center text-gray-500">Tidak ada data donatur</td>
+                        <td colspan="7" class="px-4 py-8 text-center text-gray-500">Belum ada data donatur</td>
                     </tr>
                     @endforelse
                 </tbody>
@@ -115,23 +115,25 @@
     </div>
 </div>
 
-<!-- Delete Modal -->
-<div id="deleteModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50">
-    <div class="rounded-lg bg-white p-6 shadow-lg max-w-sm w-full mx-4">
-        <h2 class="text-lg font-bold text-gray-800 mb-4">Konfirmasi Hapus</h2>
-        <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus data donatur ini? Tindakan ini tidak dapat dibatalkan.</p>
-        <div class="flex justify-end gap-3">
-            <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition">
-                Batal
+<div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
+    <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
+        <div class="flex items-start justify-between gap-4">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Konfirmasi Hapus</p>
+                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus data donatur?</h3>
+            </div>
+            <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeDeleteModal()" aria-label="Tutup modal hapus">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-            <form id="deleteForm" method="POST" class="inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
-                    Hapus
-                </button>
-            </form>
         </div>
+        <p class="mt-4 text-sm text-slate-600">Tindakan ini tidak dapat dibatalkan. Pastikan data donatur sudah tidak diperlukan lagi.</p>
+
+        <form id="deleteForm" method="POST" class="mt-5 flex justify-end gap-3">
+            @csrf
+            @method('DELETE')
+            <button type="button" class="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onclick="closeDeleteModal()">Batal</button>
+            <button type="submit" class="rounded-2xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700">Hapus</button>
+        </form>
     </div>
 </div>
 
@@ -141,18 +143,13 @@
         const form = document.getElementById('deleteForm');
         form.action = `{{ route('donatur.destroy', ':id') }}`.replace(':id', id);
         modal.classList.remove('hidden');
+        modal.classList.add('flex');
     }
 
     function closeDeleteModal() {
         const modal = document.getElementById('deleteModal');
         modal.classList.add('hidden');
+        modal.classList.remove('flex');
     }
-
-    // Close modal when clicking outside
-    document.getElementById('deleteModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeDeleteModal();
-        }
-    });
 </script>
 @endsection

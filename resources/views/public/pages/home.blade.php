@@ -530,20 +530,6 @@
     </div>
 </section>
 
-
-{{-- ============================================================
-     5. CTA BANNER SECTION
-     ─────────────────────────────────────────────────────────
-     Banner ajakan untuk berdonasi — di atas footer.
-     Berisi foto anak-anak, teks ajakan, dan 2 tombol.
-
-     CARA MODIFIKASI:
-     - Ganti foto banner: ubah src pada <img>
-     - Ubah teks judul: edit 2 baris h2
-     - Ubah deskripsi: edit paragraf
-     - Tombol 1 (Donasi Sekarang): ubah route
-     - Tombol 2 (Lihat Cara Berdonasi): ubah route
-     ============================================================ --}}
 <section class="py-14 bg-brand-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="relative bg-white rounded-2xl overflow-hidden shadow-md" data-aos="fade-up">
