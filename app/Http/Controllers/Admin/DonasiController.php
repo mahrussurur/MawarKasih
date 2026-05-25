@@ -34,13 +34,14 @@ class DonasiController extends Controller
         $donasi = $query->paginate(10)->withQueryString();
 
         // Hitung total per status untuk summary cards
+        $totalDonasi   = Donasi::count();
         $totalPending  = Donasi::where('status', 'pending')->count();
         $totalValid    = Donasi::where('status', 'valid')->count();
         $totalDitolak  = Donasi::where('status', 'ditolak')->count();
         $totalNominal  = Donasi::where('status', 'valid')->sum('nominal');
 
         return view('admin.donasi.index', compact(
-            'donasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal'
+            'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal'
         ));
     }
 
