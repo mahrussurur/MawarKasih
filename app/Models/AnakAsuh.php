@@ -13,11 +13,15 @@ class AnakAsuh extends Model
     protected $fillable = [
         'foto',
         'nama',
+        'nama_panggilan',
         'tempat_lahir',
-        'tanggal_lahir', 
+        'tanggal_lahir',
         'jenis_kelamin',
         'status_social_anak',
         'nama_ayah',
-        'nama_ibu'
+        'nama_ibu',
+        'tinggal_di_lksa_sejak',
+        'sekolah',
+        'kelas',
     ];
 }

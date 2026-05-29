@@ -25,14 +25,18 @@ class AnakAsuhController extends Controller
     {
         // 1. Validasi semua field yang ada di model agar tidak ada data kosong yang lolos ke database
         $validated = $request->validate([
-            'foto'               => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'nama'               => 'required|string|max:255',
-            'tempat_lahir'       => 'required|string|max:255',
-            'tanggal_lahir'      => 'required|date',
-            'jenis_kelamin'      => 'required|in:L,P',
-            'status_social_anak' => 'required|string',
-            'nama_ayah'          => 'nullable|string|max:255',
-            'nama_ibu'           => 'nullable|string|max:255',
+            'foto'                  => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'nama'                  => 'required|string|max:255',
+            'nama_panggilan'        => 'required|string|max:255',
+            'tempat_lahir'          => 'required|string|max:255',
+            'tanggal_lahir'         => 'required|date',
+            'jenis_kelamin'         => 'required|in:L,P',
+            'status_social_anak'    => 'required|string|max:255',
+            'nama_ayah'             => 'nullable|string|max:255',
+            'nama_ibu'              => 'nullable|string|max:255',
+            'tinggal_di_lksa_sejak' => 'required|string|max:255',
+            'sekolah'               => 'required|string|max:255',
+            'kelas'                 => 'required|string|max:255',
         ]);
 
         // 2. Proses upload foto
@@ -60,14 +64,18 @@ class AnakAsuhController extends Controller
     public function update(Request $request, AnakAsuh $anakAsuh)
     {
         $validated = $request->validate([
-            'nama'               => 'required|string|max:255',
-            'tempat_lahir'       => 'required|string|max:255',
-            'tanggal_lahir'      => 'required|date',
-            'jenis_kelamin'      => 'required|in:L,P',
-            'status_social_anak' => 'nullable|string',
-            'nama_ayah'          => 'nullable|string|max:255',
-            'nama_ibu'           => 'nullable|string|max:255',
-            'foto'               => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'nama'                  => 'required|string|max:255',
+            'nama_panggilan'        => 'required|string|max:255',
+            'tempat_lahir'          => 'required|string|max:255',
+            'tanggal_lahir'         => 'required|date',
+            'jenis_kelamin'         => 'required|in:L,P',
+            'status_social_anak'    => 'nullable|string|max:255',
+            'nama_ayah'             => 'nullable|string|max:255',
+            'nama_ibu'              => 'nullable|string|max:255',
+            'tinggal_di_lksa_sejak' => 'required|string|max:255',
+            'sekolah'               => 'required|string|max:255',
+            'kelas'                 => 'required|string|max:255',
+            'foto'                  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         if ($request->hasFile('foto')) {

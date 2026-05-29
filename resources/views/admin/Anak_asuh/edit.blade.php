@@ -18,14 +18,36 @@
                 <input type="text" name="nama" value="{{ old('nama', $anakAsuh->nama) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
             </div>
 
-            <div class="flex gap-4 mb-5">
-                <div class="w-1/2">
+            <div class="mb-5">
+                <label class="block text-gray-800 font-semibold mb-2">Nama Panggilan</label>
+                <input type="text" name="nama_panggilan" value="{{ old('nama_panggilan', $anakAsuh->nama_panggilan) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
+                <div>
                     <label class="block text-gray-800 font-semibold mb-2">Tempat Lahir</label>
                     <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir', $anakAsuh->tempat_lahir) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                 </div>
-                <div class="w-1/2">
+                <div>
                     <label class="block text-gray-800 font-semibold mb-2">Tanggal Lahir</label>
                     <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $anakAsuh->tanggal_lahir) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-600" required>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <label class="block text-gray-800 font-semibold mb-2">Tinggal di LKSA sejak</label>
+                <input type="text" name="tinggal_di_lksa_sejak" value="{{ old('tinggal_di_lksa_sejak', $anakAsuh->tinggal_di_lksa_sejak) }}" placeholder="Contoh: Dari kandungan ibu tahun 2023 atau Tahun 2024" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                <p class="text-xs text-gray-500 mt-1">Isikan apakah sejak dalam kandungan atau tahun masuk LKSA.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
+                <div>
+                    <label class="block text-gray-800 font-semibold mb-2">Sekolah</label>
+                    <input type="text" name="sekolah" value="{{ old('sekolah', $anakAsuh->sekolah) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                </div>
+                <div>
+                    <label class="block text-gray-800 font-semibold mb-2">Kelas</label>
+                    <input type="text" name="kelas" value="{{ old('kelas', $anakAsuh->kelas) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                 </div>
             </div>
 
@@ -54,22 +76,20 @@
                 </select>
             </div>
 
-            <div class="flex gap-4 mb-5">
-                <div class="w-1/2">
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
+                <div>
                     <label class="block text-gray-800 font-semibold mb-2">Nama Ayah</label>
                     <input type="text" name="nama_ayah" value="{{ old('nama_ayah', $anakAsuh->nama_ayah) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400">
                 </div>
-                <div class="w-1/2">
+                <div>
                     <label class="block text-gray-800 font-semibold mb-2">Nama Ibu</label>
                     <input type="text" name="nama_ibu" value="{{ old('nama_ibu', $anakAsuh->nama_ibu) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400">
                 </div>
             </div>
 
-            <!-- Input Foto -->
             <div class="mb-8">
                 <label class="block text-gray-700 font-semibold mb-2">Foto Dokumentasi</label>
                 
-                <!-- Menampilkan preview foto lama jika ada -->
                 @if($anakAsuh->foto)
                     <div class="mb-3">
                         <p class="text-sm text-gray-500 mb-1">Foto saat ini:</p>
@@ -77,7 +97,7 @@
                     </div>
                 @endif
 
-                <input type="file" name="foto_dokumentasi" accept="image/*" class="w-full rounded-md file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer">
+                <input type="file" name="foto" accept="image/*" class="w-full rounded-md file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer">
                 <p class="text-xs text-gray-500 mt-2">Biarkan kosong jika tidak ingin mengubah foto. Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
             </div>
 
