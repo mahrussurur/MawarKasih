@@ -67,8 +67,11 @@
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Jabatan</label>
                     <select name="jabatan" id="jabatan" 
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-400 text-sm" required>
-                        <option value="" disabled {{ old('jabatan') ? '' : 'selected' }}>Pilih Jabatan...</option>
+                        class="w-full h-[46px] appearance-none border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-gray-400" 
+                        required
+                        onchange="this.classList.remove('text-gray-400','text-sm'); this.classList.add('text-gray-900')">
+
+                        <option value="" disabled selected>Pilih Jabatan...</option>
                         <option class="text-gray-900" value="Pembina" >Pembina</option>
                         <option class="text-gray-900" value="Ketua">Ketua</option>
                         <option class="text-gray-900" value="Wakil Ketua">Wakil Ketua</option>

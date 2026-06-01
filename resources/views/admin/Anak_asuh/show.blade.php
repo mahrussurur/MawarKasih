@@ -3,6 +3,7 @@
 
 @section('content')
 <div class="p-4 md:p-6 bg-gray-100 min-h-screen">
+
     <!-- Container lebih sempit: max-w-3xl (768px) -->
     <div class="max-w-3xl mx-auto bg-white rounded-xl shadow overflow-hidden">
         
@@ -46,6 +47,7 @@
 
                 <!-- Divider vertikal (desktop only) -->
                 <div class="hidden md:block w-px h-32 bg-gray-200"></div>
+                
                 <!-- Divider horizontal (mobile only) -->
                 <div class="md:hidden w-full h-px bg-gray-200"></div>
 
@@ -57,7 +59,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Nama Panggilan</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $anakAsuh->nama_panggilan }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $anakAsuh->nama_panggilan }}</span>
                         </div>
                     </div>
 
@@ -66,7 +68,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Tempat Lahir</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $anakAsuh->tempat_lahir }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $anakAsuh->tempat_lahir }}</span>
                         </div>
                     </div>
 
@@ -75,7 +77,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Tanggal Lahir</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">
                                 {{ \Carbon\Carbon::parse($anakAsuh->tanggal_lahir)->isoFormat('D MMM Y') }}
                             </span>
                         </div>
@@ -86,7 +88,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Jenis Kelamin</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium">
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">
                                 {{ $anakAsuh->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}
                             </span>
                         </div>
@@ -97,7 +99,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Nama Ayah</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $anakAsuh->nama_ayah ?? '-' }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $anakAsuh->nama_ayah ?? '-' }}</span>
                         </div>
                     </div>
 
@@ -106,7 +108,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Nama Ibu</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $anakAsuh->nama_ibu ?? '-' }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $anakAsuh->nama_ibu ?? '-' }}</span>
                         </div>
                     </div>
 
@@ -115,7 +117,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Tinggal di LKSA Sejak</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $anakAsuh->tinggal_di_lksa_sejak }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $anakAsuh->tinggal_di_lksa_sejak }}</span>
                         </div>
                     </div>
 
@@ -124,7 +126,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Sekolah</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $anakAsuh->sekolah }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $anakAsuh->sekolah }}</span>
                         </div>
                     </div>
 
@@ -133,7 +135,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Kelas</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium">{{ $anakAsuh->kelas }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $anakAsuh->kelas }}</span>
                         </div>
                     </div>
                 </div>

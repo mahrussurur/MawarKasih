@@ -36,8 +36,8 @@
             </form>
         </div>
 
+        <!-- Table Data -->
         @if($data->count() > 0)
-        <!-- Table -->
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full min-w-[1800px] text-left border-collapse">
                 <thead>

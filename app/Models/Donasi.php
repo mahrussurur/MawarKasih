@@ -25,19 +25,27 @@ class Donasi extends Model
         'donatur_id',
     ];
 
+    // Saat ambil data dari DB, format ke d-m-Y
+    public function getTanggalDisplayAttribute()
+    {
+        return $this->tanggal ? Carbon::parse($this->tanggal)->format('d-m-Y') : null;
+    }
+
+    // Saat simpan data dari form d-m-Y, ubah ke Y-m-d
+    public function setTanggalInputAttribute($value)
+    {
+        $this->attributes['tanggal'] = Carbon::createFromFormat('d-m-Y', $value)->format('Y-m-d');
+    }
+
     protected $casts = [
         'tanggal' => 'date',
         'nominal' => 'integer',
     ];
 
-    /**
-     * Generate kode donasi unik: DON-YYYYMMDD-XXXX
-     * Dipanggil saat membuat record baru.
-     */
     public static function generateKode(): string
     {
         do {
-            $kode = 'DON-' . now()->format('Ymd') . '-' . strtoupper(Str::random(4));
+            $kode = 'DON-' . strtoupper(Str::random(8));
         } while (self::where('kode_donasi', $kode)->exists());
 
         return $kode;

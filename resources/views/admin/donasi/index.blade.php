@@ -3,7 +3,7 @@
 
 @section('content')
 
-    {{-- ── Summary Cards ── --}}
+    <!-- Summary Cards -->
     <div class="grid gap-4 xl:grid-cols-4 mb-6">
         <div class="flex items-center gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
             <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-xl">💰</div>
@@ -12,31 +12,10 @@
                 <p class="text-lg font-bold text-slate-900">Rp {{ number_format($totalNominal, 0, ',', '.') }}</p>
             </div>
         </div>
-        <!-- <div class="flex items-center gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
-            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-100 text-xl">⏳</div>
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Pending</p>
-                <p class="text-lg font-bold text-slate-900">{{ $totalPending }}</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
-            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-xl">✅</div>
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Tervalidasi</p>
-                <p class="text-lg font-bold text-slate-900">{{ $totalValid }}</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
-            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-xl">❌</div>
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Ditolak</p>
-                <p class="text-lg font-bold text-slate-900">{{ $totalDitolak }}</p>
-            </div>
-        </div> -->
     </div>
 
     <!-- Toolbar -->
-    <div class="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+    <div class="flex justify-between mb-4">
         <div class="flex flex-wrap items-center gap-3">
             <a href="{{ route('donasi.create') }}" class="inline-flex items-center gap-2 rounded-2xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-600">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -96,18 +75,18 @@
 
         <!-- Table data -->
         @if($donasi->count() > 0)
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+        <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full min-w-[1600px] text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-50 text-gray-600 text-sm font-semibold border-b border-gray-200">
                         <th class="px-4 py-3 text-center w-12">No</th>
-                        <th class="px-4 py-3">Kode Donasi</th>
-                        <th class="px-4 py-3">Nama Donatur</th>
-                        <th class="px-4 py-3">Sumber Donatur</th>
-                        <th class="px-4 py-3">No. HP</th>
-                        <th class="px-4 py-3">Nominal</th>
-                        <th class="px-4 py-3">Tanggal</th>
-                        <th class="px-4 py-3">Keterangan</th>
+                        <th class="px-4 py-3 w-40">Kode Donasi</th>
+                        <th class="px-4 py-3 w-40">Nama Donatur</th>
+                        <th class="px-4 py-3 w-40">Sumber Donatur</th>
+                        <th class="px-4 py-3 w-40">No. HP</th>
+                        <th class="px-4 py-3 w-40">Nominal</th>
+                        <th class="px-4 py-3 w-40">Tanggal</th>
+                        <th class="px-4 py-3 w-40">Keterangan</th>
                         <th class="px-4 py-3 text-center">Bukti</th>
                         <th class="px-4 py-3 text-center">Status</th>
                         <th class="px-4 py-3 text-center">Aksi</th>
@@ -126,7 +105,7 @@
                                 <span class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold text-emerald-800">Tetap</span>
                                 <!-- <div class="mt-1 text-[11px] text-slate-500">ID: {{ $item->donatur_id }}</div> -->
                             @else
-                                <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-700">Guest</span>
+                                <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-700">Umum</span>
                             @endif
                         </td>
                         <td class="px-4 py-4 text-sm ">{{ $item->no_hp ?? '-' }}</td>
@@ -147,9 +126,7 @@
                                          title="Klik untuk perbesar">
                                 </button>
                             @else
-                                <div class="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-400">
-                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                </div>
+                                <span class="text-slate-400 text-sm font-medium">-</span>
                             @endif
                         </td>
                         <td class="px-4 py-4 text-center">
@@ -222,7 +199,7 @@
             </table>
         </div>
 
-        {{-- Pagination --}}
+        <!-- Pagination -->
         @if($donasi->hasPages())
         <div class="flex flex-wrap items-center justify-end gap-2 border-t border-slate-200 px-5 py-4">
             <a href="{{ $donasi->previousPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900 {{ $donasi->onFirstPage() ? 'opacity-40 pointer-events-none' : '' }}">
@@ -304,7 +281,7 @@
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <p class="mt-4 text-sm text-slate-600">Tindakan ini tidak dapat dibatalkan. Pastikan data donasi sudah tidak diperlukan lagi.</p>
+            <p class="mt-4 text-sm text-slate-600">Hapus data permanen. Pastikan data <strong>donasi</strong> sudah tidak diperlukan lagi.</p>
 
             <form id="deleteForm" method="POST" class="mt-5 flex justify-end gap-3">
                 @csrf

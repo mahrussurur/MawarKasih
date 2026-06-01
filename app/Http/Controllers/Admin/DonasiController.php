@@ -60,13 +60,13 @@ class DonasiController extends Controller
     {
         $validated = $request->validate([
             'nama_donatur' => 'required|string|max:255',
-            'no_hp'        => 'nullable|string|max:20',
+            'no_hp'        => 'nullable|digits_between:10,15',
             'nominal'      => 'required|integer|min:1000',
-            'tanggal'      => 'required|date',
             'keterangan'   => 'nullable|string|max:1000',
         ]);
 
         $validated['kode_donasi'] = Donasi::generateKode();
+        $validated['tanggal'] = now()->format('d-m-Y H:i:s');
         $validated['status'] = 'valid'; // Langsung valid karena dari admin
 
         Donasi::create($validated);
@@ -145,10 +145,10 @@ class DonasiController extends Controller
     {
         $request->validate([
             'nama_donatur'  => 'required|string|max:255',
-            'no_hp'         => 'nullable|string|max:20',
+            'no_hp'         => 'required|string|max:20',
             'nominal'       => 'required|integer|min:1000',
             'tanggal'       => 'required|date',
-            'keterangan'    => 'nullable|string|max:1000',
+            'keterangan'    => 'required|string|max:1000',
             'bukti_transfer'=> 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
