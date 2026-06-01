@@ -25,7 +25,7 @@ class DonaturController extends Controller
         $validated = $request->validate([
             'nama'    => 'required|string|max:255',
             'email'   => 'required|email|unique:donaturs,email',
-            'no_hp'   => 'required|string|max:20',
+            'no_hp'   => 'required|digits_between:10,15',
             'alamat'  => 'required|string',
             'status'  => 'required|in:aktif,tidak_aktif',
         ]);

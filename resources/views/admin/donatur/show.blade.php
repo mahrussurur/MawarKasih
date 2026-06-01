@@ -2,66 +2,90 @@
 @section('page-title', 'Detail Donatur')
 
 @section('content')
-<div class="p-6 bg-gray-100 min-h-screen flex justify-center items-start">
+<div class="p-4 md:p-6 bg-gray-100 min-h-screen">
     
-    <div class="w-full max-w-3xl bg-white rounded-xl shadow-md p-8 border border-gray-200 mt-4">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Detail Data Donatur</h2>
-            <a href="{{ route('donatur.index') }}" class="text-blue-500 hover:text-blue-700">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    <!-- Container lebih sempit: max-w-3xl (768px) -->
+    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow overflow-hidden">
+        
+        <!-- Header -->
+        <div class="p-2 md:p-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
+            <div class="min-w-0">
+                <h2 class="text-lg font-bold text-white truncate">Detail Donatur</h2>
+                <p class="text-xs md:text-sm text-gray-300">Informasi lengkap donatur.</p>
+            </div>
+            <a href="{{ route('donatur.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span class="hidden sm:inline">Kembali</span>
             </a>
         </div>
 
-        <div class="space-y-6">
-            <div class="border-b border-gray-200 pb-4">
-                <p class="text-gray-600 text-sm font-semibold">Nama Lengkap</p>
-                <p class="text-gray-800 text-lg font-semibold mt-1">{{ $donatur->nama }}</p>
+        <div class="p-4 md:p-6">
+
+            <!-- Layout: Foto di atas (mobile) / kiri (desktop) -->
+            <div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
+
+                <!-- Foto Section (Icon Placeholder) -->
+                <div class="flex flex-col items-center gap-3 flex-shrink-0">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200 shadow-sm flex items-center justify-center">
+                        <svg class="w-16 h-16 md:w-20 md:h-20 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                        </svg>
+                    </div>
+                    
+                    <div class="text-center">
+                        <span class="text-base md:text-lg font-bold text-gray-900 block truncate max-w-[180px] md:max-w-none">
+                            {{ $donatur->nama }}
+                        </span>
+                        <span class="inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-semibold {{ $donatur->status == 'aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                            {{ ucfirst(str_replace('_', ' ', $donatur->status)) }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Divider vertikal (desktop only) -->
+                <div class="hidden md:block w-px h-32 bg-gray-200"></div>
+                <!-- Divider horizontal (mobile only) -->
+                <div class="md:hidden w-full h-px bg-gray-200"></div>
+
+                <!-- Detail Section -->
+                <div class="w-full space-y-2.5">
+
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Email</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $donatur->email }}</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">No. HP</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $donatur->no_hp }}</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Alamat</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $donatur->alamat }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="border-b border-gray-200 pb-4">
-                <p class="text-gray-600 text-sm font-semibold">Email</p>
-                <p class="text-gray-800 text-lg font-semibold mt-1">{{ $donatur->email }}</p>
-            </div>
-
-            <div class="border-b border-gray-200 pb-4">
-                <p class="text-gray-600 text-sm font-semibold">No. HP</p>
-                <p class="text-gray-800 text-lg font-semibold mt-1">{{ $donatur->no_hp }}</p>
-            </div>
-
-            <div class="border-b border-gray-200 pb-4">
-                <p class="text-gray-600 text-sm font-semibold">Alamat</p>
-                <p class="text-gray-800 text-lg font-semibold mt-1">{{ $donatur->alamat }}</p>
-            </div>
-
-            <div class="border-b border-gray-200 pb-4">
-                <p class="text-gray-600 text-sm font-semibold">Status</p>
-                <p class="mt-1">
-                    <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium {{ $donatur->status == 'aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                        {{ ucfirst(str_replace('_', ' ', $donatur->status)) }}
-                    </span>
-                </p>
-            </div>
-
-            <div class="border-b border-gray-200 pb-4">
-                <p class="text-gray-600 text-sm font-semibold">Tanggal Dibuat</p>
-                <p class="text-gray-800 text-lg font-semibold mt-1">{{ $donatur->created_at->format('d M Y H:i') }}</p>
-            </div>
-
-            <div class="pb-4">
-                <p class="text-gray-600 text-sm font-semibold">Terakhir Diupdate</p>
-                <p class="text-gray-800 text-lg font-semibold mt-1">{{ $donatur->updated_at->format('d M Y H:i') }}</p>
-            </div>
-        </div>
-
-        <div class="flex justify-between items-center pt-6 border-t border-gray-200 mt-6">
-            <a href="{{ route('donatur.index') }}" class="bg-gray-200 text-gray-700 border border-gray-300 px-8 py-2 rounded-lg font-medium hover:bg-gray-300 transition">
-                Kembali
-            </a>
-            <div class="flex gap-3">
-                <a href="{{ route('donatur.edit', $donatur->id) }}" class="bg-amber-500 text-white px-8 py-2 rounded-lg font-medium hover:bg-amber-600 transition">
+            <!-- Tombol Aksi -->
+            <div class="mt-6 pt-4 border-t border-gray-200 flex flex-wrap gap-3 justify-center">
+                <a href="{{ route('donatur.edit', $donatur->id) }}"
+                class="rounded-2xl bg-orange-500 px-5 py-2 text-sm font-semibold text-white border border-orange-600  transition hover:bg-orange-600">
                     Edit
                 </a>
-                <button onclick="openDeleteModal()" class="bg-red-500 text-white px-8 py-2 rounded-lg font-medium hover:bg-red-600 transition">
+                <button onclick="openDeleteModal({{ $donatur->id }})"
+                class="rounded-2xl bg-red-600 px-5 py-2 text-sm font-semibold text-white border border-red-700  transition hover:bg-red-700">
                     Hapus
                 </button>
             </div>

@@ -44,7 +44,7 @@
 
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Alamat</label>
-                    <textarea name="alamat" rows="2" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400">{{ old('alamat', $pengasuh->alamat) }}</textarea>
+                    <textarea name="alamat" rows="2" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" required>{{ old('alamat', $pengasuh->alamat) }}</textarea>
                 </div>
 
                 <div class="mb-5">

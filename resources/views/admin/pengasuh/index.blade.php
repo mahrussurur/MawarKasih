@@ -73,7 +73,7 @@
                             {{ $item->tempat_lahir }}, <br>
                             <span class="text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal_lahir)->format('d - m - Y') }}</span>
                         </td>
-                        <td class="px-4 py-4">{{ $item->alamat ?? '-' }}</td>
+                        <td class="px-4 py-4">{{ substr($item->alamat, 0, 35) }}{{ strlen($item->alamat) > 35 ? '...' : '' }}</td>
                         <td class="px-4 py-4">{{ $item->jenis_kelamin }}</td>
                         <td class="px-4 py-4">{{ $item->no_hp }}</td>
                         <td class="px-4 py-4">{{ $item->jabatan }}</td>
@@ -102,14 +102,14 @@
                                     </svg>
                                 </a>
                                 <!-- Tombol Hapus -->
-                                <button
-                                    onclick="openDeleteModal({{ $item->id }})"
-                                    class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-red-500 bg-red-100 text-red-700 transition hover:bg-red-500 hover:text-white"
-                                    title="Hapus">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                        </path>
+                                <button type="button"
+                                        class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-red-600 bg-red-100 text-red-700 transition hover:bg-red-600 hover:text-white"
+                                        title="Hapus"
+                                        data-delete-route="{{ route('pengasuh.destroy', $item->id) }}"
+                                        data-nama-anak="{{ $item->nama }}"
+                                        onclick="openDeleteModal(this)">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                     </svg>
                                 </button>
                             </div>
@@ -161,19 +161,19 @@
     </div>
 </div>
 
- <!-- Delete Confirmation Modal -->
+<!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
     <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
         <div class="flex items-start justify-between gap-4">
             <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Konfirmasi Hapus</p>
-                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus data pengasuh?</h3>
+                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus data <span id="deleteModalNama"></span>?</h3>
             </div>
             <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeDeleteModal()" aria-label="Tutup modal hapus">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
-        <p class="mt-4 text-sm text-slate-600">Tindakan ini tidak dapat dibatalkan. Pastikan data pengasuh sudah tidak diperlukan lagi.</p>
+        <p class="mt-4 text-sm text-slate-600">Hapus data permanen. Pastikan data <strong>pengasuh</strong> sudah tidak diperlukan lagi.</p>
 
         <form id="deleteForm" method="POST" class="mt-5 flex justify-end gap-3">
             @csrf
@@ -185,36 +185,48 @@
 </div>
 
 <script>
-const imagePreviewModal = document.getElementById('imagePreviewModal');
-const imagePreview = document.getElementById('imagePreview');
+        const imagePreviewModal = document.getElementById('imagePreviewModal');
+        const imagePreview = document.getElementById('imagePreview');
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteForm = document.getElementById('deleteForm');
 
-function openImagePreview(src) {
-    imagePreview.src = src;
-    imagePreviewModal.classList.remove('hidden');
-    imagePreviewModal.classList.add('flex');
-}
+        function openImagePreview(src) {
+            imagePreview.src = src;
+            imagePreviewModal.classList.remove('hidden');
+            imagePreviewModal.classList.add('flex');
+        }
 
-function closeImagePreview() {
-    imagePreviewModal.classList.add('hidden');
-    imagePreviewModal.classList.remove('flex');
-    imagePreview.src = '';
-}
+        function closeImagePreview() {
+            imagePreviewModal.classList.add('hidden');
+            imagePreviewModal.classList.remove('flex');
+            imagePreview.src = '';
+        }
 
-function openDeleteModal(id) {
-    document.getElementById('deleteForm').action = '{{ route("pengasuh.destroy", ["pengasuh" => ":id"]) }}'.replace(':id', id);
-    document.getElementById('deleteModal').classList.remove('hidden');
-    document.getElementById('deleteModal').classList.add('flex');
-}
+        function openDeleteModal(button) {
+            const route = button.dataset.deleteRoute;
+            const nama = button.dataset.namaAnak;
 
-function closeDeleteModal() {
-    document.getElementById('deleteModal').classList.add('hidden');
-    document.getElementById('deleteModal').classList.remove('flex');
-}
+            deleteForm.action = route;
+            document.getElementById('deleteModalNama').textContent = nama;
+            deleteModal.classList.remove('hidden');
+            deleteModal.classList.add('flex');
+        }
 
-imagePreviewModal.addEventListener('click', function (event) {
-    if (event.target === imagePreviewModal) {
-        closeImagePreview();
-    }
-});
-</script>
+        function closeDeleteModal() {
+            deleteModal.classList.add('hidden');
+            deleteModal.classList.remove('flex');
+        }
+
+        imagePreviewModal.addEventListener('click', function (event) {
+            if (event.target === imagePreviewModal) {
+                closeImagePreview();
+            }
+        });
+
+        deleteModal.addEventListener('click', function (event) {
+            if (event.target === deleteModal) {
+                closeDeleteModal();
+            }
+        });
+    </script>
 @endsection

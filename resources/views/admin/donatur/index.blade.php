@@ -37,15 +37,15 @@
 
         @if($data->count() > 0)
         <!-- table data -->
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+        <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full min-w-[1200px] text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-50 text-gray-600 text-sm font-semibold border-b border-gray-200">
                         <th class="px-4 py-3 text-center w-12">No</th>
                         <th class="px-4 py-3">Nama</th>
                         <th class="px-4 py-3">Email</th>
                         <th class="px-4 py-3">No. HP</th>
-                        <th class="px-4 py-3">Alamat</th>
+                        <th class="px-4 py-3 ">Alamat</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3 text-center">Aksi</th>
                     </tr>
@@ -57,7 +57,7 @@
                         <td class="px-4 py-4 font-semibold">{{ $item->nama }}</td>
                         <td class="px-4 py-4">{{ $item->email }}</td>
                         <td class="px-4 py-4">{{ $item->no_hp }}</td>
-                        <td class="px-4 py-4">{{ substr($item->alamat, 0, 30) }}{{ strlen($item->alamat) > 30 ? '...' : '' }}</td>
+                        <td class="px-4 py-4">{{ substr($item->alamat, 0, 35) }}{{ strlen($item->alamat) > 35 ? '...' : '' }}</td>
                         <td class="px-4 py-4">
                             <span class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium {{ $item->status == 'aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
                                 {{ ucfirst(str_replace('_', ' ', $item->status)) }}
@@ -87,14 +87,14 @@
                                     </svg>
                                 </a>
                                 <!-- Tombol Hapus -->
-                                <button
-                                    onclick="openDeleteModal({{ $item->id }})"
-                                    class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-red-500 bg-red-100 text-red-700 transition hover:bg-red-500 hover:text-white"
-                                    title="Hapus">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                                        </path>
+                                <button type="button"
+                                        class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-red-600 bg-red-100 text-red-700 transition hover:bg-red-600 hover:text-white"
+                                        title="Hapus"
+                                        data-delete-route="{{ route('donatur.destroy', $item->id) }}"
+                                        data-nama-anak="{{ $item->nama }}"
+                                        onclick="openDeleteModal(this)">
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                     </svg>
                                 </button>
                             </div>
@@ -106,30 +106,46 @@
         </div>
 
         <!-- Pagination -->
-        <div class="border-t border-slate-200 py-4 text-sm">
-            {{ $data->links() }}
+        @if($data->hasPages())
+        <div class="flex flex-wrap items-center justify-end gap-2 border-t border-slate-200 px-5 py-4 mt-4">
+            <a href="{{ $data->previousPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900 {{ $data->onFirstPage() ? 'opacity-40 pointer-events-none' : '' }}">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </a>
+
+            @foreach($data->getUrlRange(1, $data->lastPage()) as $page => $url)
+                <a href="{{ $url }}" class="inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-xl border px-3 text-sm font-semibold transition {{ $page == $data->currentPage() ? 'border-sky-600 bg-sky-600 text-white' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300' }}">
+                    {{ $page }}
+                </a>
+            @endforeach
+
+            <a href="{{ $data->nextPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900 {{ !$data->hasMorePages() ? 'opacity-40 pointer-events-none' : '' }}">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </a>
         </div>
+        @endif
+
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-slate-500">
-            <p class="text-base font-semibold text-slate-900">Belum ada data donatur</p>
-            <span class="text-sm text-slate-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan data donatur pertama' }}</span>
+            <p class="text-base font-semibold text-slate-900">Belum ada data pengasuh</p>
+            <span class="text-sm text-slate-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan data pengasuh pertama' }}</span>
         </div>
         @endif
     </div>
 </div>
 
+<!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
     <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
         <div class="flex items-start justify-between gap-4">
             <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Konfirmasi Hapus</p>
-                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus data donatur?</h3>
+                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus data <span id="deleteModalNama"></span>?</h3>
             </div>
             <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeDeleteModal()" aria-label="Tutup modal hapus">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
-        <p class="mt-4 text-sm text-slate-600">Tindakan ini tidak dapat dibatalkan. Pastikan data donatur sudah tidak diperlukan lagi.</p>
+        <p class="mt-4 text-sm text-slate-600">Hapus data permanen. Pastikan data <strong>Donatur</strong> sudah tidak diperlukan lagi.</p>
 
         <form id="deleteForm" method="POST" class="mt-5 flex justify-end gap-3">
             @csrf
@@ -141,18 +157,22 @@
 </div>
 
 <script>
-    function openDeleteModal(id) {
-        const modal = document.getElementById('deleteModal');
-        const form = document.getElementById('deleteForm');
-        form.action = `{{ route('donatur.destroy', ':id') }}`.replace(':id', id);
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    }
+        const deleteModal = document.getElementById('deleteModal');
+        const deleteForm = document.getElementById('deleteForm');
 
-    function closeDeleteModal() {
-        const modal = document.getElementById('deleteModal');
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
-</script>
+        function openDeleteModal(button) {
+            const route = button.dataset.deleteRoute;
+            const nama = button.dataset.namaAnak;
+
+            deleteForm.action = route;
+            document.getElementById('deleteModalNama').textContent = nama;
+            deleteModal.classList.remove('hidden');
+            deleteModal.classList.add('flex');
+        }
+
+        function closeDeleteModal() {
+            deleteModal.classList.add('hidden');
+            deleteModal.classList.remove('flex');
+        }
+    </script>
 @endsection

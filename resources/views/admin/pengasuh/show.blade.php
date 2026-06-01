@@ -58,7 +58,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Tempat Lahir</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $pengasuh->tempat_lahir ?? '-' }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $pengasuh->tempat_lahir ?? '-' }}</span>
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Tanggal Lahir</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">
                                 {{ \Carbon\Carbon::parse($pengasuh->tanggal_lahir)->isoFormat('D MMM Y') }}
                             </span>
                         </div>
@@ -78,7 +78,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Alamat</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $pengasuh->alamat ?? '-' }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $pengasuh->alamat ?? '-' }}</span>
                         </div>
                     </div>
                     
@@ -87,7 +87,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Jenis Kelamin</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $pengasuh->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $pengasuh->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
                         </div>
                     </div>
 
@@ -96,7 +96,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">No. HP</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium truncate">{{ $pengasuh->no_hp }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $pengasuh->no_hp }}</span>
                         </div>
                     </div>
                 </div>
