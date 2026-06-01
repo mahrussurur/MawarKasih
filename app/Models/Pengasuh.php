@@ -13,6 +13,9 @@ class Pengasuh extends Model
     protected $fillable = [
         'foto',
         'nama',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'alamat',
         'jabatan',
         'jenis_kelamin',
         'no_hp'

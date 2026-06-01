@@ -10,10 +10,25 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class AnakAsuhController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = AnakAsuh::latest()->paginate(10);
-        return view('admin.anak_asuh.index', compact('data'));
+        $query = AnakAsuh::latest();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('nama_panggilan', 'like', "%{$search}%")
+                  ->orWhere('nama_ayah', 'like', "%{$search}%")
+                  ->orWhere('nama_ibu', 'like', "%{$search}%")
+                  ->orWhere('sekolah', 'like', "%{$search}%");
+            });
+        }
+
+        $data = $query->paginate(10)->withQueryString();
+        $totalData = AnakAsuh::count();
+
+        return view('admin.anak_asuh.index', compact('data', 'totalData'));
     }
 
     public function create()
@@ -38,6 +53,14 @@ class AnakAsuhController extends Controller
             'sekolah'               => 'required|string|max:255',
             'kelas'                 => 'required|string|max:255',
         ]);
+
+        // Optional: bersihkan nilai yang disabled sebelum simpan
+        if (in_array($validated['status_social_anak'], ['Yatim', 'Yatim Piatu'])) {
+            $validated['nama_ayah'] = null;
+        }
+        if (in_array($validated['status_social_anak'], ['Piatu', 'Yatim Piatu'])) {
+            $validated['nama_ibu'] = null;
+        }
 
         // 2. Proses upload foto
         if ($request->hasFile('foto')) {

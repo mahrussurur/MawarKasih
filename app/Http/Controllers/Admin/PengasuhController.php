@@ -10,9 +10,20 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class PengasuhController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Pengasuh::latest()->paginate(10);
+        $query = Pengasuh::latest();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nama', 'like', "%{$search}%")
+                  ->orWhere('jabatan', 'like', "%{$search}%")
+                  ->orWhere('no_hp', 'like', "%{$search}%");
+            });
+        }
+
+        $data = $query->paginate(10)->withQueryString();
         return view('admin.pengasuh.index', compact('data'));
     }
 
@@ -25,9 +36,12 @@ class PengasuhController extends Controller
     {
         $validated = $request->validate([
             'nama'          => 'required|string|max:255',
+            'tempat_lahir'  => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'alamat'        => 'required|string|max:255',
             'jabatan'       => 'required|string|max:255',
             'jenis_kelamin' => 'required|in:L,P',
-            'no_hp'         => 'required|string|max:20',
+            'no_hp'         => 'required|digits_between:10,15',
             'foto'          => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -54,9 +68,12 @@ class PengasuhController extends Controller
     {
         $validated = $request->validate([
             'nama'          => 'required|string|max:255',
+            'tempat_lahir'  => 'nullable|string|max:255',
+            'tanggal_lahir' => 'nullable|date',
+            'alamat'        => 'nullable|string',
             'jabatan'       => 'required|string|max:255',
             'jenis_kelamin' => 'required|in:L,P',
-            'no_hp'         => 'required|string|max:20',
+            'no_hp'         => 'required|numeric',
             'foto'          => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 

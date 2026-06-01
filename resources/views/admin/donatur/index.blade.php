@@ -35,6 +35,7 @@
             </form>
         </div>
 
+        @if($data->count() > 0)
         <!-- table data -->
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -50,9 +51,9 @@
                     </tr>
                 </thead>
                 <tbody  class="text-gray-700 text-sm">
-                    @forelse($data as $index => $item)
+                    @foreach($data as $index => $item)
                     <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                        <td class="px-4 py-4 text-center">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-4 text-center text-sm">{{ $data->firstItem() + $index }}</td>
                         <td class="px-4 py-4 font-semibold">{{ $item->nama }}</td>
                         <td class="px-4 py-4">{{ $item->email }}</td>
                         <td class="px-4 py-4">{{ $item->no_hp }}</td>
@@ -99,11 +100,7 @@
                             </div>
                         </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="7" class="px-4 py-8 text-center text-gray-500">Belum ada data donatur</td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -112,6 +109,12 @@
         <div class="border-t border-slate-200 py-4 text-sm">
             {{ $data->links() }}
         </div>
+        @else
+        <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-slate-500">
+            <p class="text-base font-semibold text-slate-900">Belum ada data donatur</p>
+            <span class="text-sm text-slate-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan data donatur pertama' }}</span>
+        </div>
+        @endif
     </div>
 </div>
 

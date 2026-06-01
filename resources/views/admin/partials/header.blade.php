@@ -69,17 +69,35 @@
     .dropdown-item.danger:hover { background: #fef2f2; }
     .dropdown-item svg { width: 16px; height: 16px; }
     .dropdown-divider { height: 1px; background: #f1f5f9; margin: 4px 0; }
+
+    /* Toggle sidebar (desktop) */
+    .btn-toggle-sidebar {
+        display: flex; padding: 6px; border-radius: 8px; border: none;
+        background: transparent; cursor: pointer; color: #64748b;
+        transition: all 0.2s ease;
+    }
+    .btn-toggle-sidebar:hover { background: #f1f5f9; color: #0f172a; }
+    .btn-toggle-sidebar svg { width: 20px; height: 20px; transition: transform 0.3s ease; }
+    .sidebar-collapsed .btn-toggle-sidebar svg { transform: rotate(180deg); }
+    @media (max-width: 768px) { .btn-toggle-sidebar { display: none; } }
 </style>
 
 <header class="main-header">
     <div class="header-inner">
 
-        <!-- Kiri: Hamburger + Judul -->
+        <!-- Kiri: Hamburger + Toggle + Judul -->
         <div class="header-left">
             <!-- Tombol hamburger (mobile only) -->
             <button class="btn-hamburger" onclick="openSidebar()" aria-label="Buka menu">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+
+            <!-- Tombol toggle sidebar (desktop only) -->
+            <button class="btn-toggle-sidebar" onclick="toggleSidebar()" aria-label="Toggle sidebar" title="Perkecil/Perbesar sidebar">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
                 </svg>
             </button>
 

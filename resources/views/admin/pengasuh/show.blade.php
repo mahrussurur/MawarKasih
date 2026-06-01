@@ -2,64 +2,116 @@
 @section('page-title', 'Data Pengasuh')
 
 @section('content')
-<div class="p-6 bg-gray-100 min-h-screen">
-    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow overflow-hidden">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center">
-            <div>
-                <h2 class="text-lg font-bold text-gray-900">Detail Pengasuh</h2>
-                <p class="text-sm text-gray-500">Informasi lengkap pengasuh.</p>
+<div class="p-4 md:p-6 bg-gray-100 min-h-screen">
+
+    <!-- Container lebih sempit: max-w-3xl (768px) -->
+    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow overflow-hidden">
+        
+        <!-- Header -->
+        <div class="p-2 md:p-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
+            <div class="min-w-0">
+                <h2 class="text-lg font-bold text-white truncate">Detail Pengasuh</h2>
+                <p class="text-xs md:text-sm text-gray-300">Informasi lengkap pengasuh.</p>
             </div>
-            <a href="{{ route('pengasuh.index') }}" class="text-sm font-semibold text-gray-600 hover:text-gray-800 flex items-center transition-colors">
+            <a href="{{ route('pengasuh.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
-                Kembali
+                <span class="hidden sm:inline">Kembali</span>
             </a>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-            <!-- Foto -->
-            <div class="col-span-1 flex flex-col items-center gap-2">
-                <button type="button"
-                        class="inline-flex"
-                        onclick="openImagePreview('{{ asset('storage/'.$pengasuh->foto) }}')"
-                        aria-label="Perbesar foto {{ $pengasuh->nama }}">
-                    <img src="{{ asset('storage/'.$pengasuh->foto) }}"
-                         class="w-48 h-48 rounded-lg object-cover border-2 border-gray-200 cursor-pointer transition duration-200 hover:scale-105"
-                         alt="Foto {{ $pengasuh->nama }}"
-                         title="Klik untuk perbesar">
-                </button>
-                <span class="text-lg font-bold text-gray-700">{{ $pengasuh->nama }}</span>
-                <span class="text-sm text-gray-700">{{ $pengasuh->jabatan }}</span>
-            </div>
+        <div class="p-4 md:p-6">
+            <!-- Layout: Foto di atas (mobile) / kiri (desktop) -->
+            <div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
             
-            
-            <!-- Detail -->
-            <div class="col-span-2 space-y-4">
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                        <div class="text-sm text-gray-500">Jenis Kelamin</div>
-                        <div class="text-gray-900 font-semibold">{{ $pengasuh->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</div>
-                    </div>
-                    <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                        <div class="text-sm text-gray-500">No. HP</div>
-                        <div class="text-gray-900 font-semibold">{{ $pengasuh->no_hp }}</div>
-                    </div>
-                </div>
-
-                <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
-                    <div class="text-sm text-gray-500">Tanggal Dibuat</div>
-                    <div class="text-gray-900 font-semibold">{{ \Carbon\Carbon::parse($pengasuh->created_at)->format('d - m - Y') }}</div>
-                </div>
-
-                <div class="flex gap-3">
-                    <a href="{{ route('pengasuh.edit', $pengasuh->id) }}" class="font-semibold bg-orange-400 text-white px-8 py-2 rounded-lg hover:bg-orange-500">
-                        Edit
-                    </a>
-                    <button onclick="openDeleteModal({{ $pengasuh->id }})" class="font-semibold bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600">
-                        Hapus
+                <!-- Foto Section -->
+                <div class="flex flex-col items-center gap-3 flex-shrink-0">
+                    <button type="button"
+                            onclick="openImagePreview('{{ asset('storage/'.$pengasuh->foto) }}')"
+                            aria-label="Perbesar foto {{ $pengasuh->nama }}">
+                        <img src="{{ asset('storage/'.$pengasuh->foto) }}"
+                            class="w-32 h-32 md:w-40 md:h-40 rounded-lg object-cover border-2 border-gray-200 cursor-pointer transition duration-200 hover:scale-105"
+                            alt="Foto {{ $pengasuh->nama }}"
+                            title="Klik untuk perbesar">
                     </button>
+                    <div class="text-center">
+                        <span class="text-base md:text-lg font-bold text-gray-900 block truncate max-w-[180px] md:max-w-none">
+                            {{ $pengasuh->nama }}
+                        </span>
+                        <span class="inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
+                            {{ $pengasuh->jabatan }}
+                        </span>
+                    </div>
                 </div>
+                
+                <!-- Divider vertikal (desktop only) -->
+                <div class="hidden md:block w-px h-32 bg-gray-200"></div>
+                <!-- Divider horizontal (mobile only) -->
+                <div class="md:hidden w-full h-px bg-gray-200"></div>
+                
+                <!-- Detail Section -->
+                <div class="w-full space-y-2.5">
+
+                    <!-- Tempat Lahir -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Tempat Lahir</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium truncate">{{ $pengasuh->tempat_lahir ?? '-' }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Tanggal Lahir -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Tanggal Lahir</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium truncate">
+                                {{ \Carbon\Carbon::parse($pengasuh->tanggal_lahir)->isoFormat('D MMM Y') }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Alamat -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Alamat</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium truncate">{{ $pengasuh->alamat ?? '-' }}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Jenis Kelamin -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Jenis Kelamin</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium truncate">{{ $pengasuh->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
+                        </div>
+                    </div>
+
+                    <!-- No. HP -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">No. HP</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium truncate">{{ $pengasuh->no_hp }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tombol Aksi -->
+            <div class="mt-6 pt-4 border-t border-gray-200 flex flex-wrap gap-3 justify-center">
+                <a href="{{ route('pengasuh.edit', $pengasuh->id) }}"
+                class="rounded-2xl bg-orange-500 px-5 py-2 text-sm font-semibold text-white border border-orange-600  transition hover:bg-orange-600">
+                    Edit
+                </a>
+                <button onclick="openDeleteModal({{ $pengasuh->id }})"
+                class="rounded-2xl bg-red-600 px-5 py-2 text-sm font-semibold text-white border border-red-700  transition hover:bg-red-700">
+                    Hapus
+                </button>
             </div>
         </div>
     </div>

@@ -24,6 +24,9 @@
             <tr>
                 <th>No</th>
                 <th>Nama</th>
+                <th>Tempat Lahir</th>
+                <th>Tanggal Lahir</th>
+                <th>Alamat</th>
                 <th>Jabatan</th>
                 <th>Jenis Kelamin</th>
                 <th>No. HP</th>
@@ -34,6 +37,9 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->nama }}</td>
+                <td>{{ $item->tempat_lahir ?? '-' }}</td>
+                <td>{{ $item->tanggal_lahir ? \Carbon\Carbon::parse($item->tanggal_lahir)->format('d - m - Y') : '-' }}</td>
+                <td>{{ $item->alamat ?? '-' }}</td>
                 <td>{{ $item->jabatan }}</td>
                 <td>{{ $item->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                 <td>{{ $item->no_hp }}</td>

@@ -94,13 +94,13 @@
             </form>
         </div>
 
-        <!-- Table -->
+        <!-- Table data -->
         @if($donasi->count() > 0)
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-50 text-gray-600 text-sm font-semibold border-b border-gray-200">
-                        <th class="class=px-4 py-3 text-center w-12">No</th>
+                        <th class="px-4 py-3 text-center w-12">No</th>
                         <th class="px-4 py-3">Kode Donasi</th>
                         <th class="px-4 py-3">Nama Donatur</th>
                         <th class="px-4 py-3">Sumber Donatur</th>
