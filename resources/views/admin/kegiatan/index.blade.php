@@ -4,6 +4,7 @@
 @section('content')
 <div class="p-1 bg-gray-100 min-h-screen">
  
+    <!-- Toolbar -->
     <div class="flex justify-between mb-4">
         <div class="flex flex-wrap items-center gap-3">
             <a href="{{ route('kegiatan.create') }}" class="inline-flex items-center gap-2 rounded-2xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-600">
@@ -30,8 +31,9 @@
         </div>
 
         <!-- Tabel Data -->
-        <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+        @if($kegiatans->count() > 0)
+        <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full min-w-[1200px] text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-50 text-gray-600 text-sm font-semibold border-b border-gray-200">
                         <th class="px-4 py-3 text-center w-12">No</th>
@@ -43,33 +45,25 @@
                     </tr>
                 </thead>
                 <tbody class="text-gray-700 text-sm">
-                    @forelse($kegiatans as $index => $kegiatan)
+                    @foreach($kegiatans as $index => $kegiatan)
                         <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                            <td class="px-4 py-4 text-center">{{ $index + 1 }}</td>
+                            <td class="px-4 py-4 text-center">{{ $kegiatans->firstItem() + $index }}</td>
                             <td class="px-4 py-4">
-                                @if($kegiatan->foto_dokumentasi)
                                     <button type="button"
                                             class="inline-flex"
-                                            onclick="openImagePreview('{{ asset('storage/' . $kegiatan->foto_dokumentasi) }}')"
+                                            onclick="openImagePreview('{{ asset('storage/'. $kegiatan->foto_dokumentasi) }}')"
                                             aria-label="Perbesar foto kegiatan {{ $kegiatan->nama_kegiatan }}">
-                                        <img src="{{ asset('storage/' . $kegiatan->foto_dokumentasi) }}"
-                                             class="w-12 h-12 object-cover rounded shadow-sm cursor-pointer transition duration-200 hover:scale-105"
-                                             alt="Foto kegiatan {{ $kegiatan->nama_kegiatan }}"
-                                             title="Klik untuk perbesar">
+                                        <img src="{{ asset('storage/'. $kegiatan->foto_dokumentasi) }}"
+                                            class="w-12 h-12 rounded object-cover mx-auto cursor-pointer transition duration-200 hover:scale-105"
+                                            alt="Foto {{ $kegiatan->nama_kegiatan }}"
+                                            title="Klik untuk perbesar">
                                     </button>
-                                @else
-                                    <div
-                                        class="w-12 h-12 bg-gray-100 rounded flex items-center justify-center text-xs text-gray-400 border border-gray-200">
-                                        Kosong
-                                    </div>
-                                @endif
                             </td>
-                            <td class="px-4 py-4 font-medium">{{ $kegiatan->nama_kegiatan }}</td>
+                            <td class="px-4 py-4 font-semibold">{{ $kegiatan->nama_kegiatan }}</td>
                             <td class="px-4 py-4 whitespace-nowrap">
                             <span class="text-gray-500">{{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->format('d - m - Y') }}</span>
                             </td>
                             <td class="px-4 py-4 max-w-4">
-                                <!-- Memotong deskripsi agar tidak merusak tabel -->
                                 <span class="line-clamp-2 break-words">{{ $kegiatan->deskripsi }}</span>
                             </td>
                             <td class="px-4 py-4">
@@ -99,6 +93,7 @@
                                         type="button"
                                         onclick="openDeleteModal(this)"
                                         data-action="{{ route('kegiatan.destroy', $kegiatan->id) }}"
+                                        data-nama-kegiatan="{{ $kegiatan->nama_kegiatan }}"
                                         class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-red-600 bg-red-100 text-red-700 transition hover:bg-red-600 hover:text-white"
                                         title="Hapus">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,21 +105,11 @@
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="px-4 py-10 text-center text-gray-500">
-                                Belum ada data kegiatan.
-                            </td>
-                        </tr>
-                    @endforelse
+                    @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
-
-        <div class="border-t p-4 flex justify-end">
-            {{ $kegiatans->links() }}
-        </div>
-
     </div>
 </div>
 
@@ -145,13 +130,13 @@
         <div class="flex items-start justify-between gap-4">
             <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Konfirmasi Hapus</p>
-                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus data kegiatan?</h3>
+                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus data <span id="deleteModalNama"></span>?</h3>
             </div>
             <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeDeleteModal()" aria-label="Tutup modal hapus">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
-        <p class="mt-4 text-sm text-slate-600">Tindakan ini tidak dapat dibatalkan. Pastikan data kegiatan sudah tidak diperlukan lagi.</p>
+        <p class="mt-4 text-sm text-slate-600">Hapus data permanen. Pastikan data <strong>kegiatan</strong> sudah tidak diperlukan lagi.</p>
 
         <form id="deleteForm" method="POST" class="mt-5 flex justify-end gap-3">
             @csrf
@@ -180,6 +165,9 @@ function closeImagePreview() {
 
 function openDeleteModal(button) {
     const action = button.dataset.action;
+    const nama = button.dataset.namaKegiatan;
+
+    document.getElementById('deleteModalNama').textContent = nama;
     document.getElementById('deleteForm').action = action;
     document.getElementById('deleteModal').classList.remove('hidden');
     document.getElementById('deleteModal').classList.add('flex');

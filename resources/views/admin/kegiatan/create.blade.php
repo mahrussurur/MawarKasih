@@ -1,50 +1,67 @@
 @extends('admin.layouts.app')
+@section('page-title', 'Data Kegiatan')
+
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-md border border-gray-100 p-8">
+<div class="p-4 md:p-6 bg-gray-100 min-h-screen">
+
+    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow overflow-hidden">
         
-        <div class="mb-8 border-b border-gray-100 pb-4">
-            <h2 class="text-2xl font-bold text-gray-800">Tambah Kegiatan Baru</h2>
-            <p class="text-gray-500 text-sm mt-1">Masukkan detail kegiatan panti asuhan di bawah ini.</p>
+        <!-- Header -->
+        <div class="p-2 md:p-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
+            <div class="min-w-0">
+                <h2 class="text-lg font-bold text-white truncate">Tambah Data Kegiatan</h2>
+                <p class="text-xs md:text-sm text-gray-300">Formulir Penambahan Data Kegiatan.</p>
+            </div>
+            <a href="{{ route('kegiatan.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span class="hidden sm:inline">Kembali</span>
+            </a>
         </div>
 
-        <!-- Perhatikan enctype="multipart/form-data", ini WAJIB agar bisa upload foto -->
-        <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <div class="p-4 md:p-6">
+            <form action="{{ route('kegiatan.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
 
-            <!-- Input Nama Kegiatan -->
-            <div class="mb-6">
-                <label class="block text-gray-700 font-semibold mb-2">Nama Kegiatan</label>
-                <input type="text" name="nama_kegiatan" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required placeholder="Contoh: Buka Puasa Bersama">
-            </div>
+                <!-- Input Nama Kegiatan -->
+                <div class="mb-5">
+                    <label class="block text-gray-800 font-semibold mb-2">Nama Kegiatan</label>
+                    <input type="text" name="nama_kegiatan" value="{{ old('nama_kegiatan') }}" placeholder="Masukkan Nama Kegiatan..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
+                </div>
 
-            <!-- Input Tanggal -->
-            <div class="mb-6">
-                <label class="block text-gray-700 font-semibold mb-2">Tanggal Pelaksanaan</label>
-                <input type="date" name="tanggal_pelaksanaan" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
-            </div>
+                <!-- Input Tanggal -->
+                <div class="mb-5">
+                    <label class="block text-gray-800 font-semibold mb-2">Tanggal Pelaksanaan</label>
+                    <input type="date" name="tanggal_pelaksanaan" value="{{ old('tanggal_pelaksanaan') }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-400 text-sm" required>
+                </div>
 
-            <!-- Input Deskripsi -->
-            <div class="mb-6">
-                <label class="block text-gray-700 font-semibold mb-2">Deskripsi Kegiatan</label>
-                <textarea name="deskripsi" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required placeholder="Ceritakan detail kegiatan ini..."></textarea>
-            </div>
+                <!-- Input Deskripsi -->
+                <div class="mb-5">
+                    <label class="block text-gray-800 font-semibold mb-2">Deskripsi Kegiatan</label>
+                    <textarea name="keterangan" rows="2" placeholder="Masukkan Deskripsi Kegiatan..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400"></textarea>
+                </div>
 
-            <!-- Input Foto -->
-            <div class="mb-8">
-                <label class="block text-gray-700 font-semibold mb-2">Foto Dokumentasi (Opsional)</label>
-                <input type="file" name="foto_dokumentasi" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                <p class="text-xs text-gray-500 mt-2">Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
-            </div>
+                <!-- Input Foto -->
+                <div class="mb-8">
+                    <label class="block text-gray-800 font-semibold mb-2">Upload Foto Kegiatan</label>
+                    <input type="file" name="foto" accept="image/*" class="w-full rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer" required>
+                    <p class="text-xs text-gray-500 mt-2">Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
+                </div>
 
-            <!-- Tombol Aksi -->
-            <div class="flex justify-end space-x-3">
-                <a href="{{ route('kegiatan.index') }}" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 font-semibold transition-colors">Batal</a>
-                <button type="submit" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition-colors">Simpan Kegiatan</button>
-            </div>
-        </form>
-
+                <!-- Tombol Aksi -->
+                <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
+                    <a href="{{ route('kegiatan.index') }}" class="rounded-2xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300  transition hover:bg-gray-300">
+                        Batal
+                    </a>
+                    <button type="submit" class="rounded-2xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-600">
+                        Simpan
+                    </button>
+                </div>
+                
+            </form>
+        </div>
     </div>
 </div>
 @endsection

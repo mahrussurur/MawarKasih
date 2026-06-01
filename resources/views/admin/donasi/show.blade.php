@@ -22,7 +22,7 @@
         </div>
 
         <div class="p-4 md:p-6">
-            <!-- Layout: Foto di atas (mobile) / kiri (desktop) -->
+            <!-- Layout: Foto di atas -->
             <div class="flex flex-col gap-6 items-center">
                 
                 <!-- Section -->

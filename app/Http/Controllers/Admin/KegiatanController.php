@@ -43,7 +43,7 @@ class KegiatanController extends Controller
             'nama_kegiatan' => 'required|string|max:255',
             'tanggal_pelaksanaan' => 'required|date',
             'deskripsi' => 'required',
-            'foto_dokumentasi' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'foto_dokumentasi' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         // 2. Siapkan tempat untuk menyimpan nama file foto
