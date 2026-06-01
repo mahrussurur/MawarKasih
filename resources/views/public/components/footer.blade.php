@@ -39,7 +39,7 @@
                 <ul class="space-y-2.5 text-sm mb-6">
                     <li><a href="{{ route('public.tentang.profil') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Profil Lembaga</a></li>
                     <li><a href="{{ route('public.tentang.visi-misi') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Visi & Misi</a></li>
-                    <li><a href="{{ route('public.galeri') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Galeri</a></li>
+                    <li><a href="{{ route('public.galeri.index') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Galeri</a></li>
                     <li><a href="{{ route('public.kontak') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Kontak</a></li>
                 </ul>
             </div>

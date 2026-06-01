@@ -7,10 +7,10 @@
 
 <section id="heroCarousel" class="group relative h-[530px] lg:h-[630px] overflow-hidden bg-gray-900" data-aos="fade">
 
-    {{-- Carousel slides container --}}
+    <!-- Carousel slides container -->
     <div id="carouselTrack" class="relative w-full h-full flex transition-transform duration-700 ease-out">
         
-        {{-- Slide 1 --}}
+        <!-- Slide 1 -->
         <div class="carousel-slide min-w-full relative h-full">
             <img src="{{ asset('images/hero/slide-1.jpg') }}" 
                 alt="Slide 1 - Panti Asuhan Mawar Kasih" 
@@ -18,7 +18,7 @@
             <div class="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/40 to-transparent"></div>
         </div>
 
-        {{-- Slide 2 --}}
+        <!-- Slide 2 -->
         <div class="carousel-slide min-w-full relative h-full">
             <img src="{{ asset('images/hero/slide-2.jpg') }}" 
                 alt="Slide 2 - Panti Asuhan Mawar Kasih" 
@@ -26,7 +26,7 @@
             <div class="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/40 to-transparent"></div>
         </div>
 
-        {{-- Slide 3 --}}
+        <!-- Slide 3 -->
         <div class="carousel-slide min-w-full relative h-full">
             <img src="{{ asset('images/hero/slide-3.jpg') }}" 
                 alt="Slide 3 - Panti Asuhan Mawar Kasih" 
@@ -34,7 +34,7 @@
             <div class="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/40 to-transparent"></div>
         </div>
 
-        {{-- Slide 4 --}}
+        <!-- Slide 4 -->
         <div class="carousel-slide min-w-full relative h-full">
             <img src="{{ asset('images/hero/slide-4.jpg') }}" 
                 alt="Slide 4 - Panti Asuhan Mawar Kasih" 
@@ -42,7 +42,7 @@
             <div class="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/40 to-transparent"></div>
         </div>
 
-        {{-- Clone slide pertama untuk loop kanan mulus --}}
+        <!-- Clone slide pertama untuk loop kanan mulus -->
         <div class="carousel-slide min-w-full relative h-full" aria-hidden="true">
             <img src="{{ asset('images/hero/slide-1.jpg') }}" 
                 alt="Slide 1 - Panti Asuhan Mawar Kasih (clone)" 
@@ -52,28 +52,28 @@
 
     </div>
 
-    {{-- Konten hero (teks) --}}
+    <!-- Konten hero (teks) -->
     <div class="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center py-8">
         <div class="max-w-xl">
 
-            {{-- Label kecil di atas judul --}}
+            <!-- Label kecil di atas judul -->
             <span class="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold uppercase tracking-widest rounded-full mb-5">
                 Lembaga Panti Asuhan Mawar Kasih
             </span>
 
-            {{-- Judul utama --}}
+            <!-- Judul utama -->
             <h1 class="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold !leading-tight text-white mb-5">
                 Setiap Anak Berhak Memiliki<br>
                 <span class="text-brand-400">Kasih Sayang.</span>
             </h1>
 
-            {{-- Deskripsi pendek --}}
+            <!-- Deskripsi pendek -->
             <p class="text-gray-200 text-base sm:text-lg leading-relaxed mb-8">
                 Bersama kita hadirkan cinta, pendidikan,<br class="hidden sm:block">
                 dan masa depan yang lebih baik untuk mereka.
             </p>
 
-            {{-- Tombol CTA --}}
+            <!-- Tombol CTA -->
             <div class="flex flex-wrap gap-3">
                 <a href="{{ route('public.donasi.form') }}"
                     class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-brand-600/30 hover:-translate-y-0.5">
@@ -89,12 +89,12 @@
         </div>
     </div>
 
-    {{-- Tombol Prev --}}
+    <!-- Tombol Prev -->
     <button id="prevBtn" onclick="prevSlide()" class="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-40 w-8 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-lg items-center justify-center transition-all duration-200 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto">
         <i data-lucide="chevron-left" class="w-6 h-6 text-white transition-transform hover:scale-110"></i>
     </button>
 
-    {{-- Tombol Next --}}
+    <!-- Tombol Next -->
     <button id="nextBtn" onclick="nextSlide()"
     class="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-40 w-8 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-lg items-center justify-center transition-all duration-200 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto">
         <i data-lucide="chevron-right" class="w-6 h-6 text-white transition-transform hover:scale-110"></i>
@@ -176,7 +176,7 @@
         autoSlideInterval = setInterval(autoSlide, 5000); // Ganti slide setiap 5 detik
     }
 
-    // Swipe support untuk mobile
+    // Swipe untuk mobile
     let touchStartX = 0;
     let touchEndX = 0;
 

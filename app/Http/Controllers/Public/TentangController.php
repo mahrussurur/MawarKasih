@@ -8,21 +8,16 @@ class TentangController extends Controller
 {
     public function profil()
     {
-        return view('public.pages.tentang');
+        return view('public.tentang');
     }
 
     public function visiMisi()
     {
-        return view('public.pages.tentang');
-    }
-
-    public function galeri()
-    {
-        return view('public.pages.galeri');
+        return view('public.tentang');
     }
 
     public function kontak()
     {
-        return view('public.pages.tentang');
+        return view('public.tentang');
     }
 }

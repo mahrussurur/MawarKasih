@@ -65,6 +65,6 @@ class HomeController extends Controller
         $kegiatans = Kegiatan::latest('tanggal_pelaksanaan')
             ->get();
 
-        return view('public.pages.home', compact('stats', 'kegiatans'));
+        return view('public.home', compact('stats', 'kegiatans'));
     }
 }

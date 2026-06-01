@@ -12,6 +12,7 @@ use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\KegiatanPublicController;
 use App\Http\Controllers\Public\DonasiPublicController;
 use App\Http\Controllers\Public\DonaturPublicController;
+use App\Http\Controllers\Public\GaleriPublicController;
 use App\Http\Controllers\Public\TentangController;
 use App\Http\Controllers\Public\FasilitasController;
 
@@ -47,8 +48,8 @@ Route::prefix('')->name('public.')->group(function () {
     Route::get('/fasilitas', [FasilitasController::class, 'index'])->name('fasilitas');
 
     // ── Galeri ───────────────────────────────────────────────
-    Route::get('/galeri', [TentangController::class, 'galeri'])->name('galeri');
-
+    Route::get('/galeri', [GaleriPublicController::class, 'index'])->name('galeri.index');
+    Route::get('/galeri/{id}', [GaleriPublicController::class, 'show'])->name('galeri.show');
     // ── Kontak ───────────────────────────────────────────────
     Route::get('/kontak', [TentangController::class, 'kontak'])->name('kontak');
 
