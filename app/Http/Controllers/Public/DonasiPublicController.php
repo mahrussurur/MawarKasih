@@ -81,11 +81,13 @@ class DonasiPublicController extends Controller
         $donatur = session('donatur_id') ? Donatur::find(session('donatur_id')) : null;
 
         $rules = [
-            'nominal' => 'required|integer|min:1000|max:100000000',
-            'bukti_transfer' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'agree' => 'required|accepted',
-            'website' => 'nullable|string|max:0',
-        ];
+    'nominal' => 'required|integer|min:1000|max:100000000',
+    'bukti_transfer' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+    'metode_pembayaran' => 'required|string|in:qris,mandiri,bca,bni,bri',
+    'keterangan' => 'nullable|string|max:500',
+    'agree' => 'required|accepted',
+    'website' => 'nullable|string|max:0',
+];
 
         if (!$donatur) {
             $rules = array_merge($rules, [
@@ -110,7 +112,8 @@ class DonasiPublicController extends Controller
             'bukti_transfer' => $path,
             'status' => 'pending',
             'catatan_admin' => null,
-            'keterangan' => $donatur ? 'Donatur Tetap' : 'Guest',
+                        'metode_pembayaran' => $validated['metode_pembayaran'],
+            'keterangan' => $validated['keterangan'] ?? null,
             'donatur_id' => $donatur?->id,
         ];
 

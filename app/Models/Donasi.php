@@ -23,6 +23,7 @@ class Donasi extends Model
         'catatan_admin',
         'keterangan',
         'donatur_id',
+        'metode_pembayaran',
     ];
 
     // Saat ambil data dari DB, format ke d-m-Y

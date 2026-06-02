@@ -127,6 +127,14 @@
                         @error('bukti_transfer')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
 
+                    <div class="mt-4">
+                        <label class="text-sm font-semibold text-gray-700 block mb-2">Keterangan / Doa</label>
+                        <textarea name="keterangan" rows="3" class="w-full rounded-2xl border border-gray-300 px-4 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100" placeholder="Tuliskan doa atau pesan Anda (opsional)">{{ old('keterangan') }}</textarea>
+                        @error('keterangan')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <label class="flex items-start gap-3 rounded-2xl bg-gray-50 px-4 py-3 text-sm text-gray-700">
                         <input type="checkbox" name="agree" value="1" class="mt-1 rounded border-gray-300 text-brand-600 focus:ring-brand-500" required>
                         <span>Saya menyetujui bahwa data yang saya kirimkan akan diproses untuk tujuan donasi dan verifikasi transfer.</span>
@@ -224,6 +232,14 @@
                             </div>
                         </div>
                         @error('metode_pembayaran')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="text-sm font-semibold text-gray-700 block mb-2">Keterangan / Doa</label>
+                        <textarea name="keterangan" rows="3" class="w-full rounded-2xl border border-gray-300 px-4 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100" placeholder="Tuliskan doa atau pesan Anda (opsional)">{{ old('keterangan') }}</textarea>
+                        @error('keterangan')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
