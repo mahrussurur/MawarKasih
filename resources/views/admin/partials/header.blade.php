@@ -70,15 +70,50 @@
     .dropdown-item svg { width: 16px; height: 16px; }
     .dropdown-divider { height: 1px; background: #f1f5f9; margin: 4px 0; }
 
-    /* Toggle sidebar (desktop) */
+    /* Toggle sidebar (desktop) - ICON HAMBURGER */
     .btn-toggle-sidebar {
         display: flex; padding: 6px; border-radius: 8px; border: none;
         background: transparent; cursor: pointer; color: #64748b;
         transition: all 0.2s ease;
     }
     .btn-toggle-sidebar:hover { background: #f1f5f9; color: #0f172a; }
-    .btn-toggle-sidebar svg { width: 20px; height: 20px; transition: transform 0.3s ease; }
-    .sidebar-collapsed .btn-toggle-sidebar svg { transform: rotate(180deg); }
+    .btn-toggle-sidebar svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Animasi garis */
+.btn-toggle-sidebar line {
+    transition: all 0.25s ease;
+}
+
+/* =========================
+   KONDISI SIDEBAR NORMAL
+   (menu detail)
+   Garis rata kanan
+========================= */
+.btn-toggle-sidebar .line-top {
+    transform: translateX(4px);
+}
+
+.btn-toggle-sidebar .line-middle {
+    transform: translateX(0);
+}
+
+.btn-toggle-sidebar .line-bottom {
+    transform: translateX(4px);
+}
+
+/* =========================
+   KONDISI SIDEBAR COLLAPSED
+   (icon saja)
+   Hamburger normal
+========================= */
+.sidebar-collapsed .btn-toggle-sidebar .line-top,
+.sidebar-collapsed .btn-toggle-sidebar .line-middle,
+.sidebar-collapsed .btn-toggle-sidebar .line-bottom {
+    transform: translateX(0);
+}
     @media (max-width: 768px) { .btn-toggle-sidebar { display: none; } }
 </style>
 
@@ -94,10 +129,10 @@
                 </svg>
             </button>
 
-            <!-- Tombol toggle sidebar (desktop only) -->
+            <!-- Tombol toggle sidebar (desktop only) - ICON HAMBURGER -->
             <button class="btn-toggle-sidebar" onclick="toggleSidebar()" aria-label="Toggle sidebar" title="Perkecil/Perbesar sidebar">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                 </svg>
             </button>
 

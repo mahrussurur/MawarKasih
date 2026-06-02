@@ -49,7 +49,6 @@
 
                 <!-- Detail Section -->
                 <div class="w-full space-y-2.5">
-
                     <!-- Deskripsi Lengkap -->
                     <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
                         <div class="flex items-center gap-2">
@@ -58,8 +57,8 @@
                             <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $kegiatan->deskripsi ?? '-' }}</span>
                         </div>
                     </div>
-
                 </div>
+                
             </div>
 
             <!-- Tombol Aksi -->
