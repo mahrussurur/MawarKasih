@@ -8,9 +8,8 @@
 <div class="min-h-screen bg-gray-50 py-20">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-10 text-center">
-            <span class="inline-flex items-center rounded-full bg-brand-50 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Form Donasi Publik</span>
-            <h1 class="mt-4 text-3xl font-bold text-gray-900">Pilih jalur donasi yang sesuai</h1>
-            <p class="mt-3 text-sm text-gray-600">Anda dapat berdonasi sebagai <strong>Guest</strong> atau sebagai <strong>Donatur Tetap</strong>. Semua laporan akan menandai sumber donasi secara jelas.</p>
+            <!-- <span class="inline-flex items-center rounded-full bg-brand-50 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Formulir Donasi</span> -->
+            <!-- <h1 class="mt-4 text-3xl font-bold text-gray-900">Pilih jalur donasi yang sesuai</h1> -->
         </div>
 
         @if(session('success'))
@@ -34,13 +33,9 @@
         @if(empty($donatur))
             <section class="mx-auto max-w-3xl rounded-[28px] border border-gray-200 bg-white p-8 shadow-sm">
                 <div class="flex items-start justify-between gap-4">
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Guest</p>
-                        <h2 class="mt-2 text-xl font-bold text-gray-900">Donasi Tanpa Akun</h2>
-                    </div>
-                    <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">Tanpa login</span>
+                    <h2 class="mt-2 text-xl font-bold text-gray-900">Formulir Donasi</h2>
                 </div>
-                <p class="mt-4 text-sm leading-6 text-gray-600">Isi nama, nomor HP, dan email Anda untuk mencatat donasi secara aman. Data ini akan dicatat sebagai <strong>Guest</strong> dan tidak terhubung ke akun donatur tetap.</p>
+                <p class="mt-4 text-sm leading-6 text-gray-600">Isi nama, nomor HP, dan email Anda yang sesuai agar donasi dapat dicatat secara aman.</p>
 
                 <form action="{{ route('public.donasi.kirim') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-5">
                     @csrf
@@ -48,13 +43,13 @@
 
                     <div>
                         <label class="text-sm font-semibold text-gray-700">Nama Donatur</label>
-                        <input type="text" name="nama_donatur" value="{{ old('nama_donatur') }}" maxlength="255" placeholder="Nama lengkap" class="mt-2 w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100" required>
+                        <input type="text" name="nama_donatur" value="{{ old('nama_donatur') }}" maxlength="255" placeholder="Masukkan Nama lengkap..." class="mt-2 w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100" required>
                         @error('nama_donatur')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
 
                     <div>
                         <label class="text-sm font-semibold text-gray-700">Email</label>
-                        <input type="email" name="email" value="{{ old('email') }}" maxlength="255" placeholder="contoh@email.com" class="mt-2 w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100" required>
+                        <input type="email" name="email" value="{{ old('email') }}" maxlength="255" placeholder="contoh@gmail.com" class="mt-2 w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100" required>
                         @error('email')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
 
@@ -67,13 +62,68 @@
                     <div>
                         <label class="text-sm font-semibold text-gray-700">Nominal Donasi</label>
                         <input type="number" name="nominal" value="{{ old('nominal') }}" min="1000" max="100000000" placeholder="Masukkan jumlah donasi" class="mt-2 w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100" required>
+                        <p class="mt-2 text-xs text-gray-500">Contoh: Rp 10000</p>
                         @error('nominal')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
 
                     <div>
+                        <label class="text-sm font-semibold text-gray-700 block mb-2">Metode Pembayaran</label>
+                        <div class="grid grid-cols-3 gap-4">
+                            
+                            <!-- QRIS - Kotak Besar di Kiri -->
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="metode_pembayaran" value="qris" class="peer sr-only" required>
+                                <div class="flex flex-col items-center justify-start h-full p-1 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 280px;">
+                                    <img src="{{ asset('images/qris-logo.png') }}" alt="QRIS" class="h-20 object-contain mb-4">
+                                    <span class="text-sm font-semibold text-gray-700 peer-checked:text-brand-700">QRIS</span>
+                                </div>
+                            </label>
+                            <!-- Container untuk 4 Bank (2x2 Grid) -->
+                            <div class="col-span-2 grid grid-cols-2 gap-4">
+                                
+                                <!-- MANDIRI -->
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="metode_pembayaran" value="mandiri" class="peer sr-only">
+                                    <div class="flex flex-col items-center justify-center h-full p-5 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 130px;">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg" alt="Mandiri" class="h-10 object-contain mb-2">
+                                    </div>
+                                </label>
+
+                                <!-- BCA -->
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="metode_pembayaran" value="bca" class="peer sr-only">
+                                    <div class="flex flex-col items-center justify-center h-full p-5 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 130px;">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="BCA" class="h-10 object-contain mb-2">
+                                    </div>
+                                </label>
+
+                                <!-- BNI -->
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="metode_pembayaran" value="bni" class="peer sr-only">
+                                    <div class="flex flex-col items-center justify-center h-full p-5 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 130px;">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Bank_Negara_Indonesia_logo_%282004%29.svg" alt="BNI" class="h-10 object-contain mb-2">
+                                    </div>
+                                </label>
+
+                                <!-- BRI -->
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="metode_pembayaran" value="bri" class="peer sr-only">
+                                    <div class="flex flex-col items-center justify-center h-full p-5 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 130px;">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/BANK_BRI_logo.svg" alt="BRI" class="h-10 object-contain mb-2">
+                                    </div>
+                                </label>
+
+                            </div>
+                        </div>
+                        @error('metode_pembayaran')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
                         <label class="text-sm font-semibold text-gray-700">Bukti Transfer</label>
-                        <input type="file" name="bukti_transfer" accept="image/png,image/jpeg,image/webp" class="mt-2 w-full rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-700 file:mr-3 file:rounded-full file:border-0 file:bg-brand-100 file:px-4 file:py-2 file:text-brand-700" required>
-                        <p class="mt-2 text-xs text-gray-500">Format yang diterima: JPG, PNG, WEBP. Maksimal 2 MB.</p>
+                        <input type="file" name="bukti_transfer" accept="image/jpg, image/png, image/jpeg" class="mt-3 w-full rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer" required>
+                        <p class="mt-2 text-xs text-gray-500">Format yang diterima: JPG, PNG. Maksimal 2 MB.</p>
                         @error('bukti_transfer')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
 
@@ -83,34 +133,32 @@
                     </label>
                     @error('agree')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
 
-                    <button type="submit" class="inline-flex w-full items-center justify-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Kirim Donasi sebagai Guest</button>
+                    <button type="submit" class="inline-flex w-full items-center justify-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Kirim Donasi</button>
                 </form>
             </section>
         @else
-            <section class="mx-auto max-w-3xl rounded-[28px] border border-brand-100 bg-brand-50/40 p-8 shadow-sm">
+            <section class="mx-auto max-w-3xl rounded-[28px] border border-brand-100 bg-white p-8 shadow-sm">
                 <div class="flex items-start justify-between gap-4">
                     <div>
-                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-700">Donatur Tetap</p>
-                        <h2 class="mt-2 text-xl font-bold text-gray-900">Selamat datang, {{ $donatur->nama }}</h2>
+                        <h2 class="mt-2 text-xl font-bold text-gray-900">Formulir Donasi</h2>
                     </div>
-                    <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">Akun aktif</span>
                 </div>
-                <p class="mt-4 text-sm leading-6 text-gray-600">Data profil Anda akan digunakan otomatis. Admin dapat membedakan donasi ini sebagai <strong>Donatur Tetap</strong> melalui ID akun di data donasi.</p>
+                <p class="mt-4 text-sm leading-6 text-gray-600">Data profil Anda akan digunakan otomatis. Isi nominal dan upload bukti transfer yang sesuai !</p>
 
                 <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                    <div class="rounded-2xl bg-white p-4">
+                    <div class="rounded-2xl bg-gray-100 p-4">
                         <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Nama</p>
                         <p class="mt-2 text-sm font-semibold text-gray-900">{{ $donatur->nama }}</p>
                     </div>
-                    <div class="rounded-2xl bg-white p-4">
+                    <div class="rounded-2xl bg-gray-100 p-4">
                         <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Email</p>
                         <p class="mt-2 text-sm font-semibold text-gray-900">{{ $donatur->email }}</p>
                     </div>
-                    <div class="rounded-2xl bg-white p-4">
+                    <div class="rounded-2xl bg-gray-100 p-4">
                         <p class="text-xs uppercase tracking-[0.2em] text-gray-500">No. HP</p>
                         <p class="mt-2 text-sm font-semibold text-gray-900">{{ $donatur->no_hp }}</p>
                     </div>
-                    <div class="rounded-2xl bg-white p-4">
+                    <div class="rounded-2xl bg-gray-100 p-4">
                         <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Alamat</p>
                         <p class="mt-2 text-sm font-semibold text-gray-900">{{ $donatur->alamat }}</p>
                     </div>
@@ -126,10 +174,64 @@
                         @error('nominal')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
 
+                                        <div>
+                        <label class="text-sm font-semibold text-gray-700 block mb-2">Metode Pembayaran</label>
+                        <div class="grid grid-cols-3 gap-4">
+                            
+                            <!-- QRIS - Kotak Besar di Kiri -->
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="metode_pembayaran" value="qris" class="peer sr-only" required>
+                                <div class="flex flex-col items-center justify-start h-full p-1 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 280px;">
+                                    <img src="{{ asset('images/qris-logo.png') }}" alt="QRIS" class="h-20 object-contain mb-4">
+                                    <span class="text-sm font-semibold text-gray-700 peer-checked:text-brand-700">QRIS</span>
+                                </div>
+                            </label>
+                            <!-- Container untuk 4 Bank (2x2 Grid) -->
+                            <div class="col-span-2 grid grid-cols-2 gap-4">
+                                
+                                <!-- MANDIRI -->
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="metode_pembayaran" value="mandiri" class="peer sr-only">
+                                    <div class="flex flex-col items-center justify-center h-full p-5 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 130px;">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg" alt="Mandiri" class="h-10 object-contain mb-2">
+                                    </div>
+                                </label>
+
+                                <!-- BCA -->
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="metode_pembayaran" value="bca" class="peer sr-only">
+                                    <div class="flex flex-col items-center justify-center h-full p-5 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 130px;">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" alt="BCA" class="h-10 object-contain mb-2">
+                                    </div>
+                                </label>
+
+                                <!-- BNI -->
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="metode_pembayaran" value="bni" class="peer sr-only">
+                                    <div class="flex flex-col items-center justify-center h-full p-5 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 130px;">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e0/Bank_Negara_Indonesia_logo_%282004%29.svg" alt="BNI" class="h-10 object-contain mb-2">
+                                    </div>
+                                </label>
+
+                                <!-- BRI -->
+                                <label class="cursor-pointer relative">
+                                    <input type="radio" name="metode_pembayaran" value="bri" class="peer sr-only">
+                                    <div class="flex flex-col items-center justify-center h-full p-5 rounded-2xl border-2 border-gray-200 bg-white hover:border-brand-300 transition-all peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:ring-2 peer-checked:ring-brand-100" style="min-height: 130px;">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/BANK_BRI_logo.svg" alt="BRI" class="h-10 object-contain mb-2">
+                                    </div>
+                                </label>
+
+                            </div>
+                        </div>
+                        @error('metode_pembayaran')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div>
                         <label class="text-sm font-semibold text-gray-700">Bukti Transfer</label>
-                        <input type="file" name="bukti_transfer" accept="image/png,image/jpeg,image/webp" class="mt-2 w-full rounded-2xl border border-dashed border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 file:mr-3 file:rounded-full file:border-0 file:bg-brand-100 file:px-4 file:py-2 file:text-brand-700" required>
-                        <p class="mt-2 text-xs text-gray-500">Format yang diterima: JPG, PNG, WEBP. Maksimal 2 MB.</p>
+                        <input type="file" name="bukti_transfer" accept="image/jpg, image/png,image/jpeg,image" class="mt-3 w-full rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer" required>
+                        <p class="mt-2 text-xs text-gray-500">Format yang diterima: JPG, PNG, JPEG. Maksimal 2 MB.</p>
                         @error('bukti_transfer')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                     </div>
 
@@ -139,10 +241,7 @@
                     </label>
                     @error('agree')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
 
-                    <div class="flex flex-wrap items-center justify-between gap-3">
-                        <a href="{{ route('public.donatur.profile') }}" class="inline-flex items-center rounded-full border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100">Lihat Profil</a>
-                        <button type="submit" class="inline-flex items-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Kirim Donasi sebagai Donatur Tetap</button>
-                    </div>
+                    <button type="submit" class="inline-flex w-full items-center justify-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Kirim Donasi</button>
                 </form>
             </section>
         @endif

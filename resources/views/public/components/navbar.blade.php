@@ -105,12 +105,15 @@
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('public.donasi.login') }}" class="flex items-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-2.5 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">
-                        Login
-                    </a>
+                    {{-- TAMBAHKAN KONDISI INI --}}
+                    @if(!request()->routeIs('public.donasi.login'))
+                        <a href="{{ route('public.donasi.login') }}" class="flex items-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-2.5 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">
+                            Login
+                        </a>
+                    @endif
                 @endif
             </div>
-
+            
             <!-- HAMBURGER MOBILE -->
             <button class="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition"
                 onclick="toggleMobileMenu()" aria-label="Menu">
@@ -177,7 +180,7 @@
                             </form>
                         </div>
                     </div>
-                @else
+                @elseif(!request()->routeIs('public.donasi.login'))
                     <div class="space-y-3">
                         <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-3 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">Login Donatur</a>
                     </div>

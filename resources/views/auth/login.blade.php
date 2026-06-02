@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin — Panti Asuhan Mawar Kasih</title>
 
-    {{-- Tailwind CSS via Vite --}}
+    <!-- Tailwind CSS via Vite -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
@@ -91,19 +91,17 @@
 
 <body class="min-h-screen bg-photo flex flex-col items-center justify-center px-4 py-8 relative">
 
-    {{-- Overlay gelap tipis agar teks lebih terbaca --}}
+    <!-- Overlay gelap tipis agar teks lebih terbaca -->
     <div class="absolute inset-0 bg-black/20"></div>
 
-    {{-- ═══════════════════════════════════════════════
-         CARD UTAMA
-    ═══════════════════════════════════════════════ --}}
+    <!-- CARD UTAMA -->
     <div class="relative z-10 w-full max-w-3xl glass-card rounded-2xl shadow-2xl overflow-hidden animate-fade-in">
         <div class="flex flex-col md:flex-row min-h-[440px]">
 
-            {{-- ── PANEL KIRI: Logo & Tagline ── --}}
+            <!-- PANEL KIRI: Logo & Tagline -->
             <div class="md:w-5/12 flex flex-col items-center justify-center px-8 py-10 text-center">
 
-                {{-- Logo — ganti src dengan path logo kamu --}}
+                <!-- Logo -->
                 <div class="mb-5">
                     <img
                         src="/images/logo.png"
@@ -113,12 +111,12 @@
                     >
                 </div>
 
-                {{-- Nama Panti --}}
+                <!-- Nama Panti -->
                 <h2 class="text-2xl font-extrabold text-black leading-tight drop-shadow-md">
                     Panti Asuhan<br>Mawar Kasih
                 </h2>
 
-                {{-- Tagline --}}
+                <!-- Tagline -->
                 <p class="mt-4 text-sm text-white leading-relaxed font-medium">
                     Cinta, Kepedulian,<br>
                     dan Harapan untuk<br>
@@ -127,30 +125,30 @@
                 </p>
             </div>
 
-            {{-- ── DIVIDER VERTIKAL ── --}}
+            <!-- DIVIDER VERTIKAL -->
             <div class="hidden md:block glass-divider"></div>
 
-            {{-- ── PANEL KANAN: Form Login ── --}}
+            <!-- PANEL KANAN: Form Login -->
             <div class="md:w-7/12 px-8 py-10 animate-fade-in-delay">
 
-                {{-- Judul --}}
+                <!-- Judul -->
                 <h1 class="text-2xl font-extrabold text-black leading-tight drop-shadow-md">Login Admin</h1>
                 <p class="mt-4 text-sm text-white leading-relaxed font-medium">
                     Silahkan masuk untuk mengakses<br>sistem pengelolaan data.
                 </p>
 
-                {{-- ── Alert Error ── --}}
+                <!-- Alert Error -->
                 @if ($errors->any())
                     <div class="mb-5 px-4 py-3 rounded-lg bg-red-100/70 border border-red-300 text-red-700 text-sm">
                         {{ $errors->first() }}
                     </div>
                 @endif
 
-                {{-- ── FORM ── --}}
+                <!-- FORM -->
                 <form method="POST" action="{{ route('login') }}" class="space-y-6">
                 @csrf
 
-                {{-- Username --}}
+                <!-- Username -->
                 <div>
                     <label for="username" class="block mb-2 text-sm font-semibold text-white/90">
                         Username
@@ -169,7 +167,7 @@
                     </div>
                 </div>
 
-                {{-- Password --}}
+                <!-- Password -->
                 <div>
                     <label for="password" class="block mb-2 text-sm font-semibold text-white/90">
                         Password
@@ -184,7 +182,7 @@
                             class="w-full px-4 py-3 pr-12 rounded-xl text-sm font-medium text-white bg-white/10 border border-white/20 placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:bg-white/20 transition-all duration-300"
                         >
 
-                        {{-- Toggle show/hide password dengan kontras tinggi --}}
+                        <!-- Toggle show/hide password dengan kontras tinggi -->
                         <button
                             type="button"
                             onclick="togglePassword()"
@@ -207,7 +205,7 @@
                     </div>
                 </div>
 
-    {{-- Remember Me & Lupa Password --}}
+    <!-- Remember Me & Lupa Password -->
     <div class="flex items-center justify-between pt-1">
         <label class="flex items-center group cursor-pointer">
             <div class="relative flex items-center">
@@ -229,7 +227,7 @@
         </a>
     </div>
 
-    {{-- Tombol Login --}}
+    <!-- Tombol Login -->
     <button
         type="submit"
         class="w-full py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm tracking-wide shadow-[0_0_15px_rgba(37,99,235,0.4)] hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] active:scale-[0.98] transition-all duration-200"
@@ -241,12 +239,12 @@
         </div>
     </div>
 
-    {{--FOOTER--}}
+    <!-- FOOTER -->
     <p class="relative z-10 mt-6 text-xs text-white/80 font-medium text-center drop-shadow">
         &copy; {{ date('Y') }} Yayasan Mawar Kasih. Semua hak dilindungi.
     </p>
 
-    {{-- Script: toggle show/hide password --}}
+    <!-- Script: toggle show/hide password -->
     <script>
         function togglePassword() {
             const input   = document.getElementById('password');

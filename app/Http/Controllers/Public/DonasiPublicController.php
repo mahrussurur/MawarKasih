@@ -13,12 +13,12 @@ class DonasiPublicController extends Controller
     public function form()
     {
         $donatur = session('donatur_id') ? Donatur::find(session('donatur_id')) : null;
-        return view('public.pages.donasi.index', compact('donatur'));
+        return view('public.donasi.index', compact('donatur'));
     }
 
     public function login()
     {
-        return view('public.pages.donasi.login');
+        return view('public.donasi.login');
     }
 
     public function loginStore(Request $request)
@@ -40,7 +40,7 @@ class DonasiPublicController extends Controller
 
     public function registrasi()
     {
-        return view('public.pages.donasi.registrasi');
+        return view('public.donasi.registrasi');
     }
 
     public function registrasiStore(Request $request)
@@ -63,17 +63,17 @@ class DonasiPublicController extends Controller
 
     public function rekening()
     {
-        return view('public.pages.donasi.rekening');
+        return view('public.donasi.rekening');
     }
 
     public function tutorial()
     {
-        return view('public.pages.donasi.tutorial');
+        return view('public.donasi.tutorial');
     }
 
     public function validasi()
     {
-        return view('public.pages.donasi.validasi');
+        return view('public.donasi.validasi');
     }
 
     public function kirim(Request $request)

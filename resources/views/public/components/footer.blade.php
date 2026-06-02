@@ -91,17 +91,17 @@
         </div>
     </div>
 
-    {{-- ===== FOOTER BOTTOM ===== --}}
+    <!-- FOOTER BOTTOM -->
     <div class="bg-gray-900 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-xs text-gray-500">
             {{-- Copyright --}}
             <p>© {{ date('Y') }} Panti Asuhan Mawar Kasih. Semua Hak Dilindungi.</p>
-            {{-- Legal links --}}
+            <!-- {{-- Legal links --}}
             <div class="flex items-center gap-4">
                 <a href="{{ route('public.kebijakan') }}" class="hover:text-gray-300 transition">Kebijakan Privasi</a>
                 <span>|</span>
                 <a href="{{ route('public.syarat') }}" class="hover:text-gray-300 transition">Syarat &amp; Ketentuan</a>
-            </div>
+            </div> -->
         </div>
     </div>
 

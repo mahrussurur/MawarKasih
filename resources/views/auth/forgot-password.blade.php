@@ -10,7 +10,7 @@
             {{ session('status') }}
         </div>
     @endif
-    <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
+    <form method="POST" action="{{ request()->routeIs('public.donasi.*') ? route('public.donasi.password.email') : route('password.email') }}" class="space-y-5">
         @csrf
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -33,12 +33,12 @@
     </form>
     <p class="text-center text-sm text-gray-500 mt-6">
         Ingat password?
-        <a href="/login" class="text-blue-600 hover:underline font-medium">
+        <a href="{{ request()->routeIs('public.donasi.*') ? route('public.donasi.login') : route('login') }}" class="text-blue-600 hover:underline font-medium">
             Kembali ke Login
         </a>
     </p>
 
     @error('email')
-        <p class="text-sm text-red-500 mt-1">Email tidak valid</p>
+        <p class="text-sm text-red-500 mt-1">{{ $message }}</p>
     @enderror
 </x-guest-layout>

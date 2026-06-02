@@ -10,7 +10,6 @@
                 <h1 class="text-3xl font-bold text-gray-900">Profil Donatur</h1>
                 <p class="mt-2 text-sm text-gray-500">Lihat detail data Anda sebagai donatur tetap.</p>
             </div>
-            <a href="{{ route('public.donasi.form') }}" class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Donasi Sekarang</a>
         </div>
 
         <div class="grid gap-6 lg:grid-cols-2">

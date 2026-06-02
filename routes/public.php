@@ -40,6 +40,12 @@ Route::prefix('')->name('public.')->group(function () {
     Route::get('/riwayat-donasi', [DonaturPublicController::class, 'history'])->name('donatur.history');
     Route::post('/donatur/logout', [DonaturPublicController::class, 'logout'])->name('donatur.logout');
 
+    // Password Reset Routes for Donatur
+    Route::get('/donasi/lupa-sandi', [\App\Http\Controllers\Public\DonaturPasswordResetController::class, 'createLinkRequest'])->name('donasi.password.request');
+    Route::post('/donasi/lupa-sandi', [\App\Http\Controllers\Public\DonaturPasswordResetController::class, 'storeLinkRequest'])->name('donasi.password.email');
+    Route::get('/donasi/reset-sandi/{token}', [\App\Http\Controllers\Public\DonaturPasswordResetController::class, 'createReset'])->name('donasi.password.reset');
+    Route::post('/donasi/reset-sandi', [\App\Http\Controllers\Public\DonaturPasswordResetController::class, 'storeReset'])->name('donasi.password.update');
+
     // ── Tentang Kami ─────────────────────────────────────────
     Route::get('/tentang/profil', [TentangController::class, 'profil'])->name('tentang.profil');
     Route::get('/tentang/visi-misi', [TentangController::class, 'visiMisi'])->name('tentang.visi-misi');

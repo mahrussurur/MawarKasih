@@ -25,7 +25,7 @@ class DonaturPublicController extends Controller
             return redirect()->route('public.donasi.registrasi')->with('error', 'Silakan registrasi terlebih dahulu.');
         }
 
-        return view('public.pages.donatur.profile', compact('donatur'));
+        return view('public.donatur.profile', compact('donatur'));
     }
 
     public function history()
@@ -39,7 +39,7 @@ class DonaturPublicController extends Controller
             ->latest('tanggal')
             ->get();
 
-        return view('public.pages.donatur.history', compact('donatur', 'donasis'));
+        return view('public.donatur.history', compact('donatur', 'donasis'));
     }
 
     public function logout(Request $request)

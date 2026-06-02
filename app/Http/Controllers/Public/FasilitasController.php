@@ -8,6 +8,6 @@ class FasilitasController extends Controller
 {
     public function index()
     {
-        return view('public.pages.fasilitas');
+        return view('public.fasilitas');
     }
 }
