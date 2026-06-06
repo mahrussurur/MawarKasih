@@ -51,7 +51,7 @@
         </div>
 
         <!-- Table data -->
-         @if($galeris->count() > 0)
+        @if($galeris->count() > 0)
         <div class="overflow-x-auto custom-scrollbar">
             <table class="w-full min-w-[1100px] text-left border-collapse">
                 <thead>

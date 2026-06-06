@@ -45,31 +45,31 @@
                     </tr>
                 </thead>
                 <tbody class="text-gray-700 text-sm">
-                    @foreach($kegiatans as $index => $kegiatan)
+                    @foreach($kegiatans as $index => $item)
                         <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                             <td class="px-4 py-4 text-center">{{ $kegiatans->firstItem() + $index }}</td>
                             <td class="px-4 py-4">
                                     <button type="button"
                                             class="inline-flex"
-                                            onclick="openImagePreview('{{ asset('storage/'. $kegiatan->foto_dokumentasi) }}')"
-                                            aria-label="Perbesar foto kegiatan {{ $kegiatan->nama_kegiatan }}">
-                                        <img src="{{ asset('storage/'. $kegiatan->foto_dokumentasi) }}"
+                                            onclick="openImagePreview('{{ asset('storage/'. $item->foto_dokumentasi) }}')"
+                                            aria-label="Perbesar foto kegiatan {{ $item->nama_kegiatan }}">
+                                        <img src="{{ asset('storage/'. $item->foto_dokumentasi) }}"
                                             class="w-12 h-12 rounded object-cover mx-auto cursor-pointer transition duration-200 hover:scale-105"
-                                            alt="Foto {{ $kegiatan->nama_kegiatan }}"
+                                            alt="Foto {{ $item->nama_kegiatan }}"
                                             title="Klik untuk perbesar">
                                     </button>
                             </td>
-                            <td class="px-4 py-4 font-semibold">{{ $kegiatan->nama_kegiatan }}</td>
+                            <td class="px-4 py-4 font-semibold">{{ $item->nama_kegiatan }}</td>
                             <td class="px-4 py-4 whitespace-nowrap">
-                            <span class="text-gray-500">{{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->format('d - m - Y') }}</span>
+                            <span class="text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal_pelaksanaan)->format('d - m - Y') }}</span>
                             </td>
                             <td class="px-4 py-4 max-w-4">
-                                <span class="line-clamp-2 break-words">{{ $kegiatan->deskripsi }}</span>
+                                <span class="line-clamp-2 break-words">{{ $item->deskripsi }}</span>
                             </td>
                             <td class="px-4 py-4">
                                 <div class="flex justify-center gap-1">
                                     <!-- Tombol Lihat Detail -->
-                                    <a href="{{ route('kegiatan.show', $kegiatan->id) }}"
+                                    <a href="{{ route('kegiatan.show', $item->id) }}"
                                         class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-blue-500 bg-sky-100 text-blue-600 transition hover:bg-blue-500 hover:text-white"                                        title="Lihat Detail">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -80,7 +80,7 @@
                                         </svg>
                                     </a>
                                     <!-- Tombol Edit -->
-                                    <a href="{{ route('kegiatan.edit', $kegiatan->id) }}"
+                                    <a href="{{ route('kegiatan.edit', $item->id) }}"
                                         class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-amber-500 bg-yellow-100 text-amber-700 transition hover:bg-amber-500 hover:text-white"                                        title="Edit">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -92,8 +92,8 @@
                                     <button
                                         type="button"
                                         onclick="openDeleteModal(this)"
-                                        data-action="{{ route('kegiatan.destroy', $kegiatan->id) }}"
-                                        data-nama-kegiatan="{{ $kegiatan->nama_kegiatan }}"
+                                        data-action="{{ route('kegiatan.destroy', $item->id) }}"
+                                        data-nama-kegiatan="{{ $item->nama_kegiatan }}"
                                         class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-red-600 bg-red-100 text-red-700 transition hover:bg-red-600 hover:text-white"
                                         title="Hapus">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,13 +106,39 @@
                             </td>
                         </tr>
                     @endforeach
-                    @endif
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination -->
+        @if($kegiatans->hasPages())
+        <div class="flex flex-wrap items-center justify-end gap-2 border-t border-slate-200 px-5 py-4 mt-4">
+            <a href="{{ $kegiatans->previousPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900 {{ $kegiatans->onFirstPage() ? 'opacity-40 pointer-events-none' : '' }}">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </a>
+
+            @foreach($kegiatans->getUrlRange(1, $kegiatans->lastPage()) as $page => $url)
+                <a href="{{ $url }}" class="inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-xl border px-3 text-sm font-semibold transition {{ $page == $kegiatans->currentPage() ? 'border-sky-600 bg-sky-600 text-white' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300' }}">
+                    {{ $page }}
+                </a>
+            @endforeach
+
+            <a href="{{ $kegiatans->nextPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900 {{ !$kegiatans->hasMorePages() ? 'opacity-40 pointer-events-none' : '' }}">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+        @endif
+
+        @else
+        <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-slate-500">
+            <p class="text-base font-semibold text-slate-900">Belum ada data kegiatan</p>
+            <span class="text-sm text-slate-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan data kegiatan pertama' }}</span>
+        </div>
+        @endif
     </div>
 </div>
 
+<!-- Image Preview Modal -->
 <div id="imagePreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
     <div class="relative max-h-[90vh] max-w-[90vw]" onclick="event.stopPropagation()">
         <button type="button"

@@ -31,8 +31,8 @@
                             <td class="px-6 py-4 font-semibold text-gray-900">{{ $donasi->kode_donasi }}</td>
                             <td class="px-6 py-4 text-gray-700">{{ $donasi->nominal_rupiah }}</td>
                             <td class="px-6 py-4 text-gray-700">{{ $donasi->tanggal?->format('d M Y') ?? '-' }}</td>
-                            <td class="px-6 py-4">
-                                <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold {{ $donasi->status == 'valid' ? 'bg-green-100 text-green-700' : ($donasi->status == 'ditolak' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700') }}">{{ $donasi->status_label }}</span>
+                            <td class="whitespace-nowrap px-4 py-3">
+                                <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold {{ $donasi->status == 'diterima' ? 'bg-green-100 text-green-700' : ($donasi->status == 'ditolak' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700') }}">{{ $donasi->status_label }}</span>
                             </td>
                         </tr>
                     @empty

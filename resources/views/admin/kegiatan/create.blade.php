@@ -40,13 +40,13 @@
                 <!-- Input Deskripsi -->
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Deskripsi Kegiatan</label>
-                    <textarea name="keterangan" rows="2" placeholder="Masukkan Deskripsi Kegiatan..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400"></textarea>
+                    <textarea name="deskripsi" rows="2" placeholder="Masukkan Deskripsi Kegiatan..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>{{ old('deskripsi') }}</textarea>
                 </div>
 
                 <!-- Input Foto -->
                 <div class="mb-8">
                     <label class="block text-gray-800 font-semibold mb-2">Upload Foto Kegiatan</label>
-                    <input type="file" name="foto" accept="image/*" class="w-full rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer" required>
+                    <input type="file" name="foto_dokumentasi" accept="image/*" class="w-full rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer" required>
                     <p class="text-xs text-gray-500 mt-2">Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
                 </div>
 

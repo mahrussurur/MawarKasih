@@ -3,8 +3,8 @@
 @section('title', 'Login Donatur')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 py-20">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-gray-50 flex items-center py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div class="rounded-3xl border border-gray-200 bg-white p-10 shadow-sm">
             <div class="text-center mb-10">
                 <h1 class="text-3xl font-bold text-gray-900">Login Donatur</h1>
@@ -26,7 +26,10 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-gray-700">Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="mt-3 w-full rounded-3xl border border-gray-300 px-4 py-4 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100"
+                    <input type="email"
+                    name="email"
+                    value="{{ old('email') }}"
+                    class="mt-3 w-full rounded-xl border border-gray-300 px-4 py-4 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
                     placeholder="masukkan alamat email Anda..."
                     autocomplete="email"
                     required>
@@ -43,7 +46,7 @@
                             name="password" 
                             placeholder="masukkan kata sandi..."
                             autocomplete="current-password" 
-                            class="w-full rounded-3xl border border-gray-300 px-4 py-4 pr-12 text-sm text-gray-900 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100" 
+                            class="w-full rounded-xl border border-gray-300 px-4 py-4 pr-12 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" 
                             required>
 
                         <button
@@ -64,19 +67,22 @@
                             </svg>
                         </button>
                     </div>
+
+                    <div class="flex justify-start mt-4">
+                        <a href="{{ route('public.donasi.password.request') }}" class="text-sm font-semibold text-blue-700 hover:text-blue-500 hover:underline transition-all">
+                            Lupa Password?
+                        </a>
+                    </div>
                 </div>
 
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <p class="text-sm font-semibold text-gray-700">
                         Belum punya akun?
-                        <a href="{{ route('public.donasi.registrasi') }}" class="text-sm font-semibold text-brand-700">
+                        <a href="{{ route('public.donasi.registrasi') }}" class="text-sm font-semibold text-blue-700 hover:text-blue-500 hover:underline transition-all">
                             Registrasi sekarang!
                         </a>
                     </p>
-                    <a href="{{ route('public.donasi.password.request') }}" class="text-sm font-semibold text-brand-700 hover:underline">
-                        Lupa Password?
-                    </a>
-                    <button type="submit" class="inline-flex items-center justify-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Login</button>
+                    <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-blue-700">Login</button>
                 </div>
             </form>
         </div>

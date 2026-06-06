@@ -5,10 +5,10 @@
             <!-- LOGO -->
             <div class="flex items-center gap-3 flex-shrink-0">
 
-                <img src="{{ asset('images/logo.png') }}" alt="Panti Asuhan Mawar Kasih" class="h-10 w-auto">
+                <img src="{{ asset('images/logo.png') }}" alt="Panti Asuhan Mawar Kasih" class="h-14 w-auto">
                 <div class="hidden sm:block leading-tight">
                     <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Panti Asuhan</div>
-                    <div class="text-base font-bold text-brand-700">Mawar Kasih</div>
+                    <div class="text-base font-bold text-gray-900">Mawar Kasih</div>
                 </div>
             </div>
 
@@ -18,19 +18,19 @@
                 <!-- Beranda -->
                 <li>
                     <a href="{{ route('public.home') }}"
-                        class="px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.home') ? 'text-brand-600 font-semibold border-b-2 border-brand-600' : '' }}">
+                        class="px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.home') ? 'text-brand-600 font-semibold' : '' }}">
                         Beranda
                     </a>
                 </li>
 
-                <!-- Donasi Dropdown -->
+                <!-- Donasi -->
                 <li class="relative group">
                     <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.donasi*') ? 'text-brand-600 font-semibold' : '' }}">
                         Donasi
                         <i data-lucide="chevron-down" class="w-4 h-4 transition group-hover:rotate-180"></i>
                     </button>
                     <!-- Dropdown Donasi -->
-                    <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
+                    <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
                         <a href="{{ route('public.donasi.form') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
                             <i data-lucide="heart" class="w-4 h-4"></i> Form Donasi
                         </a>
@@ -53,13 +53,10 @@
                         <i data-lucide="chevron-down" class="w-4 h-4 transition group-hover:rotate-180"></i>
                     </button>
                     <!-- Dropdown Kegiatan -->
-                    <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
+                    <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
                         <a href="{{ route('public.kegiatan.index') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
                             <i data-lucide="calendar" class="w-4 h-4"></i> Semua Kegiatan
                         </a>
-                        <!-- Tambah submenu kegiatan di sini jika perlu, -->
-                        <!-- Kegiatan Harian, Kegiatan Sosial, dll. -->
-
                     </div>
                 </li>
 
@@ -69,7 +66,7 @@
                         Tentang Kami
                         <i data-lucide="chevron-down" class="w-4 h-4 transition group-hover:rotate-180"></i>
                     </button>
-                    <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-xl shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
+                    <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
                         <a href="{{ route('public.tentang.profil') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
                             <i data-lucide="building-2" class="w-4 h-4"></i> Profil Lembaga
                         </a>
@@ -91,23 +88,43 @@
             <div class="hidden lg:flex items-center gap-3">
                 @if(!empty($currentDonatur))
                     <div class="relative">
-                        <button id="donaturMenuButton" type="button" onclick="toggleDonaturMenu()" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50">
-                            <span>{{ $currentDonatur->nama }}</span>
-                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        <button id="donaturMenuButton" type="button" onclick="toggleDonaturMenu()" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-gray-100">
+                            <i data-lucide="user-check" class="w-4 h-4"></i>
+                            <span title="{{ $currentDonatur->nama }}">{{ \Illuminate\Support\Str::words($currentDonatur->nama, 2, '') }}</span>
+                            <i id="donaturMenuChevron" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
                         </button>
-                        <div id="donaturMenu" class="absolute right-0 mt-2 w-56 rounded-2xl border border-gray-200 bg-white shadow-lg opacity-0 invisible transition-all duration-200 z-50">
-                            <a href="{{ route('public.donatur.profile') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">Detail Profil</a>
-                            <a href="{{ route('public.donatur.history') }}" class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">Riwayat Donasi</a>
+                        <div id="donaturMenu" class="absolute right-0 top-[calc(100%+8px)] w-[200px] bg-white border border-slate-200 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.12)] p-1.5 opacity-0 invisible transition-all duration-200 z-50">
+                            
+                            <div class="px-3 pt-2.5 pb-2 border-b border-slate-100 mb-1">
+                                <div class="text-[13px] font-bold text-slate-900 truncate">{{ $currentDonatur->nama }}</div>
+                                <div class="text-[11px] font-medium text-slate-400">Donatur</div>
+                            </div>
+
+                            <a href="{{ route('public.donatur.profile') }}" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-600 text-[13px] font-semibold hover:bg-slate-50 hover:text-slate-900 transition-colors w-full">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                Profil Saya
+                            </a>
+                            
+                            <a href="{{ route('public.donatur.history') }}" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-600 text-[13px] font-semibold hover:bg-slate-50 hover:text-slate-900 transition-colors w-full">
+                                <i data-lucide="clock" class="w-4 h-4"></i>
+                                Riwayat Donasi
+                            </a>
+
+                            <div class="h-px bg-slate-100 my-1"></div>
+
                             <form method="POST" action="{{ route('public.donatur.logout') }}">
                                 @csrf
-                                <button type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50">Logout</button>
+                                <button type="submit" class="flex items-center gap-2.5 w-full text-left px-3 py-2.5 rounded-lg text-red-500 text-[13px] font-semibold hover:bg-red-50 transition-colors cursor-pointer border-none bg-transparent">
+                                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                                    Logout
+                                </button>
                             </form>
                         </div>
                     </div>
                 @else
                     {{-- TAMBAHKAN KONDISI INI --}}
                     @if(!request()->routeIs('public.donasi.login'))
-                        <a href="{{ route('public.donasi.login') }}" class="flex items-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-2.5 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">
+                        <a href="{{ route('public.donasi.login') }}" class="flex items-center gap-2 rounded-full border border-blue-300 bg-white px-5 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100">
                             Login
                         </a>
                     @endif
@@ -169,7 +186,10 @@
                 @if(!empty($currentDonatur))
                     <div class="rounded-3xl border border-gray-200 bg-white p-3">
                         <a href="{{ route('public.donatur.profile') }}" class="flex items-center justify-between text-sm font-semibold text-gray-700 hover:text-brand-600">
-                            <span>{{ $currentDonatur->nama }}</span>
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="user" class="w-4 h-4"></i>
+                                <span title="{{ $currentDonatur->nama }}">{{ \Illuminate\Support\Str::words($currentDonatur->nama, 2, '') }}</span>
+                            </div>
                             <i data-lucide="chevron-right" class="w-4 h-4"></i>
                         </a>
                         <div class="mt-3 space-y-2">
@@ -182,7 +202,7 @@
                     </div>
                 @elseif(!request()->routeIs('public.donasi.login'))
                     <div class="space-y-3">
-                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-3 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">Login Donatur</a>
+                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-3 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">Login</a>
                     </div>
                 @endif
             </div>
@@ -202,21 +222,24 @@
 
     function toggleDonaturMenu() {
         const menu = document.getElementById('donaturMenu');
+        const chevron = document.getElementById('donaturMenuChevron');
         if (!menu) return;
-        menu.classList.toggle('hidden');
         menu.classList.toggle('opacity-0');
         menu.classList.toggle('invisible');
         menu.classList.toggle('opacity-100');
         menu.classList.toggle('visible');
+        if (chevron) chevron.classList.toggle('rotate-180');
     }
 
     document.addEventListener('click', function (event) {
         const button = document.getElementById('donaturMenuButton');
         const menu = document.getElementById('donaturMenu');
+        const chevron = document.getElementById('donaturMenuChevron');
         if (!button || !menu) return;
         if (!button.contains(event.target) && !menu.contains(event.target)) {
-            menu.classList.add('hidden', 'opacity-0', 'invisible');
+            menu.classList.add('opacity-0', 'invisible');
             menu.classList.remove('opacity-100', 'visible');
+            if (chevron) chevron.classList.remove('rotate-180');
         }
     });
 

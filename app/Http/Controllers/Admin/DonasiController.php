@@ -36,9 +36,9 @@ class DonasiController extends Controller
         // Hitung total per status untuk summary cards
         $totalDonasi   = Donasi::count();
         $totalPending  = Donasi::where('status', 'pending')->count();
-        $totalValid    = Donasi::where('status', 'valid')->count();
+        $totalValid    = Donasi::where('status', 'diterima')->count();
         $totalDitolak  = Donasi::where('status', 'ditolak')->count();
-        $totalNominal  = Donasi::where('status', 'valid')->sum('nominal');
+        $totalNominal  = Donasi::where('status', 'diterima')->sum('nominal');
 
         return view('admin.donasi.index', compact(
             'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal'
@@ -59,15 +59,16 @@ class DonasiController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_donatur' => 'required|string|max:255',
-            'no_hp'        => 'nullable|digits_between:10,15',
-            'nominal'      => 'required|integer|min:1000',
-            'keterangan'   => 'nullable|string|max:1000',
+            'nama_donatur'      => 'required|string|max:255',
+            'no_hp'             => 'nullable|digits_between:10,15',
+            'nominal'           => 'required|integer|min:1000',
+            'metode_pembayaran' => 'required|string|max:50',
+            'keterangan'        => 'nullable|string|max:1000',
         ]);
 
         $validated['kode_donasi'] = Donasi::generateKode();
         $validated['tanggal'] = now()->format('d-m-Y H:i:s');
-        $validated['status'] = 'valid'; // Langsung valid karena dari admin
+        $validated['status'] = 'diterima'; // Langsung diterima karena dari admin
 
         Donasi::create($validated);
 
@@ -83,15 +84,22 @@ class DonasiController extends Controller
     }
 
     /**
-     * Validasi donasi: ubah status ke 'valid'.
+     * Validasi donasi: ubah status ke 'diterima'.
      */
-    public function validasi(Donasi $donasi)
+    public function validasi(Request $request, Donasi $donasi)
     {
         if ($donasi->status !== 'pending') {
             return back()->with('error', 'Hanya donasi berstatus pending yang bisa divalidasi.');
         }
 
-        $donasi->update(['status' => 'valid']);
+        $request->validate([
+            'catatan_admin' => 'nullable|string|max:500',
+        ]);
+
+        $donasi->update([
+            'status' => 'diterima',
+            'catatan_admin' => $request->catatan_admin ?? 'Donasi telah diterima.',
+        ]);
 
         return back()->with('success', "Donasi {$donasi->kode_donasi} berhasil divalidasi.");
     }
@@ -144,15 +152,16 @@ class DonasiController extends Controller
     public function update(Request $request, Donasi $donasi)
     {
         $request->validate([
-            'nama_donatur'  => 'required|string|max:255',
-            'no_hp'         => 'required|string|max:20',
-            'nominal'       => 'required|integer|min:1000',
-            'tanggal'       => 'required|date',
-            'keterangan'    => 'required|string|max:1000',
-            'bukti_transfer'=> 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama_donatur'      => 'required|string|max:255',
+            'no_hp'             => 'required|string|max:20',
+            'nominal'           => 'required|integer|min:1000',
+            'metode_pembayaran' => 'required|string|max:50',
+            'tanggal'           => 'required|date',
+            'keterangan'        => 'required|string|max:1000',
+            'bukti_transfer'    => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data = $request->only('nama_donatur', 'no_hp', 'nominal', 'tanggal', 'keterangan');
+        $data = $request->only('nama_donatur', 'no_hp', 'nominal', 'metode_pembayaran', 'tanggal', 'keterangan');
 
         if ($request->hasFile('bukti_transfer')) {
             if ($donasi->bukti_transfer) {
@@ -170,7 +179,7 @@ class DonasiController extends Controller
      */
     public function cetak(Request $request)
     {
-        $query = Donasi::where('status', 'valid')->orderBy('tanggal', 'desc');
+        $query = Donasi::where('status', 'diterima')->orderBy('tanggal', 'desc');
 
         // Filter tahun jika ada
         if ($request->filled('tahun')) {

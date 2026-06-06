@@ -36,8 +36,9 @@
         width: 52px; height: 52px; border-radius: 14px;
         display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .stat-icon img { width: 34px; height: 34px; object-fit: contain; }
-    .stat-icon-placeholder { font-size: 26px; }
+    
+    /* Styling khusus icon SVG */
+    .stat-icon svg { width: 28px; height: 28px; }
 
     .stat-info .stat-label { font-size: 13px; font-weight: 600; color: #64748b; margin: 0 0 2px; }
     .stat-info .stat-value { font-size: 28px; font-weight: 800; color: #0f172a; margin: 0; line-height: 1; }
@@ -51,14 +52,21 @@
     }
     .btn-lihat:hover { opacity: 0.88; transform: translateY(-1px); }
 
-    /* Warna per card */
+    /* Warna per card & warna icon */
     .card-blue  .stat-icon { background: #eff6ff; }
+    .card-blue  .stat-icon svg { color: #3b82f6; }
     .card-blue  .btn-lihat { background: #3b82f6; }
+
     .card-green .stat-icon { background: #f0fdf4; }
+    .card-green .stat-icon svg { color: #22c55e; }
     .card-green .btn-lihat { background: #22c55e; }
+
     .card-amber .stat-icon { background: #fffbeb; }
+    .card-amber .stat-icon svg { color: #f59e0b; }
     .card-amber .btn-lihat { background: #f59e0b; }
+
     .card-purple .stat-icon { background: #faf5ff; }
+    .card-purple .stat-icon svg { color: #a855f7; }
     .card-purple .btn-lihat { background: #a855f7; }
 
     /* ── Table Grid ── */
@@ -141,21 +149,22 @@
 
 @section('content')
 
-    {{-- ── Welcome ── --}}
+    <!-- Welcome -->
     <div class="welcome-banner">
-        <h2>Selamat Datang, {{ Auth::user()->name }}! 👋</h2>
+        <h2>Selamat Datang, {{ Auth::user()->name }}!</h2>
         <p>Ini adalah dashboard utama pengelolaan Yayasan Mawar Kasih.</p>
     </div>
 
-    {{-- ── Stat Cards ── --}}
+    <!-- Stat Cards -->
     <div class="stat-grid">
 
-        {{-- Total Anak Asuh --}}
+        <!-- Total Anak Asuh -->
         <div class="stat-card card-blue">
             <div class="stat-top">
                 <div class="stat-icon">
-                    {{-- Ganti dengan emoji/icon/img sesuai kebutuhan --}}
-                    <span class="stat-icon-placeholder">👧</span>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
                 </div>
                 <div class="stat-info">
                     <p class="stat-label">Total Anak Asuh</p>
@@ -165,11 +174,16 @@
             <a href="{{ route('anak-asuh.index') }}" class="btn-lihat">Lihat Data</a>
         </div>
 
-        {{-- Total Pengasuh --}}
+        <!-- Total Pengasuh -->
         <div class="stat-card card-green">
             <div class="stat-top">
                 <div class="stat-icon">
-                    <span class="stat-icon-placeholder">👨‍👩‍👧</span>
+                    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
                 </div>
                 <div class="stat-info">
                     <p class="stat-label">Total Pengasuh</p>
@@ -179,25 +193,14 @@
             <a href="{{ route('pengasuh.index') }}" class="btn-lihat">Lihat Data</a>
         </div>
 
-        {{-- Total Kegiatan --}}
-        <div class="stat-card card-amber">
-            <div class="stat-top">
-                <div class="stat-icon">
-                    <span class="stat-icon-placeholder">📅</span>
-                </div>
-                <div class="stat-info">
-                    <p class="stat-label">Total Kegiatan</p>
-                    <p class="stat-value">{{ $totalKegiatan ?? 0 }}</p>
-                </div>
-            </div>
-            <a href="{{ route('kegiatan.index') }}" class="btn-lihat">Lihat Data</a>
-        </div>
-
-        {{-- Total Donatur --}}
+        
+        <!-- Total Donatur -->
         <div class="stat-card card-purple">
             <div class="stat-top">
                 <div class="stat-icon">
-                    <span class="stat-icon-placeholder">🤝</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                       <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/>
+                    </svg>
                 </div>
                 <div class="stat-info">
                     <p class="stat-label">Total Donatur</p>
@@ -206,13 +209,28 @@
             </div>
             <a href="{{ route('donatur.index') }}" class="btn-lihat">Lihat Data</a>
         </div>
-
+        
+        <!-- Total Kegiatan -->
+        <div class="stat-card card-amber">
+            <div class="stat-top">
+                <div class="stat-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/>
+                    </svg>
+                </div>
+                <div class="stat-info">
+                    <p class="stat-label">Total Kegiatan</p>
+                    <p class="stat-value">{{ $totalKegiatan ?? 0 }}</p>
+                </div>
+            </div>
+            <a href="{{ route('kegiatan.index') }}" class="btn-lihat">Lihat Data</a>
+        </div>
     </div>
 
-    {{-- ── Tabel Terbaru ── --}}
+    <!-- Tabel Terbaru -->
     <div class="table-grid">
 
-        {{-- Donasi Terbaru --}}
+        <!-- Donasi Terbaru -->
         <div class="table-card">
             <div class="table-card-header">
                 <h3>Donasi Terbaru</h3>
@@ -259,56 +277,6 @@
                 </div>
             @endif
         </div>
-
-        {{-- Kegiatan Terbaru --}}
-        <div class="table-card">
-            <div class="table-card-header">
-                <h3>Kegiatan Terbaru</h3>
-                <a href="{{ route('kegiatan.index') }}">Lihat semua →</a>
-            </div>
-
-            @if(isset($kegiatanTerbaru) && $kegiatanTerbaru->count() > 0)
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Nama Kegiatan</th>
-                            <th>Tanggal</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($kegiatanTerbaru as $kegiatan)
-                        <tr>
-                            <td><span class="donor-name">{{ $kegiatan->nama_kegiatan }}</span></td>
-                            <td>{{ \Carbon\Carbon::parse($kegiatan->tanggal)->format('d M Y') }}</td>
-                            <td>
-                                @php
-                                    $now = \Carbon\Carbon::now();
-                                    $tgl = \Carbon\Carbon::parse($kegiatan->tanggal);
-                                @endphp
-                                @if($tgl->isFuture())
-                                    <span class="badge badge-info">Akan Datang</span>
-                                @elseif($tgl->isToday())
-                                    <span class="badge badge-warning">Hari Ini</span>
-                                @else
-                                    <span class="badge badge-success">Selesai</span>
-                                @endif
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @else
-                <div class="empty-state">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                    </svg>
-                    <p>Belum ada data kegiatan terbaru</p>
-                </div>
-            @endif
-        </div>
-
+        
     </div>
-
 @endsection

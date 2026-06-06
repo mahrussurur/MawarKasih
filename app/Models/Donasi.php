@@ -67,7 +67,7 @@ class Donasi extends Model
     {
         return match($this->status) {
             'pending'  => 'Pending',
-            'valid'    => 'Valid',
+            'diterima' => 'Diterima',
             'ditolak'  => 'Ditolak',
             default    => $this->status,
         };
@@ -76,10 +76,10 @@ class Donasi extends Model
     public function getStatusColorAttribute(): string
     {
         return match($this->status) {
-            'pending' => 'warning',
-            'valid'   => 'success',
-            'ditolak' => 'danger',
-            default   => 'secondary',
+            'pending'  => 'warning',
+            'diterima' => 'success',
+            'ditolak'  => 'danger',
+            default    => 'secondary',
         };
     }
 }

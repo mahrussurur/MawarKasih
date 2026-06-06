@@ -24,16 +24,19 @@
             <form action="{{ route('anak-asuh.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
+                <!-- Nama Lengkap -->
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Nama Lengkap</label>
                     <input type="text" name="nama" value="{{ old('nama') }}" placeholder="Masukkan Nama Lengkap..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
                 </div>
 
+                <!-- Nama Panggilan -->
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Nama Panggilan</label>
                     <input type="text" name="nama_panggilan" value="{{ old('nama_panggilan') }}" placeholder="Masukkan Nama Panggilan..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
                 </div>
 
+                <!-- Tempat Lahir dan Tanggal Lahir -->
                 <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                     <div>
                         <label class="block text-gray-800 font-semibold mb-2">Tempat Lahir</label>
@@ -45,12 +48,14 @@
                     </div>
                 </div>
 
+                <!-- Tinggal di LKSA sejak -->
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Tinggal di LKSA sejak</label>
                     <input type="text" name="tinggal_di_lksa_sejak" value="{{ old('tinggal_di_lksa_sejak') }}" placeholder="Contoh: Dari kandungan ibu tahun 2023 atau Tahun 2024" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
                     <p class="text-xs text-gray-500 mt-1">Isikan apakah sejak dalam kandungan atau tahun masuk LKSA.</p>
                 </div>
 
+                <!-- Sekolah dan Kelas -->
                 <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                     <div>
                         <label class="block text-gray-800 font-semibold mb-2">Sekolah</label>
@@ -62,6 +67,7 @@
                     </div>
                 </div>
 
+                <!-- Jenis Kelamin -->
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Jenis Kelamin</label>
                     <div class="flex gap-6 items-center">
@@ -76,6 +82,7 @@
                     </div>
                 </div>
 
+                <!-- Status Sosial Anak -->
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Status Sosial Anak</label>
                     <select name="status_social_anak" id="status-social-anak" 
@@ -91,6 +98,7 @@
                     </select>
                 </div>
 
+                <!-- Nama Ayah dan Nama Ibu -->
                 <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                     <div id="field-nama-ayah">
                         <label class="block text-gray-800 font-semibold mb-2">Nama Ayah</label>
@@ -106,12 +114,14 @@
                     </div>
                 </div>
 
+                <!-- Upload Foto Anak -->
                 <div class="mb-8">
                     <label class="block text-gray-800 font-semibold mb-2">Upload Foto Anak</label>
                     <input type="file" name="foto" accept="image/*" class="w-full rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer">
                     <p class="text-xs text-gray-500 mt-2">Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
                 </div>
 
+                <!-- Tombol Aksi -->
                 <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
                     <a href="{{ route('anak-asuh.index') }}" class="rounded-2xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300  transition hover:bg-gray-300">
                         Batal

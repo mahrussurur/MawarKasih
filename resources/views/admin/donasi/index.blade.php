@@ -48,9 +48,9 @@
                     Pending
                     <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm">{{ $totalPending }}</span>
                 </a>
-                <a href="{{ route('donasi.index', array_merge(request()->except('status','page'), ['status'=>'valid'])) }}"
-                   class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeStatus === 'valid' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
-                    Valid
+                <a href="{{ route('donasi.index', array_merge(request()->except('status','page'), ['status'=>'diterima'])) }}"
+                   class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeStatus === 'diterima' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
+                    Diterima
                     <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm">{{ $totalValid }}</span>
                 </a>
                 <a href="{{ route('donasi.index', array_merge(request()->except('status','page'), ['status'=>'ditolak'])) }}"
@@ -84,9 +84,10 @@
                         <th class="px-4 py-3 w-40">Nama Donatur</th>
                         <th class="px-4 py-3 w-40">Sumber Donatur</th>
                         <th class="px-4 py-3 w-40">No. HP</th>
-                        <th class="px-4 py-3 w-40">Nominal</th>
                         <th class="px-4 py-3 w-40">Tanggal</th>
                         <th class="px-4 py-3 w-40">Keterangan</th>
+                        <th class="px-4 py-3 w-40">Nominal</th>
+                        <th class="px-4 py-3 w-40">Metode Pembayaran</th>
                         <th class="px-4 py-3 text-center">Bukti</th>
                         <th class="px-4 py-3 text-center">Status</th>
                         <th class="px-4 py-3 text-center">Aksi</th>
@@ -109,10 +110,13 @@
                             @endif
                         </td>
                         <td class="px-4 py-4 text-sm ">{{ $item->no_hp ?? '-' }}</td>
-                        <td class="px-4 py-4 text-sm font-semibold">{{ $item->nominal_rupiah }}</td>
                         <td class="px-4 py-4 text-sm ">{{ \Carbon\Carbon::parse($item->tanggal)->format('d - m - Y') }}</td>
                         <td class="px-4 py-4 text-sm max-w-4">
                             <span class="line-clamp-2 break-words">{{ $item->keterangan ?? '-' }}</span>
+                        </td>
+                        <td class="px-4 py-4 text-sm font-semibold">{{ $item->nominal_rupiah }}</td>
+                        <td class="px-4 py-4 text-sm">
+                            {{ ucfirst($item->metode_pembayaran) ?? '-' }}
                         </td>
                         <td class="px-4 py-4 text-center">
                             @if($item->bukti_transfer)
@@ -133,7 +137,7 @@
                             @php
                                 $statusClasses = [
                                     'pending' => 'bg-amber-100 text-amber-800',
-                                    'valid' => 'bg-emerald-100 text-emerald-800',
+                                    'diterima' => 'bg-emerald-100 text-emerald-800',
                                     'ditolak' => 'bg-red-100 text-red-800',
                                 ];
                             @endphp
@@ -154,14 +158,16 @@
                                 </a>
 
                                 @if($item->status === 'pending')
-                                    <form method="POST" action="{{ route('donasi.validasi', $item->id) }}" class="inline">
-                                        @csrf @method('PATCH')
-                                        <button type="submit" class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 transition hover:bg-emerald-600 hover:text-white" title="Validasi" onclick="return confirm('Validasi donasi {{ $item->kode_donasi }}?')">
-                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                                            </svg>
-                                        </button>
-                                    </form>
+                                    <button type="button"
+                                            class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 transition hover:bg-emerald-600 hover:text-white"
+                                            title="Validasi"
+                                            data-validasi-route="{{ route('donasi.validasi', $item->id) }}"
+                                            data-kode-donasi="{{ $item->kode_donasi }}"
+                                            onclick="openValidasiModal(this)">
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </button>
                                     <button type="button"
                                             class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-red-100 text-red-700 transition hover:bg-red-600 hover:text-white"
                                             title="Tolak"
@@ -239,6 +245,37 @@
         </div>
     </div>
 
+    <div id="validasiModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
+        <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
+            <div class="flex items-start justify-between gap-4">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Validasi Donasi</p>
+                    <h3 class="mt-2 text-lg font-bold text-slate-900">Kode: <span id="validasiModalKode"></span></h3>
+                </div>
+                <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeValidasiModal()" aria-label="Tutup modal validasi">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <p class="mt-4 text-sm text-slate-600">Masukkan catatan admin untuk donasi yang diterima.</p>
+
+            <form id="validasiForm" method="POST" class="mt-5 space-y-4">
+                @csrf
+                @method('PATCH')
+                <div>
+                    <label for="catatan_admin_validasi" class="text-sm font-semibold text-slate-700">Catatan Admin</label>
+                    <textarea id="catatan_admin_validasi" name="catatan_admin" rows="4" placeholder="Contoh: Donasi telah diterima, terima kasih."
+                              class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"></textarea>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-2">
+                    <button type="button" class="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onclick="closeValidasiModal()">Batal</button>
+                    <button type="submit" class="rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700">Validasi Donasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="tolakModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
         <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
             <div class="flex items-start justify-between gap-4">
@@ -251,7 +288,7 @@
                 </button>
             </div>
 
-            <p class="mt-4 text-sm text-slate-600">Masukkan alasan penolakan jika perlu, lalu simpan untuk mengubah status donasi menjadi ditolak.</p>
+            <p class="mt-4 text-sm text-slate-600">Masukkan catatan admin jika perlu, untuk donasi yang akan ditolak.</p>
 
             <form id="tolakForm" method="POST" class="mt-5 space-y-4">
                 @csrf
@@ -295,8 +332,10 @@
     <script>
         const imagePreviewModal = document.getElementById('imagePreviewModal');
         const imagePreview = document.getElementById('imagePreview');
+        const validasiModal = document.getElementById('validasiModal');
         const tolakModal = document.getElementById('tolakModal');
         const deleteModal = document.getElementById('deleteModal');
+        const validasiForm = document.getElementById('validasiForm');
         const tolakForm = document.getElementById('tolakForm');
         const deleteForm = document.getElementById('deleteForm');
 
@@ -310,6 +349,21 @@
             imagePreviewModal.classList.add('hidden');
             imagePreviewModal.classList.remove('flex');
             imagePreview.src = '';
+        }
+
+        function openValidasiModal(button) {
+            const route = button.dataset.validasiRoute;
+            const kode = button.dataset.kodeDonasi;
+
+            validasiForm.action = route;
+            document.getElementById('validasiModalKode').textContent = kode;
+            validasiModal.classList.remove('hidden');
+            validasiModal.classList.add('flex');
+        }
+
+        function closeValidasiModal() {
+            validasiModal.classList.add('hidden');
+            validasiModal.classList.remove('flex');
         }
 
         function openTolakModal(button) {
@@ -345,6 +399,12 @@
         imagePreviewModal.addEventListener('click', function (event) {
             if (event.target === imagePreviewModal) {
                 closeImagePreview();
+            }
+        });
+
+        validasiModal.addEventListener('click', function (event) {
+            if (event.target === validasiModal) {
+                closeValidasiModal();
             }
         });
 

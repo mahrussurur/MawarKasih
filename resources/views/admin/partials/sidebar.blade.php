@@ -68,7 +68,7 @@
     <!-- Brand -->
     <div class="sidebar-brand">
         <div class="sidebar-brand-logo">
-            <img src="/images/logo.png" alt="Logo MTK"
+            <img src="/images/logo2.png" alt="Logo MTK"
                 onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:rgba(255,255,255,0.7);font-size:11px;font-weight:800;\'>MTK</span>'">
         </div>
         <div class="sidebar-brand-text">
@@ -89,21 +89,23 @@
         <div class="nav-label" style="margin-top:8px;">Data</div>
 
         <a href="{{ route('anak-asuh.index') }}" class="nav-item {{ request()->routeIs('anak-asuh.*') ? 'active' : '' }}" data-tooltip="Data Anak Asuh">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
             <span class="nav-text">Data Anak Asuh</span>
         </a>
 
         <a href="{{ route('pengasuh.index') }}" class="nav-item {{ request()->routeIs('pengasuh.*') ? 'active' : '' }}" data-tooltip="Data Pengasuh">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            <span class="nav-text">Data Pengasuh</span>
-        </a>
-
-        <a href="{{ route('donatur.index') }}" class="nav-item {{ request()->routeIs('donatur.*') ? 'active' : '' }}" data-tooltip="Data Donatur">
             <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span class="nav-text">Data Pengasuh</span>
+        </a>
+
+        <a href="{{ route('donatur.index') }}" class="nav-item {{ request()->routeIs('donatur.*') ? 'active' : '' }}" data-tooltip="Data Donatur">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/>
             </svg>
             <span class="nav-text">Data Donatur</span>
         </a>
@@ -114,13 +116,15 @@
         </a>
 
         <a href="{{ route('kegiatan.index') }}" class="nav-item {{ request()->routeIs('kegiatan.*') ? 'active' : '' }}" data-tooltip="Data Kegiatan">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/>
+            </svg>
             <span class="nav-text">Data Kegiatan</span>
         </a>
 
         <a href="{{ route('galeri.index') }}" class="nav-item {{ request()->routeIs('galeri.*') ? 'active' : '' }}" data-tooltip="Galeri Foto">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            <span class="nav-text">Galeri Foto</span>
+            <span class="nav-text">Data Galeri</span>
         </a>
     </nav>
 </aside>

@@ -63,13 +63,13 @@
 
             <!-- Judul utama -->
             <h1 class="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold !leading-tight text-white mb-5">
-                Setiap Anak Berhak Memiliki<br>
-                <span class="text-brand-400">Kasih Sayang.</span>
+                Dikasihi untuk<br>
+                <span class="text-brand-400">Saling Mengasihi.</span>
             </h1>
 
             <!-- Deskripsi pendek -->
             <p class="text-gray-200 text-base sm:text-lg leading-relaxed mb-8">
-                Bersama kita hadirkan cinta, pendidikan,<br class="hidden sm:block">
+                Bersama kita hadirkan kasih sayang, pendidikan,<br class="hidden sm:block">
                 dan masa depan yang lebih baik untuk mereka.
             </p>
 
@@ -79,10 +79,6 @@
                     class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-brand-600/30 hover:-translate-y-0.5">
                     <i data-lucide="heart" class="w-4 h-4"></i>
                     Donasi Sekarang
-                </a>
-                <a href="{{ route('public.kegiatan.index') }}"
-                    class="inline-flex items-center gap-2 bg-transparent border-2 border-white/60 hover:border-white text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 hover:-translate-y-0.5">
-                    Lihat Kegiatan
                 </a>
             </div>
 

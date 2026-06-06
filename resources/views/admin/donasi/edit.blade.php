@@ -35,19 +35,38 @@
                     <label class="block text-gray-800 font-semibold mb-2">No. HP</label>
                     <input type="text" name="no_hp" value="{{ old('no_hp', $donasi->no_hp) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400">
                 </div>
-                <div class="mb-5">
-                    <label class="block text-gray-800 font-semibold mb-2">Nominal</label>
-                    <input type="number" name="nominal" value="{{ old('nominal', $donasi->nominal) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" min="1000" required>
-                </div>
-
+                
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Tanggal</label>
                     <input 
-                        type="date" 
-                        name="tanggal" 
-                        value="{{ old('tanggal', $donasi->tanggal ? \Carbon\Carbon::parse($donasi->tanggal)->format('Y-m-d') : date('Y-m-d')) }}" 
-                        class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" 
-                        required>
+                    type="date" 
+                    name="tanggal" 
+                    value="{{ old('tanggal', $donasi->tanggal ? \Carbon\Carbon::parse($donasi->tanggal)->format('Y-m-d') : date('Y-m-d')) }}" 
+                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                    required>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                    <div>
+                        <label class="block text-gray-800 font-semibold mb-2">Nominal</label>
+                        <input type="number" name="nominal" value="{{ old('nominal', $donasi->nominal) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" min="1000" required>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-800 font-semibold mb-2">Metode Pembayaran</label>
+                        <select name="metode_pembayaran" id="metode_pembayaran"
+                            class="w-full h-[46px] appearance-none border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-gray-900"
+                            required> 
+                            <option value="" disabled>Pilih Metode Pembayaran</option>
+                            <option value="Tunai" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'Tunai' ? 'selected' : '' }}>Tunai</option>
+                            <option value="bca" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'bca' ? 'selected' : '' }}>Transfer BCA</option>
+                            <option value="mandiri" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'mandiri' ? 'selected' : '' }}>Transfer Mandiri</option>
+                            <option value="bni" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'bni' ? 'selected' : '' }}>Transfer BNI</option>
+                            <option value="bri" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'bri' ? 'selected' : '' }}>Transfer BRI</option>
+                            <option value="qris" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'qris' ? 'selected' : '' }}>QRIS</option>
+                            <option value="Lainnya" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="mb-5">

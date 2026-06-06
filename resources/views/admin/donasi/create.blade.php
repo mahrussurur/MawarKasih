@@ -24,32 +24,58 @@
             <form action="{{ route('donasi.store') }}" method="POST">
                 @csrf
 
+                <!-- Nama Donatur -->
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Nama Donatur</label>
-                    <input type="text" name="nama_donatur" placeholder="Masukkan Nama Donatur..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
+                    <input type="text" name="nama_donatur" value="{{ old('nama_donatur') }}" placeholder="Masukkan Nama Donatur..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
                 </div>
 
+                <!-- No. HP -->
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">No. HP</label>
-                    <input type="number" name="no_hp" placeholder="Contoh: 08xxxxxxxxxx" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400">
+                    <input type="number" name="no_hp" value="{{ old('no_hp') }}" placeholder="Contoh: 08xxxxxxxxxx" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
                 </div>
 
-                <div class="mb-5">
-                    <label class="block text-gray-800 font-semibold mb-2">Nominal</label>
-                    <input type="number" name="nominal" placeholder="Masukkan Nominal Donasi..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" min="1000" required>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                    <!-- Nominal -->
+                    <div>
+                        <label class="block text-gray-800 font-semibold mb-2">Nominal</label>
+                        <input type="number" name="nominal" value="{{ old('nominal') }}" placeholder="Masukkan Nominal Donasi..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" min="1000" required>
+                    </div>
+
+                    <!-- Metode Pembayaran -->
+                    <div>
+                        <label class="block text-gray-800 font-semibold mb-2">Metode Pembayaran</label>
+                        <select name="metode_pembayaran" id="metode_pembayaran"
+                            class="w-full h-[46px] appearance-none border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm text-gray-400"
+                            required
+                            onchange="this.classList.remove('text-gray-400','text-sm'); this.classList.add('text-gray-900')"> 
+                            
+                            <option value="" disabled selected>Pilih Metode Pembayaran</option>
+                            <option class="text-gray-900" value="Tunai" {{ old('metode_pembayaran') == 'Tunai' ? 'selected' : '' }}>Tunai</option>
+                            <option class="text-gray-900" value="bca" {{ old('metode_pembayaran') == 'bca' ? 'selected' : '' }}>Transfer BCA</option>
+                            <option class="text-gray-900" value="mandiri" {{ old('metode_pembayaran') == 'mandiri' ? 'selected' : '' }}>Transfer Mandiri</option>
+                            <option class="text-gray-900" value="bni" {{ old('metode_pembayaran') == 'bni' ? 'selected' : '' }}>Transfer BNI</option>
+                            <option class="text-gray-900" value="bri" {{ old('metode_pembayaran') == 'bri' ? 'selected' : '' }}>Transfer BRI</option>
+                            <option class="text-gray-900" value="qris" {{ old('metode_pembayaran') == 'qris' ? 'selected' : '' }}>QRIS</option>
+                        </select>
+                    </div>
                 </div>
 
+                <!-- Keterangan -->
                 <div class="mb-5">
                     <label class="block text-gray-800 font-semibold mb-2">Keterangan</label>
-                    <textarea name="keterangan" rows="2" placeholder="Masukkan Keterangan..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400"></textarea>
+                    <textarea name="keterangan" value="{{ old('keterangan') }}" rows="2" placeholder="Masukkan Keterangan..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>{{ old('keterangan') }}</textarea>
                 </div>
 
+                <!-- Upload Bukti Transfer -->
                 <div class="mb-8">
                     <label class="block text-gray-800 font-semibold mb-2">Upload Bukti Transfer</label>
-                    <input type="file" name="bukti_transfer" accept="image/*" class="w-full rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer">
+                    <input type="file" name="bukti_transfer" value="{{ old('bukti_transfer') }}" accept="image/*" class="w-full rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer">
                     <p class="text-xs text-gray-500 mt-2">Biarkan kosong jika tidak memerlukan bukti. Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
                 </div>
 
+                <!-- Tombol Aksi -->
                 <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
                     <a href="{{ route('donasi.index') }}" class="rounded-2xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300  transition hover:bg-gray-300">
                         Batal
