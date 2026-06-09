@@ -30,6 +30,7 @@ use App\Models\AnakAsuh;   // Model tabel anak_asuhs
 use App\Models\Pengasuh;   // Model tabel penguruses
 use App\Models\Kegiatan;   // Model tabel kegiatans
 use App\Models\Donatur;   // Model tabel donaturs
+use App\Models\Galeri;    // Model tabel galeris
 
 class HomeController extends Controller
 {
@@ -65,6 +66,8 @@ class HomeController extends Controller
         $kegiatans = Kegiatan::latest('tanggal_pelaksanaan')
             ->get();
 
-        return view('public.home', compact('stats', 'kegiatans'));
+        $fasilitas = Galeri::where('kategori', 'fasilitas')->latest()->get();
+
+        return view('public.home', compact('stats', 'kegiatans', 'fasilitas'));
     }
 }
