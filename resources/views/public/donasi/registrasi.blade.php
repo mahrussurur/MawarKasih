@@ -11,12 +11,12 @@
                     <div class="space-y-6">
                         <div>
                             <h1 class="text-2xl sm:text-3xl font-bold">Selamat datang calon donatur tetap!</h1>
-                            <p class="mt-5 text-sm leading-7 text-white/90">Isi data ini sekali saja. Setelah terdaftar, Anda bisa langsung berdonasi tanpa mengisi ulang data pribadi, dan mendapatkan halaman profil serta riwayat donasi.</p>
+                            <p class="mt-5 text-sm leading-5 text-white/90">Isi data ini sekali saja. Setelah terdaftar, Anda bisa langsung berdonasi tanpa mengisi ulang data pribadi, dan mendapatkan halaman profil serta riwayat donasi.</p>
                         </div>
                         <div class="space-y-4 text-sm text-white/80">
                             <p><strong>Keuntungan:</strong></p>
                             <ul class="list-disc list-inside">
-                                <li>Form donasi cepat: hanya nominal dan bukti transfer.</li>
+                                <li>Form donasi cepat tanpa mengisi data diri.</li>
                                 <li>Profil donatur tersimpan.</li>
                                 <li>Riwayat donasi pribadi.</li>
                                 <li>Logout kapan saja.</li>
@@ -77,12 +77,10 @@
                             <label class="block text-sm font-semibold text-gray-700">Alamat Lengkap</label>
                             <textarea 
                                 name="alamat"
-                                value="{{ old('alamat') }}"
                                 rows="3" 
                                 class="mt-3 w-full rounded-xl border border-gray-300 px-4 py-4 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" 
                                 placeholder="masukkan alamat lengkap Anda..."
-                                required>
-                            </textarea>
+                                required>{{ old('alamat') }}</textarea>
                             @error('alamat')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>
 
