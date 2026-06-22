@@ -29,7 +29,8 @@ Route::prefix('')->name('public.')->group(function () {
     Route::get('/donasi', [DonasiPublicController::class, 'form'])->name('donasi.form');
     Route::get('/donasi/rekening', [DonasiPublicController::class, 'rekening'])->name('donasi.rekening');
     Route::get('/donasi/tutorial', [DonasiPublicController::class, 'tutorial'])->name('donasi.tutorial');
-    Route::get('/donasi/validasi', [DonasiPublicController::class, 'validasi'])->name('donasi.validasi');
+    Route::get('/donasi/validasi/{kode_donasi?}', [DonasiPublicController::class, 'validasi'])->name('donasi.validasi');
+    Route::post('/donasi/validasi/{kode_donasi}/upload', [DonasiPublicController::class, 'uploadBukti'])->name('donasi.validasi.upload');
     Route::get('/donasi/login', [DonasiPublicController::class, 'login'])->name('donasi.login');
     Route::post('/donasi/login', [DonasiPublicController::class, 'loginStore'])->name('donasi.login.submit');
     Route::get('/donasi/registrasi', [DonasiPublicController::class, 'registrasi'])->name('donasi.registrasi');

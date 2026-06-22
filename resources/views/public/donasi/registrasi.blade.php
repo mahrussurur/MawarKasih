@@ -3,7 +3,7 @@
 @section('title', 'Registrasi Donatur')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 flex items-center py-16">
+<div class="bg-gray-50 py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div class="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -64,11 +64,15 @@
 
                         <div>
                             <label class="block text-sm font-semibold text-gray-700">Nomor HP</label>
-                            <input type="text"
+                            <input type="tel"
                             name="no_hp"
                             value="{{ old('no_hp') }}"
+                            minlength="10" maxlength="15"
                             class="mt-3 w-full rounded-xl border border-gray-300 px-4 py-4 text-sm font-medium text-gray-900 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
                             placeholder="masukkan nomor hp Anda..."
+                            pattern="[0-9]{10,15}"
+                            title="Hanya angka, 10-15 digit"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             required>
                             @error('no_hp')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
                         </div>

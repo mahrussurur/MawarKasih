@@ -34,30 +34,24 @@
                         <a href="{{ route('public.donasi.form') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
                             <i data-lucide="heart" class="w-4 h-4"></i> Form Donasi
                         </a>
-                        <a href="{{ route('public.donasi.rekening') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
-                            <i data-lucide="credit-card" class="w-4 h-4"></i> Rekening Donasi
-                        </a>
-                        <a href="{{ route('public.donasi.tutorial') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
-                            <i data-lucide="book-open" class="w-4 h-4"></i> Tutorial Berdonasi
-                        </a>
                         <a href="{{ route('public.donasi.validasi') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
                             <i data-lucide="check-circle" class="w-4 h-4"></i> Validasi Donasi
                         </a>
+                        <a href="{{ route('public.donasi.rekening') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
+                            <i data-lucide="credit-card" class="w-4 h-4"></i> Rekening Donasi
+                        </a>
+                        <!-- <a href="{{ route('public.donasi.tutorial') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
+                            <i data-lucide="book-open" class="w-4 h-4"></i> Tutorial Berdonasi
+                        </a> -->
                     </div>
                 </li>
 
-                <!-- Kegiatan Dropdown -->
-                <li class="relative group">
-                    <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.kegiatan*') ? 'text-brand-600 font-semibold' : '' }}">
-                        Kegiatan
-                        <i data-lucide="chevron-down" class="w-4 h-4 transition group-hover:rotate-180"></i>
-                    </button>
-                    <!-- Dropdown Kegiatan -->
-                    <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
-                        <a href="{{ route('public.kegiatan.index') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
-                            <i data-lucide="calendar" class="w-4 h-4"></i> Semua Kegiatan
-                        </a>
-                    </div>
+                <!-- Artikel Kegiatan -->
+                <li>
+                    <a href="{{ route('public.kegiatan.index') }}"
+                        class="px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.kegiatan.index') ? 'text-brand-600 font-semibold' : '' }}">
+                        Artikel Kegiatan
+                    </a>
                 </li>
 
                 <!-- Tentang Kami Dropdown -->
@@ -153,21 +147,16 @@
                 </button>
                 <div id="acc-donasi" class="hidden pl-4 mt-1 space-y-1">
                     <a href="{{ route('public.donasi.form') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Form Donasi</a>
-                    <a href="{{ route('public.donasi.rekening') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Rekening Donasi</a>
-                    <a href="{{ route('public.donasi.tutorial') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Tutorial Berdonasi</a>
                     <a href="{{ route('public.donasi.validasi') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Validasi Donasi</a>
+                    <a href="{{ route('public.donasi.rekening') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Rekening Donasi</a>
+                    <!-- <a href="{{ route('public.donasi.tutorial') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Tutorial Berdonasi</a> -->
                 </div>
             </div>
 
             <!-- Mobile: Accordion Kegiatan -->
-            <div>
-                <button class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50" onclick="toggleAccordion('acc-kegiatan', this)">
-                    Kegiatan <i data-lucide="chevron-down" class="w-4 h-4 transition" id="chevron-acc-kegiatan"></i>
-                </button>
-                <div id="acc-kegiatan" class="hidden pl-4 mt-1 space-y-1">
-                    <a href="{{ route('public.kegiatan.index') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Semua Kegiatan</a>
-                </div>
-            </div>
+            <a href="{{ route('public.kegiatan.index') }}" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 {{ request()->routeIs('public.kegiatan.index') ? 'bg-brand-50 text-brand-600' : '' }}">
+                Artikel Kegiatan
+            </a>
 
             <!-- Mobile: Accordion Tentang Kami -->
             <div>

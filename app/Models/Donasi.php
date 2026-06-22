@@ -15,6 +15,8 @@ class Donasi extends Model
     protected $fillable = [
         'kode_donasi',
         'nama_donatur',
+        'email',
+        'alamat',
         'no_hp',
         'nominal',
         'tanggal',
@@ -24,6 +26,7 @@ class Donasi extends Model
         'keterangan',
         'donatur_id',
         'metode_pembayaran',
+        'tampilkan_nama',
     ];
 
     // Saat ambil data dari DB, format ke d-m-Y

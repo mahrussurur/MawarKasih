@@ -31,6 +31,7 @@ use App\Models\Pengasuh;   // Model tabel penguruses
 use App\Models\Kegiatan;   // Model tabel kegiatans
 use App\Models\Donatur;   // Model tabel donaturs
 use App\Models\Galeri;    // Model tabel galeris
+use App\Models\Donasi;
 
 class HomeController extends Controller
 {
@@ -52,6 +53,7 @@ class HomeController extends Controller
             'totalPengasuh'  => Pengasuh::count(),
             'totalKegiatan'  => Kegiatan::count(),
             'totalDonatur'  => Donatur::count(),
+            'totalDonasi'  => Donasi::count(),
         ];
 
         // ======================================================

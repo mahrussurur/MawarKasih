@@ -3,7 +3,7 @@
 @section('title', 'Login Donatur')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 flex items-center py-16">
+<div class="bg-gray-50 py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div class="rounded-3xl border border-gray-200 bg-white p-10 shadow-sm">
             <div class="text-center mb-10">
