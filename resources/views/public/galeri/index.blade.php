@@ -2,22 +2,20 @@
 @section('title', 'Galeri — Panti Asuhan Mawar Kasih')
 
 @section('content')
-<!-- Header Section -->
-<section class="relative bg-brand-50 pt-24 pb-12 lg:pt-32 lg:pb-20 overflow-hidden">
-    <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-brand-400 via-transparent to-transparent pointer-events-none"></div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-        <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4" style="font-family:'Playfair Display',serif">
-            Galeri <span class="text-brand-600">Mawar Kasih</span>
-        </h1>
-        <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
-            Kumpulan momen kebersamaan, kegiatan, dan keceriaan anak-anak asuh di Panti Asuhan Mawar Kasih.
-        </p>
-    </div>
-</section>
 
 <!-- Gallery Grid Section -->
 <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="max-w-7xl mx-auto mb-12">
+            <form action="{{ route('public.galeri.index') }}" method="GET" class="relative">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau deskripsi foto..." class="w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all placeholder:text-sm">
+                <button type="submit" class="absolute right-1 top-1 bottom-1 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-1 transition-all shadow-sm">
+                    Cari
+                </button>
+            </form>
+        </div>
+        
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @forelse($galleries as $gallery)
                 <div class="group bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full">

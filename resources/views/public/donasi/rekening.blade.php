@@ -36,9 +36,6 @@
                 </div>
             </div>
 
-            <div class="mt-12 text-center">
-                <a href="{{ route('public.donasi.form') }}" class="inline-flex justify-center items-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700 shadow-sm">Kembali ke Form Donasi</a>
-            </div>
         </div>
     </div>
 </div>
