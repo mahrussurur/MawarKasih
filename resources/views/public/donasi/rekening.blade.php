@@ -13,7 +13,19 @@
             <div class="flex flex-col md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-gray-200 items-center max-w-5xl mx-auto mt-6">
                 <!-- Kiri: QRIS -->
                 <div class="flex-1 flex justify-center md:justify-end w-full p-6 md:pr-16 md:py-8">
-                    <img src="{{ asset('images/qris-barcode.jpg') }}" alt="QRIS Panti Asuhan Mawar Kasih" class="w-full max-w-[280px] object-contain rounded-xl shadow-sm border border-gray-200">
+                    @if(file_exists(public_path('images/qris-barcode.jpg')))
+                        <img src="{{ asset('images/qris-barcode.jpg') }}" alt="QRIS Panti Asuhan Mawar Kasih" class="w-full max-w-[280px] object-contain rounded-xl shadow-sm border border-gray-200">
+                    @else
+                        <div class="w-full max-w-[280px] aspect-square flex flex-col items-center justify-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-6 text-center">
+                            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mb-3">
+                                <i data-lucide="qr-code" class="w-8 h-8"></i>
+                            </div>
+                            <p class="text-sm font-semibold text-gray-700 mb-1">QRIS Belum Tersedia</p>
+                            <p class="text-xs text-gray-400 max-w-[180px] leading-relaxed">
+                                Metode pembayaran via QRIS saat ini belum diaktifkan.
+                            </p>
+                        </div>
+                    @endif
                 </div>
 
                 <!-- Kanan: Rekening -->

@@ -248,13 +248,6 @@
                     KEGIATAN TERKINI KAMI
                 </h2>
             </div>
-            
-            <!-- Tombol Lihat Semua disesuaikan dengan aksen warna merah -->
-            <a href="{{ route('public.kegiatan.index') }}"
-                class="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-600 hover:text-blue-700 transition group mt-4 md:mt-0">
-                Lihat Semua Kegiatan
-                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-            </a>
         </div>
 
         <!-- Grid kartu kegiatan (Diubah menjadi 3 kolom agar ukuran & proporsi pas dengan screenshot) -->
@@ -339,12 +332,6 @@
                     FASILITAS KAMI
                 </h2>
             </div>
-            
-            <a href="{{ route('public.fasilitas') }}"
-                class="inline-flex items-center gap-1.5 text-sm font-semibold text-gray-600 hover:text-blue-700 transition group mt-4 md:mt-0">
-                Lihat Semua Fasilitas
-                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
-            </a>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">

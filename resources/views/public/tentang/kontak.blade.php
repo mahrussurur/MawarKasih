@@ -31,7 +31,7 @@
                     <div>
                         <!-- Judul turun ke text-lg, teks deskripsi turun ke text-sm -->
                         <h3 class="text-lg font-semibold text-gray-800 mb-1">Panti Asuhan Mawar Kasih</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">
+                        <p class="text-gray-500 text-sm font-medium leading-relaxed">
                             G857+F87, Unnamed Road, Bayatrejo, Kedunggebang, Kec. Tegaldlimo, Kabupaten Banyuwangi, Jawa Timur 68484
                         </p>
                     </div>
@@ -44,7 +44,7 @@
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 mb-1">Email</h3>
-                        <a href="mailto:pantimawarkasih@gmail.com" class="text-gray-500 hover:text-brand-600 text-sm transition-colors">
+                        <a href="mailto:pantimawarkasih@gmail.com" class="text-gray-500 hover:text-brand-600 text-sm font-medium transition-colors">
                             pantimawarkasih@gmail.com
                         </a>
                     </div>
@@ -58,10 +58,10 @@
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 mb-1">WhatsApp</h3>
                         <div class="flex items-center gap-1.5 text-sm">
-                            <a href="https://wa.me/6282334208165" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-700 transition-colors font-medium">
+                            <a href="https://wa.me/6282334208165" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-800 transition-colors font-medium">
                                 +6282334208165
                             </a>
-                            <p class="text-gray-500">(Bpk. Masduki)</p>
+                            <p class="text-gray-500 font-medium">(Bpk. Masduki)</p>
                         </div>
                     </div>
                 </div>

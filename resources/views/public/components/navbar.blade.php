@@ -94,12 +94,12 @@
                                 <div class="text-[11px] font-medium text-slate-400">Donatur</div>
                             </div>
 
-                            <a href="{{ route('public.donatur.profile') }}" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-600 text-[13px] font-semibold hover:bg-slate-50 hover:text-slate-900 transition-colors w-full">
+                            <a href="{{ route('public.donatur.profile') }}" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-gray-600 text-[13px] font-semibold hover:bg-gray-100 hover:text-gray-900 transition-colors w-full">
                                 <i data-lucide="user" class="w-4 h-4"></i>
                                 Profil Saya
                             </a>
                             
-                            <a href="{{ route('public.donatur.history') }}" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-600 text-[13px] font-semibold hover:bg-slate-50 hover:text-slate-900 transition-colors w-full">
+                            <a href="{{ route('public.donatur.history') }}" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-gray-600 text-[13px] font-semibold hover:bg-gray-100 hover:text-gray-900 transition-colors w-full">
                                 <i data-lucide="clock" class="w-4 h-4"></i>
                                 Riwayat Donasi
                             </a>

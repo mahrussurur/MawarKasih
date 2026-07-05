@@ -35,7 +35,7 @@ class DonasiPublicController extends Controller
         }
 
         session(['donatur_id' => $donatur->id]);
-        return redirect()->route('public.home')->with('success', 'Login berhasil. Selamat datang kembali, ' . $donatur->nama);
+        return redirect()->route('public.donatur.profile')->with('success', 'Login berhasil');
     }
 
     public function registrasi()
@@ -58,7 +58,7 @@ class DonasiPublicController extends Controller
         $donatur = Donatur::create($validated);
         session(['donatur_id' => $donatur->id]);
 
-        return redirect()->route('public.home')->with('success', 'Registrasi berhasil. Selamat datang, ' . $donatur->nama);
+        return redirect()->route('public.home')->with('success', 'Registrasi berhasil');
     }
 
     public function rekening()

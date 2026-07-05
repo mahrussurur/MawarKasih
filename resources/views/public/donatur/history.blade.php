@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="min-h-screen bg-gray-50 py-20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-3xl font-bold text-gray-900">Riwayat Donasi</h1>
@@ -22,6 +22,7 @@
                         <th class="px-6 py-4 text-left font-semibold text-gray-700">Nominal</th>
                         <th class="px-6 py-4 text-left font-semibold text-gray-700">Tanggal</th>
                         <th class="px-6 py-4 text-left font-semibold text-gray-700">Status</th>
+                        <th class="px-6 py-4 text-center font-semibold text-gray-700">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -34,10 +35,18 @@
                             <td class="whitespace-nowrap px-4 py-3">
                                 <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold {{ $donasi->status == 'diterima' ? 'bg-green-100 text-green-700' : ($donasi->status == 'ditolak' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700') }}">{{ $donasi->status_label }}</span>
                             </td>
+                            <td class="whitespace-nowrap px-6 py-4 text-center">
+                                <a href="{{ route('public.donasi.validasi', ['kode_donasi' => $donasi->kode_donasi]) }}" class="inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700 transition hover:bg-brand-100">
+                                    Detail
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </a>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-12 text-center text-gray-500">Belum ada riwayat donasi.</td>
+                            <td colspan="6" class="px-6 py-12 text-center text-gray-500">Belum ada riwayat donasi.</td>
                         </tr>
                     @endforelse
                 </tbody>

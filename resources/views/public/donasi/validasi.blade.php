@@ -38,30 +38,33 @@
                             </div>
 
                             <!-- Pemberitahuan / Info Box -->
-                            <div class="flex items-start gap-2 p-3 bg-yellow-50 border border-yellow-100 rounded-lg">
-                                <svg class="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <p class="text-xs text-yellow-700 leading-relaxed">
-                                    <span class="font-semibold">Penting:</span> Simpan Kunci Validasi ini. Anda dapat menggunakannya untuk mengecek status dan detail donasi Anda kapan saja.
-                                </p>
-                            </div>
+                            @if(session('success'))
+                                <div id="infoBoxKunci" class="flex items-start gap-2 p-3 bg-yellow-50 border border-yellow-100 rounded-lg transition-all duration-300">
+                                    <svg class="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p class="text-xs text-yellow-700 leading-relaxed">
+                                        <span class="font-semibold">Penting:</span> Simpan Kunci Validasi ini. Anda dapat menggunakannya untuk mengecek status dan detail donasi Anda kapan saja.
+                                    </p>
+                                </div>
+                            @endif
+                            
                         </div>
                         <div class="grid grid-cols-3">
                             <div class="col-span-1 text-gray-500">Nama</div>
-                            <div class="col-span-2 font-medium">: {{ $donasi->nama_donatur }}</div>
+                            <div class="col-span-2 font-medium break-all">: {{ $donasi->nama_donatur }}</div>
                         </div>
                         <div class="grid grid-cols-3">
                             <div class="col-span-1 text-gray-500">Email</div>
-                            <div class="col-span-2 font-medium">: {{ $donasi->email ?? '-' }}</div>
+                            <div class="col-span-2 font-medium break-all">: {{ $donasi->email ?? '-' }}</div>
                         </div>
                         <div class="grid grid-cols-3">
                             <div class="col-span-1 text-gray-500">Alamat</div>
-                            <div class="col-span-2 font-medium">: {{ $donasi->alamat ?? '-' }}</div>
+                            <div class="col-span-2 font-medium break-all">: {{ $donasi->alamat ?? '-' }}</div>
                         </div>
                         <div class="grid grid-cols-3">
                             <div class="col-span-1 text-gray-500">No. Telp</div>
-                            <div class="col-span-2 font-medium">: {{ $donasi->no_hp }}</div>
+                            <div class="col-span-2 font-medium break-all">: {{ $donasi->no_hp }}</div>
                         </div>
                     </div>
 
@@ -70,19 +73,19 @@
                     <div class="space-y-3 text-sm text-gray-700">
                         <div class="grid grid-cols-3">
                             <div class="col-span-1 text-gray-500">Nama Tertera</div>
-                            <div class="col-span-2 font-medium">: {{ ucwords(str_replace('_', ' ', $donasi->tampilkan_nama)) }}</div>
+                            <div class="col-span-2 font-medium break-all">: {{ ucwords(str_replace('_', ' ', $donasi->tampilkan_nama)) }}</div>
                         </div>
                         <div class="grid grid-cols-3">
                             <div class="col-span-1 text-gray-500">Keterangan</div>
-                            <div class="col-span-2 font-medium">: {{ $donasi->keterangan ?? '-' }}</div>
+                            <div class="col-span-2 font-medium break-all">: {{ $donasi->keterangan ?? '-' }}</div>
                         </div>
                         <div class="grid grid-cols-3">
                             <div class="col-span-1 text-gray-500">Nominal</div>
-                            <div class="col-span-2 font-medium">: {{ $donasi->nominal_rupiah }}</div>
+                            <div class="col-span-2 font-medium break-all">: {{ $donasi->nominal_rupiah }}</div>
                         </div>
                         <div class="grid grid-cols-3">
                             <div class="col-span-1 text-gray-500">Metode</div>
-                            <div class="col-span-2 font-medium uppercase">: {{ $donasi->metode_pembayaran }}</div>
+                            <div class="col-span-2 font-medium uppercase break-all">: {{ $donasi->metode_pembayaran }}</div>
                         </div>
                     </div>
 
@@ -127,12 +130,6 @@
                         </div>
                     @endif
                 </div>
-            </div>
-
-            <div class="mt-8 text-center">
-                <a href="{{ route('public.home') }}" class="inline-flex rounded-full bg-brand-600 px-8 py-3 text-sm font-semibold text-white transition hover:bg-brand-700 shadow-sm">
-                    Kembali ke Beranda
-                </a>
             </div>
         @else
             <!-- Form Pencarian (Jika tidak ada Donasi/Kode) -->
@@ -201,6 +198,16 @@
     function salinKunci(text) {
         navigator.clipboard.writeText(text).then(() => {
             showToast('Kunci berhasil disalin!');
+            
+            // Sembunyikan pesan penting (jika ada) setelah kunci disalin
+            const infoBox = document.getElementById('infoBoxKunci');
+            if (infoBox) {
+                infoBox.classList.add('opacity-0', '-translate-y-2');
+                setTimeout(() => {
+                    infoBox.style.display = 'none';
+                }, 300);
+            }
+            
         }).catch(err => {
             console.error('Gagal menyalin: ', err);
         });

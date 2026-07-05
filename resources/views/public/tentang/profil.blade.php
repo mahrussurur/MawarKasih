@@ -14,16 +14,16 @@
                     
                     <div class="space-y-6 text-gray-600 text-sm md:text-base leading-relaxed">
                         <p>
-                            Akte Notaris: Nomor 65, tanggal 20 September 2016 oleh ENDY INDRA PERMANA, S.H., M.Kn.
+                            <span class="font-medium">Akte Notaris:</span> Nomor 65, tanggal 20 September 2016 oleh ENDY INDRA PERMANA, S.H., M.Kn.
                         </p>
                         <p>
-                            SK Menkumham RI: Nomor AHU-0074647.AH.01.07.TAHUN 2016, tanggal 28 September 2016
+                            <span class="font-medium">SK Menkumham RI:</span> Nomor AHU-0074647.AH.01.07.TAHUN 2016, tanggal 28 September 2016
                         </p>
                         <p>
-                            NPWP: 03.092.999.6-627.000
+                            <span class="font-medium">NPWP:</span> 03.092.999.6-627.000
                         </p>
                         <p>
-                            STP Yayasan Nomor : P2T/23/07.04/02/I/2014
+                            <span class="font-medium">STP Yayasan Nomor:</span> P2T/23/07.04/02/I/2014
                         </p>
                     </div>
                 </div>
