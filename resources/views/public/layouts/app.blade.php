@@ -18,17 +18,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    {{-- ======================================================
-         TAILWIND CSS
-         Jika sudah pakai Vite/Mix, hapus CDN ini dan
-         ganti dengan: @vite(['resources/css/app.css'])
-    ====================================================== --}}
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // ======================================================
-        // TAILWIND CONFIG - Warna & Font Kustom
-        // Ubah warna brand di sini jika perlu.
-        // ======================================================
         tailwind.config = {
             theme: {
                 extend: {

@@ -1,5 +1,5 @@
 @extends('public.layouts.app')
-@section('title', 'Donasi - Panti Asuhan Mawar Kasih')
+@section('title', 'Donasi | Panti Asuhan Mawar Kasih')
 
 @section('content')
 @php
@@ -8,18 +8,12 @@
 <div class="bg-gray-50 py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 
-        @if(session('success'))
-            <div class="mb-8 rounded-3xl border border-green-200 bg-green-50 p-5 text-sm text-green-800">{{ session('success') }}</div>
-        @endif
-        @if(session('error'))
-            <div class="mb-8 rounded-3xl border border-red-200 bg-red-50 p-5 text-sm text-red-800">{{ session('error') }}</div>
-        @endif
 
-        @if($errorBag->any())
+        @if($errors->any())
             <div class="mb-8 rounded-3xl border border-red-200 bg-red-50 p-5 text-sm text-red-800">
                 <p class="font-semibold">Terdapat kesalahan pada pengisian form:</p>
                 <ul class="mt-3 list-disc pl-5">
-                    @foreach($errorBag->all() as $error)
+                    @foreach($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
@@ -220,10 +214,10 @@
                                 </label>
 
                                 <!-- QR BISA DIDOWNLOAD -->
-                                <a href="{{ asset('images/qris-tes.png') }}"
+                                <a href="{{ asset('images/qris-barcode.png') }}"
                                     download="QRIS-Panti-Asuhan-Mawar-Kasih.png"
                                     title="Klik untuk mengunduh QRIS">
-                                    <img src="{{ asset('images/qris-tes.png') }}"
+                                    <img src="{{ asset('images/qris-barcode.png') }}"
                                         alt="QRIS Barcode"
                                         class="w-48 h-48 object-contain rounded-lg hover:shadow hover:shadow-green-400 transition">
                                 </a>
@@ -481,8 +475,8 @@
                                         <img src="{{ asset('images/qris-logo.png') }}" alt="QRIS" class="h-10 object-contain relative z-0 bg-transparent">
                                     </div>
                                 </label>
-                                <a href="{{ asset('images/qris-tes.png') }}" download="QRIS-Panti-Asuhan-Mawar-Kasih.png" title="Klik untuk mengunduh QRIS">
-                                    <img src="{{ asset('images/qris-tes.png') }}" alt="QRIS Barcode" class="w-48 h-48 object-contain rounded-lg hover:shadow hover:shadow-green-400 transition">
+                                <a href="{{ asset('images/qris-barcode.png') }}" download="QRIS-Panti-Asuhan-Mawar-Kasih.png" title="Klik untuk mengunduh QRIS">
+                                    <img src="{{ asset('images/qris-barcode.png') }}" alt="QRIS Barcode" class="w-48 h-48 object-contain rounded-lg hover:shadow hover:shadow-green-400 transition">
                                 </a>
                                 <div class="mt-4 space-y-1 text-center">
                                     <p class="text-sm font-bold text-gray-800 uppercase tracking-wide">Panti Asuhan Mawar Kasih</p>

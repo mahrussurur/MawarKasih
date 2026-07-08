@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('page-title', 'Data Donatur')
+@section('title', 'Data Donatur | Panti Asuhan Mawar Kasih')
 
 @section('content')
 <div class="p-1 bg-gray-100 min-h-screen">

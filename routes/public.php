@@ -57,6 +57,7 @@ Route::prefix('')->name('public.')->group(function () {
     // ── Galeri ───────────────────────────────────────────────
     Route::get('/galeri', [GaleriPublicController::class, 'index'])->name('galeri.index');
     Route::get('/galeri/{id}', [GaleriPublicController::class, 'show'])->name('galeri.show');
+    
     // ── Kontak ───────────────────────────────────────────────
     Route::get('/kontak', [TentangController::class, 'kontak'])->name('kontak');
 

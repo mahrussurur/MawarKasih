@@ -124,7 +124,33 @@ class DonasiPublicController extends Controller
             ]);
         }
 
-        $validated = $request->validate($rules);
+        $messages = [
+            'nominal.required' => 'Nominal donasi wajib diisi.',
+            'nominal.integer' => 'Nominal donasi harus berupa angka valid.',
+            'nominal.min' => 'Nominal donasi minimal Rp 1.000.',
+            'nominal.max' => 'Nominal donasi maksimal Rp 100.000.000.',
+            'metode_pembayaran.required' => 'Silakan pilih metode pembayaran terlebih dahulu.',
+            'metode_pembayaran.in' => 'Metode pembayaran tidak valid.',
+            'tampilkan_nama.required' => 'Silakan pilih opsi tampilan nama untuk donasi ini.',
+            'tampilkan_nama.in' => 'Opsi tampilan nama tidak valid.',
+            'keterangan.max' => 'Doa/Keterangan maksimal 500 karakter.',
+            'bukti_transfer.image' => 'File bukti transfer harus berupa gambar.',
+            'bukti_transfer.mimes' => 'Format bukti transfer harus jpeg, png, atau jpg.',
+            'bukti_transfer.max' => 'Ukuran file maksimal 2MB.',
+
+            'nama_donatur.required' => 'Nama donatur wajib diisi.',
+            'nama_donatur.max' => 'Nama donatur maksimal 255 karakter.',
+            'email.required' => 'Alamat email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.max' => 'Alamat email maksimal 255 karakter.',
+            'no_hp.required' => 'Nomor handphone wajib diisi.',
+            'no_hp.min' => 'Nomor handphone minimal 10 digit.',
+            'no_hp.max' => 'Nomor handphone maksimal 15 digit.',
+            'no_hp.regex' => 'Nomor handphone hanya boleh berisi angka.',
+            'alamat.max' => 'Alamat maksimal 1000 karakter.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
 
         if (!empty($request->input('website'))) {
             return back()->withInput()->withErrors(['website' => 'Permintaan tidak valid.']);

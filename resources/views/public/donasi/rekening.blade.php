@@ -13,8 +13,8 @@
             <div class="flex flex-col md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-gray-200 items-center max-w-5xl mx-auto mt-6">
                 <!-- Kiri: QRIS -->
                 <div class="flex-1 flex justify-center md:justify-end w-full p-6 md:pr-16 md:py-8">
-                    @if(file_exists(public_path('images/qris-barcode.jpg')))
-                        <img src="{{ asset('images/qris-barcode.jpg') }}" alt="QRIS Panti Asuhan Mawar Kasih" class="w-full max-w-[280px] object-contain rounded-xl shadow-sm border border-gray-200">
+                    @if(file_exists(public_path('images/qris-mawarkasih.jpg')))
+                        <img src="{{ asset('images/qris-mawarkasih.jpg') }}" alt="QRIS Panti Asuhan Mawar Kasih" class="w-full max-w-[280px] object-contain rounded-xl shadow-sm border border-gray-200">
                     @else
                         <div class="w-full max-w-[280px] aspect-square flex flex-col items-center justify-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-6 text-center">
                             <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mb-3">
@@ -52,34 +52,11 @@
     </div>
 </div>
 
-<!-- Elemen Notifikasi Toast -->
-<div id="toastNotifikasi" class="fixed top-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg shadow-lg transform transition-all duration-300 -translate-y-4 opacity-0 pointer-events-none z-50">
-    <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-    </svg>
-    <span id="toastMessage" class="text-sm font-medium whitespace-nowrap">Berhasil!</span>
-</div>
-
 @section('extra_scripts')
 <script>
-    function showToast(message) {
-        const toast = document.getElementById('toastNotifikasi');
-        const toastMessage = document.getElementById('toastMessage');
-        
-        toastMessage.textContent = message;
-        
-        toast.classList.remove('-translate-y-4', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
-        
-        setTimeout(() => {
-            toast.classList.remove('translate-y-0', 'opacity-100');
-            toast.classList.add('-translate-y-4', 'opacity-0');
-        }, 3500);
-    }
-
     function salinNomor(text) {
         navigator.clipboard.writeText(text).then(() => {
-            showToast('Nomor rekening berhasil disalin!');
+            showToast('Nomor rekening berhasil disalin!', 'success');
         }).catch(err => {
             console.error('Gagal menyalin: ', err);
         });

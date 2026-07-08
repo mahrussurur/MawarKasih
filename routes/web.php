@@ -2,19 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes - Entry Point
-|--------------------------------------------------------------------------
-| File ini hanya sebagai pintu masuk. Semua route dipecah ke:
-|   - routes/admin.php   → panel admin (butuh login)
-|   - routes/public_web.php → web profile (bisa diakses semua)
-|   - routes/auth.php    → login, register (bawaan Laravel)
-*/
-
-// Redirect root ke halaman utama web profile
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('public.home');
 });
 
 // Load route admin (panel pengelolaan data)

@@ -1,5 +1,5 @@
 @extends('public.layouts.app')
-@section('title', 'Galeri — Panti Asuhan Mawar Kasih')
+@section('title', 'Galeri | Panti Asuhan Mawar Kasih')
 
 @section('content')
 

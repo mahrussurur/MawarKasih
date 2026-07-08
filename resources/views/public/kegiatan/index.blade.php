@@ -1,5 +1,5 @@
 @extends('public.layouts.app')
-@section('title', 'Kegiatan — Panti Asuhan Mawar Kasih')
+@section('title', 'Kegiatan | Panti Asuhan Mawar Kasih')
 
 @section('content')
 <div class="bg-gray-50 py-20 min-h-screen">

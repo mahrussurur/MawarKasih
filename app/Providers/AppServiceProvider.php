@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Donatur;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Daftarkan folder admin/components sebagai namespace komponen default
+        Blade::anonymousComponentNamespace('admin.components', '');
+
         View::composer(['public.*', 'public.components.*'], function ($view) {
             $donatur = null;
             if (session()->has('donatur_id')) {

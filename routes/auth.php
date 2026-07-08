@@ -1,9 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\NewPasswordController;
-use Illuminate\Support\Facades\Route;
 
 // Halaman login (GET) - tampilkan form
 Route::get('login', [AuthenticatedSessionController::class, 'create'])

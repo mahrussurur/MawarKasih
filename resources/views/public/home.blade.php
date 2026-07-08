@@ -12,7 +12,6 @@
         <div class="carousel-slide min-w-full relative h-full" aria-hidden="true">
             <img src="{{ asset('images/hero/slide-3.jpeg') }}" alt="Clone Last" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
-            <!-- Gradient mobile: Atas gelap (untuk teks), Bawah gelap (untuk tombol). Desktop: Kiri ke kanan -->
             <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
         </div>
 
