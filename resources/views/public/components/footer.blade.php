@@ -1,26 +1,18 @@
 <footer class="bg-brand-600 text-gray-300">
 
-    <!-- ===== FOOTER MAIN ===== -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
 
             <!-- KOLOM 1: Brand -->
-            <!-- Ditambahkan: flex-col, items-center, text-center untuk mobile -->
             <div class="lg:col-span-2 flex flex-col items-center text-center lg:items-start lg:text-left">
-                <!-- Logo -->
                 <a href="{{ route('public.home') }}" class="flex flex-col lg:flex-row items-center gap-3 mb-4">
-                    <!-- Ukuran logo diperbesar di mobile (h-28/h-32) dan normal di desktop (lg:h-11) -->
                     <img src="{{ asset('images/logo.png') }}" alt="Mawar Kasih" class="h-28 sm:h-32 lg:h-11 w-auto brightness-200 object-contain">
-                    
-                    <!-- Teks disembunyikan di mobile (hidden) dan dimunculkan di desktop (lg:block) -->
                     <div class="hidden lg:block leading-tight">
                         <div class="text-xs text-gray-400 uppercase tracking-wider">Panti Asuhan</div>
                         <div class="text-lg font-bold text-white">Mawar Kasih</div>
                     </div>
                 </a>
 
-                <!-- Deskripsi singkat / Alamat -->
-                <!-- Ditambahkan: mx-auto lg:mx-0 agar blok teks ke tengah di mobile -->
                 <a href="https://www.google.com/maps/place/Panti+Asuhan+Mawar+Kasih,+Kabupaten+Banyuwangi/@-8.4913261,114.3107274,17z/data=!3m1!4b1!4m6!3m5!1s0x2dd3fbf2a718c7cb:0xc856a6741baaf690!8m2!3d-8.4913314!4d114.3133023!16s%2Fg%2F11mhs9wjcp?authuser=0&entry=ttu&g_ep=EgoyMDI2MDYxMC4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -122,7 +114,6 @@
     <!-- FOOTER BOTTOM -->
     <div class="bg-gray-900 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-center gap-3 text-xs text-gray-500">
-            <!-- Copyright -->
             <p>© {{ date('Y') }} Panti Asuhan Mawar Kasih. Semua Hak Dilindungi.</p>
         </div>
     </div>

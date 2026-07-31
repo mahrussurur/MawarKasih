@@ -3,46 +3,36 @@
 @section('title', 'Profil Donatur')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 py-20">
+<div class="bg-gray-50 py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 
         <div class="grid gap-6 lg:grid-cols-1">
             <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
                 <h2 class="text-xl font-semibold text-gray-900 mb-6">Informasi Pribadi</h2>
-                <div class="space-y-5 text-sm text-gray-700">
-                    <div>
-                        <p class="text-xs text-gray-500">Nama Lengkap</p>
-                        <p class="mt-2 font-semibold text-gray-900">{{ $donatur->nama }}</p>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <div class="rounded-lg bg-gray-100 p-4 min-w-0">
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Nama</p>
+                        <p class="mt-2 text-sm font-semibold text-gray-900 break-all">{{ $donatur->nama }}</p>
                     </div>
-                    <div>
-                        <p class="text-xs text-gray-500">Email</p>
-                        <p class="mt-2 font-semibold text-gray-900">{{ $donatur->email }}</p>
+                    <div class="rounded-lg bg-gray-100 p-4 min-w-0">
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Email</p>
+                        <p class="mt-2 text-sm font-semibold text-gray-900 break-all">{{ $donatur->email }}</p>
                     </div>
-                    <div>
-                        <p class="text-xs text-gray-500">Nomor HP</p>
-                        <p class="mt-2 font-semibold text-gray-900">{{ $donatur->no_hp }}</p>
+                    <div class="rounded-lg bg-gray-100 p-4 min-w-0">
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-500">No. HP</p>
+                        <p class="mt-2 text-sm font-semibold text-gray-900 break-all">{{ $donatur->no_hp }}</p>
                     </div>
-                    <div>
-                        <p class="text-xs text-gray-500">Alamat</p>
-                        <p class="mt-2 font-semibold text-gray-900">{{ $donatur->alamat }}</p>
+                    <div class="rounded-lg bg-gray-100 p-4 min-w-0">
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Alamat</p>
+                        <p class="mt-2 text-sm font-semibold text-gray-900 break-all">{{ $donatur->alamat }}</p>
                     </div>
-                    <div>
-                        <p class="text-xs text-gray-500">Status Donatur</p>
+                    <div class="rounded-lg bg-gray-100 p-4 min-w-0 sm:col-span-2">
+                        <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Status Donatur</p>
                         <p class="mt-2 inline-flex rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">{{ ucfirst($donatur->status) }}</p>
                     </div>
                 </div>
             </div>
 
-            <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm">
-                <h2 class="text-xl font-semibold text-gray-900 mb-6">Aksi Cepat</h2>
-                <div class="space-y-4">
-                    <a href="{{ route('public.donatur.history') }}" class="block rounded-3xl border border-brand-600 bg-brand-50 px-5 py-4 text-sm font-semibold text-brand-700 transition hover:bg-brand-100">Lihat Riwayat Donasi</a>
-                    <form action="{{ route('public.donatur.logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="w-full rounded-3xl bg-red-500 px-5 py-4 text-sm font-semibold text-white transition hover:bg-red-600">Logout</button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 </div>

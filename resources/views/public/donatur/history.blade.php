@@ -3,54 +3,56 @@
 @section('title', 'Riwayat Donasi')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 py-20">
+<div class="bg-gray-50 py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <h1 class="text-3xl font-bold text-gray-900">Riwayat Donasi</h1>
-                <p class="mt-2 text-sm text-gray-500">Lihat status dan detail semua donasi Anda.</p>
+        <div class="rounded-[28px] border border-gray-200 bg-white p-6 sm:p-10 shadow-sm">
+            <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Riwayat Donasi</h1>
+                    <p class="mt-1 text-sm text-gray-500">Lihat status dan detail semua donasi Anda.</p>
+                </div>
+                <a href="{{ route('public.donasi.form') }}" class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Buat Donasi Baru</a>
             </div>
-            <a href="{{ route('public.donasi.form') }}" class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Buat Donasi Baru</a>
-        </div>
 
-        <div class="overflow-x-auto rounded-3xl border border-gray-200 bg-white shadow-sm">
-            <table class="min-w-full divide-y divide-gray-200 text-sm">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-4 text-left font-semibold text-gray-700">No</th>
-                        <th class="px-6 py-4 text-left font-semibold text-gray-700">Kode Donasi</th>
-                        <th class="px-6 py-4 text-left font-semibold text-gray-700">Nominal</th>
-                        <th class="px-6 py-4 text-left font-semibold text-gray-700">Tanggal</th>
-                        <th class="px-6 py-4 text-left font-semibold text-gray-700">Status</th>
-                        <th class="px-6 py-4 text-center font-semibold text-gray-700">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100">
-                    @forelse($donasis as $donasi)
+            <div class="overflow-x-auto rounded-2xl border border-gray-100">
+                <table class="min-w-full divide-y divide-gray-200 text-sm">
+                    <thead class="bg-gray-50">
                         <tr>
-                            <td class="px-6 py-4 text-gray-700">{{ $loop->iteration }}</td>
-                            <td class="px-6 py-4 font-semibold text-gray-900">{{ $donasi->kode_donasi }}</td>
-                            <td class="px-6 py-4 text-gray-700">{{ $donasi->nominal_rupiah }}</td>
-                            <td class="px-6 py-4 text-gray-700">{{ $donasi->tanggal?->format('d M Y') ?? '-' }}</td>
-                            <td class="whitespace-nowrap px-4 py-3">
-                                <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold {{ $donasi->status == 'diterima' ? 'bg-green-100 text-green-700' : ($donasi->status == 'ditolak' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700') }}">{{ $donasi->status_label }}</span>
-                            </td>
-                            <td class="whitespace-nowrap px-6 py-4 text-center">
-                                <a href="{{ route('public.donasi.validasi', ['kode_donasi' => $donasi->kode_donasi]) }}" class="inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700 transition hover:bg-brand-100">
-                                    Detail
-                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </a>
-                            </td>
+                            <th class="px-6 py-4 text-left font-semibold text-gray-700">No</th>
+                            <th class="px-6 py-4 text-left font-semibold text-gray-700">Kode Donasi</th>
+                            <th class="px-6 py-4 text-left font-semibold text-gray-700">Nominal</th>
+                            <th class="px-6 py-4 text-left font-semibold text-gray-700">Tanggal</th>
+                            <th class="px-6 py-4 text-left font-semibold text-gray-700">Status</th>
+                            <th class="px-6 py-4 text-center font-semibold text-gray-700">Aksi</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="px-6 py-12 text-center text-gray-500">Belum ada riwayat donasi.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse($donasis as $donasi)
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="px-6 py-4 text-gray-700">{{ $loop->iteration }}</td>
+                                <td class="px-6 py-4 font-semibold text-gray-900">{{ $donasi->kode_donasi }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ $donasi->nominal_rupiah }}</td>
+                                <td class="px-6 py-4 text-gray-700">{{ $donasi->tanggal?->format('d M Y') ?? '-' }}</td>
+                                <td class="whitespace-nowrap px-4 py-3">
+                                    <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold {{ $donasi->status == 'diterima' ? 'bg-green-100 text-green-700' : ($donasi->status == 'ditolak' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700') }}">{{ $donasi->status_label }}</span>
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4 text-center">
+                                    <a href="{{ route('public.donasi.validasi', ['kode_donasi' => $donasi->kode_donasi]) }}" class="inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700 transition hover:bg-brand-100">
+                                        Detail
+                                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="px-6 py-12 text-center text-gray-500">Belum ada riwayat donasi.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

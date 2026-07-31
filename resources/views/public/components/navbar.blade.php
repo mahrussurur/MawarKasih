@@ -173,19 +173,26 @@
 
             <div class="pt-2">
                 @if(!empty($currentDonatur))
-                    <div class="rounded-3xl border border-gray-200 bg-white p-3">
-                        <a href="{{ route('public.donatur.profile') }}" class="flex items-center justify-between text-sm font-semibold text-gray-700 hover:text-brand-600">
+                    <div>
+                        <button class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 border border-gray-100" onclick="toggleAccordion('acc-profile', this)">
                             <div class="flex items-center gap-2">
                                 <i data-lucide="user" class="w-4 h-4"></i>
                                 <span title="{{ $currentDonatur->nama }}">{{ \Illuminate\Support\Str::words($currentDonatur->nama, 2, '') }}</span>
                             </div>
-                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                        </a>
-                        <div class="mt-3 space-y-2">
-                            <a href="{{ route('public.donatur.history') }}" class="block rounded-full bg-brand-50 px-4 py-3 text-sm font-semibold text-brand-700 hover:bg-brand-100">Riwayat Donasi</a>
-                            <form action="{{ route('public.donatur.logout') }}" method="POST">
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition" id="chevron-acc-profile"></i>
+                        </button>
+                        <div id="acc-profile" class="hidden pl-4 mt-2 space-y-1">
+                            <a href="{{ route('public.donatur.profile') }}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-brand-600">
+                                <i data-lucide="user" class="w-4 h-4"></i> Profil Saya
+                            </a>
+                            <a href="{{ route('public.donatur.history') }}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-brand-600">
+                                <i data-lucide="clock" class="w-4 h-4"></i> Riwayat Donasi
+                            </a>
+                            <form action="{{ route('public.donatur.logout') }}" method="POST" class="mt-1">
                                 @csrf
-                                <button type="submit" class="w-full rounded-full bg-red-500 px-4 py-3 text-sm font-semibold text-white hover:bg-red-600">Logout</button>
+                                <button type="submit" class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-red-500 hover:text-red-600">
+                                    <i data-lucide="log-out" class="w-4 h-4"></i> Logout
+                                </button>
                             </form>
                         </div>
                     </div>

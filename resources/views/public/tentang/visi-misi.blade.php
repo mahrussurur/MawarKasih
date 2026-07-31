@@ -10,7 +10,7 @@
                 
                 <!-- Kiri: Tujuan (Menggantikan Motto) -->
                 <div>
-                    <h2 class="text-xl font-bold text-gray-900 mb-6 uppercase tracking-wide">Tujuan</h2>
+                    <h2 class="text-lg font-bold text-gray-900 mb-6 uppercase tracking-wide">Tujuan</h2>
                     
                     <ol class="list-decimal list-outside ml-5 space-y-4 text-gray-600 text-base leading-relaxed">
                         <li>Menyiapkan Sumber Daya Manusia Menjadi Pribadi Yang Mempunyai Kompetensi Keterampilan, Khususnya Dalam Bidang Teknologi Informasi Dan Komunikasi.</li>
@@ -25,7 +25,7 @@
                     
                     <!-- Visi -->
                     <div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide">Visi</h3>
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 uppercase tracking-wide">Visi</h3>
                         <ul class="list-disc list-outside ml-5 space-y-3 text-gray-600 text-sm md:text-base leading-relaxed">
                             <li>Meningkatkan kesejahteraan dan kemakmuran masyarakat sehingga tercapai cita cita masyarakat yang adil dan sejahtera.</li>
                             <li>Meningkatkan kualitas sumber daya manusia dan mencetak generasi bangsa yang profesional dan memiliki bertanggung jawab.</li>
@@ -34,7 +34,7 @@
 
                     <!-- Misi -->
                     <div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4 uppercase tracking-wide">Misi</h3>
+                        <h3 class="text-lg font-bold text-gray-900 mb-4 uppercase tracking-wide">Misi</h3>
                         <ul class="list-disc list-outside ml-5 space-y-3 text-gray-600 text-sm md:text-base leading-relaxed">
                             <li>Manjaring masyarakat secara umum dan khusus untuk dididik menjadi orang yang berkualitas dibidangnya masing masing.</li>
                             <li>Memberi pendidikan formal dan non formal.</li>

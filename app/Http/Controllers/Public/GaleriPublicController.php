@@ -12,7 +12,7 @@ class GaleriPublicController extends Controller
     public function index()
     {
         $galleries = Galeri::where('kategori', 'umum')->latest()->paginate(12); // Sesuaikan jumlah per halaman
-        return view('public.galeri.index', compact('galleries'));
+        return view('public.tentang.galeri', compact('galleries'));
     }
 
     public function show($id)

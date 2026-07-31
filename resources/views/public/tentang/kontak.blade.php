@@ -19,49 +19,47 @@
                 </iframe>
             </div>
 
-            <!-- Detail Kontak (PERBAIKAN: Diperkecil & Lebih Rapat) -->
-            <div class="max-w-2xl flex flex-col space-y-7">
+            <!-- Detail Kontak -->
+            <div class="max-w-2xl grid grid-cols-1 gap-2">
                 
                 <!-- Alamat -->
-                <div class="flex items-start gap-4">
-                    <!-- Ukuran lingkaran ikon dikecilkan dari w-14 h-14 ke w-11 h-11 -->
-                    <div class="w-11 h-11 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="map-pin" class="w-5 h-5 text-gray-600"></i>
+                <div class="group flex items-start gap-4 p-4 rounded-2xl -ml-4">
+                    <div class="w-11 h-11 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
                     </div>
-                    <div>
-                        <!-- Judul turun ke text-lg, teks deskripsi turun ke text-sm -->
-                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Panti Asuhan Mawar Kasih</h3>
-                        <p class="text-gray-500 text-sm font-medium leading-relaxed">
+                    <div class="pt-0.5">
+                        <h3 class="text-[15px] font-semibold text-slate-800 mb-1.5 leading-none">Panti Asuhan Mawar Kasih</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed">
                             G857+F87, Unnamed Road, Bayatrejo, Kedunggebang, Kec. Tegaldlimo, Kabupaten Banyuwangi, Jawa Timur 68484
                         </p>
                     </div>
                 </div>
 
                 <!-- Email -->
-                <div class="flex items-start gap-4">
-                    <div class="w-11 h-11 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <i data-lucide="mail" class="w-5 h-5 text-gray-600"></i>
+                <div class="group flex items-start gap-4 p-4 rounded-2xl -ml-4">
+                    <div class="w-11 h-11 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i data-lucide="mail" class="w-5 h-5"></i>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Email</h3>
-                        <a href="mailto:pantimawarkasih@gmail.com" class="text-gray-500 hover:text-brand-600 text-sm font-medium transition-colors">
+                    <div class="pt-0.5">
+                        <h3 class="text-[15px] font-semibold text-slate-800 mb-1.5 leading-none">Email</h3>
+                        <a href="mailto:pantimawarkasih@gmail.com" class="text-slate-500 hover:text-brand-600 transition-colors">
                             pantimawarkasih@gmail.com
                         </a>
                     </div>
                 </div>
 
                 <!-- WhatsApp -->
-                <div class="flex items-start gap-4">
-                    <div class="w-11 h-11 bg-gray-100 rounded-full flex-shrink-0 flex items-center justify-center">
-                        <i data-lucide="phone" class="w-5 h-5 text-gray-600"></i>
+                <div class="group flex items-start gap-4 p-4 rounded-2xl -ml-4">
+                    <div class="w-11 h-11 bg-green-50 text-green-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
                     </div>
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-800 mb-1">WhatsApp</h3>
-                        <div class="flex items-center gap-1.5 text-sm">
-                            <a href="https://wa.me/6282334208165" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-800 transition-colors font-medium">
+                    <div class="pt-0.5">
+                        <h3 class="text-[15px] font-semibold text-slate-800 mb-1.5 leading-none">WhatsApp</h3>
+                        <div class="flex items-center gap-2 mt-1">
+                            <a href="https://wa.me/6282334208165" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-700 transition-colors text-sm font-medium">
                                 +6282334208165
                             </a>
-                            <p class="text-gray-500 font-medium">(Bpk. Masduki)</p>
+                            <span class="text-slate-500 text-sm font-medium">(Bpk. Masduki)</span>
                         </div>
                     </div>
                 </div>
