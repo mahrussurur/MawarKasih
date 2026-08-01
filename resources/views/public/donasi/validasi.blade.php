@@ -3,7 +3,8 @@
 @section('title', 'Validasi Donasi')
 
 @section('content')
-<div class="bg-gray-50 py-20">
+@include('public.components.page-header', ['title' => 'Validasi Donasi'])
+<div class="bg-gray-50 py-10 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         @if(isset($donasi) && $donasi)
 
@@ -134,13 +135,8 @@
         @else
             <!-- Form Pencarian (Jika tidak ada Donasi/Kode) -->
             <section class="rounded-[28px] border border-gray-200 bg-white p-10 shadow-sm">
-                <div class="flex items-start justify-between gap-4">
-                    <div>
-                        <h2 class="mt-2 text-xl font-bold text-gray-900">Validasi Donasi</h2>
-                    </div>
-                </div>
 
-                <form action="{{ route('public.donasi.validasi') }}" method="GET" class="mt-6 space-y-5">
+                <form action="{{ route('public.donasi.validasi') }}" method="GET" class="space-y-5">
                     <div>
                         <label class="text-sm font-bold text-gray-800">
                             Kunci Validasi <span class="text-red-500">*</span>

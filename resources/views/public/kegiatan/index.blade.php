@@ -2,7 +2,8 @@
 @section('title', 'Kegiatan | Panti Asuhan Mawar Kasih')
 
 @section('content')
-<div class="bg-gray-50 py-20 min-h-screen">
+@include('public.components.page-header', ['title' => 'Artikel Kegiatan'])
+<div class="bg-gray-50 py-10 lg:py-16 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Kolom Pencarian -->

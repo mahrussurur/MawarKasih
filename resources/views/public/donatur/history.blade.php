@@ -3,7 +3,8 @@
 @section('title', 'Riwayat Donasi')
 
 @section('content')
-<div class="bg-gray-50 py-20">
+@include('public.components.page-header', ['title' => 'Riwayat Donasi'])
+<div class="bg-gray-50 py-10 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="rounded-[28px] border border-gray-200 bg-white p-6 sm:p-10 shadow-sm">
             <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -11,7 +12,7 @@
                     <h1 class="text-2xl font-bold text-gray-900">Riwayat Donasi</h1>
                     <p class="mt-1 text-sm text-gray-500">Lihat status dan detail semua donasi Anda.</p>
                 </div>
-                <a href="{{ route('public.donasi.form') }}" class="inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Buat Donasi Baru</a>
+                <a href="{{ route('public.donasi.form') }}" class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-700">Buat Donasi Baru</a>
             </div>
 
             <div class="overflow-x-auto rounded-2xl border border-gray-100">

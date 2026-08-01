@@ -3,16 +3,14 @@
 @section('title', 'Rekening Donasi')
 
 @section('content')
-<div class="bg-gray-50 py-20">
+@include('public.components.page-header', ['title' => 'Rekening Donasi'])
+<div class="bg-gray-50 py-10 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div class="rounded-3xl border border-gray-200 bg-white p-10 shadow-sm text-center">
-            <div class="text-start mb-10">
-                <h1 class="mt-2 text-xl font-bold text-gray-900">Rekening Donasi</h1>
-            </div>
+        <div class="rounded-3xl border border-gray-200 bg-white p-6 md:p-10 shadow-sm text-center">
 
-            <div class="flex flex-col md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-gray-200 items-center max-w-5xl mx-auto mt-6">
+            <div class="flex flex-col md:flex-row divide-y-2 md:divide-y-0 md:divide-x-2 divide-gray-200 items-center max-w-5xl mx-auto">
                 <!-- Kiri: QRIS -->
-                <div class="flex-1 flex justify-center md:justify-end w-full p-6 md:pr-16 md:py-8">
+                <div class="flex-1 flex justify-center md:justify-end w-full pb-8 md:pb-0 md:pr-16">
                     @if(file_exists(public_path('images/qris-mawarkasih.jpg')))
                         <img src="{{ asset('images/qris-mawarkasih.jpg') }}" alt="QRIS Panti Asuhan Mawar Kasih" class="w-full max-w-[280px] object-contain rounded-xl shadow-sm border border-gray-200">
                     @else
@@ -29,7 +27,7 @@
                 </div>
 
                 <!-- Kanan: Rekening -->
-                <div class="flex-1 space-y-5 text-left w-full p-6 md:pl-16 md:py-8">
+                <div class="flex-1 space-y-5 text-left w-full pt-8 md:pt-0 md:pl-16">
                     <h3 class="text-base text-gray-800">Rekening Donasi Panti Asuhan Mawar Kasih:</h3>
                     
                     <ul class="space-y-4">

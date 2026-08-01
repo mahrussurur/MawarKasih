@@ -2,7 +2,8 @@
 @section('title', 'Kontak — Panti Asuhan Mawar Kasih')
 
 @section('content')
-<div class="bg-gray-50 py-20 min-h-screen">
+@include('public.components.page-header', ['title' => 'Kontak'])
+<div class="bg-gray-50 py-10 lg:py-16 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 md:p-12">
@@ -55,7 +56,7 @@
                     </div>
                     <div class="pt-0.5">
                         <h3 class="text-[15px] font-semibold text-slate-800 mb-1.5 leading-none">WhatsApp</h3>
-                        <div class="flex items-center gap-2 mt-1">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 mt-1">
                             <a href="https://wa.me/6282334208165" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-700 transition-colors text-sm font-medium">
                                 +6282334208165
                             </a>

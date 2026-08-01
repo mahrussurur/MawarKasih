@@ -2,7 +2,8 @@
 @section('title', 'Profil Lembaga — Panti Asuhan Mawar Kasih')
 
 @section('content')
-<div class="bg-gray-50 py-20 min-h-screen">
+@include('public.components.page-header', ['title' => 'Profil Lembaga'])
+<div class="bg-gray-50 py-10 lg:py-16 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 md:p-12">

@@ -134,7 +134,7 @@
     </div>
 
     <!-- MOBILE MENU -->
-    <div id="mobileMenu" class="lg:hidden hidden bg-white border-t border-gray-100 shadow-lg">
+    <div id="mobileMenu" class="lg:hidden absolute w-full top-full left-0 bg-white border-t border-gray-100 shadow-lg transition-all duration-300 ease-out opacity-0 -translate-y-4 invisible">
         <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
             <a href="{{ route('public.home') }}" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 {{ request()->routeIs('public.home') ? 'bg-brand-50 text-brand-600' : '' }}">
                 Beranda
@@ -146,10 +146,10 @@
                     Donasi <i data-lucide="chevron-down" class="w-4 h-4 transition" id="chevron-acc-donasi"></i>
                 </button>
                 <div id="acc-donasi" class="hidden pl-4 mt-1 space-y-1">
-                    <a href="{{ route('public.donasi.form') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Form Donasi</a>
-                    <a href="{{ route('public.donasi.validasi') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Validasi Donasi</a>
-                    <a href="{{ route('public.donasi.rekening') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Rekening Donasi</a>
-                    <!-- <a href="{{ route('public.donasi.tutorial') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Tutorial Berdonasi</a> -->
+                    <a href="{{ route('public.donasi.form') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Form Donasi</a>
+                    <a href="{{ route('public.donasi.validasi') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Validasi Donasi</a>
+                    <a href="{{ route('public.donasi.rekening') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Rekening Donasi</a>
+                    <!-- <a href="{{ route('public.donasi.tutorial') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Tutorial Berdonasi</a> -->
                 </div>
             </div>
 
@@ -164,33 +164,35 @@
                     Tentang Kami <i data-lucide="chevron-down" class="w-4 h-4 transition" id="chevron-acc-tentang"></i>
                 </button>
                 <div id="acc-tentang" class="hidden pl-4 mt-1 space-y-1">
-                    <a href="{{ route('public.tentang.profil') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Profil Lembaga</a>
-                    <a href="{{ route('public.tentang.visi-misi') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Visi & Misi</a>
-                    <a href="{{ route('public.galeri.index') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Galeri</a>
-                    <a href="{{ route('public.kontak') }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-brand-600">Kontak</a>
+                    <a href="{{ route('public.tentang.profil') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Profil Lembaga</a>
+                    <a href="{{ route('public.tentang.visi-misi') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Visi & Misi</a>
+                    <a href="{{ route('public.galeri.index') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Galeri</a>
+                    <a href="{{ route('public.kontak') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Kontak</a>
                 </div>
             </div>
 
             <div class="pt-2">
                 @if(!empty($currentDonatur))
                     <div>
-                        <button class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 border border-gray-100" onclick="toggleAccordion('acc-profile', this)">
-                            <div class="flex items-center gap-2">
-                                <i data-lucide="user" class="w-4 h-4"></i>
-                                <span title="{{ $currentDonatur->nama }}">{{ \Illuminate\Support\Str::words($currentDonatur->nama, 2, '') }}</span>
+                        <button class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-blue-700 bg-blue-50 border border-blue-200 shadow-sm hover:bg-blue-100 transition-all" onclick="toggleAccordion('acc-profile', this)">
+                            <div class="flex items-center gap-2.5">
+                                <div class="bg-blue-100 p-1.5 rounded-full text-blue-600">
+                                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                                </div>
+                                <span title="{{ $currentDonatur->nama }}" class="tracking-wide">{{ \Illuminate\Support\Str::words($currentDonatur->nama, 2, '') }}</span>
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition" id="chevron-acc-profile"></i>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300" id="chevron-acc-profile"></i>
                         </button>
                         <div id="acc-profile" class="hidden pl-4 mt-2 space-y-1">
-                            <a href="{{ route('public.donatur.profile') }}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-brand-600">
+                            <a href="{{ route('public.donatur.profile') }}" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">
                                 <i data-lucide="user" class="w-4 h-4"></i> Profil Saya
                             </a>
-                            <a href="{{ route('public.donatur.history') }}" class="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-brand-600">
+                            <a href="{{ route('public.donatur.history') }}" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">
                                 <i data-lucide="clock" class="w-4 h-4"></i> Riwayat Donasi
                             </a>
                             <form action="{{ route('public.donatur.logout') }}" method="POST" class="mt-1">
                                 @csrf
-                                <button type="submit" class="flex items-center gap-2 w-full text-left px-3 py-2 text-sm text-red-500 hover:text-red-600">
+                                <button type="submit" class="flex items-center gap-2 w-full text-left px-3 py-2.5 rounded-lg text-sm text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors">
                                     <i data-lucide="log-out" class="w-4 h-4"></i> Logout
                                 </button>
                             </form>
@@ -206,6 +208,9 @@
     </div>
 </nav>
 
+<!-- OVERLAY MOBILE MENU -->
+<div id="mobileMenuOverlay" class="fixed top-16 inset-x-0 bottom-0 bg-black/50 z-40 backdrop-blur-sm transition-opacity duration-300 lg:hidden opacity-0 invisible" aria-hidden="true"></div>
+
 <!-- Spacer agar konten tidak tertutup navbar fixed -->
 <div class="h-16 lg:h-[70px]"></div>
 
@@ -213,7 +218,23 @@
     // Toggle mobile menu
     function toggleMobileMenu() {
         const menu = document.getElementById('mobileMenu');
-        menu.classList.toggle('hidden');
+        const overlay = document.getElementById('mobileMenuOverlay');
+        
+        if (menu) {
+            menu.classList.toggle('opacity-100');
+            menu.classList.toggle('translate-y-0');
+            menu.classList.toggle('visible');
+            menu.classList.toggle('opacity-0');
+            menu.classList.toggle('-translate-y-4');
+            menu.classList.toggle('invisible');
+        }
+        
+        if (overlay) {
+            overlay.classList.toggle('opacity-100');
+            overlay.classList.toggle('visible');
+            overlay.classList.toggle('opacity-0');
+            overlay.classList.toggle('invisible');
+        }
     }
 
     function toggleDonaturMenu() {
@@ -228,14 +249,35 @@
     }
 
     document.addEventListener('click', function (event) {
-        const button = document.getElementById('donaturMenuButton');
-        const menu = document.getElementById('donaturMenu');
+        // --- Logika untuk Donatur Menu (Desktop) ---
+        const donaturBtn = document.getElementById('donaturMenuButton');
+        const donaturMenu = document.getElementById('donaturMenu');
         const chevron = document.getElementById('donaturMenuChevron');
-        if (!button || !menu) return;
-        if (!button.contains(event.target) && !menu.contains(event.target)) {
-            menu.classList.add('opacity-0', 'invisible');
-            menu.classList.remove('opacity-100', 'visible');
-            if (chevron) chevron.classList.remove('rotate-180');
+        
+        if (donaturBtn && donaturMenu) {
+            if (!donaturBtn.contains(event.target) && !donaturMenu.contains(event.target)) {
+                donaturMenu.classList.add('opacity-0', 'invisible');
+                donaturMenu.classList.remove('opacity-100', 'visible');
+                if (chevron) chevron.classList.remove('rotate-180');
+            }
+        }
+
+        // --- Logika untuk Mobile Menu ---
+        const mobileMenu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('mobileMenuOverlay');
+        // Mencari apakah target klik adalah tombol hamburger atau anaknya
+        const clickedOnHamburger = event.target.closest('[onclick="toggleMobileMenu()"]');
+        
+        if (mobileMenu && mobileMenu.classList.contains('visible')) {
+            // Jika klik terjadi di luar mobileMenu DAN bukan di tombol hamburger
+            if (!mobileMenu.contains(event.target) && !clickedOnHamburger) {
+                mobileMenu.classList.remove('opacity-100', 'translate-y-0', 'visible');
+                mobileMenu.classList.add('opacity-0', '-translate-y-4', 'invisible');
+                if (overlay) {
+                    overlay.classList.remove('opacity-100', 'visible');
+                    overlay.classList.add('opacity-0', 'invisible');
+                }
+            }
         }
     });
 

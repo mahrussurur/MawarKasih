@@ -2,10 +2,11 @@
 @section('title', 'Donasi | Panti Asuhan Mawar Kasih')
 
 @section('content')
+@include('public.components.page-header', ['title' => 'Formulir Donasi'])
 @php
     $errorBag = $errors instanceof \Illuminate\Support\ViewErrorBag ? $errors : new \Illuminate\Support\ViewErrorBag();
 @endphp
-<div class="bg-gray-50 py-20">
+<div class="bg-gray-50 py-10 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 
 
@@ -22,9 +23,6 @@
 
         @if(empty($donatur))
             <section class="rounded-[28px] border border-gray-200 bg-white p-5 sm:p-10 shadow-sm">
-                <div class="flex items-start justify-between gap-4">
-                    <h2 class="mt-2 text-xl font-bold text-gray-900">Formulir Donasi</h2>
-                </div>
 
                 <form action="{{ route('public.donasi.kirim') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-5">
                     @csrf
@@ -353,12 +351,7 @@
             </section>
         @else
             <section class="rounded-[28px] border border-gray-200 bg-white p-5 sm:p-10 shadow-sm">
-                <div class="flex items-start justify-between gap-4">
-                    <div>
-                        <h2 class="mt-2 text-xl font-bold text-gray-900">Formulir Donasi</h2>
-                    </div>
-                </div>
-                
+
                 <div class="mt-6 grid gap-4 sm:grid-cols-2">
                     <div class="rounded-lg bg-gray-100 p-4 min-w-0">
                         <p class="text-xs uppercase tracking-[0.2em] text-gray-500">Nama</p>

@@ -435,33 +435,48 @@
 @section('extra_scripts')
 <script>
     function openFasilitasModal(imgSrc) {
+        document.getElementById('fasilitasModalImg').src = imgSrc;
 
-    document.getElementById('fasilitasModalImg').src = imgSrc;
+        const modal = document.getElementById('fasilitasModal');
+        const box = document.getElementById('fasilitasModalBox');
 
-    const modal = document.getElementById('fasilitasModal');
-    const box = document.getElementById('fasilitasModalBox');
+        modal.classList.remove('opacity-0', 'invisible');
+        modal.classList.add('opacity-100', 'visible');
+        box.classList.remove('scale-95');
+        box.classList.add('scale-100');
+        document.body.style.overflow = 'hidden';
 
-    modal.classList.remove('opacity-0', 'invisible');
-    modal.classList.add('opacity-100', 'visible');
+        // Tambahkan entri history agar tombol back mobile menutup modal
+        history.pushState({ fasilitasModal: true }, '');
+    }
 
-    box.classList.remove('scale-95');
-    box.classList.add('scale-100');
-
-    document.body.style.overflow = 'hidden';
-}
+    function _doCloseFasilitasModal() {
+        const modal = document.getElementById('fasilitasModal');
+        const box = document.getElementById('fasilitasModalBox');
+        if (!modal || modal.classList.contains('invisible')) return;
+        modal.classList.add('opacity-0', 'invisible');
+        modal.classList.remove('opacity-100', 'visible');
+        box.classList.add('scale-95');
+        box.classList.remove('scale-100');
+        document.body.style.overflow = '';
+    }
 
     function closeFasilitasModal(event) {
         // Jika klik di dalam box modal, jangan tutup
         if (event && event.target !== document.getElementById('fasilitasModal')) return;
 
-        const modal = document.getElementById('fasilitasModal');
-        const box = document.getElementById('fasilitasModalBox');
-        modal.classList.add('opacity-0', 'invisible');
-        modal.classList.remove('opacity-100', 'visible');
-        box.classList.add('scale-95');
-        box.classList.remove('scale-100');
-        document.body.style.overflow = ''; // kembalikan scroll
+        // Hapus entri history yang kita tambahkan saat buka modal
+        if (history.state && history.state.fasilitasModal) {
+            history.back();
+        } else {
+            _doCloseFasilitasModal();
+        }
     }
+
+    // Tangkap tombol back browser/mobile — tutup modal, jangan navigasi
+    window.addEventListener('popstate', (e) => {
+        _doCloseFasilitasModal();
+    });
 
     // Tutup modal dengan tombol Escape
     document.addEventListener('keydown', (e) => {

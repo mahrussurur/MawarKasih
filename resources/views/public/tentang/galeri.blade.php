@@ -2,7 +2,7 @@
 @section('title', 'Galeri | Panti Asuhan Mawar Kasih')
 
 @section('content')
-
+@include('public.components.page-header', ['title' => 'Galeri'])
 <style>
     .fancybox__caption {
         position: absolute !important;
@@ -48,6 +48,7 @@
 
                     <a href="{{ asset('storage/' . $gallery->foto) }}" 
                        data-fancybox="gallery"
+                       data-filename="{{ Str::slug($gallery->judul) }}.{{ pathinfo($gallery->foto, PATHINFO_EXTENSION) }}"
                        data-caption="<div class='max-w-xl mx-auto'><h4 class='font-bold text-base md:text-lg text-white mb-1 tracking-wide'>{{ $gallery->judul }}</h4>@if($gallery->deskripsi)<p class='text-xs md:text-sm text-gray-200 leading-relaxed'>{{ $gallery->deskripsi }}</p>@endif</div>"
                        class="absolute inset-0 z-10"
                        title="{{ $gallery->judul }}">
@@ -113,6 +114,49 @@
                 },
             },
         });
+        
+        // Intercept download button click to force the correct filename
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('.f-button, .fancybox__button, button');
+            if (!btn) return;
+            
+            const action = btn.getAttribute('data-action');
+            const title = btn.getAttribute('title');
+            
+            if (action === 'download' || title === 'Download') {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (typeof Fancybox !== 'undefined') {
+                    const instance = Fancybox.getInstance();
+                    if (instance) {
+                        const slide = instance.getSlide();
+                        if (slide && slide.triggerEl) {
+                            const filename = slide.triggerEl.getAttribute('data-filename') || 'gambar.jpg';
+                            const url = slide.src;
+                            
+                            // Download via blob to bypass browser URL naming fallback
+                            fetch(url)
+                              .then(res => res.blob())
+                              .then(blob => {
+                                  const blobUrl = window.URL.createObjectURL(blob);
+                                  const a = document.createElement("a");
+                                  a.style.display = 'none';
+                                  a.href = blobUrl;
+                                  a.download = filename;
+                                  document.body.appendChild(a);
+                                  a.click();
+                                  window.URL.revokeObjectURL(blobUrl);
+                                  document.body.removeChild(a);
+                              })
+                              .catch(() => {
+                                  window.open(url, '_blank');
+                              });
+                        }
+                    }
+                }
+            }
+        }, true); // use capture phase to run before Fancybox's own listeners
         
         if (typeof lucide !== 'undefined' && lucide.createIcons) {
             lucide.createIcons();
