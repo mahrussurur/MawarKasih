@@ -670,27 +670,9 @@
 
         document.querySelectorAll('.payment-group').forEach(initPaymentCards);
 
-        // Toast Notification Logic
-        function showToast(message) {
-            const toast = document.getElementById('toastNotifikasi');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            if (toast && toastMessage) {
-                toastMessage.textContent = message;
-                
-                toast.classList.remove('-translate-y-4', 'opacity-0');
-                toast.classList.add('translate-y-0', 'opacity-100');
-                
-                setTimeout(() => {
-                    toast.classList.remove('translate-y-0', 'opacity-100');
-                    toast.classList.add('-translate-y-4', 'opacity-0');
-                }, 3000);
-            }
-        }
-
         window.salinNomorRekening = function(text) {
             navigator.clipboard.writeText(text).then(() => {
-                showToast('Nomor rekening berhasil disalin!');
+                showToast('Nomor rekening berhasil disalin!', 'success');
             }).catch(err => {
                 console.error('Gagal menyalin: ', err);
             });

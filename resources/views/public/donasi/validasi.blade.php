@@ -154,47 +154,11 @@
     </div>
 </div>
 
-<!-- Elemen Notifikasi Toast - Posisi Atas Tengah -->
-<div id="toastNotifikasi" class="fixed top-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg shadow-lg transform transition-all duration-300 -translate-y-4 opacity-0 pointer-events-none z-50">
-    <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-    </svg>
-    <span id="toastMessage" class="text-sm font-medium whitespace-nowrap">Berhasil!</span>
-</div>
-
 <script>
-    function showToast(message, type = 'success') {
-        const toast = document.getElementById('toastNotifikasi');
-        const toastMessage = document.getElementById('toastMessage');
-        const iconPath = toast.querySelector('path');
-        
-        toastMessage.textContent = message;
-        
-        toast.classList.remove('bg-green-600', 'bg-red-600');
-        
-        if (type === 'error') {
-            toast.classList.add('bg-red-600');
-            iconPath.setAttribute('d', 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z');
-        } else {
-            toast.classList.add('bg-green-600');
-            iconPath.setAttribute('d', 'M5 13l4 4L19 7');
-        }
-        
-        // Tampilkan notifikasi (turun dari atas)
-        toast.classList.remove('-translate-y-4', 'opacity-0');
-        toast.classList.add('translate-y-0', 'opacity-100');
-        
-        // Sembunyikan kembali setelah 3.5 detik
-        setTimeout(() => {
-            toast.classList.remove('translate-y-0', 'opacity-100');
-            toast.classList.add('-translate-y-4', 'opacity-0');
-        }, 3500);
-    }
-
     function salinKunci(text) {
         navigator.clipboard.writeText(text).then(() => {
-            showToast('Kunci berhasil disalin!');
-            
+            showToast('Kunci berhasil disalin!', 'success');
+
             // Sembunyikan pesan penting (jika ada) setelah kunci disalin
             const infoBox = document.getElementById('infoBoxKunci');
             if (infoBox) {
@@ -203,23 +167,10 @@
                     infoBox.style.display = 'none';
                 }, 300);
             }
-            
+
         }).catch(err => {
             console.error('Gagal menyalin: ', err);
         });
     }
-
-    // Jika ada session success atau error, tampilkan notifikasi saat halaman dimuat
-    @if(session('success'))
-        document.addEventListener('DOMContentLoaded', function() {
-            showToast("{{ session('success') }}", 'success');
-        });
-    @endif
-
-    @if(session('error'))
-        document.addEventListener('DOMContentLoaded', function() {
-            showToast("{{ session('error') }}", 'error');
-        });
-    @endif
 </script>
 @endsection

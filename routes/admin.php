@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\ProfileController;
 
 Route::prefix('admin')
-    ->middleware(['auth'])
+    ->middleware(['auth', \App\Http\Middleware\AdminSessionTimeout::class])
     ->group(function () {
 
         // Dashboard

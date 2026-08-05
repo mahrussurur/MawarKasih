@@ -137,5 +137,8 @@
     {{-- Section untuk JS tambahan per halaman --}}
     @yield('extra_scripts')
 
+    {{-- Toast Notification --}}
+    @include('public.components.toast')
+
 </body>
 </html>

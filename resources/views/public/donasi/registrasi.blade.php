@@ -31,10 +31,6 @@
                         <p class="mt-2 text-sm text-gray-500">Lengkapi data berikut untuk menjadi donatur tetap.</p>
                     </div>
 
-                    @if(session('error'))
-                        <div class="mb-5 rounded-2xl bg-red-50 border border-red-200 p-4 text-sm text-red-700">{{ session('error') }}</div>
-                    @endif
-
                     <form action="{{ route('public.donasi.registrasi.submit') }}" method="POST" class="space-y-5">
                         @csrf
 
