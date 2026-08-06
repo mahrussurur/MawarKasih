@@ -100,7 +100,7 @@
                     
                     <!-- Search Input for Donaturs -->
                     <div class="mb-4 relative">
-                        <input type="text" id="searchDonatur" placeholder="Cari donatur atau catatan..." class="w-full pl-4 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm transition">
+                        <input type="text" id="searchDonatur" placeholder="Cari donatur atau catatan..." class="w-full pl-4 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm">
                         <div class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
                             <i data-lucide="search" class="w-4 h-4"></i>
                         </div>
@@ -108,7 +108,7 @@
 
                     <div class="space-y-4 max-h-[500px] overflow-y-auto overflow-x-hidden pr-2" id="donaturList" style="scrollbar-width: thin; scrollbar-color: #E5E7EB transparent;">
                         @forelse($donaturs as $donatur)
-                        <div class="bg-gray-50 rounded-2xl p-4 border border-gray-100 donatur-item">
+                        <div class="bg-brand-100 rounded-2xl p-4 border border-gray-100 donatur-item">
                             <div class="flex justify-between items-start mb-2 gap-2">
                                 <span class="font-bold text-gray-700 text-sm">
                                     @if($donatur->tampilkan_nama == 'hamba_allah')

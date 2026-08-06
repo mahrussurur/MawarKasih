@@ -116,11 +116,8 @@
                         </div>
                     </div>
                 @else
-                    {{-- TAMBAHKAN KONDISI INI --}}
                     @if(!request()->routeIs('public.donasi.login'))
-                        <a href="{{ route('public.donasi.login') }}" class="flex items-center gap-2 rounded-full border border-blue-300 bg-white px-5 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100">
-                            Login
-                        </a>
+                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 text-sm font-semibold transition">Login</a>
                     @endif
                 @endif
             </div>
@@ -200,7 +197,7 @@
                     </div>
                 @elseif(!request()->routeIs('public.donasi.login'))
                     <div class="space-y-3">
-                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full border border-brand-600 bg-white px-5 py-3 text-sm font-semibold text-brand-600 transition hover:bg-brand-50">Login</a>
+                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition">Login</a>
                     </div>
                 @endif
             </div>

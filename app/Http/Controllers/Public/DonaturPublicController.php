@@ -22,7 +22,7 @@ class DonaturPublicController extends Controller
     {
         $donatur = $this->currentDonatur();
         if (!$donatur) {
-            return redirect()->route('public.donasi.login')->with('error', 'Sesi Anda telah berakhir atau Anda belum login. Silakan login terlebih dahulu.');
+            return redirect()->route('public.donasi.login')->with('error', 'Sesi Anda telah berakhir. Silakan login terlebih dahulu.');
         }
 
         return view('public.donatur.profile', compact('donatur'));
@@ -32,7 +32,7 @@ class DonaturPublicController extends Controller
     {
         $donatur = $this->currentDonatur();
         if (!$donatur) {
-            return redirect()->route('public.donasi.login')->with('error', 'Sesi Anda telah berakhir atau Anda belum login. Silakan login terlebih dahulu.');
+            return redirect()->route('public.donasi.login')->with('error', 'Sesi Anda telah berakhir. Silakan login terlebih dahulu.');
         }
 
         $donasis = Donasi::where('donatur_id', $donatur->id)

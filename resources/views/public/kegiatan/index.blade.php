@@ -9,9 +9,9 @@
         <!-- Kolom Pencarian -->
         <div class="max-w-7xl mx-auto mb-12">
             <form action="{{ route('public.kegiatan.index') }}" method="GET" class="relative">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau deskripsi kegiatan..." class="w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all placeholder:text-sm">
-                <button type="submit" class="absolute right-1 top-1 bottom-1 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-1 transition-all shadow-sm">
-                    Cari
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau deskripsi kegiatan..." class="w-full pl-4 pr-20 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm">
+                <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-600">
+                    <i data-lucide="search" class="w-5 h-5"></i>
                 </button>
             </form>
         </div>
@@ -27,7 +27,7 @@
                             @if($item->foto_dokumentasi)
                                 <img src="{{ Storage::url($item->foto_dokumentasi) }}"
                                     alt="{{ $item->nama_kegiatan }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    class="w-full h-full object-cover"
                                     loading="lazy">
                             @else
                                 <!-- Placeholder jika gambar tidak tersedia -->
@@ -64,7 +64,7 @@
                             <!-- 4. Tombol Read More di pojok kanan bawah -->
                             <div class="flex justify-end pt-2">
                                 <a href="{{ route('public.kegiatan.show', $item->id) }}" 
-                                   class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-1.5 rounded transition-colors duration-200">
+                                   class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-1.5 rounded-xl transition-colors duration-200">
                                     Read More
                                 </a>
                             </div>

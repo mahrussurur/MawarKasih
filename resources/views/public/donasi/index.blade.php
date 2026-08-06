@@ -24,7 +24,7 @@
         @if(empty($donatur))
             <section class="rounded-[28px] border border-gray-200 bg-white p-5 sm:p-10 shadow-sm">
 
-                <form action="{{ route('public.donasi.kirim') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-5">
+                <form id="donasi-form-guest" action="{{ route('public.donasi.kirim') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-5" novalidate>
                     @csrf
                     <input type="text" name="website" value="" autocomplete="off" tabindex="-1" class="hidden" aria-hidden="true">
 
@@ -40,7 +40,7 @@
                                 value="{{ old('nama_donatur') }}"
                                 maxlength="255"
                                 placeholder="Nama"
-                                class="w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
                                 required>
                             @error('nama_donatur')
                                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -82,9 +82,8 @@
                             value="{{ old('email') }}"
                             maxlength="255"
                             placeholder="cth. contoh@gmail.com"
-                            class="mt-2 w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                            class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
                             pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
-                            title="Format email tidak valid (contoh: nama@domain.com)"
                             required>
                         @error('email')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -102,9 +101,8 @@
                             minlength="10"
                             maxlength="15"
                             placeholder="cth. 081234567890"
-                            class="mt-2 w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                            class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
                             pattern="[0-9]{10,15}"
-                            title="Hanya angka, 10-15 digit"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             required>
                         @error('no_hp')
@@ -119,7 +117,7 @@
                         <textarea
                             name="alamat"
                             rows="3"
-                            class="mt-2 w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                            class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
                             placeholder="Masukkan alamat Anda (opsional)"
                         >{{ old('alamat') }}</textarea>
                         @error('alamat')
@@ -134,25 +132,25 @@
                         <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 mb-3">
                             <label class="cursor-pointer relative">
                                 <input type="radio" name="nominal_option" value="10000" class="peer sr-only nominal-radio">
-                                <div class="flex items-center justify-center py-3 rounded-lg border-2 border-gray-200 bg-white hover:border-blue-500 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-semibold text-gray-700 text-sm">
+                                <div class="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-brand-500 peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-semibold text-gray-700 text-sm">
                                     Rp 10.000
                                 </div>
                             </label>
                             <label class="cursor-pointer relative">
                                 <input type="radio" name="nominal_option" value="50000" class="peer sr-only nominal-radio">
-                                <div class="flex items-center justify-center py-3 rounded-lg border-2 border-gray-200 bg-white hover:border-blue-500 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-semibold text-gray-700 text-sm">
+                                <div class="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-brand-500 peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-semibold text-gray-700 text-sm">
                                     Rp 50.000
                                 </div>
                             </label>
                             <label class="cursor-pointer relative">
                                 <input type="radio" name="nominal_option" value="100000" class="peer sr-only nominal-radio">
-                                <div class="flex items-center justify-center py-3 rounded-lg border-2 border-gray-200 bg-white hover:border-blue-500 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-semibold text-gray-700 text-sm">
+                                <div class="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-brand-500 peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-semibold text-gray-700 text-sm">
                                     Rp 100.000
                                 </div>
                             </label>
                             <label class="cursor-pointer relative">
                                 <input type="radio" name="nominal_option" value="lainnya" class="peer sr-only nominal-radio" checked>
-                                <div class="flex items-center justify-center py-3 rounded-lg border-2 border-gray-200 bg-white hover:border-blue-500 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-semibold text-gray-700 text-sm">
+                                <div class="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-brand-500 peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-semibold text-gray-700 text-sm">
                                     Lainnya
                                 </div>
                             </label>
@@ -162,8 +160,8 @@
                                 Nominal <span class="text-red-500">*</span>
                             </label>
 
-                            <div class="flex rounded-lg border border-gray-300 bg-white overflow-hidden focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all duration-300">
-                                <span class="inline-flex items-center px-4 bg-gray-100 border-r border-gray-300 text-sm font-medium text-gray-600 select-none">
+                            <div class="flex bg-gray-50 border border-gray-200 rounded-xl overflow-hidden focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-500 focus-within:border-transparent">
+                                <span class="inline-flex items-center px-4 border-r border-gray-200 text-sm font-medium text-gray-600 select-none">
                                     Rp
                                 </span>
                                 
@@ -323,7 +321,7 @@
                         <textarea 
                             name="keterangan" 
                             rows="3" 
-                            class="w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" 
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm" 
                             placeholder="Tuliskan doa atau pesan Anda (opsional)">{{ old('keterangan') }}</textarea>
                         @error('keterangan')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -371,7 +369,7 @@
                     </div>
                 </div>
 
-                <form action="{{ route('public.donasi.kirim') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-5">
+                <form id="donasi-form-login" action="{{ route('public.donasi.kirim') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-5" novalidate>
                     @csrf
                     <input type="text" name="website" value="" autocomplete="off" tabindex="-1" class="hidden" aria-hidden="true">
 
@@ -405,25 +403,25 @@
                         <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 mb-3">
                             <label class="cursor-pointer relative">
                                 <input type="radio" name="nominal_option" value="10000" class="peer sr-only nominal-radio">
-                                <div class="flex items-center justify-center py-3 rounded-lg border-2 border-gray-200 bg-white hover:border-blue-500 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-semibold text-gray-700 text-sm">
+                                <div class="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-brand-500 peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-semibold text-gray-700 text-sm">
                                     Rp 10.000
                                 </div>
                             </label>
                             <label class="cursor-pointer relative">
                                 <input type="radio" name="nominal_option" value="50000" class="peer sr-only nominal-radio">
-                                <div class="flex items-center justify-center py-3 rounded-lg border-2 border-gray-200 bg-white hover:border-blue-500 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-semibold text-gray-700 text-sm">
+                                <div class="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-brand-500 peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-semibold text-gray-700 text-sm">
                                     Rp 50.000
                                 </div>
                             </label>
                             <label class="cursor-pointer relative">
                                 <input type="radio" name="nominal_option" value="100000" class="peer sr-only nominal-radio">
-                                <div class="flex items-center justify-center py-3 rounded-lg border-2 border-gray-200 bg-white hover:border-blue-500 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-semibold text-gray-700 text-sm">
+                                <div class="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-brand-500 peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-semibold text-gray-700 text-sm">
                                     Rp 100.000
                                 </div>
                             </label>
                             <label class="cursor-pointer relative">
                                 <input type="radio" name="nominal_option" value="lainnya" class="peer sr-only nominal-radio" checked>
-                                <div class="flex items-center justify-center py-3 rounded-lg border-2 border-gray-200 bg-white hover:border-blue-500 transition-all peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:text-blue-700 font-semibold text-gray-700 text-sm">
+                                <div class="flex items-center justify-center py-3 rounded-xl border-2 border-gray-200 bg-gray-50 hover:border-brand-500 peer-checked:border-brand-500 peer-checked:bg-brand-50 peer-checked:text-brand-700 font-semibold text-gray-700 text-sm">
                                     Lainnya
                                 </div>
                             </label>
@@ -433,8 +431,8 @@
                                 Nominal <span class="text-red-500">*</span>
                             </label>
 
-                            <div class="flex rounded-lg border border-gray-300 bg-white overflow-hidden focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all duration-300">
-                                <span class="inline-flex items-center px-4 bg-gray-100 border-r border-gray-300 text-sm font-medium text-gray-600 select-none">
+                            <div class="flex bg-gray-50 border border-gray-200 rounded-xl overflow-hidden focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-500 focus-within:border-transparent">
+                                <span class="inline-flex items-center px-4 border-r border-gray-200 text-sm font-medium text-gray-600 select-none">
                                     Rp
                                 </span>
                                 
@@ -531,7 +529,7 @@
                         <textarea 
                             name="keterangan" 
                             rows="3" 
-                            class="w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" 
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm" 
                             placeholder="Tuliskan doa atau pesan Anda (opsional)">{{ old('keterangan') }}</textarea>
                         @error('keterangan')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -711,8 +709,47 @@
 
         setupImagePreview('bukti_transfer_input_1', 'preview_container_1', 'bukti_transfer_preview_1', 'remove_preview_1');
         setupImagePreview('bukti_transfer_input_2', 'preview_container_2', 'bukti_transfer_preview_2', 'remove_preview_2');
+
+        // ── Validasi Form Donasi (ring merah, tanpa popup browser) ──
+        function setupFormValidation(formId) {
+            const form = document.getElementById(formId);
+            if (!form) return;
+
+            const fields = form.querySelectorAll('input:not([type=hidden]):not([type=radio]):not([type=file]):not(.sr-only), textarea');
+
+            fields.forEach(field => {
+                field.addEventListener('input', function () {
+                    if (this.checkValidity()) {
+                        this.classList.remove('input-error');
+                    }
+                });
+            });
+
+            form.addEventListener('submit', function (e) {
+                let firstInvalid = null;
+                fields.forEach(field => {
+                    if (!field.checkValidity()) {
+                        e.preventDefault();
+                        field.classList.add('input-error');
+                        if (!firstInvalid) firstInvalid = field;
+                    }
+                });
+                if (firstInvalid) firstInvalid.focus();
+            });
+        }
+
+        setupFormValidation('donasi-form-guest');
+        setupFormValidation('donasi-form-login');
     });
 </script>
+
+<style>
+    .input-error {
+        border-color: transparent !important;
+        box-shadow: 0 0 0 2px #f87171 !important;
+        outline: none !important;
+    }
+</style>
 @endsection
 
 @endsection

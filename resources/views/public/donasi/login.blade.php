@@ -11,24 +11,25 @@
                 <p class="mt-3 text-sm text-gray-500">Masuk email dan password yang Anda gunakan saat registrasi.</p>
             </div>
 
-            <form action="{{ route('public.donasi.login.submit') }}" method="POST" class="space-y-6">
+            <form id="login-form" action="{{ route('public.donasi.login.submit') }}" method="POST" class="space-y-6" novalidate>
                 @csrf
 
                 <div>
                     <label class="text-sm font-bold text-gray-800 block">Email</label>
                     <input type="email"
+                    id="login-email"
                     name="email"
                     value="{{ old('email') }}"
-                    class="mt-2 w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                    class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm {{ $errors->has('email') ? 'input-error' : '' }}"
                     placeholder="Masukkan alamat email Anda..."
                     autocomplete="email"
                     required>
+                    @error('email')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
                 </div>
 
                 <div>
                     <label class="text-sm font-bold text-gray-800 block">Password</label>
                     
-                    <!-- WRAPPER RELATIVE: Penting agar tombol absolute berada di dalam area ini -->
                     <div class="relative mt-2">
                         <input 
                             id="password" 
@@ -36,7 +37,7 @@
                             name="password" 
                             placeholder="Masukkan kata sandi..."
                             autocomplete="current-password" 
-                            class="w-full px-4 py-3 pr-12 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                            class="w-full pl-4 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm {{ $errors->has('password') ? 'input-error' : '' }}"
                             required>
 
                         <button
@@ -69,12 +70,18 @@
     </div>
 </div>
 
-<!-- Script: toggle show/hide password -->
+<style>
+    .input-error {
+        border-color: transparent !important;
+        box-shadow: 0 0 0 2px #f87171 !important;
+        outline: none !important;
+    }
+</style>
+
 <script>
     function togglePassVisibility(inputId, iconId) {
         const input = document.getElementById(inputId);
         const icon = document.getElementById(iconId);
-
         if (input.type === 'password') {
             input.type = 'text';
             icon.setAttribute('data-lucide', 'eye-off');
@@ -82,7 +89,32 @@
             input.type = 'password';
             icon.setAttribute('data-lucide', 'eye');
         }
-        lucide.createIcons(); // Refresh icons
+        lucide.createIcons();
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('login-form');
+        const inputs = form.querySelectorAll('input[required]');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', function () {
+                if (this.checkValidity()) {
+                    this.classList.remove('input-error');
+                }
+            });
+        });
+
+        form.addEventListener('submit', function (e) {
+            let firstInvalid = null;
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    e.preventDefault();
+                    input.classList.add('input-error');
+                    if (!firstInvalid) firstInvalid = input;
+                }
+            });
+            if (firstInvalid) firstInvalid.focus();
+        });
+    });
 </script>
 @endsection

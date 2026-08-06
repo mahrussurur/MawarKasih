@@ -261,7 +261,7 @@
                     @if($kegiatan->foto_dokumentasi)
                         <img src="{{ Storage::url($kegiatan->foto_dokumentasi) }}"
                             alt="{{ $kegiatan->judul }}"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            class="w-full h-full object-cover"
                             loading="lazy">
                     @else
                         <!-- Placeholder jika gambar tidak tersedia -->
@@ -298,7 +298,7 @@
                     <!-- 4. Tombol Read More di pojok kanan bawah -->
                     <div class="flex justify-end pt-2">
                         <a href="{{ route('public.kegiatan.show', $kegiatan->id) }}" 
-                           class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-1.5 rounded transition-colors duration-200">
+                           class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-1.5 rounded-xl transition-colors duration-200">
                             Read More
                         </a>
                     </div>

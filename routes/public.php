@@ -14,7 +14,6 @@ use App\Http\Controllers\Public\DonasiPublicController;
 use App\Http\Controllers\Public\DonaturPublicController;
 use App\Http\Controllers\Public\GaleriPublicController;
 use App\Http\Controllers\Public\TentangController;
-use App\Http\Controllers\Public\FasilitasController;
 
 Route::prefix('')->name('public.')->group(function () {
 
@@ -50,9 +49,6 @@ Route::prefix('')->name('public.')->group(function () {
     // ── Tentang Kami ─────────────────────────────────────────
     Route::get('/tentang/profil', [TentangController::class, 'profil'])->name('tentang.profil');
     Route::get('/tentang/visi-misi', [TentangController::class, 'visiMisi'])->name('tentang.visi-misi');
-
-    // ── Fasilitas ────────────────────────────────────────────
-    Route::get('/fasilitas', [FasilitasController::class, 'index'])->name('fasilitas');
 
     // ── Galeri ───────────────────────────────────────────────
     Route::get('/galeri', [GaleriPublicController::class, 'index'])->name('galeri.index');

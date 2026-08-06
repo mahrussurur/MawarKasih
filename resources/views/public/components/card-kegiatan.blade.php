@@ -25,7 +25,7 @@
         @if(!empty($kegiatan->foto))
             <img src="{{ asset('storage/' . $kegiatan->foto) }}"
                  alt="{{ $kegiatan->nama }}"
-                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                 class="w-full h-full object-cover">
         @else
             {{-- Placeholder jika foto belum diisi admin --}}
             <div class="w-full h-full flex items-center justify-center bg-primary-50">

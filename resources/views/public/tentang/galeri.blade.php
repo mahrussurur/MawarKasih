@@ -35,7 +35,7 @@
 
         <div class="max-w-7xl mx-auto mb-12">
             <form action="{{ route('public.galeri.index') }}" method="GET" class="relative">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau deskripsi foto..." class="w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all placeholder:text-sm">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau deskripsi foto..." class="w-full pl-4 pr-20 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm">
                 <button type="submit" class="absolute right-1 top-1 bottom-1 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-1 transition-all shadow-sm">
                     Cari
                 </button>

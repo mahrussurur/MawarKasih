@@ -6,13 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Donasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Barryvdh\DomPDF\Facade\Pdf; // pastikan package dompdf terinstall
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DonasiController extends Controller
 {
-    /**
-     * Halaman daftar donasi — dengan filter status & search.
-     */
+    // Halaman daftar donasi — dengan filter status & search.
     public function index(Request $request)
     {
         $query = Donasi::query()->latest();
@@ -45,17 +43,13 @@ class DonasiController extends Controller
         ));
     }
 
-    /**
-     * Halaman tambah donasi baru (untuk admin).
-     */
+    // Halaman tambah donasi baru (untuk admin).
     public function create()
     {
         return view('admin.donasi.create');
     }
 
-    /**
-     * Simpan donasi baru dari admin.
-     */
+    // Simpan donasi baru dari admin.
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -75,17 +69,13 @@ class DonasiController extends Controller
         return redirect()->route('donasi.index')->with('success', 'Donasi berhasil ditambahkan.');
     }
 
-    /**
-     * Detail donasi (modal / halaman detail).
-     */
+    // Detail donasi (modal / halaman detail).
     public function show(Donasi $donasi)
     {
         return view('admin.donasi.show', compact('donasi'));
     }
 
-    /**
-     * Validasi donasi: ubah status ke 'diterima'.
-     */
+    // Validasi donasi: ubah status ke 'diterima'.
     public function validasi(Request $request, Donasi $donasi)
     {
         if ($donasi->status !== 'pending') {
@@ -104,9 +94,7 @@ class DonasiController extends Controller
         return back()->with('success', "Donasi {$donasi->kode_donasi} berhasil divalidasi.");
     }
 
-    /**
-     * Tolak donasi: ubah status ke 'ditolak' + simpan catatan.
-     */
+    // Tolak donasi: ubah status ke 'ditolak' + simpan catatan.
     public function tolak(Request $request, Donasi $donasi)
     {
         if ($donasi->status !== 'pending') {
@@ -125,9 +113,7 @@ class DonasiController extends Controller
         return back()->with('success', "Donasi {$donasi->kode_donasi} telah ditolak.");
     }
 
-    /**
-     * Hapus donasi.
-     */
+    // Hapus donasi
     public function destroy(Donasi $donasi)
     {
         // Hapus file bukti transfer jika ada
@@ -141,9 +127,7 @@ class DonasiController extends Controller
         return back()->with('success', "Donasi {$kode} berhasil dihapus.");
     }
 
-    /**
-     * Edit donasi.
-     */
+    // Edit donasi
     public function edit(Donasi $donasi)
     {
         return view('admin.donasi.edit', compact('donasi'));
@@ -174,9 +158,7 @@ class DonasiController extends Controller
         return redirect()->route('donasi.index')->with('success', 'Data donasi berhasil diperbarui.');
     }
 
-    /**
-     * Cetak laporan donasi valid (PDF via DomPDF).
-     */
+    // Cetak laporan donasi valid (PDF via DomPDF).
     public function cetak(Request $request)
     {
         $query = Donasi::where('status', 'diterima')->orderBy('tanggal', 'desc');
@@ -196,10 +178,8 @@ class DonasiController extends Controller
         return $pdf->download('laporan-donasi-' . now()->format('YmdHis') . '.pdf');
     }
 
-    /**
-     * CEK STATUS DONASI — untuk donatur di web publik.
-     * Cek berdasarkan kode_donasi.
-     */
+    // CEK STATUS DONASI — untuk donatur di web publik.
+    // Cek berdasarkan kode_donasi.
     public function cekStatus(Request $request)
     {
         $request->validate([

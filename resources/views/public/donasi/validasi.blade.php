@@ -141,7 +141,7 @@
                         <label class="text-sm font-bold text-gray-800">
                             Kunci Validasi <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="kode_donasi" value="{{ request('kode_donasi') }}" placeholder="Masukkan Kunci Validasi" class="mt-2 w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" required>
+                        <input type="text" name="kode_donasi" value="{{ request('kode_donasi') }}" placeholder="Masukkan Kunci Validasi" class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm" required>
                     </div>
                     <div class="flex gap-4 justify-center">
                         <button type="submit" class="inline-flex justify-center items-center rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-700 shadow-sm">

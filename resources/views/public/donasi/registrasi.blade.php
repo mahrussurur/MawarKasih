@@ -31,7 +31,7 @@
                         <p class="mt-2 text-sm text-gray-500">Lengkapi data berikut untuk menjadi donatur tetap.</p>
                     </div>
 
-                    <form action="{{ route('public.donasi.registrasi.submit') }}" method="POST" class="space-y-5">
+                    <form id="reg-form" action="{{ route('public.donasi.registrasi.submit') }}" method="POST" class="space-y-5" novalidate>
                         @csrf
 
                         <div>
@@ -39,11 +39,11 @@
                             <input type="text"
                             name="nama"
                             value="{{ old('nama') }}"
-                            class="mt-2 w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                            class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm {{ $errors->has('nama') ? 'input-error' : '' }}"
                             placeholder="Masukkan nama lengkap Anda..."
                             autocomplete="name"
                             required>
-                            @error('nama')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                            @error('nama')<p class="mt-2 text-sm text-red-500">{{ $message }}</p>@enderror
                         </div>
 
                         <div>
@@ -51,11 +51,11 @@
                             <input type="email"
                             name="email"
                             value="{{ old('email') }}"
-                            class="mt-2 w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                            class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm {{ $errors->has('email') ? 'input-error' : '' }}"
                             placeholder="Masukkan alamat email Anda..."
                             autocomplete="email"
                             required>
-                            @error('email')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                            @error('email')<p class="mt-2 text-sm text-red-500">{{ $message }}</p>@enderror
                         </div>
 
                         <div>
@@ -64,13 +64,12 @@
                             name="no_hp"
                             value="{{ old('no_hp') }}"
                             minlength="10" maxlength="15"
-                            class="mt-2 w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                            class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm {{ $errors->has('no_hp') ? 'input-error' : '' }}"
                             placeholder="Masukkan nomor hp Anda..."
                             pattern="[0-9]{10,15}"
-                            title="Hanya angka, 10-15 digit"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             required>
-                            @error('no_hp')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                            @error('no_hp')<p class="mt-2 text-sm text-red-500">{{ $message }}</p>@enderror
                         </div>
 
                         <div>
@@ -78,10 +77,10 @@
                             <textarea 
                                 name="alamat"
                                 rows="3" 
-                                class="mt-2 w-full px-4 py-3 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300" 
+                                class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm {{ $errors->has('alamat') ? 'input-error' : '' }}" 
                                 placeholder="Masukkan alamat lengkap Anda..."
                                 required>{{ old('alamat') }}</textarea>
-                            @error('alamat')<p class="mt-2 text-sm text-red-600">{{ $message }}</p>@enderror
+                            @error('alamat')<p class="mt-2 text-sm text-red-500">{{ $message }}</p>@enderror
                         </div>
 
                         <div>
@@ -91,12 +90,11 @@
                                     id="reg-password"
                                     type="password"
                                     name="password"
-                                    class="w-full px-4 py-3 pr-12 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                    class="w-full pl-4 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm {{ $errors->has('password') ? 'input-error' : '' }}"
                                     placeholder="Masukkan kata sandi..."
                                     autocomplete="new-password"
                                     required
                                 >
-
                                 <button
                                     type="button"
                                     onclick="togglePassVisibility('reg-password', 'eye-reg-pass')"
@@ -106,7 +104,7 @@
                                 </button>
                             </div>
                             @error('password')
-                                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -117,11 +115,10 @@
                                     id="reg-password-conf"
                                     type="password"
                                     name="password_confirmation"
-                                    class="w-full px-4 py-3 pr-12 rounded-lg text-sm text-gray-900 border border-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
+                                    class="w-full pl-4 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
                                     placeholder="Ulangi kata sandi..."
                                     required
                                 >
-
                                 <button
                                     type="button"
                                     onclick="togglePassVisibility('reg-password-conf', 'eye-reg-pass-conf')"
@@ -130,6 +127,7 @@
                                     <i data-lucide="eye" id="eye-reg-pass-conf" class="w-5 h-5"></i>
                                 </button>
                             </div>
+                            <p id="pass-match-error" class="mt-2 text-sm text-red-500 hidden">Password dan konfirmasi password tidak cocok.</p>
                         </div>
 
                         <div class="flex flex-wrap gap-3 items-center justify-between">
@@ -143,11 +141,18 @@
     </div>
 </div>
 
+<style>
+    .input-error {
+        border-color: transparent !important;
+        box-shadow: 0 0 0 2px #f87171 !important;
+        outline: none !important;
+    }
+</style>
+
 <script>
     function togglePassVisibility(inputId, iconId) {
         const input = document.getElementById(inputId);
         const icon = document.getElementById(iconId);
-
         if (input.type === 'password') {
             input.type = 'text';
             icon.setAttribute('data-lucide', 'eye-off');
@@ -155,7 +160,54 @@
             input.type = 'password';
             icon.setAttribute('data-lucide', 'eye');
         }
-        lucide.createIcons(); // Refresh icons
+        lucide.createIcons();
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('reg-form');
+        const passInput = document.getElementById('reg-password');
+        const passConfInput = document.getElementById('reg-password-conf');
+        const passMatchError = document.getElementById('pass-match-error');
+        const inputs = form.querySelectorAll('input[required], textarea[required]');
+
+        inputs.forEach(input => {
+            input.addEventListener('input', function () {
+                if (this.checkValidity()) {
+                    this.classList.remove('input-error');
+                }
+                // Recheck password match when typing in either field
+                if (this === passInput || this === passConfInput) {
+                    if (passInput.value && passConfInput.value && passInput.value !== passConfInput.value) {
+                        passConfInput.classList.add('input-error');
+                        passMatchError.classList.remove('hidden');
+                    } else {
+                        passConfInput.classList.remove('input-error');
+                        passMatchError.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        form.addEventListener('submit', function (e) {
+            let firstInvalid = null;
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    e.preventDefault();
+                    input.classList.add('input-error');
+                    if (!firstInvalid) firstInvalid = input;
+                }
+            });
+
+            // Check password match
+            if (passInput.value !== passConfInput.value) {
+                e.preventDefault();
+                passConfInput.classList.add('input-error');
+                passMatchError.classList.remove('hidden');
+                if (!firstInvalid) firstInvalid = passConfInput;
+            }
+
+            if (firstInvalid) firstInvalid.focus();
+        });
+    });
 </script>
 @endsection
