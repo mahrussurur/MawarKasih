@@ -14,9 +14,6 @@ use Illuminate\View\View;
 
 class DonaturPasswordResetController extends Controller
 {
-    /**
-     * Display the password reset link request view.
-     */
     public function createLinkRequest(): View
     {
         return view('auth.forgot-password', [
@@ -25,9 +22,6 @@ class DonaturPasswordResetController extends Controller
         ]);
     }
 
-    /**
-     * Handle an incoming password reset link request.
-     */
     public function storeLinkRequest(Request $request): RedirectResponse
     {
         $request->validate([
@@ -44,9 +38,6 @@ class DonaturPasswordResetController extends Controller
                         ->withErrors(['email' => __($status)]);
     }
 
-    /**
-     * Display the password reset view.
-     */
     public function createReset(Request $request): View
     {
         return view('auth.reset-password', [
@@ -57,9 +48,6 @@ class DonaturPasswordResetController extends Controller
         ]);
     }
 
-    /**
-     * Handle an incoming new password request.
-     */
     public function storeReset(Request $request): RedirectResponse
     {
         $request->validate([

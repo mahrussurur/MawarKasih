@@ -7,9 +7,16 @@ use App\Models\AnakAsuh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\ImageService;
 
 class AnakAsuhController extends Controller
 {
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
     public function index(Request $request)
     {
         $query = AnakAsuh::latest();
@@ -61,7 +68,7 @@ class AnakAsuhController extends Controller
         }
 
         if ($request->hasFile('foto')) {
-            $validated['foto'] = $request->file('foto')->store('anak_asuh', 'public');
+            $validated['foto'] = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'anak_asuh');
         }
 
         \App\Models\AnakAsuh::create($validated);
@@ -97,10 +104,8 @@ class AnakAsuhController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            if ($anakAsuh->foto) {
-                Storage::disk('public')->delete($anakAsuh->foto);
-            }
-            $validated['foto'] = $request->file('foto')->store('anak_asuh', 'public');
+            $this->imageService->deleteImage($anakAsuh->foto);
+            $validated['foto'] = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'anak_asuh');
         }
 
         $anakAsuh->update($validated);
@@ -111,7 +116,7 @@ class AnakAsuhController extends Controller
     public function destroy($id)
     {
         $anak = AnakAsuh::findOrFail($id);
-        if($anak->foto) Storage::disk('public')->delete($anak->foto);
+        $this->imageService->deleteImage($anak->foto);
         $anak->delete();
         return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil dihapus');
     }

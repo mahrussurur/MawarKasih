@@ -6,9 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Kegiatan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ImageService;
 
 class KegiatanController extends Controller
 {
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -41,7 +48,7 @@ class KegiatanController extends Controller
         $fotoPath = null;
 
         if ($request->hasFile('foto_dokumentasi')) {
-            $fotoPath = $request->file('foto_dokumentasi')->store('kegiatan', 'public');
+            $fotoPath = $this->imageService->uploadAndGenerateWebp($request->file('foto_dokumentasi'), 'kegiatan');
         }
 
         Kegiatan::create([
@@ -82,10 +89,8 @@ class KegiatanController extends Controller
         $fotoPath = $kegiatan->foto_dokumentasi;
 
         if ($request->hasFile('foto_dokumentasi')) {
-            if ($kegiatan->foto_dokumentasi) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($kegiatan->foto_dokumentasi);
-            }
-            $fotoPath = $request->file('foto_dokumentasi')->store('kegiatan', 'public');
+            $this->imageService->deleteImage($kegiatan->foto_dokumentasi);
+            $fotoPath = $this->imageService->uploadAndGenerateWebp($request->file('foto_dokumentasi'), 'kegiatan');
         }
 
         $kegiatan->update([
@@ -102,9 +107,7 @@ class KegiatanController extends Controller
     {
         $kegiatan = Kegiatan::findOrFail($id);
 
-        if ($kegiatan->foto_dokumentasi) {
-            \Illuminate\Support\Facades\Storage::disk('public')->delete($kegiatan->foto_dokumentasi);
-        }
+        $this->imageService->deleteImage($kegiatan->foto_dokumentasi);
 
         $kegiatan->delete();
 

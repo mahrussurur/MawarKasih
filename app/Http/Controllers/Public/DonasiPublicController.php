@@ -7,9 +7,16 @@ use App\Models\Donasi;
 use App\Models\Donatur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Services\ImageService;
 
 class DonasiPublicController extends Controller
 {
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
     public function form()
     {
         $donatur = session('donatur_id') ? Donatur::find(session('donatur_id')) : null;
@@ -95,7 +102,10 @@ class DonasiPublicController extends Controller
         ]);
 
         if ($request->hasFile('bukti_transfer')) {
-            $path = $request->file('bukti_transfer')->store('bukti_transfer', 'public');
+            if ($donasi->bukti_transfer) {
+                $this->imageService->deleteImage($donasi->bukti_transfer);
+            }
+            $path = $this->imageService->uploadAndGenerateWebp($request->file('bukti_transfer'), 'bukti_transfer');
             $donasi->update(['bukti_transfer' => $path]);
         }
 
@@ -158,7 +168,7 @@ class DonasiPublicController extends Controller
 
         $buktiPath = null;
         if ($request->hasFile('bukti_transfer')) {
-            $buktiPath = $request->file('bukti_transfer')->store('bukti_transfer', 'public');
+            $buktiPath = $this->imageService->uploadAndGenerateWebp($request->file('bukti_transfer'), 'bukti_transfer');
         }
 
         $payload = [

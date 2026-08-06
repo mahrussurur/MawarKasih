@@ -7,10 +7,17 @@ use App\Models\Donasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\ImageService;
 
 class DonasiController extends Controller
 {
-    // Halaman daftar donasi — dengan filter status & search.
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+    
     public function index(Request $request)
     {
         $query = Donasi::query()->latest();
@@ -116,10 +123,7 @@ class DonasiController extends Controller
     // Hapus donasi
     public function destroy(Donasi $donasi)
     {
-        // Hapus file bukti transfer jika ada
-        if ($donasi->bukti_transfer) {
-            Storage::disk('public')->delete($donasi->bukti_transfer);
-        }
+        $this->imageService->deleteImage($donasi->bukti_transfer);
 
         $kode = $donasi->kode_donasi;
         $donasi->delete();
@@ -148,10 +152,8 @@ class DonasiController extends Controller
         $data = $request->only('nama_donatur', 'no_hp', 'nominal', 'metode_pembayaran', 'tanggal', 'keterangan');
 
         if ($request->hasFile('bukti_transfer')) {
-            if ($donasi->bukti_transfer) {
-                Storage::disk('public')->delete($donasi->bukti_transfer);
-            }
-            $data['bukti_transfer'] = $request->file('bukti_transfer')->store('bukti_transfer', 'public');
+            $this->imageService->deleteImage($donasi->bukti_transfer);
+            $data['bukti_transfer'] = $this->imageService->uploadAndGenerateWebp($request->file('bukti_transfer'), 'bukti_transfer');
         }
 
         $donasi->update($data);

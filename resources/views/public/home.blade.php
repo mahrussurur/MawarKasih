@@ -10,31 +10,31 @@
     <div id="carouselTrack" class="relative w-full h-full flex">
         
         <div class="carousel-slide min-w-full relative h-full" aria-hidden="true">
-            <img src="{{ asset('images/hero/slide-3.jpeg') }}" alt="Clone Last" class="w-full h-full object-cover">
+            <img src="{{ asset('images/hero/slide-3.webp') }}" alt="Clone Last" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
         </div>
 
         <div class="carousel-slide min-w-full relative h-full">
-            <img src="{{ asset('images/hero/slide-1.jpeg') }}" alt="Slide 1 - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
+            <img src="{{ asset('images/hero/slide-1.webp') }}" alt="Slide 1 - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
         </div>
 
         <div class="carousel-slide min-w-full relative h-full">
-            <img src="{{ asset('images/hero/slide-2.jpeg') }}" alt="Slide 2 - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
+            <img src="{{ asset('images/hero/slide-2.webp') }}" alt="Slide 2 - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
         </div>
 
         <div class="carousel-slide min-w-full relative h-full">
-            <img src="{{ asset('images/hero/slide-3.jpeg') }}" alt="Slide 3 - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
+            <img src="{{ asset('images/hero/slide-3.webp') }}" alt="Slide 3 - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
         </div>
 
         <div class="carousel-slide min-w-full relative h-full" aria-hidden="true">
-            <img src="{{ asset('images/hero/slide-1.jpeg') }}" alt="Clone First" class="w-full h-full object-cover">
+            <img src="{{ asset('images/hero/slide-1.webp') }}" alt="Clone First" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
             <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
         </div>
@@ -236,7 +236,7 @@
 <section class="py-14 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- Header section sesuai dengan Screenshot 2026-06-09 212507.jpg -->
+        <!-- Header section sesuai dengan Screenshot 2026-06-09 212507.webp -->
         <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10" data-aos="fade-up">
             <div>
                 <div class="flex items-center gap-4 mb-1">
@@ -259,7 +259,7 @@
                 <!-- Gambar kegiatan -->
                 <div class="aspect-[16/10] overflow-hidden bg-gray-100">
                     @if($kegiatan->foto_dokumentasi)
-                        <img src="{{ Storage::url($kegiatan->foto_dokumentasi) }}"
+                        <img src="{{ get_webp_url($kegiatan->foto_dokumentasi) }}"
                             alt="{{ $kegiatan->judul }}"
                             class="w-full h-full object-cover"
                             loading="lazy">
@@ -341,9 +341,9 @@
                 
                 <div class="w-full sm:w-40 md:w-48 aspect-[4/3] sm:aspect-square md:aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 shrink-0">
                     @if($f->foto)
-                        <img src="{{ Storage::url($f->foto) }}"
+                        <img src="{{ get_webp_url($f->foto) }}"
                             alt="{{ $f->judul }}"
-                            onclick="openFasilitasModal('{{ Storage::url($f->foto) }}')"
+                            onclick="openFasilitasModal('{{ get_webp_url($f->foto) }}')"
                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-105 cursor-zoom-in">
                     @else
                         <div class="w-full h-full flex items-center justify-center bg-gray-50">
@@ -379,7 +379,7 @@
 
             <!-- Background foto ringan di kanan -->
             <div class="absolute right-0 top-0 bottom-0 w-1/2 hidden md:block">
-                <img src="{{ asset('images/anak-panti.jpeg') }}"
+                <img src="{{ asset('images/anak-panti.webp') }}"
                     alt="Anak-anak Mawar Kasih"
                     class="w-full h-full object-cover object-center opacity-90">
                 <!-- Overlay gradient dari kiri -->

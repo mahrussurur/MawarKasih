@@ -132,7 +132,7 @@
                     if (instance) {
                         const slide = instance.getSlide();
                         if (slide && slide.triggerEl) {
-                            const filename = slide.triggerEl.getAttribute('data-filename') || 'gambar.jpg';
+                            const filename = slide.triggerEl.getAttribute('data-filename') || 'gambar.webp';
                             const url = slide.src;
                             
                             // Download via blob to bypass browser URL naming fallback

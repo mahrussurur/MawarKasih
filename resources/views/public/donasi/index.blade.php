@@ -205,15 +205,15 @@
                                             </div>
                                         </div>
                                         
-                                        <img src="{{ asset('images/qris-logo.png') }}" alt="QRIS" class="h-10 object-contain relative z-0 bg-transparent">
+                                        <img src="{{ asset('images/qris-logo.webp') }}" alt="QRIS" class="h-10 object-contain relative z-0 bg-transparent">
                                     </div>
                                 </label>
 
                                 <!-- QR BISA DIDOWNLOAD -->
-                                <a href="{{ asset('images/qris-barcode.png') }}"
-                                    download="QRIS-Panti-Asuhan-Mawar-Kasih.png"
+                                <a href="{{ asset('images/qris-barcode.webp') }}"
+                                    download="QRIS-Panti-Asuhan-Mawar-Kasih.webp"
                                     title="Klik untuk mengunduh QRIS">
-                                    <img src="{{ asset('images/qris-barcode.png') }}"
+                                    <img src="{{ asset('images/qris-barcode.webp') }}"
                                         alt="QRIS Barcode"
                                         class="w-48 h-48 object-contain rounded-lg hover:shadow hover:shadow-green-400 transition">
                                 </a>
@@ -463,11 +463,11 @@
                                                 </svg>
                                             </div>
                                         </div>
-                                        <img src="{{ asset('images/qris-logo.png') }}" alt="QRIS" class="h-10 object-contain relative z-0 bg-transparent">
+                                        <img src="{{ asset('images/qris-logo.webp') }}" alt="QRIS" class="h-10 object-contain relative z-0 bg-transparent">
                                     </div>
                                 </label>
-                                <a href="{{ asset('images/qris-barcode.png') }}" download="QRIS-Panti-Asuhan-Mawar-Kasih.png" title="Klik untuk mengunduh QRIS">
-                                    <img src="{{ asset('images/qris-barcode.png') }}" alt="QRIS Barcode" class="w-48 h-48 object-contain rounded-lg hover:shadow hover:shadow-green-400 transition">
+                                <a href="{{ asset('images/qris-barcode.webp') }}" download="QRIS-Panti-Asuhan-Mawar-Kasih.webp" title="Klik untuk mengunduh QRIS">
+                                    <img src="{{ asset('images/qris-barcode.webp') }}" alt="QRIS Barcode" class="w-48 h-48 object-contain rounded-lg hover:shadow hover:shadow-green-400 transition">
                                 </a>
                                 <div class="mt-4 space-y-1 text-center">
                                     <p class="text-sm font-bold text-gray-800 uppercase tracking-wide">Panti Asuhan Mawar Kasih</p>

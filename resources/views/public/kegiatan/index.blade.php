@@ -25,7 +25,7 @@
                         <!-- Gambar kegiatan -->
                         <div class="aspect-[16/10] overflow-hidden bg-gray-100">
                             @if($item->foto_dokumentasi)
-                                <img src="{{ Storage::url($item->foto_dokumentasi) }}"
+                                <img src="{{ get_webp_url($item->foto_dokumentasi) }}"
                                     alt="{{ $item->nama_kegiatan }}"
                                     class="w-full h-full object-cover"
                                     loading="lazy">

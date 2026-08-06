@@ -20,20 +20,17 @@ class DashboardController extends Controller
         $totalPengasuh = Pengasuh::count();
         $totalKegiatan = Kegiatan::count();
         $totalDonatur = Donatur::count();
-        // $totalDonasi  = Donasi::distinct('nama_donatur')->count();
 
-        // ── Data Terbaru ──
         $donasiTerbaru  = Donasi::latest()->take(5)->get();
         $kegiatanTerbaru = Kegiatan::latest()->take(5)->get();
 
-        $donasiTerbaru   = collect(); // collection kosong
+        $donasiTerbaru   = collect();
 
         return view('admin.dashboard', compact(
             'totalAnak',
             'totalPengasuh',
             'totalKegiatan',
             'totalDonatur',
-            // 'totalDonasi',
             'donasiTerbaru',
             'kegiatanTerbaru'
         ));

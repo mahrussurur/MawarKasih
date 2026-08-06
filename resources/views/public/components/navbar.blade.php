@@ -5,7 +5,7 @@
             <!-- LOGO -->
             <div class="flex items-center gap-3 flex-shrink-0">
 
-                <img src="{{ asset('images/logo.png') }}" alt="Panti Asuhan Mawar Kasih" class="h-14 w-auto">
+                <img src="{{ asset('images/logo.webp') }}" alt="Panti Asuhan Mawar Kasih" class="h-14 w-auto">
                 <div class="hidden sm:block leading-tight">
                     <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Panti Asuhan</div>
                     <div class="text-base font-bold text-gray-900">Mawar Kasih</div>

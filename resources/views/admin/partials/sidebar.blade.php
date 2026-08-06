@@ -68,7 +68,7 @@
     <!-- Brand -->
     <div class="sidebar-brand">
         <div class="sidebar-brand-logo">
-            <img src="/images/logo2.png" alt="Logo MTK"
+            <img src="/images/logo2.webp" alt="Logo MTK"
                 onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:rgba(255,255,255,0.7);font-size:11px;font-weight:800;\'>MTK</span>'">
         </div>
         <div class="sidebar-brand-text">

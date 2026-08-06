@@ -8,10 +8,10 @@
     <meta name="keywords" content="panti asuhan, mawar kasih, bandung, donasi, anak yatim">
     <meta property="og:title" content="@yield('title', 'Beranda') | Panti Asuhan Mawar Kasih">
     <meta property="og:description" content="@yield('meta_desc', 'Bersama kita hadirkan kasih sayang, pendidikan, dan masa depan yang lebih baik.')">
-    <meta property="og:image" content="{{ asset('images/og-image.jpg') }}">
+    <meta property="og:image" content="{{ asset('images/og-image.webp') }}">
     <meta property="og:url" content="{{ url()->current() }}">
 
-    <link rel="icon" type="image/png" href="{{ asset('images/logo2.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo2.webp') }}">
 
     <!-- FONTS - Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

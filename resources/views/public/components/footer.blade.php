@@ -6,7 +6,7 @@
             <!-- KOLOM 1: Brand -->
             <div class="lg:col-span-2 flex flex-col items-center text-center lg:items-start lg:text-left">
                 <a href="{{ route('public.home') }}" class="flex flex-col lg:flex-row items-center gap-3 mb-4">
-                    <img src="{{ asset('images/logo.png') }}" alt="Mawar Kasih" class="h-28 sm:h-32 lg:h-11 w-auto brightness-200 object-contain">
+                    <img src="{{ asset('images/logo.webp') }}" alt="Mawar Kasih" class="h-28 sm:h-32 lg:h-11 w-auto brightness-200 object-contain">
                     <div class="hidden lg:block leading-tight">
                         <div class="text-xs text-gray-400 uppercase tracking-wider">Panti Asuhan</div>
                         <div class="text-lg font-bold text-white">Mawar Kasih</div>

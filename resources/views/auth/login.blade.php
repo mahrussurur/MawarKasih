@@ -19,7 +19,7 @@
 
         /* ── Background foto penuh layar ── */
         .bg-photo {
-            background-image: url('/images/bg-login.jpg');
+            background-image: url('/images/bg-login.webp');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -104,7 +104,7 @@
                 <!-- Logo -->
                 <div class="mb-5">
                     <img
-                        src="/images/logo.png"
+                        src="/images/logo.webp"
                         alt="Logo Panti Asuhan Mawar Kasih"
                         class="w-24 h-24 object-contain mx-auto drop-shadow-lg"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
