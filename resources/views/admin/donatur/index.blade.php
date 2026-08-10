@@ -127,8 +127,8 @@
 
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-slate-500">
-            <p class="text-base font-semibold text-slate-900">Belum ada data pengasuh</p>
-            <span class="text-sm text-slate-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan data pengasuh pertama' }}</span>
+            <p class="text-base font-semibold text-slate-900">Belum ada data donatur</p>
+            <span class="text-sm text-slate-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan data donatur pertama' }}</span>
         </div>
         @endif
     </div>

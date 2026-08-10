@@ -1,12 +1,10 @@
 {{--
-    ┌─────────────────────────────────────────────────────────────┐
-    │  GLOBAL TOAST NOTIFICATION  (Public Layout)                 │
-    │  Mendukung: success, error, warning, info, status           │
-    └─────────────────────────────────────────────────────────────┘
+    GLOBAL TOAST NOTIFICATION
+    Shared across admin & public layouts.
 --}}
 
-<div id="toastContainer"
-     class="fixed top-6 left-1/2 -translate-x-1/2 z-[9999] flex flex-col gap-3 pointer-events-none"
+<div id="{{ $id ?? 'toastContainer' }}"
+     class="pointer-events-none fixed left-1/2 top-6 z-[9999] flex -translate-x-1/2 flex-col gap-3"
      style="min-width: 300px; max-width: 420px;">
 </div>
 
@@ -28,43 +26,68 @@
         transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
         backdrop-filter: blur(6px);
         border: 1px solid rgba(255,255,255,0.2);
+        color: #fff;
     }
-    .toast-item.show { transform: translateY(0); opacity: 1; }
-    .toast-item.hide { transform: translateY(-150%); opacity: 0; }
 
-    .toast-success { background: #22c55e; color: #ffffff; }
-    .toast-error   { background: #ef4444; color: #ffffff; }
-    .toast-warning { background: #f59e0b; color: #ffffff; }
-    .toast-info    { background: #3b82f6; color: #ffffff; }
+    .toast-item.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
 
-    .toast-icon  { flex-shrink:0; width:20px; height:20px; margin-top:1px; }
+    .toast-item.hide {
+        transform: translateY(-150%);
+        opacity: 0;
+    }
+
+    .toast-success { background: #22c55e; }
+    .toast-error   { background: #ef4444; }
+    .toast-warning { background: #f59e0b; }
+    .toast-info    { background: #3b82f6; }
+
+    .toast-icon {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        margin-top: 1px;
+    }
+
     .toast-close {
-        flex-shrink: 0; margin-left: auto; opacity: 0.7;
-        cursor: pointer; background: none; border: none;
-        color: inherit; padding: 0; font-size: 18px;
-        line-height: 1; transition: opacity 0.2s;
+        flex-shrink: 0;
+        margin-left: auto;
+        opacity: 0.75;
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: inherit;
+        padding: 0;
+        font-size: 18px;
+        line-height: 1;
+        transition: opacity 0.2s;
     }
-    .toast-close:hover { opacity: 1; }
+
+    .toast-close:hover {
+        opacity: 1;
+    }
 </style>
 
 <script>
 (function() {
     const ICONS = {
         success: `<svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity=".4" fill="none"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 13l3.5 3.5L17 9"/></svg>`,
-        error:   `<svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity=".4" fill="none"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 9l-6 6M9 9l6 6"/></svg>`,
+        error: `<svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity=".4" fill="none"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 9l-6 6M9 9l6 6"/></svg>`,
         warning: `<svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 3h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>`,
-        info:    `<svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity=".4" fill="none"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8h.01M12 12v4"/></svg>`,
+        info: `<svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity=".4" fill="none"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8h.01M12 12v4"/></svg>`,
     };
 
-    window.showToast = function(message, type = 'success', duration = 4000) {
-        const container = document.getElementById('toastContainer');
+    window.showToast = function(message, type = 'success', duration = 4000, containerId = 'toastContainer') {
+        const container = document.getElementById(containerId);
         if (!container || !message) return;
 
         const toast = document.createElement('div');
         toast.className = `toast-item toast-${type} relative overflow-hidden`;
         toast.innerHTML = `
             ${ICONS[type] || ICONS.info}
-            <span style="flex:1">${message}</span>
+            <span style="flex: 1;">${message}</span>
             <button class="toast-close" onclick="this.closest('.toast-item').remove()" aria-label="Tutup">&times;</button>
         `;
 
@@ -83,8 +106,7 @@
         toast.addEventListener('transitionend', () => toast.remove(), { once: true });
     }
 
-    // ── Auto-trigger dari Laravel session ──────────────────────
-    document.addEventListener('DOMContentLoaded', function () {
+    function initToastFromSession() {
         @if(session('success'))
             showToast(@json(session('success')), 'success');
         @endif
@@ -105,8 +127,8 @@
             @php
                 $status = session('status');
                 $statusMessages = [
-                    'profile-updated'        => 'Profil berhasil diperbarui.',
-                    'password-updated'       => 'Password berhasil diperbarui.',
+                    'profile-updated' => 'Profil berhasil diperbarui.',
+                    'password-updated' => 'Password berhasil diperbarui.',
                     'verification-link-sent' => 'Link verifikasi telah dikirim ke email Anda.',
                 ];
                 $statusMsg = $statusMessages[$status] ?? $status;
@@ -118,6 +140,12 @@
             @php $firstError = $errors->first(); @endphp
             showToast(@json($firstError), 'error');
         @endif
-    });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initToastFromSession);
+    } else {
+        initToastFromSession();
+    }
 })();
 </script>

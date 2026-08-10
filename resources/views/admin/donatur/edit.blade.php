@@ -2,10 +2,9 @@
 @section('page-title', 'Edit Donatur')
 
 @section('content')
-<div class="p-4 md:p-6 bg-gray-100 min-h-screen">
+<div class="p-4 md:p-6 bg-slate-100 min-h-screen">
     
-    <!-- Container lebih sempit: max-w-3xl (768px) -->
-    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow overflow-hidden">
+    <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         
         <!-- Header -->
         <div class="p-2 md:p-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">

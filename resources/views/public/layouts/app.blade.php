@@ -138,7 +138,7 @@
     @yield('extra_scripts')
 
     {{-- Toast Notification --}}
-    @include('public.components.toast')
+    <x-toast />
 
 </body>
 </html>

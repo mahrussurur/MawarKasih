@@ -2,10 +2,9 @@
 @section('page-title', 'Detail Galeri')
 
 @section('content')
-<div class="p-4 md:p-6 bg-gray-100 min-h-screen">
+<div class="p-4 md:p-6 bg-slate-100 min-h-screen">
 
-    <!-- Container lebih sempit: max-w-3xl (768px) -->
-    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow overflow-hidden">
+    <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
 
         <!-- Header -->
         <div class="p-2 md:p-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
@@ -22,8 +21,6 @@
         </div>
 
         <div class="p-6 sm:p-6">
-
-        <!-- Layout: Foto di atas -->
             <div class="flex flex-col gap-6 items-center">
 
                 <!-- Foto Section -->
@@ -99,7 +96,7 @@
         <div class="mt-3 text-center">
             <h3 class="text-lg font-medium text-gray-900">Konfirmasi Hapus</h3>
             <div class="mt-2 px-7 py-3">
-                <p class="text-sm text-gray-500">Apakah Anda yakin ingin menghapus data pengasuh ini?</p>
+                <p class="text-sm text-gray-500">Apakah Anda yakin ingin menghapus data galeri ini?</p>
             </div>
             <div class="flex items-center px-4 py-3 gap-3">
                 <button onclick="closeDeleteModal()" class="py-2 bg-gray-500 text-white text-base font-medium rounded-md flex-1 shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">Batal</button>
@@ -129,7 +126,7 @@ function closeImagePreview() {
 }
 
 function openDeleteModal(id) {
-    document.getElementById('deleteForm').action = '{{ route("pengasuh.destroy", ["pengasuh" => ":id"]) }}'.replace(':id', id);
+    document.getElementById('deleteForm').action = '{{ route("galeri.destroy", ["galeri" => ":id"]) }}'.replace(':id', id);
     document.getElementById('deleteModal').classList.remove('hidden');
 }
 
