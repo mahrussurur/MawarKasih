@@ -35,7 +35,9 @@
                                 <td class="px-6 py-4 text-gray-700">{{ $donasi->nominal_rupiah }}</td>
                                 <td class="px-6 py-4 text-gray-700">{{ $donasi->tanggal?->format('d M Y') ?? '-' }}</td>
                                 <td class="whitespace-nowrap px-4 py-3">
-                                    <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold {{ $donasi->status == 'diterima' ? 'bg-green-100 text-green-700' : ($donasi->status == 'ditolak' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700') }}">{{ $donasi->status_label }}</span>
+                                    <span class="inline-flex rounded-full px-3 py-1 text-xs font-semibold {{ $donasi->status == 'diterima' ? 'bg-green-100 text-green-700' : ($donasi->status == 'ditolak' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700') }}">
+                                        {{ $donasi->status_label }}
+                                    </span>
                                 </td>
                                 <td class="whitespace-nowrap px-6 py-4 text-center">
                                     <a href="{{ route('public.donasi.validasi', ['kode_donasi' => $donasi->kode_donasi]) }}" class="inline-flex items-center gap-1 rounded-full bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-700 transition hover:bg-brand-100">

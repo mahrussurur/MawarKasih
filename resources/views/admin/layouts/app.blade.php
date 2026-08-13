@@ -51,19 +51,45 @@
             margin-left: var(--sidebar-collapsed-width);
         }
 
-        .sidebar-collapsed .sidebar .nav-text,
-        .sidebar-collapsed .sidebar .sidebar-brand-text,
-        .sidebar-collapsed .sidebar .nav-label {
+        .sidebar-collapsed .sidebar .sidebar-brand {
+            justify-content: center;
+            gap: 0;
+            min-width: 0;
+        }
+
+        .sidebar-collapsed .sidebar .sidebar-brand-info {
+            display: none;
+        }
+
+        .sidebar-collapsed .sidebar .sidebar-toggle {
+            margin-left: 0;
+        }
+
+        .sidebar-collapsed .sidebar .sidebar-brand-text {
+            display: none;
+        }
+
+        .sidebar-collapsed .sidebar .sidebar-brand-text > * {
+            display: none;
+        }
+
+        .sidebar-collapsed .sidebar .nav-text {
             width: 0;
             opacity: 0;
             overflow: hidden;
             white-space: nowrap;
+            display: inline-block;
+        }
+
+        .sidebar-collapsed .sidebar .nav-label {
+            display: none;
         }
 
         .sidebar-collapsed .sidebar .nav-item {
             justify-content: center;
             padding-left: 0;
             padding-right: 0;
+            gap: 0;
         }
 
         .sidebar-collapsed .sidebar .nav-item::after {

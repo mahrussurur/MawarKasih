@@ -9,18 +9,6 @@
 <div class="bg-gray-50 py-10 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 
-
-        @if($errors->any())
-            <div class="mb-8 rounded-3xl border border-red-200 bg-red-50 p-5 text-sm text-red-800">
-                <p class="font-semibold">Terdapat kesalahan pada pengisian form:</p>
-                <ul class="mt-3 list-disc pl-5">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
         @if(empty($donatur))
             <section class="rounded-[28px] border border-gray-200 bg-white p-5 sm:p-10 shadow-sm">
 
@@ -555,14 +543,6 @@
             </section>
         @endif
     </div>
-</div>
-
-<!-- Elemen Notifikasi Toast - Posisi Atas Tengah -->
-<div id="toastNotifikasi" class="fixed top-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg shadow-lg transform transition-all duration-300 -translate-y-4 opacity-0 pointer-events-none z-50">
-    <svg class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-    </svg>
-    <span id="toastMessage" class="text-sm font-medium whitespace-nowrap">Berhasil!</span>
 </div>
 
 @section('extra_scripts')

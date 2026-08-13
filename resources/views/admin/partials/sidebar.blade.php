@@ -1,13 +1,21 @@
 <aside class="sidebar fixed inset-y-0 left-0 z-50 flex flex-col overflow-hidden bg-[#1E4FBC] text-white">
-    <div class="flex items-center gap-3 border-b border-white/10 px-3.5 py-[9.5px] transition-all duration-300">
-        <div class="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-transparent">
-            <img src="/images/logo2.webp" alt="Logo MTK" class="h-full w-full object-contain"
-                onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'text-[11px] font-extrabold text-white/80\'>MTK</span>'">
+    <div class="sidebar-brand flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-[9.5px] transition-all duration-300">
+        <div class="sidebar-brand-info flex items-center gap-3">
+            <div class="sidebar-brand-icon flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-transparent">
+                <img src="/images/logo2.webp" alt="Logo MTK" class="h-full w-full object-contain"
+                    onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'text-[11px] font-extrabold text-white/80\'>MTK</span>'">
+            </div>
+            <div class="sidebar-brand-text overflow-hidden whitespace-nowrap transition-all duration-200">
+                <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-white/50">Yayasan</div>
+                <div class="mt-0.5 text-[15px] font-bold text-white">Mawar Kasih</div>
+            </div>
         </div>
-        <div class="sidebar-brand-text overflow-hidden whitespace-nowrap transition-all duration-200">
-            <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-white/50">Yayasan</div>
-            <div class="mt-0.5 text-[15px] font-bold text-white">Mawar Kasih</div>
-        </div>
+
+        <button class="sidebar-toggle hidden h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white transition hover:bg-white/10 p-1.5 md:flex" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
     </div>
 
     <nav class="sidebar-nav flex-1 overflow-y-auto px-3.5 py-3.5">

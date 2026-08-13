@@ -4,6 +4,8 @@
 @section('page-title', 'Dashboard')
 
 @section('content')
+<div class="px-8 pt-4 bg-gray-100 min-h-screen">
+    
     <div class="mb-6">
         <h2 class="text-2xl font-extrabold text-slate-900">Selamat Datang, {{ Auth::user()->name }}!</h2>
         <p class="mt-1 text-sm font-medium text-slate-500">Ini adalah dashboard utama pengelolaan Yayasan Mawar Kasih.</p>
@@ -122,4 +124,5 @@
             @endif
         </div>
     </div>
+</div>
 @endsection

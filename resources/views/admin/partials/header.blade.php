@@ -7,12 +7,6 @@
                 </svg>
             </button>
 
-            <button class="hidden h-9 w-9 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 md:flex" onclick="toggleSidebar()" aria-label="Toggle sidebar" title="Perkecil/Perbesar sidebar">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
-
             <h1 class="text-xl font-extrabold tracking-tight text-slate-900 sm:text-2xl">@yield('page-title', 'Dashboard')</h1>
         </div>
 

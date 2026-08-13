@@ -137,13 +137,6 @@
                     Silahkan masuk untuk mengakses<br>sistem pengelolaan data.
                 </p>
 
-                <!-- Alert Error -->
-                @if ($errors->any())
-                    <div class="mb-5 px-4 py-3 rounded-lg bg-red-100/70 border border-red-300 text-red-700 text-sm">
-                        {{ $errors->first() }}
-                    </div>
-                @endif
-
                 <!-- FORM -->
                 <form method="POST" action="{{ route('login') }}" class="space-y-6">
                 @csrf
@@ -263,5 +256,7 @@
         }
     </script>
 
+    {{-- Toast Notification --}}
+    <x-toast />
 </body>
 </html>

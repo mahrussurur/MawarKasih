@@ -38,18 +38,6 @@
                                 </div>
                             </div>
 
-                            <!-- Pemberitahuan / Info Box -->
-                            @if(session('success'))
-                                <div id="infoBoxKunci" class="flex items-start gap-2 p-3 bg-yellow-50 border border-yellow-100 rounded-lg transition-all duration-300">
-                                    <svg class="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    <p class="text-xs text-yellow-700 leading-relaxed">
-                                        <span class="font-semibold">Penting:</span> Simpan Kunci Validasi ini. Anda dapat menggunakannya untuk mengecek status dan detail donasi Anda kapan saja.
-                                    </p>
-                                </div>
-                            @endif
-                            
                         </div>
                         <div class="grid grid-cols-3">
                             <div class="col-span-1 text-gray-500">Nama</div>

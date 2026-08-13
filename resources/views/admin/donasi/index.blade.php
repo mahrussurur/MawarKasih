@@ -3,14 +3,25 @@
 @section('title', 'Data Donasi | Panti Asuhan Mawar Kasih')
 
 @section('content')
+<div class="px-8 pt-4 bg-gray-100 min-h-screen">
 
     <!-- Summary Cards -->
-    <div class="grid gap-4 xl:grid-cols-4 mb-6">
-        <div class="flex items-center gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md">
-            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-100 text-xl">💰</div>
+    <div class="grid gap-4 xl:grid-cols-4 mb-4">
+        <div class="flex items-center gap-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M3.75 5.25h16.5a1.5 1.5 0 011.5 1.5v10.5a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V6.75a1.5 1.5 0 011.5-1.5z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 14.25h2.25" />
+                </svg>
+            </div>
+
             <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Total Valid</p>
-                <p class="text-lg font-bold text-slate-900">Rp {{ number_format($totalNominal, 0, ',', '.') }}</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    Total Donasi
+                </p>
+                <p class="text-lg font-bold text-slate-900">
+                    Rp {{ number_format($totalNominal, 0, ',', '.') }}
+                </p>
             </div>
         </div>
     </div>
@@ -18,13 +29,13 @@
     <!-- Toolbar -->
     <div class="flex justify-between mb-4">
         <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ route('donasi.create') }}" class="inline-flex items-center gap-2 rounded-2xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-600">
+            <a href="{{ route('donasi.create') }}" class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 Tambah Donasi
             </a>
         </div>
         <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ route('donasi.cetak') }}" target="_blank" class="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50">
+            <a href="{{ route('donasi.cetak') }}" target="_blank" class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm transition hover:border-gray-300 hover:bg-gray-100">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                 Cetak Laporan
             </a>
@@ -32,7 +43,7 @@
     </div>
 
     <!-- Kotak Utama Konten -->
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <div class="bg-white rounded-[28px] shadow-sm border border-gray-100 p-6 mb-4">
 
         <!-- Filter Bar -->
         <div class="flex flex-col gap-4 border-b border-slate-200 py-4 lg:flex-row lg:items-center lg:justify-between">
@@ -69,7 +80,7 @@
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </span>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama / kode..."
-                           class="w-full rounded-2xl border border-slate-200 bg-slate-50 py-2.5 pl-11 pr-4 text-sm text-slate-700 outline-none transition focus:border-sky-400 focus:bg-white focus:ring-2 focus:ring-sky-100" />
+                           class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm" />
                 </label>
             </form>
         </div>
@@ -233,6 +244,7 @@
         @endif
 
     </div>
+</div>
 
     <div id="imagePreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
         <div class="relative max-h-[90vh] max-w-[90vw]" onclick="event.stopPropagation()">
