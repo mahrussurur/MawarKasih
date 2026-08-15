@@ -4,40 +4,52 @@
     <meta charset="UTF-8">
     <title>Laporan Data Donatur</title>
     <style>
+        
+        @page {
+            size: A4 portrait;
+            margin: 8mm 10mm 7mm 10mm;
+        }
+        
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            line-height: 1.6;
-            color: #333;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            color: #111;
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
         }
 
-        .container {
-            padding: 20px;
-            max-width: 100%;
-        }
-
+        /* HEADER */
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #333;
-            padding-bottom: 15px;
+            margin-bottom: 4mm;
+            padding-bottom: 3mm;
+            border-bottom: 1.5px solid #222;
         }
-
         .header h1 {
-            font-size: 18px;
+            margin: 0;
+            font-size: 17px;
             font-weight: bold;
-            margin-bottom: 5px;
+            text-transform: uppercase;
+            line-height: 1.15;
         }
-
-        .header p {
-            font-size: 11px;
-            margin: 3px 0;
+        .header h2,
+        .header h3 {
+            margin: 1px 0 0;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+        .header .tahun {
+            margin-top: 2px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
         .info {
@@ -80,28 +92,22 @@
             font-size: 11px;
         }
 
-        .status-aktif {
-            background-color: #d4edda;
-            padding: 3px 8px;
-            border-radius: 3px;
-            display: inline-block;
-        }
-
-        .status-tidak_aktif {
-            background-color: #f8d7da;
-            padding: 3px 8px;
-            border-radius: 3px;
-            display: inline-block;
-        }
     </style>
 </head>
 <body>
+    @php
+        $tahunSekarang = now()->year;
+    @endphp
+
     <div class="container">
         <!-- Header -->
         <div class="header">
             <h1>LAPORAN DATA DONATUR</h1>
-            <p>Panti Asuhan Mawar Kasih</p>
-            <p>Jl. Mawarkasih No. 123, Kota</p>
+            <h2>LKSA MAWAR KASIH</h2>
+            <h3>BANYUWANGI</h3>
+            <div class="tahun">
+                TAHUN AJARAN {{ $tahunSekarang }}
+            </div>
         </div>
 
         <!-- Info -->
@@ -115,11 +121,10 @@
             <thead>
                 <tr>
                     <th class="text-center" style="width: 5%;">No</th>
-                    <th style="width: 20%;">Nama</th>
-                    <th style="width: 20%;">Email</th>
+                    <th style="width: 25%;">Nama</th>
+                    <th style="width: 25%;">Email</th>
                     <th style="width: 15%;">No. HP</th>
-                    <th style="width: 25%;">Alamat</th>
-                    <th class="text-center" style="width: 15%;">Status</th>
+                    <th style="width: 30%;">Alamat</th>
                 </tr>
             </thead>
             <tbody>
@@ -130,15 +135,10 @@
                         <td>{{ $item->email }}</td>
                         <td>{{ $item->no_hp }}</td>
                         <td>{{ $item->alamat }}</td>
-                        <td class="text-center">
-                            <span class="status-{{ $item->status }}">
-                                {{ ucfirst(str_replace('_', ' ', $item->status)) }}
-                            </span>
-                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">Tidak ada data donatur</td>
+                        <td colspan="5" class="text-center">Tidak ada data donatur</td>
                     </tr>
                 @endforelse
             </tbody>

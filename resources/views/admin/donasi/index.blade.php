@@ -88,49 +88,49 @@
         <!-- Table data -->
         @if($donasi->count() > 0)
         <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full min-w-[1600px] text-left border-collapse">
-                <thead>
-                    <tr class="bg-gray-50 text-gray-600 text-sm font-semibold border-b border-gray-200">
-                        <th class="px-4 py-3 text-center w-12">No</th>
-                        <th class="px-4 py-3 w-40">Kode Donasi</th>
-                        <th class="px-4 py-3 w-40">Nama Donatur</th>
-                        <th class="px-4 py-3 w-40">Sumber Donatur</th>
-                        <th class="px-4 py-3 w-40">No. HP</th>
-                        <th class="px-4 py-3 w-40">Tanggal</th>
-                        <th class="px-4 py-3 w-40">Keterangan</th>
-                        <th class="px-4 py-3 w-40">Nominal</th>
-                        <th class="px-4 py-3 w-40">Metode Pembayaran</th>
-                        <th class="px-4 py-3 text-center">Bukti</th>
-                        <th class="px-4 py-3 text-center">Status</th>
-                        <th class="px-4 py-3 text-center">Aksi</th>
+            <table class="w-full min-w-[1600px] text-left divide-y divide-gray-200 text-sm border-b border-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center w-12">No</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Kode Donasi</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Nama Donatur</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Sumber Donatur</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">No. HP</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Tanggal</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Keterangan</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Nominal</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Metode Pembayaran</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center">Bukti</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center">Status</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center sticky right-0 bg-gray-50 z-10 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-gray-700 text-sm">
+                <tbody class="divide-y divide-gray-100">
                     @foreach($donasi as $index => $item)
-                    <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                        <td class="px-4 py-4 text-center text-sm">{{ $donasi->firstItem() + $index }}</td>
-                        <td class="px-4 py-4 text-sm font-semibold">{{ $item->kode_donasi }}</td>
-                        <td class="px-4 py-4 text-sm font-semibold max-w-4">
+                    <tr class="hover:bg-gray-50 transition-colors group">
+                        <td class="px-6 py-4 text-center text-gray-700">{{ $donasi->firstItem() + $index }}</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->kode_donasi }}</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900 max-w-4">
                             <span class="line-clamp-2 break-words">{{ $item->nama_donatur ?? '-' }}</span>
                         </td>
-                        <td class="px-4 py-4 text-sm">
+                        <td class="px-6 py-4 text-gray-700">
                             @if($item->donatur_id)
                                 <span class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold text-emerald-800">Tetap</span>
-                                <!-- <div class="mt-1 text-[11px] text-slate-500">ID: {{ $item->donatur_id }}</div> -->
+                                <!-- <div class="mt-1 text-[11px] text-gray-500">ID: {{ $item->donatur_id }}</div> -->
                             @else
                                 <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-700">Umum</span>
                             @endif
                         </td>
-                        <td class="px-4 py-4 text-sm ">{{ $item->no_hp ?? '-' }}</td>
-                        <td class="px-4 py-4 text-sm ">{{ \Carbon\Carbon::parse($item->tanggal)->format('d - m - Y') }}</td>
-                        <td class="px-4 py-4 text-sm max-w-4">
+                        <td class="px-6 py-4 text-gray-700">{{ $item->no_hp ?? '-' }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($item->tanggal)->format('d - m - Y') }}</td>
+                        <td class="px-6 py-4 text-gray-700 max-w-4">
                             <span class="line-clamp-2 break-words">{{ $item->keterangan ?? '-' }}</span>
                         </td>
-                        <td class="px-4 py-4 text-sm font-semibold">{{ $item->nominal_rupiah }}</td>
-                        <td class="px-4 py-4 text-sm">
-                            {{ ucfirst($item->metode_pembayaran) ?? '-' }}
+                        <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->nominal_rupiah }}</td>
+                        <td class="px-6 py-4 text-gray-700">
+                            {{ ucfirst($item->jenis_donasi) ?? '-' }}
                         </td>
-                        <td class="px-4 py-4 text-center">
+                        <td class="px-6 py-4 text-center">
                             @if($item->bukti_transfer)
                                 <button type="button"
                                         class="inline-flex"
@@ -142,10 +142,10 @@
                                          title="Klik untuk perbesar">
                                 </button>
                             @else
-                                <span class="text-slate-400 text-sm font-medium">-</span>
+                                <span class="text-slate-400 font-medium">-</span>
                             @endif
                         </td>
-                        <td class="px-4 py-4 text-center">
+                        <td class="px-6 py-4 text-center">
                             @php
                                 $statusClasses = [
                                     'pending' => 'bg-amber-100 text-amber-800',
@@ -157,7 +157,7 @@
                                 {{ ucfirst($item->status) }}
                             </span>
                         </td>
-                        <td class="px-4 py-4 text-center">
+                        <td class="px-6 py-4 text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
                             <div class="flex justify-center gap-1">
                                 <!-- Tombol Lihat Detail -->
                                 <a href="{{ route('donasi.show', $item->id) }}"
@@ -202,7 +202,7 @@
                                             class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-red-600 bg-red-100 text-red-700 transition hover:bg-red-600 hover:text-white"
                                             title="Hapus"
                                             data-delete-route="{{ route('donasi.destroy', $item->id) }}"
-                                            data-kode-donasi="{{ $item->kode_donasi }}"
+                                            data-name="{{ $item->kode_donasi }}"
                                             onclick="openDeleteModal(this)">
                                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -219,44 +219,33 @@
 
         <!-- Pagination -->
         @if($donasi->hasPages())
-        <div class="flex flex-wrap items-center justify-end gap-2 border-t border-slate-200 px-5 py-4">
-            <a href="{{ $donasi->previousPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900 {{ $donasi->onFirstPage() ? 'opacity-40 pointer-events-none' : '' }}">
+        <div class="flex flex-wrap items-center justify-end gap-1 mt-4">
+            <a href="{{ $donasi->previousPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 transition hover:border-gray-300 hover:text-gray-900 {{ $donasi->onFirstPage() ? 'opacity-40 pointer-events-none' : '' }}">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
             </a>
 
             @foreach($donasi->getUrlRange(1, $donasi->lastPage()) as $page => $url)
-                <a href="{{ $url }}" class="inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-xl border px-3 text-sm font-semibold transition {{ $page == $donasi->currentPage() ? 'border-sky-600 bg-sky-600 text-white' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300' }}">
+                <a href="{{ $url }}" class="inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-xl border px-3 text-sm font-semibold transition {{ $page == $donasi->currentPage() ? 'border-blue-500 bg-blue-500 text-white' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300' }}">
                     {{ $page }}
                 </a>
             @endforeach
 
-            <a href="{{ $donasi->nextPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900 {{ !$donasi->hasMorePages() ? 'opacity-40 pointer-events-none' : '' }}">
+            <a href="{{ $donasi->nextPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 transition hover:border-gray-300 hover:text-gray-900 {{ !$donasi->hasMorePages() ? 'opacity-40 pointer-events-none' : '' }}">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
             </a>
         </div>
         @endif
 
         @else
-        <div class="flex min-h-[40px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-slate-500">
-            <p class="text-base font-semibold text-slate-900">Belum ada data donasi</p>
-            <span class="text-sm text-slate-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan donasi pertama' }}</span>
+        <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
+            <p class="text-base font-semibold text-gray-900">Belum ada data donasi</p>
+            <span class="text-sm text-gray-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan donasi pertama' }}</span>
         </div>
         @endif
 
     </div>
 </div>
 
-    <div id="imagePreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
-        <div class="relative max-h-[90vh] max-w-[90vw]" onclick="event.stopPropagation()">
-            <button type="button"
-                    class="absolute -right-3 -top-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-700 shadow-lg transition hover:bg-slate-100"
-                    onclick="closeImagePreview()"
-                    aria-label="Tutup preview gambar">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-            <img id="imagePreview" src="" alt="Preview bukti transfer" class="max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/70 bg-white object-contain shadow-2xl">
-        </div>
-    </div>
 
     <div id="validasiModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
         <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
@@ -320,49 +309,11 @@
         </div>
     </div>
 
-    <div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
-        <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
-            <div class="flex items-start justify-between gap-4">
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Konfirmasi Hapus</p>
-                    <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus donasi <span id="deleteModalKode"></span>?</h3>
-                </div>
-                <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeDeleteModal()" aria-label="Tutup modal hapus">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <p class="mt-4 text-sm text-slate-600">Hapus data permanen. Pastikan data <strong>donasi</strong> sudah tidak diperlukan lagi.</p>
-
-            <form id="deleteForm" method="POST" class="mt-5 flex justify-end gap-3">
-                @csrf
-                @method('DELETE')
-                <button type="button" class="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onclick="closeDeleteModal()">Batal</button>
-                <button type="submit" class="rounded-2xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700">Hapus</button>
-            </form>
-        </div>
-    </div>
-
     <script>
-        const imagePreviewModal = document.getElementById('imagePreviewModal');
-        const imagePreview = document.getElementById('imagePreview');
         const validasiModal = document.getElementById('validasiModal');
         const tolakModal = document.getElementById('tolakModal');
-        const deleteModal = document.getElementById('deleteModal');
         const validasiForm = document.getElementById('validasiForm');
         const tolakForm = document.getElementById('tolakForm');
-        const deleteForm = document.getElementById('deleteForm');
-
-        function openImagePreview(src) {
-            imagePreview.src = src;
-            imagePreviewModal.classList.remove('hidden');
-            imagePreviewModal.classList.add('flex');
-        }
-
-        function closeImagePreview() {
-            imagePreviewModal.classList.add('hidden');
-            imagePreviewModal.classList.remove('flex');
-            imagePreview.src = '';
-        }
 
         function openValidasiModal(button) {
             const route = button.dataset.validasiRoute;
@@ -394,27 +345,6 @@
             tolakModal.classList.remove('flex');
         }
 
-        function openDeleteModal(button) {
-            const route = button.dataset.deleteRoute;
-            const kode = button.dataset.kodeDonasi;
-
-            deleteForm.action = route;
-            document.getElementById('deleteModalKode').textContent = kode;
-            deleteModal.classList.remove('hidden');
-            deleteModal.classList.add('flex');
-        }
-
-        function closeDeleteModal() {
-            deleteModal.classList.add('hidden');
-            deleteModal.classList.remove('flex');
-        }
-
-        imagePreviewModal.addEventListener('click', function (event) {
-            if (event.target === imagePreviewModal) {
-                closeImagePreview();
-            }
-        });
-
         validasiModal.addEventListener('click', function (event) {
             if (event.target === validasiModal) {
                 closeValidasiModal();
@@ -426,12 +356,8 @@
                 closeTolakModal();
             }
         });
-
-        deleteModal.addEventListener('click', function (event) {
-            if (event.target === deleteModal) {
-                closeDeleteModal();
-            }
-        });
     </script>
+    
+    @include('admin.partials.modals')
     
 @endsection

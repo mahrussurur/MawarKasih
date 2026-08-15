@@ -174,10 +174,10 @@ class DonasiController extends Controller
         $totalNominal = $donasi->sum('nominal');
         $tahun        = $request->tahun ?? 'Semua Tahun';
 
-        $pdf = Pdf::loadView('donasi.cetak', compact('donasi', 'totalNominal', 'tahun'))
-                  ->setPaper('a4', 'landscape');
+        $pdf = Pdf::loadView('admin.donasi.cetak', compact('donasi', 'totalNominal', 'tahun'))
+                  ->setPaper('a4', 'portrait');
 
-        return $pdf->download('laporan-donasi-' . now()->format('YmdHis') . '.pdf');
+        return $pdf->stream('Laporan_Data_Donasi_Mawar_Kasih.pdf');
     }
 
     // CEK STATUS DONASI — untuk donatur di web publik.

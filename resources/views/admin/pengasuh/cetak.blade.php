@@ -3,10 +3,48 @@
 <head>
     <title>Laporan Data Pengasuh</title>
     <style>
-        body { font-family: sans-serif; font-size: 12px; }
-        .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; }
-        .header h2 { margin: 0; padding: 0; }
-        .header p { margin: 5px 0 0 0; font-style: italic; }
+        @page {
+            size: A4 portrait;
+            margin: 8mm 10mm 7mm 10mm;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 13px;
+            color: #111;
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+        }
+        
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 4mm;
+            padding-bottom: 3mm;
+            border-bottom: 1.5px solid #222;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 17px;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+        .header h2,
+        .header h3 {
+            margin: 1px 0 0;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.15;
+        }
+        .header .tahun {
+            margin-top: 2px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { border: 1px solid #333; padding: 8px; text-align: left; }
         th { background-color: #f2f2f2; text-align: center; }
@@ -14,9 +52,17 @@
     </style>
 </head>
 <body>
+    @php
+        $tahunSekarang = now()->year;
+    @endphp
+
     <div class="header">
-        <h1>Laporan Data Pengasuh</h1>
-        <p>Yayasan Mawar Kasih</p>
+        <h1>LAPORAN DATA PENGASUH</h1>
+        <h2>LKSA MAWAR KASIH</h2>
+        <h3>BANYUWANGI</h3>
+        <div class="tahun">
+            TAHUN AJARAN {{ $tahunSekarang }}
+        </div>
     </div>
     
     <table>

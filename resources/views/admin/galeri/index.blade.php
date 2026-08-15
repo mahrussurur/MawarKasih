@@ -54,22 +54,22 @@
         <!-- Table data -->
         @if($galeris->count() > 0)
         <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full min-w-[1100px] text-left border-collapse">
-                <thead>
-                    <tr class="bg-gray-50 text-gray-600 text-sm font-semibold border-b border-gray-200">
-                        <th class="px-4 py-3 text-center w-12">No</th>
-                        <th class="px-4 py-3 w-20">Foto</th>
-                        <th class="px-4 py-3 w-60">Judul</th>
-                        <th class="px-4 py-3 w-40">Kategori</th>
-                        <th class="px-4 py-3 w-60">Deskripsi</th>
-                        <th class="px-4 py-3 text-center w-20">Aksi</th>
+            <table class="w-full min-w-[1100px] text-left divide-y divide-gray-200 text-sm border-b border-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center w-12">No</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-20">Foto</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-60">Judul</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Kategori</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 w-60">Deskripsi</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center w-20 sticky right-0 bg-gray-50 z-10 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="text-gray-700 text-sm">
+                <tbody class="divide-y divide-gray-100">
                     @foreach($galeris as $index => $galeri)
-                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                            <td class="px-4 py-4 text-center">{{ $index + 1 }}</td>
-                            <td class="px-4 py-4">
+                        <tr class="hover:bg-gray-50 transition-colors group">
+                            <td class="px-6 py-4 text-center text-gray-700">{{ $index + 1 }}</td>
+                            <td class="px-6 py-4 text-center">
                                 @if($galeri->foto)
                                     <button type="button"
                                             class="inline-flex"
@@ -86,16 +86,16 @@
                                     </div>
                                 @endif
                             </td>
-                            <td class="px-4 py-4 font-medium">{{ $galeri->judul }}</td>
-                            <td class="px-4 py-4">
+                            <td class="px-6 py-4 font-semibold text-gray-900">{{ $galeri->judul }}</td>
+                            <td class="px-6 py-4">
                                 <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $galeri->kategori === 'fasilitas' ? 'bg-emerald-100 text-emerald-700' : 'bg-sky-100 text-sky-700' }}">
                                     {{ ucfirst($galeri->kategori) }}
                                 </span>
                             </td>
-                            <td class="px-4 py-4 max-w-md">
+                            <td class="px-6 py-4 max-w-md text-gray-700">
                                 <span class="line-clamp-2 break-words">{{ $galeri->deskripsi }}</span>
                             </td>
-                            <td class="px-4 py-4">
+                            <td class="px-6 py-4 text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
                                 <div class="flex justify-center gap-1">
                                     <a href="{{ route('galeri.show', $galeri->id) }}"
                                        class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-blue-500 bg-sky-100 text-blue-600 transition hover:bg-blue-500 hover:text-white"
@@ -114,8 +114,8 @@
                                     </a>
                                     <button type="button"
                                             onclick="openDeleteModal(this)"
-                                            data-action="{{ route('galeri.destroy', $galeri->id) }}"
-                                            data-judul="{{ $galeri->judul }}"
+                                            data-delete-route="{{ route('galeri.destroy', $galeri->id) }}"
+                                            data-name="{{ $galeri->judul }}"
                                             class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-red-600 bg-red-100 text-red-700 transition hover:bg-red-600 hover:text-white"
                                             title="Hapus">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,101 +132,31 @@
 
         <!-- Pagination -->
         @if($galeris->hasPages())
-        <div class="flex flex-wrap items-center justify-end gap-2 border-t border-slate-200 px-5 py-4">
-            <a href="{{ $galeri->previousPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900 {{ $galeri->onFirstPage() ? 'opacity-40 pointer-events-none' : '' }}">
+        <div class="flex flex-wrap items-center justify-end gap-1 mt-4">
+            <a href="{{ $galeri->previousPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-gray-50 text-gray-600 transition hover:border-gray-300 hover:text-gray-900 {{ $galeri->onFirstPage() ? 'opacity-40 pointer-events-none' : '' }}">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
             </a>
 
             @foreach($galeri->getUrlRange(1, $galeri->lastPage()) as $page => $url)
-                <a href="{{ $url }}" class="inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-xl border px-3 text-sm font-semibold transition {{ $page == $galeri->currentPage() ? 'border-sky-600 bg-sky-600 text-white' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300' }}">
+                <a href="{{ $url }}" class="inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-xl border px-3 text-sm font-semibold transition {{ $page == $galeri->currentPage() ? 'border-blue-500 bg-blue-500 text-white' : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-gray-300' }}">
                     {{ $page }}
                 </a>
             @endforeach
 
-            <a href="{{ $galeri->nextPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 transition hover:border-slate-300 hover:text-slate-900 {{ !$galeri->hasMorePages() ? 'opacity-40 pointer-events-none' : '' }}">
+            <a href="{{ $galeri->nextPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-gray-50 text-gray-600 transition hover:border-gray-300 hover:text-gray-900 {{ !$galeri->hasMorePages() ? 'opacity-40 pointer-events-none' : '' }}">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
             </a>
         </div>
         @endif
 
         @else
-        <div class="flex min-h-[40px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-slate-500">
-            <p class="text-base font-semibold text-slate-900">Belum ada data galeri</p>
-            <span class="text-sm text-slate-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan galeri pertama' }}</span>
+        <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
+            <p class="text-base font-semibold text-gray-900">Belum ada data galeri</p>
+            <span class="text-sm text-gray-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan galeri pertama' }}</span>
         </div>
         @endif
     </div>
 </div>
 
-<div id="imagePreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
-    <div class="relative max-h-[90vh] max-w-[90vw]" onclick="event.stopPropagation()">
-        <button type="button"
-                class="absolute -right-3 -top-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-700 shadow-lg transition hover:bg-slate-100"
-                onclick="closeImagePreview()"
-                aria-label="Tutup preview gambar">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-        <img id="imagePreview" src="" alt="Preview foto galeri" class="max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/70 bg-white object-contain shadow-2xl">
-    </div>
-</div>
-
-<div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
-    <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
-        <div class="flex items-start justify-between gap-4">
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Konfirmasi Hapus</p>
-                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus foto <span id="deleteModalJudul"></span>?</h3>
-            </div>
-            <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeDeleteModal()" aria-label="Tutup modal hapus">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-        </div>
-        <p class="mt-4 text-sm text-slate-600">Hapus data permanen. Pastikan <strong>foto</strong> tidak diperlukan lagi.</p>
-
-        <form id="deleteForm" method="POST" class="mt-5 flex justify-end gap-3">
-            @csrf
-            @method('DELETE')
-            <button type="button" class="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onclick="closeDeleteModal()">Batal</button>
-            <button type="submit" class="rounded-2xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700">Hapus</button>
-        </form>
-    </div>
-</div>
-
-<script>
-const imagePreviewModal = document.getElementById('imagePreviewModal');
-const imagePreview = document.getElementById('imagePreview');
-
-function openImagePreview(src) {
-    imagePreview.src = src;
-    imagePreviewModal.classList.remove('hidden');
-    imagePreviewModal.classList.add('flex');
-}
-
-function closeImagePreview() {
-    imagePreviewModal.classList.add('hidden');
-    imagePreviewModal.classList.remove('flex');
-    imagePreview.src = '';
-}
-
-function openDeleteModal(button) {
-    const action = button.dataset.action;
-    const nama = button.dataset.judul;
-
-    document.getElementById('deleteForm').action = action;
-    document.getElementById('deleteModalJudul').textContent = nama;
-    document.getElementById('deleteModal').classList.remove('hidden');
-    document.getElementById('deleteModal').classList.add('flex');
-}
-
-function closeDeleteModal() {
-    document.getElementById('deleteModal').classList.add('hidden');
-    document.getElementById('deleteModal').classList.remove('flex');
-}
-
-imagePreviewModal.addEventListener('click', function (event) {
-    if (event.target === imagePreviewModal) {
-        closeImagePreview();
-    }
-});
-</script>
+@include('admin.partials.modals')
 @endsection

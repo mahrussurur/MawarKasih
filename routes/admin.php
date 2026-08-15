@@ -30,22 +30,14 @@ Route::prefix('admin')
         Route::get('/donatur/cetak', [DonaturController::class, 'cetak'])->name('donatur.cetak');
         Route::resource('donatur', DonaturController::class);
 
-        // Resource lainnya
-        Route::resource('donasi',  DonasiController::class);
+        // Donasi - route cetak & aksi khusus didahulukan agar tidak tertimpa wildcard {donasi}
+        Route::get('donasi/cetak', [DonasiController::class, 'cetak'])->name('donasi.cetak');
+        Route::patch('donasi/{donasi}/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
+        Route::patch('donasi/{donasi}/tolak', [DonasiController::class, 'tolak'])->name('donasi.tolak');
+        Route::resource('donasi', DonasiController::class);
+
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('galeri',  GaleriController::class);
-
-        // Cetak laporan donasi valid (PDF)
-        Route::get('donasi/cetak', [DonasiController::class, 'cetak'])->name('donasi.cetak');
-        
-        // Validasi donasi (pending → valid)
-        Route::patch('donasi/{donasi}/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
-        
-        // Tolak donasi (pending → ditolak)
-        Route::patch('donasi/{donasi}/tolak', [DonasiController::class, 'tolak'])->name('donasi.tolak');
-        
-        // Resource standar (index, create, store, show, edit, update, destroy)
-        Route::resource('donasi', DonasiController::class);
         
         // ── ROUTE PUBLIK (di luar middleware auth) ──
         // Cek status donasi untuk donatur via kode_donasi
