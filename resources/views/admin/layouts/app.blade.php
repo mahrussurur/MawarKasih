@@ -12,6 +12,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- Script Pencegah Flash Of Unstyled Content (FOUC) saat Reload -->
     <script>
         (function() {
             if (window.innerWidth > 768 && localStorage.getItem('sidebar-collapsed') === 'true') {
@@ -22,12 +23,13 @@
 
     <style>
         :root {
-            --sidebar-width: 250px;
-            --sidebar-collapsed-width: 78px;
+            --sidebar-width: 230px;
+            --sidebar-collapsed-width: 80px;
         }
 
         html { font-family: 'Plus Jakarta Sans', sans-serif; }
 
+        /* --- DESKTOP LAYOUT --- */
         .sidebar {
             width: var(--sidebar-width);
             transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s ease;
@@ -43,6 +45,7 @@
             animation: fadeInUp 0.35s ease both;
         }
 
+        /* State Collapsed (Desktop) */
         .sidebar-collapsed .sidebar {
             width: var(--sidebar-collapsed-width);
         }
@@ -51,26 +54,19 @@
             margin-left: var(--sidebar-collapsed-width);
         }
 
+        /* Sembunyikan Elemen Teks saat Collapsed */
+        .sidebar-collapsed .sidebar .sidebar-brand-info,
+        .sidebar-collapsed .sidebar .sidebar-brand-text,
+        .sidebar-collapsed .sidebar .nav-label {
+            display: none !important;
+        }
+
         .sidebar-collapsed .sidebar .sidebar-brand {
             justify-content: center;
-            gap: 0;
-            min-width: 0;
-        }
-
-        .sidebar-collapsed .sidebar .sidebar-brand-info {
-            display: none;
-        }
-
-        .sidebar-collapsed .sidebar .sidebar-toggle {
-            margin-left: 0;
-        }
-
-        .sidebar-collapsed .sidebar .sidebar-brand-text {
-            display: none;
-        }
-
-        .sidebar-collapsed .sidebar .sidebar-brand-text > * {
-            display: none;
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: 14px;    
+            padding-bottom: 14px; 
         }
 
         .sidebar-collapsed .sidebar .nav-text {
@@ -81,10 +77,6 @@
             display: inline-block;
         }
 
-        .sidebar-collapsed .sidebar .nav-label {
-            display: none;
-        }
-
         .sidebar-collapsed .sidebar .nav-item {
             justify-content: center;
             padding-left: 0;
@@ -92,15 +84,16 @@
             gap: 0;
         }
 
+        /* Tooltip Hover pada Desktop Collapsed */
         .sidebar-collapsed .sidebar .nav-item::after {
             content: attr(data-tooltip);
             position: absolute;
-            left: calc(var(--sidebar-collapsed-width) - 8px);
+            left: calc(var(--sidebar-collapsed-width) - 4px);
             top: 50%;
             transform: translateY(-50%);
             background: rgba(15, 23, 42, 0.95);
             color: #fff;
-            padding: 6px 10px;
+            padding: 6px 12px;
             border-radius: 8px;
             font-size: 12px;
             font-weight: 600;
@@ -121,70 +114,110 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- MOBILE LAYOUT (RESPONSIF <= 768px) --- */
         @media (max-width: 768px) {
-            .sidebar {
+            /* Mencegah sidebar gepeng saat dibuka di HP */
+            .sidebar, 
+            .sidebar-collapsed .sidebar {
+                width: var(--sidebar-width) !important;
                 transform: translateX(-100%);
             }
 
             .sidebar.open {
-                transform: translateX(0);
+                transform: translateX(0) !important;
             }
 
-            .main-content {
-                margin-left: 0;
-            }
-
+            /* Reset margin di HP */
+            .main-content,
             .sidebar-collapsed .main-content {
-                margin-left: 0;
+                margin-left: 0 !important;
+            }
+
+            /* Tampilkan kembali teks jika dibuka di HP */
+            .sidebar-collapsed .sidebar .sidebar-brand-info,
+            .sidebar-collapsed .sidebar .sidebar-brand-text,
+            .sidebar-collapsed .sidebar .nav-label {
+                display: flex !important;
+            }
+
+            .sidebar-collapsed .sidebar .nav-text {
+                width: auto !important;
+                opacity: 1 !important;
+            }
+
+            .sidebar-collapsed .sidebar .nav-item {
+                justify-content: flex-start !important;
+                padding-left: 0.875rem !important;
+                padding-right: 0.875rem !important;
+                gap: 0.75rem !important;
+            }
+
+            /* Matikan tooltip di perangkat layar sentuh/mobile */
+            .sidebar-collapsed .sidebar .nav-item::after {
+                display: none !important;
             }
         }
     </style>
 
     @stack('styles')
 </head>
-<body class="bg-slate-100 text-slate-900 antialiased">
+<body class="bg-gray-100 text-gray-900 antialiased">
 <div class="flex min-h-screen">
+    <!-- Sidebar -->
     @include('admin.partials.sidebar')
 
-    <div class="fixed inset-0 z-40 hidden bg-slate-900/50" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <!-- Overlay Backdrop Mobile -->
+    <div class="fixed inset-0 z-40 hidden bg-gray-900/50 backdrop-blur-sm transition-opacity" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
+    <!-- Content Wrapper -->
     <div class="main-content flex min-h-screen flex-1 flex-col">
+        <!-- Header -->
         @include('admin.partials.header')
 
-        <main class="page-content">
+        <!-- Dynamic Main Content -->
+        <main class="page-content flex-1 p-4 sm:p-6 lg:p-8">
             @yield('content')
         </main>
     </div>
 </div>
 
+<!-- Modals Partial -->
+@include('admin.partials.modals')
+
 <script>
+    // FUNGSI NAVIGASI SIDEBAR GLOBAL
     function openSidebar() {
-        document.querySelector('.sidebar').classList.add('open');
-        document.getElementById('sidebarOverlay').classList.remove('hidden');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (sidebar && overlay) {
+            sidebar.classList.add('open');
+            overlay.classList.remove('hidden');
+        }
     }
 
     function closeSidebar() {
-        document.querySelector('.sidebar').classList.remove('open');
-        document.getElementById('sidebarOverlay').classList.add('hidden');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (sidebar && overlay) {
+            sidebar.classList.remove('open');
+            overlay.classList.add('hidden');
+        }
     }
 
     function toggleSidebar() {
-        const html = document.documentElement;
-        const isCollapsed = html.classList.toggle('sidebar-collapsed');
-        localStorage.setItem('sidebar-collapsed', isCollapsed);
-    }
-
-    function toggleDropdown() {
-        document.getElementById('profileDropdown').classList.toggle('hidden');
-    }
-
-    document.addEventListener('click', function(e) {
-        const btn  = document.getElementById('profileBtn');
-        const menu = document.getElementById('profileDropdown');
-        if (menu && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.add('hidden');
+        if (window.innerWidth > 768) {
+            const html = document.documentElement;
+            const isCollapsed = html.classList.toggle('sidebar-collapsed');
+            localStorage.setItem('sidebar-collapsed', isCollapsed);
+        } else {
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar.classList.contains('open')) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
         }
-    });
+    }
 </script>
 
 @stack('scripts')

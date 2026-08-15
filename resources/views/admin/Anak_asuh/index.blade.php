@@ -3,7 +3,7 @@
 @section('title', 'Data Anak Asuh | Panti Asuhan Mawar Kasih')
 
 @section('content')
-<div class="px-8 pt-4 bg-gray-100 min-h-screen">
+<div class="bg-gray-100 min-h-screen">
 
     <!-- Toolbar -->
     <div class="flex justify-between mb-4">
@@ -24,11 +24,11 @@
     <!-- Kotak Utama Konten -->
     <div class="bg-white rounded-[28px] shadow-sm border border-gray-100 p-6 mb-4">
         
-        <div class="flex flex-col gap-4 border-b border-slate-200 py-4 lg:flex-row lg:items-center lg:justify-end">
+        <div class="flex flex-col gap-4 border-b border-gray-200 py-4 lg:flex-row lg:items-center lg:justify-end">
             <!-- Search -->
             <form method="GET" action="{{ route('anak-asuh.index') }}" class="flex w-full items-center gap-3 lg:w-auto">
                 <label class="relative block w-full lg:w-[260px]">
-                    <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-slate-400">
+                    <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-gray-400">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </span>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama / sekolah..."

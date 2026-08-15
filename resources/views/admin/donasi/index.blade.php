@@ -3,7 +3,7 @@
 @section('title', 'Data Donasi | Panti Asuhan Mawar Kasih')
 
 @section('content')
-<div class="px-8 pt-4 bg-gray-100 min-h-screen">
+<div class="bg-gray-100 min-h-screen">
 
     <!-- Summary Cards -->
     <div class="grid gap-4 xl:grid-cols-4 mb-4">
@@ -16,10 +16,10 @@
             </div>
 
             <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">
                     Total Donasi
                 </p>
-                <p class="text-lg font-bold text-slate-900">
+                <p class="text-lg font-bold text-gray-900">
                     Rp {{ number_format($totalNominal, 0, ',', '.') }}
                 </p>
             </div>
@@ -46,29 +46,29 @@
     <div class="bg-white rounded-[28px] shadow-sm border border-gray-100 p-6 mb-4">
 
         <!-- Filter Bar -->
-        <div class="flex flex-col gap-4 border-b border-slate-200 py-4 lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex flex-col gap-4 border-b border-gray-200 py-4 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex flex-wrap gap-2">
                 @php $activeStatus = request('status', 'semua'); @endphp
 
                 <a href="{{ route('donasi.index', array_merge(request()->except('status','page'), ['status'=>'semua'])) }}"
-                   class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeStatus === 'semua' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200' }}">
+                   class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeStatus === 'semua' ? 'bg-gray-900 text-white border-gray-900' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
                     Semua
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm">{{ $totalDonasi }}</span>
+                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalDonasi }}</span>
                 </a>
                 <a href="{{ route('donasi.index', array_merge(request()->except('status','page'), ['status'=>'pending'])) }}"
                    class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeStatus === 'pending' ? 'bg-amber-600 text-white border-amber-600' : 'bg-amber-100 text-amber-800 border-amber-100 hover:bg-amber-200' }}">
                     Pending
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm">{{ $totalPending }}</span>
+                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalPending }}</span>
                 </a>
                 <a href="{{ route('donasi.index', array_merge(request()->except('status','page'), ['status'=>'diterima'])) }}"
                    class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeStatus === 'diterima' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
                     Diterima
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm">{{ $totalValid }}</span>
+                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalValid }}</span>
                 </a>
                 <a href="{{ route('donasi.index', array_merge(request()->except('status','page'), ['status'=>'ditolak'])) }}"
                    class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeStatus === 'ditolak' ? 'bg-red-600 text-white border-red-600' : 'bg-red-100 text-red-800 border-red-100 hover:bg-red-200' }}">
                     Ditolak
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm">{{ $totalDitolak }}</span>
+                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalDitolak }}</span>
                 </a>
             </div>
 
@@ -76,7 +76,7 @@
             <form method="GET" action="{{ route('donasi.index') }}" class="flex w-full items-center gap-3 lg:w-auto">
                 <input type="hidden" name="status" value="{{ $activeStatus }}">
                 <label class="relative block w-full lg:w-[260px]">
-                    <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-slate-400">
+                    <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-gray-400">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </span>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama / kode..."
@@ -118,7 +118,7 @@
                                 <span class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold text-emerald-800">Tetap</span>
                                 <!-- <div class="mt-1 text-[11px] text-gray-500">ID: {{ $item->donatur_id }}</div> -->
                             @else
-                                <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-[11px] font-semibold text-slate-700">Umum</span>
+                                <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-[11px] font-semibold text-gray-700">Umum</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->no_hp ?? '-' }}</td>
@@ -137,12 +137,12 @@
                                         onclick="openImagePreview('{{ Storage::url($item->bukti_transfer) }}')"
                                         aria-label="Perbesar bukti transfer {{ $item->kode_donasi }}">
                                     <img src="{{ Storage::url($item->bukti_transfer) }}"
-                                         class="h-12 w-12 rounded border border-slate-200 object-cover transition duration-200 hover:scale-105 cursor-pointer"
+                                         class="h-12 w-12 rounded border border-gray-200 object-cover transition duration-200 hover:scale-105 cursor-pointer"
                                          alt="Bukti transfer {{ $item->kode_donasi }}"
                                          title="Klik untuk perbesar">
                                 </button>
                             @else
-                                <span class="text-slate-400 font-medium">-</span>
+                                <span class="text-gray-400 font-medium">-</span>
                             @endif
                         </td>
                         <td class="px-6 py-4 text-center">
@@ -153,7 +153,7 @@
                                     'ditolak' => 'bg-red-100 text-red-800',
                                 ];
                             @endphp
-                            <span class="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold {{ $statusClasses[$item->status] ?? 'bg-slate-100 text-slate-700' }}">
+                            <span class="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold {{ $statusClasses[$item->status] ?? 'bg-gray-100 text-gray-700' }}">
                                 {{ ucfirst($item->status) }}
                             </span>
                         </td>
@@ -251,27 +251,27 @@
         <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
             <div class="flex items-start justify-between gap-4">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Validasi Donasi</p>
-                    <h3 class="mt-2 text-lg font-bold text-slate-900">Kode: <span id="validasiModalKode"></span></h3>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Validasi Donasi</p>
+                    <h3 class="mt-2 text-lg font-bold text-gray-900">Kode: <span id="validasiModalKode"></span></h3>
                 </div>
-                <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeValidasiModal()" aria-label="Tutup modal validasi">
+                <button type="button" class="rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900" onclick="closeValidasiModal()" aria-label="Tutup modal validasi">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
-            <p class="mt-4 text-sm text-slate-600">Masukkan catatan admin untuk donasi yang diterima.</p>
+            <p class="mt-4 text-sm text-gray-600">Masukkan catatan admin untuk donasi yang diterima.</p>
 
             <form id="validasiForm" method="POST" class="mt-5 space-y-4">
                 @csrf
                 @method('PATCH')
                 <div>
-                    <label for="catatan_admin_validasi" class="text-sm font-semibold text-slate-700">Catatan Admin</label>
+                    <label for="catatan_admin_validasi" class="text-sm font-semibold text-gray-700">Catatan Admin</label>
                     <textarea id="catatan_admin_validasi" name="catatan_admin" rows="4" placeholder="Contoh: Donasi telah diterima, terima kasih."
-                              class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"></textarea>
+                              class="mt-2 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm text-gray-700 outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"></textarea>
                 </div>
 
                 <div class="flex justify-end gap-3 pt-2">
-                    <button type="button" class="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onclick="closeValidasiModal()">Batal</button>
+                    <button type="button" class="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50" onclick="closeValidasiModal()">Batal</button>
                     <button type="submit" class="rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-emerald-700">Validasi Donasi</button>
                 </div>
             </form>
@@ -282,27 +282,27 @@
         <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
             <div class="flex items-start justify-between gap-4">
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Tolak Donasi</p>
-                    <h3 class="mt-2 text-lg font-bold text-slate-900">Kode: <span id="tolakModalKode"></span></h3>
+                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Tolak Donasi</p>
+                    <h3 class="mt-2 text-lg font-bold text-gray-900">Kode: <span id="tolakModalKode"></span></h3>
                 </div>
-                <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeTolakModal()" aria-label="Tutup modal tolak">
+                <button type="button" class="rounded-full p-2 text-gray-500 transition hover:bg-gray-100 hover:text-gray-900" onclick="closeTolakModal()" aria-label="Tutup modal tolak">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
-            <p class="mt-4 text-sm text-slate-600">Masukkan catatan admin jika perlu, untuk donasi yang akan ditolak.</p>
+            <p class="mt-4 text-sm text-gray-600">Masukkan catatan admin jika perlu, untuk donasi yang akan ditolak.</p>
 
             <form id="tolakForm" method="POST" class="mt-5 space-y-4">
                 @csrf
                 @method('PATCH')
                 <div>
-                    <label for="catatan_admin" class="text-sm font-semibold text-slate-700">Catatan Admin</label>
+                    <label for="catatan_admin" class="text-sm font-semibold text-gray-700">Catatan Admin</label>
                     <textarea id="catatan_admin" name="catatan_admin" rows="4" placeholder="Contoh: Bukti transfer tidak valid atau data tidak sesuai."
-                              class="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-rose-400 focus:ring-2 focus:ring-rose-100"></textarea>
+                              class="mt-2 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm text-gray-700 outline-none transition focus:border-rose-400 focus:ring-2 focus:ring-rose-100"></textarea>
                 </div>
 
                 <div class="flex justify-end gap-3 pt-2">
-                    <button type="button" class="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onclick="closeTolakModal()">Batal</button>
+                    <button type="button" class="rounded-2xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50" onclick="closeTolakModal()">Batal</button>
                     <button type="submit" class="rounded-2xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-700">Tolak Donasi</button>
                 </div>
             </form>

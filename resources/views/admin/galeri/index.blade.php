@@ -3,7 +3,7 @@
 @section('title', 'Data Galeri | Panti Asuhan Mawar Kasih')
 
 @section('content')
-<div class="px-8 pt-4 bg-gray-100 min-h-screen">
+<div class="bg-gray-100 min-h-screen">
 
     <div class="flex justify-between mb-4">
         <div class="flex flex-wrap items-center gap-3">
@@ -17,24 +17,24 @@
     <!-- Kotak Utama Konten -->
     <div class="bg-white rounded-[28px] shadow-sm border border-gray-100 p-6 mb-4">
         
-        <div class="flex flex-col gap-4 border-b border-slate-200 py-4 lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex flex-col gap-4 border-b border-gray-200 py-4 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex flex-wrap gap-2">
                 @php $activeKategori = $kategori ?? request('kategori', 'semua'); @endphp
 
                 <a href="{{ route('galeri.index', array_merge(request()->except(['kategori','page']), ['kategori' => 'semua'])) }}"
-                   class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'semua' ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200' }}">
+                   class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'semua' ? 'bg-gray-900 text-white border-gray-900' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
                     Semua
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm">{{ $totalGaleri }}</span>
+                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalGaleri }}</span>
                 </a>
                 <a href="{{ route('galeri.index', array_merge(request()->except(['kategori','page']), ['kategori' => 'umum'])) }}"
                    class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'umum' ? 'bg-sky-600 text-white border-sky-600' : 'bg-sky-100 text-sky-800 border-sky-100 hover:bg-sky-200' }}">
                     Umum
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm">{{ $totalUmum }}</span>
+                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalUmum }}</span>
                 </a>
                 <a href="{{ route('galeri.index', array_merge(request()->except(['kategori','page']), ['kategori' => 'fasilitas'])) }}"
                    class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'fasilitas' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
                     Fasilitas
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-600 shadow-sm">{{ $totalFasilitas }}</span>
+                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalFasilitas }}</span>
                 </a>
             </div>
 
@@ -42,7 +42,7 @@
             <form method="GET" action="{{ route('galeri.index') }}" class="flex w-full items-center gap-3 lg:w-auto">
                 <input type="hidden" name="kategori" value="{{ $activeKategori }}">
                 <label class="relative block w-full lg:w-[260px]">
-                    <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-slate-400">
+                    <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-gray-400">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     </span>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari judul foto..."
