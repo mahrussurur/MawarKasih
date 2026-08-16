@@ -81,8 +81,9 @@
     </div>
 
     <div class="grid gap-5">
-        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-            <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+    <div class="grid gap-5">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
+            <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4 lg:flex-row lg:items-center lg:justify-between">
                 <div class="flex items-center gap-3">
                     <h3 class="text-base font-extrabold text-gray-900">Donasi Terbaru</h3>
                     @if(isset($totalDonasiPending) && $totalDonasiPending > 0)
@@ -95,65 +96,149 @@
             </div>
 
             @if(isset($donasiTerbaru) && $donasiTerbaru->count() > 0)
-                <div class="overflow-x-auto">
-                    <table class="w-full border-collapse">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Tanggal & Waktu</th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Donatur</th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Jumlah</th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Metode</th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Bukti</th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($donasiTerbaru as $donasi)
-                            <tr class="border-t border-gray-100 hover:bg-gray-50/80">
-                                <td class="px-4 py-3 text-sm text-gray-600">{{ $donasi->created_at ? $donasi->created_at->format('d M Y, H:i') : \Carbon\Carbon::parse($donasi->tanggal)->format('d M Y') }}</td>
-                                <td class="px-4 py-3 text-sm font-bold text-gray-900">{{ $donasi->nama_donatur }}</td>
-                                <td class="px-4 py-3 text-sm font-bold text-gray-900">Rp {{ number_format($donasi->nominal, 0, ',', '.') }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-600">{{ $donasi->metode_pembayaran }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-600">
-                                    @if($donasi->bukti_transfer)
-                                        <button type="button" onclick="openImagePreview('{{ asset('storage/' . $donasi->bukti_transfer) }}')" class="text-blue-600 hover:underline">Lihat Bukti</button>
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td class="px-4 py-3">
-                                    <div class="flex gap-2">
-                                        <button type="button"
-                                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 transition hover:bg-emerald-600 hover:text-white"
-                                                title="Terima"
-                                                data-validasi-route="{{ route('donasi.validasi', $donasi->id) }}"
-                                                data-kode-donasi="{{ $donasi->kode_donasi }}"
-                                                onclick="openValidasiModal(this)">
-                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                        </button>
-                                        <button type="button"
-                                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-red-100 text-red-600 transition hover:bg-red-600 hover:text-white"
-                                                title="Tolak"
-                                                data-tolak-route="{{ route('donasi.tolak', $donasi->id) }}"
-                                                data-kode-donasi="{{ $donasi->kode_donasi }}"
-                                                onclick="openTolakModal(this)">
-                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @else
-                <div class="flex flex-col items-center justify-center px-6 py-12 text-gray-300">
-                    <p class="text-sm font-semibold text-gray-400">Belum ada data donasi terbaru</p>
+<div class="overflow-x-auto custom-scrollbar">
+    <table class="w-full text-left text-sm whitespace-nowrap">
+        <thead class="border-b border-gray-200 bg-gray-50">
+            <tr>
+                <th class="px-4 py-2.5 font-semibold text-gray-700">
+                    Tanggal & Waktu
+                </th>
+                <th class="px-4 py-2.5 font-semibold text-gray-700">
+                    Donatur
+                </th>
+                <th class="px-4 py-2.5 font-semibold text-gray-700">
+                    Jumlah
+                </th>
+                <th class="px-4 py-2.5 font-semibold text-gray-700">
+                    Metode
+                </th>
+                <th class="px-4 py-2.5 text-center font-semibold text-gray-700">
+                    Bukti
+                </th>
+                <th class="sticky right-0 z-10 bg-gray-50 px-4 py-2.5 text-center font-semibold text-gray-700 shadow-[inset_1px_0_0_#e5e7eb]">
+                    Aksi
+                </th>
+            </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-100">
+            @foreach($donasiTerbaru as $donasi)
+                <tr class="group transition-colors hover:bg-gray-50">
+
+                    {{-- Tanggal & Waktu --}}
+                    <td class="px-4 py-2.5 text-gray-700">
+                        {{ $donasi->created_at
+                            ? $donasi->created_at->format('d M Y, H:i')
+                            : \Carbon\Carbon::parse($donasi->tanggal)->format('d M Y')
+                        }}
+                    </td>
+
+                    {{-- Donatur --}}
+                    <td class="px-4 py-2.5 font-semibold text-gray-900">
+                        {{ $donasi->nama_donatur }}
+                    </td>
+
+                    {{-- Jumlah --}}
+                    <td class="px-4 py-2.5 font-semibold text-gray-900">
+                        Rp {{ number_format($donasi->nominal, 0, ',', '.') }}
+                    </td>
+
+                    {{-- Metode --}}
+                    <td class="px-4 py-2.5 text-gray-700">
+                        {{ $donasi->metode_pembayaran }}
+                    </td>
+
+                    {{-- Bukti Transfer --}}
+                    <td class="px-4 py-2.5 text-center">
+                        @if($donasi->bukti_transfer)
+                            <button
+                                type="button"
+                                class="inline-flex"
+                                onclick="openImagePreview('{{ asset('storage/' . $donasi->bukti_transfer) }}')"
+                                aria-label="Perbesar bukti transfer"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $donasi->bukti_transfer) }}"
+                                    class="h-10 w-10 cursor-pointer rounded border border-gray-200 object-cover transition duration-200 hover:scale-105"
+                                    alt="Bukti transfer"
+                                    title="Klik untuk memperbesar"
+                                >
+                            </button>
+                        @else
+                            <span class="font-medium text-gray-400">-</span>
+                        @endif
+                    </td>
+
+                    {{-- Aksi --}}
+                    <td class="sticky right-0 z-10 bg-white px-4 py-2.5 text-center shadow-[inset_1px_0_0_#e5e7eb] transition-colors group-hover:bg-gray-50">
+                        <div class="flex justify-center gap-1">
+
+                            {{-- Terima --}}
+                            <button
+                                type="button"
+                                class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700 transition hover:bg-emerald-600 hover:text-white"
+                                title="Terima"
+                                data-validasi-route="{{ route('donasi.validasi', $donasi->id) }}"
+                                data-kode-donasi="{{ $donasi->kode_donasi }}"
+                                onclick="openValidasiModal(this)"
+                            >
+                                <svg
+                                    class="h-3.5 w-3.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2.5"
+                                        d="M5 13l4 4L19 7"
+                                    />
+                                </svg>
+                            </button>
+
+                            {{-- Tolak --}}
+                            <button
+                                type="button"
+                                class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-red-100 text-red-700 transition hover:bg-red-600 hover:text-white"
+                                title="Tolak"
+                                data-tolak-route="{{ route('donasi.tolak', $donasi->id) }}"
+                                data-kode-donasi="{{ $donasi->kode_donasi }}"
+                                onclick="openTolakModal(this)"
+                            >
+                                <svg
+                                    class="h-3.5 w-3.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2.5"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
+                                </svg>
+                            </button>
+
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>            @else
+                <div class="flex min-h-[200px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
+                    <p class="text-sm font-semibold text-gray-900">Belum ada data donasi terbaru</p>
                 </div>
             @endif
+        </div>
         </div>
     </div>
 </div>
 
-@include('admin.partials.donasi_action_modals')
 @endsection
+
+@push('modals')
+    @include('admin.partials.donasi_action_modals')
+@endpush

@@ -7,7 +7,7 @@
 
     <!-- Summary Cards -->
     <div class="grid gap-4 xl:grid-cols-4 mb-4">
-        <div class="flex items-center gap-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M3.75 5.25h16.5a1.5 1.5 0 011.5 1.5v10.5a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V6.75a1.5 1.5 0 011.5-1.5z" />
@@ -43,10 +43,10 @@
     </div>
 
     <!-- Kotak Utama Konten -->
-    <div class="bg-white rounded-[28px] shadow-sm border border-gray-100 p-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
 
         <!-- Filter Bar -->
-        <div class="flex flex-col gap-4 border-b border-gray-200 py-4 lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex flex-wrap gap-2">
                 @php $activeStatus = request('status', 'semua'); @endphp
 
@@ -88,18 +88,18 @@
         <!-- Table data -->
         @if($donasi->count() > 0)
         <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full min-w-[1600px] text-left divide-y divide-gray-200 text-sm border-b border-gray-200">
+            <table class="w-full text-left divide-y divide-gray-200 text-sm border-b border-gray-200 whitespace-nowrap">
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center w-12">No</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Kode Donasi</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Nama Donatur</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Sumber Donatur</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">No. HP</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Tanggal</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Keterangan</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Nominal</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 w-40">Metode Pembayaran</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">Kode Donasi</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">Nama Donatur</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">Sumber Donatur</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">No. HP</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">Tanggal</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">Keterangan</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">Nominal</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">Metode Pembayaran</th>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center">Bukti</th>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center">Status</th>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center sticky right-0 bg-gray-50 z-10 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
@@ -110,9 +110,7 @@
                     <tr class="hover:bg-gray-50 transition-colors group">
                         <td class="px-6 py-4 text-center text-gray-700">{{ $donasi->firstItem() + $index }}</td>
                         <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->kode_donasi }}</td>
-                        <td class="px-6 py-4 font-semibold text-gray-900 max-w-4">
-                            <span class="line-clamp-2 break-words">{{ $item->nama_donatur ?? '-' }}</span>
-                        </td>
+                        <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->nama_donatur ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">
                             @if($item->donatur_id)
                                 <span class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold text-emerald-800">Tetap</span>
@@ -123,9 +121,7 @@
                         </td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->no_hp ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($item->tanggal)->format('d - m - Y') }}</td>
-                        <td class="px-6 py-4 text-gray-700 max-w-4">
-                            <span class="line-clamp-2 break-words">{{ $item->keterangan ?? '-' }}</span>
-                        </td>
+                        <td class="px-6 py-4 text-gray-700">{{ $item->keterangan ?? '-' }}</td>
                         <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->nominal_rupiah }}</td>
                         <td class="px-6 py-4 text-gray-700">
                             {{ ucfirst($item->metode_pembayaran) ?? '-' }}
@@ -246,9 +242,8 @@
     </div>
 </div>
 
-
-    @include('admin.partials.donasi_action_modals')
-    
-    @include('admin.partials.modals')
-    
 @endsection
+
+@push('modals')
+    @include('admin.partials.donasi_action_modals')
+@endpush

@@ -1,5 +1,5 @@
 <!-- Delete Confirmation Modal -->
-<div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
+<div id="deleteModal" class="pointer-events-auto absolute inset-0 z-50 hidden flex-col items-center justify-center bg-black/50 backdrop-blur-sm px-4">
     <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
         <div class="flex items-start justify-between gap-4">
             <div>
@@ -51,4 +51,36 @@
             }
         });
     }
+
+    // Fungsi global untuk menampilkan preview foto sebelum upload
+    // Cara pakai: setupImagePreview('id_input', 'id_container', 'id_img', 'id_btn_hapus')
+    window.setupImagePreview = function(inputId, previewContainerId, previewImageId, removeButtonId) {
+        const input      = document.getElementById(inputId);
+        const container  = document.getElementById(previewContainerId);
+        const image      = document.getElementById(previewImageId);
+        const removeBtn  = document.getElementById(removeButtonId);
+
+        if (!input || !container || !image || !removeBtn) return;
+
+        input.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    image.src = e.target.result;
+                    container.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                container.classList.add('hidden');
+                image.src = '#';
+            }
+        });
+
+        removeBtn.addEventListener('click', function() {
+            input.value = '';
+            container.classList.add('hidden');
+            image.src = '#';
+        });
+    };
 </script>

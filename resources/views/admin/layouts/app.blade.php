@@ -164,31 +164,26 @@
     </head>
     <body class="bg-gray-100 text-gray-900 antialiased">
         <div class="flex h-screen overflow-hidden">
-            <!-- Sidebar -->
             @include('admin.partials.sidebar')
 
-            <!-- Overlay Backdrop Mobile -->
             <div class="fixed inset-0 z-40 hidden bg-gray-900/50 backdrop-blur-sm transition-opacity" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
-            <!-- Content Wrapper -->
-            <div class="main-content flex h-screen flex-1 flex-col overflow-y-auto overflow-x-hidden">
-                <!-- Header -->
+            <div class="main-content flex h-screen flex-1 flex-col overflow-hidden relative">
                 @include('admin.partials.header')
 
-                <!-- Dynamic Main Content -->
-                <main class="page-content flex-1 p-4 sm:p-6 lg:p-8 relative">
-                    @yield('content')
-                    @include('admin.partials.image_preview_modal')
+                <main class="page-content min-h-0 flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8">@yield('content')
                 </main>
-            </div>
-        </div>
 
-        <!-- Modals Partial -->
-        @include('admin.partials.modals')
-        @stack('modals')
+                <!-- Modal Container: menutupi area konten di bawah header saja -->
+                <div id="adminModalContainer" class="pointer-events-none absolute inset-0 top-16 z-50">
+                    @include('admin.partials.modals')
+                    @include('admin.partials.image_preview_modal')
+                    @stack('modals')
+                </div>
+            </div><!-- /.main-content -->
+        </div><!-- /.flex.h-screen -->
 
         <script>
-            // FUNGSI NAVIGASI SIDEBAR GLOBAL
             function openSidebar() {
                 const sidebar = document.querySelector('.sidebar');
                 const overlay = document.getElementById('sidebarOverlay');

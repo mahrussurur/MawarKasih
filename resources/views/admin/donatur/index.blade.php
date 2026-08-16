@@ -21,9 +21,9 @@
     </div>
 
     <!-- Kotak utama konten -->
-    <div class="bg-white rounded-[28px] shadow-sm border border-gray-100 p-6">
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
         
-        <div class="flex flex-col gap-4 border-b border-gray-200 py-4 lg:flex-row lg:items-center lg:justify-end">
+        <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4 lg:flex-row lg:items-center lg:justify-end">
              <!-- Search -->
             <form method="GET" action="{{ route('donatur.index') }}" class="flex w-full items-center gap-3 lg:w-auto">
                 <label class="relative block w-full lg:w-[260px]">
@@ -39,7 +39,7 @@
         <!-- table data -->
         @if($data->count() > 0)
         <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full min-w-[1200px] text-left divide-y divide-gray-200 text-sm border-b border-gray-200">
+            <table class="w-full text-left divide-y divide-gray-200 text-sm border-b border-gray-200 whitespace-nowrap">
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center w-12">No</th>
