@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('page-title', 'Data Donasi')
 @section('title', 'Data Donasi | Panti Asuhan Mawar Kasih')
 
@@ -6,24 +6,60 @@
 <div>
 
     <!-- Summary Cards -->
-    <div class="grid gap-4 xl:grid-cols-4 mb-4">
+    <div class="grid gap-4 grid-cols-1 md:grid-cols-3 mb-4">
+        <!-- Total Semua Donasi -->
         <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M3.75 5.25h16.5a1.5 1.5 0 011.5 1.5v10.5a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V6.75a1.5 1.5 0 011.5-1.5z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 14.25h2.25" />
                 </svg>
             </div>
-
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">
-                    Total Donasi
+            <div class="min-w-0">
+                <p class="truncate text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">
+                    Total Donasi Keseluruhan
                 </p>
-                <p class="text-lg font-bold text-gray-900">
+                <p class="truncate text-lg font-bold text-gray-900">
                     Rp {{ number_format($totalNominal, 0, ',', '.') }}
                 </p>
             </div>
         </div>
+
+        <!-- Jumlah Donatur Tetap -->
+        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+                <svg class="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/>
+                </svg>
+            </div>
+            <div class="min-w-0">
+                <p class="truncate text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">
+                    Jumlah Donatur Tetap
+                </p>
+                <p class="truncate text-lg font-bold text-gray-900">
+                    {{ $jumlahDonaturTetap }} <span class="text-sm font-normal text-gray-500">Orang</span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Jumlah Donatur Umum -->
+        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-gray-100 text-gray-600">
+                <svg class="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+            </div>
+            <div class="min-w-0">
+                <p class="truncate text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">
+                    Jumlah Donatur Umum
+                </p>
+                <p class="truncate text-lg font-bold text-gray-900">
+                    {{ $jumlahDonaturUmum }} <span class="text-sm font-normal text-gray-500">Orang</span>
+                </p>
+            </div>
+        </div>
+
     </div>
 
     <!-- Toolbar -->
@@ -214,23 +250,7 @@
         </div>
 
         <!-- Pagination -->
-        @if($donasi->hasPages())
-        <div class="flex flex-wrap items-center justify-end gap-1 mt-4">
-            <a href="{{ $donasi->previousPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 transition hover:border-gray-300 hover:text-gray-900 {{ $donasi->onFirstPage() ? 'opacity-40 pointer-events-none' : '' }}">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
-            </a>
-
-            @foreach($donasi->getUrlRange(1, $donasi->lastPage()) as $page => $url)
-                <a href="{{ $url }}" class="inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-xl border px-3 text-sm font-semibold transition {{ $page == $donasi->currentPage() ? 'border-blue-500 bg-blue-500 text-white' : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300' }}">
-                    {{ $page }}
-                </a>
-            @endforeach
-
-            <a href="{{ $donasi->nextPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-white text-gray-600 transition hover:border-gray-300 hover:text-gray-900 {{ !$donasi->hasMorePages() ? 'opacity-40 pointer-events-none' : '' }}">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-            </a>
-        </div>
-        @endif
+        @include('admin.partials._pagination', ['paginator' => $donasi])
 
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">

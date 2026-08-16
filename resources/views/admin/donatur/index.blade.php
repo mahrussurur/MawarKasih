@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+﻿@extends('admin.layouts.app')
 @section('page-title', 'Data Donatur')
 @section('title', 'Data Donatur | Panti Asuhan Mawar Kasih')
 
@@ -107,23 +107,7 @@
         </div>
 
         <!-- Pagination -->
-        @if($data->hasPages())
-        <div class="flex flex-wrap items-center justify-end gap-1 mt-4">
-            <a href="{{ $data->previousPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-gray-50 text-gray-600 transition hover:border-gray-300 hover:text-gray-900 {{ $data->onFirstPage() ? 'opacity-40 pointer-events-none' : '' }}">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
-            </a>
-
-            @foreach($data->getUrlRange(1, $data->lastPage()) as $page => $url)
-                <a href="{{ $url }}" class="inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-xl border px-3 text-sm font-semibold transition {{ $page == $data->currentPage() ? 'border-blue-500 bg-blue-500 text-white' : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-gray-300' }}">
-                    {{ $page }}
-                </a>
-            @endforeach
-
-            <a href="{{ $data->nextPageUrl() ?? '#' }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-gray-200 bg-gray-50 text-gray-600 transition hover:border-gray-300 hover:text-gray-900 {{ !$data->hasMorePages() ? 'opacity-40 pointer-events-none' : '' }}">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-            </a>
-        </div>
-        @endif
+        @include('admin.partials._pagination', ['paginator' => $data])
 
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">

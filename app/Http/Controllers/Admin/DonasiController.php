@@ -45,8 +45,13 @@ class DonasiController extends Controller
         $totalDitolak  = Donasi::where('status', 'ditolak')->count();
         $totalNominal  = Donasi::where('status', 'diterima')->sum('nominal');
 
+        // Hitung total donatur (Umum dan Tetap) berdasarkan donasi yang diterima
+        $jumlahDonaturUmum  = Donasi::where('status', 'diterima')->whereNull('donatur_id')->distinct('nama_donatur')->count('nama_donatur');
+        $jumlahDonaturTetap = Donasi::where('status', 'diterima')->whereNotNull('donatur_id')->distinct('donatur_id')->count('donatur_id');
+
         return view('admin.donasi.index', compact(
-            'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal'
+            'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal',
+            'jumlahDonaturUmum', 'jumlahDonaturTetap'
         ));
     }
 

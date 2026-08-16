@@ -25,6 +25,19 @@ class DashboardController extends Controller
         $totalDonasiPending = Donasi::where('status', 'pending')->count();
         $kegiatanTerbaru = Kegiatan::latest()->take(5)->get();
 
+        $donations = Donasi::where('status', 'diterima')
+            ->whereYear('tanggal', date('Y'))
+            ->get();
+            
+        $donasiPerBulanData = array_fill(1, 12, 0);
+        foreach ($donations as $donasi) {
+            if ($donasi->tanggal) {
+                $month = $donasi->tanggal->format('n');
+                $donasiPerBulanData[$month] += 1;
+            }
+        }
+        $donasiPerBulan = array_values($donasiPerBulanData);
+
         return view('admin.dashboard', compact(
             'totalAnak',
             'totalPengasuh',
@@ -32,7 +45,8 @@ class DashboardController extends Controller
             'totalDonatur',
             'donasiTerbaru',
             'totalDonasiPending',
-            'kegiatanTerbaru'
+            'kegiatanTerbaru',
+            'donasiPerBulan'
         ));
     }
 }
