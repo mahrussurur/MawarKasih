@@ -2,7 +2,7 @@
 @section('page-title', 'Edit Galeri')
 
 @section('content')
-<div class="p-4 md:p-6 bg-slate-100 min-h-screen">
+<div class="p-4 md:p-6 bg-slate-100 h-full">
 
     <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
 

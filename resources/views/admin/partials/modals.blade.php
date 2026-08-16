@@ -1,16 +1,3 @@
-<!-- Image Preview Modal -->
-<div id="imagePreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
-    <div class="relative max-h-[90vh] max-w-[90vw]" onclick="event.stopPropagation()">
-        <button type="button"
-                class="absolute -right-3 -top-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-gray-700 shadow-lg transition hover:bg-gray-100"
-                onclick="closeImagePreview()"
-                aria-label="Tutup preview gambar">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-        <img id="imagePreview" src="" alt="Preview foto" class="max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/70 bg-white object-contain shadow-2xl">
-    </div>
-</div>
-
 <!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
     <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
@@ -34,26 +21,8 @@
 </div>
 
 <script>
-    const imagePreviewModal = document.getElementById('imagePreviewModal');
-    const imagePreview = document.getElementById('imagePreview');
     const deleteModal = document.getElementById('deleteModal');
     const deleteForm = document.getElementById('deleteForm');
-
-    function openImagePreview(src) {
-        if(imagePreview && imagePreviewModal) {
-            imagePreview.src = src;
-            imagePreviewModal.classList.remove('hidden');
-            imagePreviewModal.classList.add('flex');
-        }
-    }
-
-    function closeImagePreview() {
-        if(imagePreview && imagePreviewModal) {
-            imagePreviewModal.classList.add('hidden');
-            imagePreviewModal.classList.remove('flex');
-            imagePreview.src = '';
-        }
-    }
 
     function openDeleteModal(button) {
         const route = button.dataset.deleteRoute;
@@ -73,14 +42,6 @@
             deleteModal.classList.add('hidden');
             deleteModal.classList.remove('flex');
         }
-    }
-
-    if(imagePreviewModal) {
-        imagePreviewModal.addEventListener('click', function (event) {
-            if (event.target === imagePreviewModal) {
-                closeImagePreview();
-            }
-        });
     }
 
     if(deleteModal) {

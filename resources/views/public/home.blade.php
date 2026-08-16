@@ -5,8 +5,7 @@
 
 @section('content')
 
-<section id="heroCarousel" class="group relative h-[calc(100svh-70px)] lg:h-[630px] overflow-hidden bg-gray-950" data-aos="fade">
-
+<section id="heroCarousel" class="group relative h-[calc(100svh-70px)] lg:h-[calc(100vh-70px)] overflow-hidden bg-gray-950" data-aos="fade">
     <div id="carouselTrack" class="relative w-full h-full flex">
         
         <div class="carousel-slide min-w-full relative h-full" aria-hidden="true">
@@ -88,19 +87,14 @@
 </section>
 
 <script>
-    // ======================================================
-    // INFINITE HERO CAROUSEL - Smooth Arah Terus-Menerus
-    // ======================================================
     const track = document.getElementById('carouselTrack');
     const slides = document.querySelectorAll('.carousel-slide');
     
-    // Karena struktur baru: [Clone 3, Slide 1, Slide 2, Slide 3, Clone 1]
     let currentSlide = 1; 
     const realSlidesCount = 3;
     let isTransitioning = false;
     let autoSlideInterval;
 
-    // Set posisi awal di Slide 1 asli (indeks 1) tanpa animasi saat load
     track.style.transform = `translateX(-${currentSlide * 100}%)`;
 
     function updateCarousel(animate = true) {
@@ -112,18 +106,15 @@
         track.style.transform = `translateX(-${currentSlide * 100}%)`;
     }
 
-    // Event listener untuk memindahkan posisi secara instan di background ketika animasi selesai
     track.addEventListener('transitionend', () => {
         isTransitioning = false;
         
-        // Jika sampai di ujung kanan (Clone 1), teleport secara instan ke Slide 1 asli
         if (currentSlide > realSlidesCount) {
             track.style.transition = 'none';
             currentSlide = 1;
             track.style.transform = `translateX(-${currentSlide * 100}%)`;
         }
         
-        // Jika sampai di ujung kiri (Clone 3), teleport secara instan ke Slide 3 asli
         if (currentSlide < 1) {
             track.style.transition = 'none';
             currentSlide = realSlidesCount;
@@ -152,7 +143,6 @@
         autoSlideInterval = setInterval(nextSlide, 5000);
     }
 
-    // Swipe Mobile Handler
     let touchStartX = 0;
     let touchEndX = 0;
 

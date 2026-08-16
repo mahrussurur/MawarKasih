@@ -3,7 +3,7 @@
 @section('title', 'Data Anak Asuh | Panti Asuhan Mawar Kasih')
 
 @section('content')
-<div class="bg-gray-100 min-h-screen">
+<div>
 
     <!-- Toolbar -->
     <div class="flex justify-between mb-4">
@@ -22,7 +22,7 @@
     </div>
 
     <!-- Kotak Utama Konten -->
-    <div class="bg-white rounded-[28px] shadow-sm border border-gray-100 p-6 mb-4">
+    <div class="bg-white rounded-[28px] shadow-sm border border-gray-100 p-6">
         
         <div class="flex flex-col gap-4 border-b border-gray-200 py-4 lg:flex-row lg:items-center lg:justify-end">
             <!-- Search -->

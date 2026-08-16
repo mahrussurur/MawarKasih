@@ -95,7 +95,7 @@ class DonasiController extends Controller
 
         $donasi->update([
             'status' => 'diterima',
-            'catatan_admin' => $request->catatan_admin ?? 'Donasi telah diterima.',
+            'catatan_admin' => $request->catatan_admin ?? 'Donasi telah diterima.terima kasih.',
         ]);
 
         return back()->with('success', "Donasi {$donasi->kode_donasi} berhasil divalidasi.");

@@ -21,10 +21,9 @@ class DashboardController extends Controller
         $totalKegiatan = Kegiatan::count();
         $totalDonatur = Donatur::count();
 
-        $donasiTerbaru  = Donasi::latest()->take(5)->get();
+        $donasiTerbaru  = Donasi::where('status', 'pending')->latest()->take(5)->get();
+        $totalDonasiPending = Donasi::where('status', 'pending')->count();
         $kegiatanTerbaru = Kegiatan::latest()->take(5)->get();
-
-        $donasiTerbaru   = collect();
 
         return view('admin.dashboard', compact(
             'totalAnak',
@@ -32,6 +31,7 @@ class DashboardController extends Controller
             'totalKegiatan',
             'totalDonatur',
             'donasiTerbaru',
+            'totalDonasiPending',
             'kegiatanTerbaru'
         ));
     }

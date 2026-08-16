@@ -4,7 +4,7 @@
 @section('page-title', 'Dashboard')
 
 @section('content')
-<div class="bg-gray-100 min-h-screen">
+<div>
     
     <div class="mb-6">
         <h2 class="text-2xl font-extrabold text-gray-900">Selamat Datang, {{ Auth::user()->name }}!</h2>
@@ -80,10 +80,17 @@
         </div>
     </div>
 
-    <div class="grid gap-5 lg:grid-cols-2">
+    <div class="grid gap-5">
         <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
             <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4">
-                <h3 class="text-base font-extrabold text-gray-900">Donasi Terbaru</h3>
+                <div class="flex items-center gap-3">
+                    <h3 class="text-base font-extrabold text-gray-900">Donasi Terbaru</h3>
+                    @if(isset($totalDonasiPending) && $totalDonasiPending > 0)
+                        <span class="inline-flex items-center justify-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-bold text-amber-800">
+                            {{ $totalDonasiPending }} Pending
+                        </span>
+                    @endif
+                </div>
                 <a href="{{ route('donasi.index') }}" class="text-sm font-bold text-blue-600 hover:text-blue-700">Lihat semua →</a>
             </div>
 
@@ -92,26 +99,47 @@
                     <table class="w-full border-collapse">
                         <thead class="bg-gray-50">
                             <tr>
+                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Tanggal & Waktu</th>
                                 <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Donatur</th>
                                 <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Jumlah</th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Tanggal</th>
-                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Status</th>
+                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Metode</th>
+                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Bukti</th>
+                                <th class="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.12em] text-gray-400">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($donasiTerbaru as $donasi)
                             <tr class="border-t border-gray-100 hover:bg-gray-50/80">
+                                <td class="px-4 py-3 text-sm text-gray-600">{{ $donasi->created_at ? $donasi->created_at->format('d M Y, H:i') : \Carbon\Carbon::parse($donasi->tanggal)->format('d M Y') }}</td>
                                 <td class="px-4 py-3 text-sm font-bold text-gray-900">{{ $donasi->nama_donatur }}</td>
-                                <td class="px-4 py-3 text-sm font-bold text-gray-900">Rp {{ number_format($donasi->jumlah, 0, ',', '.') }}</td>
-                                <td class="px-4 py-3 text-sm text-gray-600">{{ \Carbon\Carbon::parse($donasi->tanggal)->format('d M Y') }}</td>
-                                <td class="px-4 py-3">
-                                    @if($donasi->status === 'diterima')
-                                        <span class="inline-flex rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-bold text-emerald-700">Diterima</span>
-                                    @elseif($donasi->status === 'pending')
-                                        <span class="inline-flex rounded-full bg-amber-100 px-2.5 py-1 text-[11px] font-bold text-amber-700">Pending</span>
+                                <td class="px-4 py-3 text-sm font-bold text-gray-900">Rp {{ number_format($donasi->nominal, 0, ',', '.') }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-600">{{ $donasi->metode_pembayaran }}</td>
+                                <td class="px-4 py-3 text-sm text-gray-600">
+                                    @if($donasi->bukti_transfer)
+                                        <button type="button" onclick="openImagePreview('{{ asset('storage/' . $donasi->bukti_transfer) }}')" class="text-blue-600 hover:underline">Lihat Bukti</button>
                                     @else
-                                        <span class="inline-flex rounded-full bg-blue-100 px-2.5 py-1 text-[11px] font-bold text-blue-700">{{ $donasi->status }}</span>
+                                        -
                                     @endif
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="flex gap-2">
+                                        <button type="button"
+                                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 transition hover:bg-emerald-600 hover:text-white"
+                                                title="Terima"
+                                                data-validasi-route="{{ route('donasi.validasi', $donasi->id) }}"
+                                                data-kode-donasi="{{ $donasi->kode_donasi }}"
+                                                onclick="openValidasiModal(this)">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        </button>
+                                        <button type="button"
+                                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-red-100 text-red-600 transition hover:bg-red-600 hover:text-white"
+                                                title="Tolak"
+                                                data-tolak-route="{{ route('donasi.tolak', $donasi->id) }}"
+                                                data-kode-donasi="{{ $donasi->kode_donasi }}"
+                                                onclick="openTolakModal(this)">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -120,13 +148,12 @@
                 </div>
             @else
                 <div class="flex flex-col items-center justify-center px-6 py-12 text-gray-300">
-                    <svg class="mb-3 h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
                     <p class="text-sm font-semibold text-gray-400">Belum ada data donasi terbaru</p>
                 </div>
             @endif
         </div>
     </div>
 </div>
+
+@include('admin.partials.donasi_action_modals')
 @endsection
