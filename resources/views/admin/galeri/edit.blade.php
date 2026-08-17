@@ -2,12 +2,10 @@
 @section('page-title', 'Edit Galeri')
 
 @section('content')
-<div class="p-4 md:p-6 bg-slate-100 h-full">
-
-    <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
 
         <!-- Header -->
-        <div class="p-2 md:p-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
+        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
             <div class="min-w-0">
                 <h2 class="text-lg font-bold text-white truncate">Edit Data Galeri</h2>
                 <p class="text-xs md:text-sm text-gray-300">Ubah detail data galeri di bawah ini dan kategori jika diperlukan.</p>
@@ -26,14 +24,14 @@
                 @method('PATCH')
 
                 <div class="mb-5">
-                    <label class="block text-gray-800 font-semibold mb-2">Judul Foto</label>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Judul Foto</label>
                     <input type="text" name="judul" value="{{ old('judul', $galeri->judul) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 placeholder:text-sm placeholder:text-gray-400" required>
                 </div>
 
                 <div class="mb-5">
-                    <label class="block text-gray-800 font-semibold mb-2">Kategori</label>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Kategori</label>
                     <select name="kategori" id="kategori"
-                    class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                         <option value="" disabled {{old('kategori', $galeri->kategori) === '' ? 'selected' : ''}}>Pilih Kategori</option>
                         <option value="Umum" {{old('kategori', $galeri->kategori) === 'Umum' ? 'selected' : ''}}>Umum</option>
                         <option value="Fasilitas Panti" {{old('kategori', $galeri->kategori) === 'Fasilitas Panti' ? 'selected' : ''}}>Fasilitas Panti</option>
@@ -41,13 +39,13 @@
                 </div>
 
                 <div class="mb-5">
-                    <label class="block text-gray-800 font-semibold mb-2">Deskripsi Foto</label>
-                    <textarea name="deskripsi" rows="2" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400" required>{{ old('deskripsi', $galeri->deskripsi) }}</textarea>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Deskripsi Foto</label>
+                    <textarea name="deskripsi" rows="2" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>{{ old('deskripsi', $galeri->deskripsi) }}</textarea>
                 </div>
 
                 <!-- Input Foto -->
                 <div class="mb-8">
-                    <label class="block text-gray-800 font-semibold mb-2">Foto Dokumentasi</label>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Foto Dokumentasi</label>
                     
                     <!-- Menampilkan preview foto lama jika ada -->
                     @if($galeri->foto)
@@ -57,15 +55,15 @@
                         </div>
                     @endif
 
-                    <input type="file" name="foto" accept="image/*" class="w-full rounded-2xl file:mr-4 file:py-2 file:px-4 file:rounded-2xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#1a56db] hover:file:bg-blue-100 cursor-pointer">
+                    <input type="file" name="foto" accept="image/*" class="w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-gray-200 rounded-xl bg-gray-50">
                     <p class="text-xs text-gray-500 mt-2">Biarkan kosong jika tidak ingin mengubah foto. Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
                 </div>
 
                 <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
-                    <a href="{{ route('galeri.index') }}" class="rounded-2xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300  transition hover:bg-gray-300">
+                    <a href="{{ route('galeri.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
                         Batal
                     </a>
-                    <button type="submit" class="rounded-2xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-600">
+                    <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
                         Update
                     </button>
                 </div>
@@ -73,5 +71,4 @@
 
         </div>
     </div>
-</div>
 @endsection

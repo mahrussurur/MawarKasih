@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('page-title', 'Data Anak Asuh')
+@section('title', 'Data Anak Asuh | Panti Asuhan Mawar Kasih')
 
 @section('content')
 <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">

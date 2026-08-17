@@ -82,7 +82,7 @@
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
 
         <!-- Filter Bar -->
-        <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4 lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
             <div class="flex flex-wrap gap-2">
                 @php $activeStatus = request('status', 'semua'); @endphp
 
@@ -157,7 +157,7 @@
                         </td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->no_hp ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($item->tanggal)->format('d - m - Y') }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->keterangan ?? '-' }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ $item->keterangan ? \Illuminate\Support\Str::limit($item->keterangan, 35) : '-' }}</td>
                         <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->nominal_rupiah }}</td>
                         <td class="px-6 py-4 text-gray-700">
                             {{ ucfirst($item->metode_pembayaran) ?? '-' }}
@@ -255,7 +255,7 @@
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
             <p class="text-base font-semibold text-gray-900">Belum ada data donasi</p>
-            <span class="text-sm text-gray-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan donasi pertama' }}</span>
+            <span class="text-sm text-gray-500">{{ request('search') ? 'Data "'. request('search') . '" tidak ditemukan' : 'Tambahkan donasi pertama' }}</span>
         </div>
         @endif
 

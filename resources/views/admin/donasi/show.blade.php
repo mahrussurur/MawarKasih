@@ -2,17 +2,15 @@
 @section('page-title', 'Detail Donasi')
 
 @section('content')
-<div class="p-4 md:p-6 bg-slate-100 h-full">
-
-    <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         
         <!-- Header -->
-        <div class="p-2 md:p-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
+        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
             <div class="min-w-0">
                 <h2 class="text-lg font-bold text-white truncate">Detail Donasi</h2>
-                <p class="text-xs md:text-sm text-gray-300">Informasi lengkap donasi.</p>
+                <p class="text-xs md:text-sm text-gray-200">Informasi lengkap donasi.</p>
             </div>
-            <a href="{{ route('donasi.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
+            <a href="{{ route('donasi.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-200 flex items-center transition-colors whitespace-nowrap">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
@@ -148,13 +146,13 @@
                     </button>
                 @else
                     <a href="{{ route('donasi.edit', $donasi->id) }}" 
-                    class="rounded-2xl bg-orange-500 px-5 py-2 text-sm font-semibold text-white border border-orange-600  transition hover:bg-orange-600">
+                    class="rounded-xl px-5 py-2 text-sm font-semibold text-amber-600 border border-amber-500 bg-yellow-100 transition hover:bg-amber-500 hover:text-white">
                         Edit
                     </a>
                     <button type="button"
-                            class="rounded-2xl bg-red-600 px-5 py-2 text-sm font-semibold text-white border border-red-700  transition hover:bg-red-700"
+                            class="rounded-xl px-5 py-2 text-sm font-semibold text-red-500 border border-red-500 bg-red-100 transition hover:bg-red-500 hover:text-white"
                             data-delete-route="{{ route('donasi.destroy', $donasi->id) }}"
-                            data-kode-donasi="{{ $donasi->kode_donasi }}"
+                            data-name="{{ $donasi->kode_donasi }}"
                             onclick="openDeleteModal(this)">
                         Hapus
                     </button>
@@ -165,19 +163,9 @@
     </div>
 </div>
 
-<div id="imagePreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 px-4">
-    <div class="relative max-h-[90vh] max-w-[90vw]" onclick="event.stopPropagation()">
-        <button type="button"
-                class="absolute -right-3 -top-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-slate-700 shadow-lg transition hover:bg-slate-100"
-                onclick="closeImagePreview()"
-                aria-label="Tutup preview gambar">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-        <img id="imagePreview" src="" alt="Preview bukti transfer" class="max-h-[90vh] max-w-[90vw] rounded-2xl border border-white/70 bg-white object-contain shadow-2xl">
-    </div>
-</div>
+@push('modals')
 
-<div id="validasiModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
+<div id="validasiModal" class="pointer-events-auto absolute inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 opacity-0 invisible transition-all duration-300">
     <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
         <div class="flex items-start justify-between gap-4">
             <div>
@@ -208,7 +196,7 @@
     </div>
 </div>
 
-<div id="tolakModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
+<div id="tolakModal" class="pointer-events-auto absolute inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 opacity-0 invisible transition-all duration-300">
     <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
         <div class="flex items-start justify-between gap-4">
             <div>
@@ -239,49 +227,11 @@
     </div>
 </div>
 
-<div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 px-4">
-    <div class="w-full max-w-md rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
-        <div class="flex items-start justify-between gap-4">
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Konfirmasi Hapus</p>
-                <h3 class="mt-2 text-lg font-bold text-slate-900">Hapus donasi <span id="deleteModalKode"></span>?</h3>
-            </div>
-            <button type="button" class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900" onclick="closeDeleteModal()" aria-label="Tutup modal hapus">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-        </div>
-        <p class="mt-4 text-sm text-slate-600">Hapus data permanen. Pastikan data <strong>donasi</strong> sudah tidak diperlukan lagi.</p>
-
-        <form id="deleteForm" method="POST" class="mt-5 flex justify-end gap-3">
-            @csrf
-            @method('DELETE')
-            <button type="button" class="rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50" onclick="closeDeleteModal()">Batal</button>
-            <button type="submit" class="rounded-2xl bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700">Hapus</button>
-        </form>
-    </div>
-</div>
-
 <script>
-    const imagePreviewModal = document.getElementById('imagePreviewModal');
-    const imagePreview = document.getElementById('imagePreview');
     const validasiModal = document.getElementById('validasiModal');
     const tolakModal = document.getElementById('tolakModal');
-    const deleteModal = document.getElementById('deleteModal');
     const validasiForm = document.getElementById('validasiForm');
     const tolakForm = document.getElementById('tolakForm');
-    const deleteForm = document.getElementById('deleteForm');
-
-    function openImagePreview(src) {
-        imagePreview.src = src;
-        imagePreviewModal.classList.remove('hidden');
-        imagePreviewModal.classList.add('flex');
-    }
-
-    function closeImagePreview() {
-        imagePreviewModal.classList.add('hidden');
-        imagePreviewModal.classList.remove('flex');
-        imagePreview.src = '';
-    }
 
     function openValidasiModal(button) {
         const route = button.dataset.validasiRoute;
@@ -289,13 +239,13 @@
 
         validasiForm.action = route;
         document.getElementById('validasiModalKode').textContent = kode;
-        validasiModal.classList.remove('hidden');
-        validasiModal.classList.add('flex');
+        validasiModal.classList.remove('opacity-0', 'invisible');
+        validasiModal.classList.add('opacity-100', 'visible');
     }
 
     function closeValidasiModal() {
-        validasiModal.classList.add('hidden');
-        validasiModal.classList.remove('flex');
+        validasiModal.classList.add('opacity-0', 'invisible');
+        validasiModal.classList.remove('opacity-100', 'visible');
     }
 
     function openTolakModal(button) {
@@ -304,35 +254,14 @@
 
         tolakForm.action = route;
         document.getElementById('tolakModalKode').textContent = kode;
-        tolakModal.classList.remove('hidden');
-        tolakModal.classList.add('flex');
+        tolakModal.classList.remove('opacity-0', 'invisible');
+        tolakModal.classList.add('opacity-100', 'visible');
     }
 
     function closeTolakModal() {
-        tolakModal.classList.add('hidden');
-        tolakModal.classList.remove('flex');
+        tolakModal.classList.add('opacity-0', 'invisible');
+        tolakModal.classList.remove('opacity-100', 'visible');
     }
-
-    function openDeleteModal(button) {
-        const route = button.dataset.deleteRoute;
-        const kode = button.dataset.kodeDonasi;
-
-        deleteForm.action = route;
-        document.getElementById('deleteModalKode').textContent = kode;
-        deleteModal.classList.remove('hidden');
-        deleteModal.classList.add('flex');
-    }
-
-    function closeDeleteModal() {
-        deleteModal.classList.add('hidden');
-        deleteModal.classList.remove('flex');
-    }
-
-    imagePreviewModal.addEventListener('click', function (event) {
-        if (event.target === imagePreviewModal) {
-            closeImagePreview();
-        }
-    });
 
     validasiModal.addEventListener('click', function (event) {
         if (event.target === validasiModal) {
@@ -345,11 +274,6 @@
             closeTolakModal();
         }
     });
-
-    deleteModal.addEventListener('click', function (event) {
-        if (event.target === deleteModal) {
-            closeDeleteModal();
-        }
-    });
 </script>
+@endpush
 @endsection

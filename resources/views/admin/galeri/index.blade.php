@@ -26,15 +26,15 @@
                     Semua
                     <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalGaleri }}</span>
                 </a>
-                <a href="{{ route('galeri.index', array_merge(request()->except(['kategori','page']), ['kategori' => 'umum'])) }}"
-                   class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'umum' ? 'bg-sky-600 text-white border-sky-600' : 'bg-sky-100 text-sky-800 border-sky-100 hover:bg-sky-200' }}">
-                    Umum
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalUmum }}</span>
-                </a>
                 <a href="{{ route('galeri.index', array_merge(request()->except(['kategori','page']), ['kategori' => 'fasilitas'])) }}"
-                   class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'fasilitas' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
+                    class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'fasilitas' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
                     Fasilitas
                     <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalFasilitas }}</span>
+                </a>
+                <a href="{{ route('galeri.index', array_merge(request()->except(['kategori','page']), ['kategori' => 'umum'])) }}"
+                    class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'umum' ? 'bg-gray-600 text-white border-gray-600' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
+                    Umum
+                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalUmum }}</span>
                 </a>
             </div>
 
@@ -54,7 +54,7 @@
         <!-- Table data -->
         @if($galeris->count() > 0)
         <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full min-w-[1100px] text-left divide-y divide-gray-200 text-sm border-b border-gray-200">
+            <table class="w-full text-left divide-y divide-gray-200 text-sm border-b border-gray-200 whitespace-nowrap">
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center w-12">No</th>
@@ -88,7 +88,7 @@
                             </td>
                             <td class="px-6 py-4 font-semibold text-gray-900">{{ $galeri->judul }}</td>
                             <td class="px-6 py-4">
-                                <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $galeri->kategori === 'fasilitas' ? 'bg-emerald-100 text-emerald-700' : 'bg-sky-100 text-sky-700' }}">
+                                <span class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold {{ $galeri->kategori === 'fasilitas' ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-700' }}">
                                     {{ ucfirst($galeri->kategori) }}
                                 </span>
                             </td>
@@ -136,11 +136,11 @@
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
             <p class="text-base font-semibold text-gray-900">Belum ada data galeri</p>
-            <span class="text-sm text-gray-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan galeri pertama' }}</span>
+            <span class="text-sm text-gray-500">{{ request('search') ? 'Data "'. request('search') . '" tidak ditemukan' : 'Tambahkan data galeri' }}</span>
         </div>
         @endif
     </div>
 </div>
 
-@include('admin.partials.modals')
+
 @endsection

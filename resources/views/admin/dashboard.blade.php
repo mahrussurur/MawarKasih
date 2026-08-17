@@ -100,24 +100,12 @@
                 <table class="w-full text-left text-sm whitespace-nowrap">
                     <thead class="border-b border-gray-200 bg-gray-50">
                         <tr>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">
-                                Tanggal & Waktu
-                            </th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">
-                                Donatur
-                            </th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">
-                                Jumlah
-                            </th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">
-                                Metode
-                            </th>
-                            <th class="px-4 py-2.5 text-center font-semibold text-gray-700">
-                                Bukti
-                            </th>
-                            <th class="sticky right-0 z-10 bg-gray-50 px-4 py-2.5 text-center font-semibold text-gray-700 shadow-[inset_1px_0_0_#e5e7eb]">
-                                Aksi
-                            </th>
+                            <th class="px-4 py-2.5 font-semibold text-gray-700">Tanggal & Waktu</th>
+                            <th class="px-4 py-2.5 font-semibold text-gray-700">Donatur</th>
+                            <th class="px-4 py-2.5 font-semibold text-gray-700">Jumlah</th>
+                            <th class="px-4 py-2.5 font-semibold text-gray-700">Metode</th>
+                            <th class="px-4 py-2.5 text-center font-semibold text-gray-700">Bukti</th>
+                            <th class="sticky right-0 z-10 bg-gray-50 px-4 py-2.5 text-center font-semibold text-gray-700 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
                         </tr>
                     </thead>
 
@@ -134,19 +122,13 @@
                                 </td>
 
                                 <!-- Donatur -->
-                                <td class="px-4 py-2.5 font-semibold text-gray-900">
-                                    {{ $donasi->nama_donatur }}
-                                </td>
+                                <td class="px-4 py-2.5 font-semibold text-gray-900">{{ $donasi->nama_donatur }}</td>
 
                                 <!-- Jumlah -->
-                                <td class="px-4 py-2.5 font-semibold text-gray-900">
-                                    Rp {{ number_format($donasi->nominal, 0, ',', '.') }}
-                                </td>
+                                <td class="px-4 py-2.5 font-semibold text-gray-900">Rp {{ number_format($donasi->nominal, 0, ',', '.') }}</td>
 
                                 <!-- Metode -->
-                                <td class="px-4 py-2.5 text-gray-700">
-                                    {{ $donasi->metode_pembayaran }}
-                                </td>
+                                <td class="px-4 py-2.5 text-gray-700">{{ $donasi->metode_pembayaran }}</td>
 
                                 <!-- Bukti Transfer -->
                                 <td class="px-4 py-2.5 text-center">

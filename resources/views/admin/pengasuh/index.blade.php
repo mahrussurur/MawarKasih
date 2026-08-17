@@ -1,4 +1,4 @@
-﻿@extends('admin.layouts.app')
+@extends('admin.layouts.app')
 @section('page-title', 'Data Pengasuh')
 @section('title', 'Data Pengasuh | Panti Asuhan Mawar Kasih')
 
@@ -24,7 +24,7 @@
     <!-- Kotak utama konten -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
         
-        <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4 lg:flex-row lg:items-center lg:justify-end">
+        <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 lg:flex-row lg:items-center lg:justify-end">
             <!-- Search -->
             <form method="GET" action="{{ route('pengasuh.index') }}" class="flex w-full items-center gap-3 lg:w-auto">
                 <label class="relative block w-full lg:w-[260px]">
@@ -127,11 +127,10 @@
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
             <p class="text-base font-semibold text-gray-900">Belum ada data pengasuh</p>
-            <span class="text-sm text-gray-500">{{ request('search') ? 'Coba kata kunci lain' : 'Tambahkan data pengasuh pertama' }}</span>
+            <span class="text-sm text-gray-500">{{ request('search') ? 'Data "'. request('search') . '" tidak ditemukan' : 'Tambahkan data pengasuh' }}</span>
         </div>
         @endif
     </div>
 </div>
 
-@include('admin.partials.modals')
 @endsection

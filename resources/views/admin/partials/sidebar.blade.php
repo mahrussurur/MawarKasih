@@ -1,4 +1,4 @@
-<aside class="sidebar fixed inset-y-0 left-0 z-50 flex flex-col overflow-hidden bg-[#1E4FBC] text-white">
+<aside class="sidebar fixed inset-y-0 left-0 z-50 flex flex-col overflow-hidden bg-blue-700 text-white">
     <!-- Header Sidebar / Brand Logo -->
     <div class="sidebar-brand flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-3 transition-all duration-300">
         <div class="sidebar-brand-info flex items-center gap-3 overflow-hidden">
