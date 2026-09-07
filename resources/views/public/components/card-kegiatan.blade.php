@@ -1,22 +1,3 @@
-{{-- =========================================================================
-     COMPONENT: Card Kegiatan
-     File     : resources/views/public/components/card-kegiatan.blade.php
-     Dipakai  : home.blade.php (section kegiatan terbaru)
-                pages/kegiatan/index.blade.php (daftar kegiatan)
-
-     Variable yang dibutuhkan:
-       $kegiatan->id         : integer
-       $kegiatan->nama       : string — nama / judul kegiatan
-       $kegiatan->deskripsi  : string — deskripsi singkat
-       $kegiatan->tanggal    : date   — tanggal pelaksanaan
-       $kegiatan->kategori   : string — label kategori (Kegiatan Harian, Sosial, dll.)
-       $kegiatan->foto       : string|null — path file di storage (nullable)
-
-     Sambungan route:
-       Detail kegiatan → route('public.kegiatan.show', $kegiatan->id)
-                         controller: Public\KegiatanPublicController@show
-     ========================================================================= --}}
-
 <div class="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition group">
 
     {{-- Foto kegiatan --}}

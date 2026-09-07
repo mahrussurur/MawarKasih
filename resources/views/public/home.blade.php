@@ -33,10 +33,6 @@
 
             <div class="w-full flex flex-col items-center lg:items-start text-center lg:text-left gap-4 sm:gap-5 lg:gap-6">
 
-                <span class="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] sm:text-xs font-semibold uppercase tracking-widest rounded-full">
-                    Lembaga Panti Asuhan Mawar Kasih
-                </span>
-
                 <h1 class="text-3xl sm:text-5xl lg:text-[3.4rem] font-extrabold !leading-tight text-white drop-shadow-md">
                     Dikasihi untuk<br>
                     <span class="bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-400 bg-clip-text text-transparent">
@@ -50,7 +46,7 @@
                 </p>
 
                 <a href="{{ route('public.donasi.rekening') }}"
-                    class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3.5 lg:px-6 lg:py-3 rounded-full shadow-lg">
+                    class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3.5 lg:px-6 lg:py-3 rounded-xl">
                     <i data-lucide="heart" class="w-4 h-4"></i>
                     Donasi Sekarang
                 </a>
@@ -276,7 +272,7 @@
                 </p>
                 <div class="flex flex-col sm:flex-row gap-5">
                     <a href="{{ route('public.donasi.registrasi') }}"
-                        class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-3.5 rounded-full transition shadow-lg hover:shadow-brand-600/30 whitespace-nowrap">
+                        class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-3.5 rounded-xl transition shadow-lg hover:shadow-brand-600/30 whitespace-nowrap">
                         <i data-lucide="user-plus" class="w-4 h-4 shrink-0"></i>
                         Registrasi Sekarang
                     </a>

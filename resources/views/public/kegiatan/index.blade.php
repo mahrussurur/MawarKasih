@@ -19,15 +19,15 @@
         @if($kegiatans->count() > 0)
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($kegiatans as $item)
-                    <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 group flex flex-col h-full"
+                    <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg border border-gray-100 hover:border-gray-200 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1"
                         data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
 
                         <!-- Gambar kegiatan -->
-                        <div class="aspect-[16/10] overflow-hidden bg-gray-100">
+                        <div class="relative aspect-[16/10] overflow-hidden bg-gray-100">
                             @if($item->foto_dokumentasi)
                                 <img src="{{ get_webp_url($item->foto_dokumentasi) }}"
                                     alt="{{ $item->nama_kegiatan }}"
-                                    class="w-full h-full object-cover"
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                     loading="lazy">
                             @else
                                 <!-- Placeholder jika gambar tidak tersedia -->
@@ -35,37 +35,33 @@
                                     <i data-lucide="image" class="w-10 h-10 text-gray-300"></i>
                                 </div>
                             @endif
+
+                            {{-- Floating date badge --}}
+                            <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-gray-700 text-[11px] font-semibold px-3 py-1 rounded-lg shadow-sm flex items-center gap-1.5 border border-white/60">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-brand-600"></i>
+                                <time datetime="{{ \Carbon\Carbon::parse($item->tanggal_pelaksanaan)->format('Y-m-d') }}">
+                                    {{ \Carbon\Carbon::parse($item->tanggal_pelaksanaan)->translatedFormat('d M Y') }}
+                                </time>
+                            </div>
                         </div>
 
                         <!-- Konten kartu -->
-                        <div class="p-5 flex flex-col flex-grow justify-between">
-                            <div>
-                                <!-- 1. Judul di bagian atas dengan gaya Uppercase -->
-                                <h3 class="font-bold text-gray-700 text-base md:text-lg mb-2 line-clamp-2 uppercase group-hover:text-blue-600 transition-colors leading-snug">
-                                    <a href="{{ route('public.kegiatan.show', $item->id) }}">
-                                        {{ $item->nama_kegiatan }}
-                                    </a>
-                                </h3>
+                        <div class="p-5 sm:p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-gray-800 text-base sm:text-lg mb-2 line-clamp-2 uppercase group-hover:text-brand-600 transition-colors leading-snug">
+                                <a href="{{ route('public.kegiatan.show', $item->id) }}">
+                                    {{ $item->nama_kegiatan }}
+                                </a>
+                            </h3>
 
-                                <!-- 2. Tanggal diletakkan di bawah Judul dengan icon Clock -->
-                                <div class="flex items-center gap-1.5 text-xs text-gray-400 mb-3">
-                                    <i data-lucide="clock" class="w-3.5 h-3.5 opacity-60"></i>
-                                    <time datetime="{{ \Carbon\Carbon::parse($item->tanggal_pelaksanaan)->format('Y-m-d') }}">
-                                        {{ \Carbon\Carbon::parse($item->tanggal_pelaksanaan)->translatedFormat('d F Y') }}
-                                    </time>
-                                </div>
+                            <p class="text-xs sm:text-sm text-gray-500 line-clamp-3 mb-5 leading-relaxed text-justify">
+                                {{ Str::limit(strip_tags($item->deskripsi), 120) }}
+                            </p>
 
-                                <!-- 3. Deskripsi singkat -->
-                                <p class="text-xs md:text-sm text-gray-500 line-clamp-3 mb-4 leading-relaxed">
-                                    {{ Str::limit(strip_tags($item->deskripsi), 120) }}
-                                </p>
-                            </div>
-
-                            <!-- 4. Tombol Read More di pojok kanan bawah -->
-                            <div class="flex justify-end pt-2">
-                                <a href="{{ route('public.kegiatan.show', $item->id) }}" 
-                                   class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-1.5 rounded-xl transition-colors duration-200">
-                                    Read More
+                            <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-end">
+                                <a href="{{ route('public.kegiatan.show', $item->id) }}"
+                                   class="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-sm hover:shadow transition-all duration-200 group/btn">
+                                    <span>Selengkapnya</span>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1"></i>
                                 </a>
                             </div>
                         </div>

@@ -116,7 +116,7 @@
                     </div>
                 @else
                     @if(!request()->routeIs('public.donasi.login'))
-                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 text-sm font-semibold transition">
+                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 font-semibold transition">
                             Login
                         </a>
                     @endif
