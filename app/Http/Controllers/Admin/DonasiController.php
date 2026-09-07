@@ -133,7 +133,7 @@ class DonasiController extends Controller
         $kode = $donasi->kode_donasi;
         $donasi->delete();
 
-        return back()->with('success', "Donasi {$kode} berhasil dihapus.");
+        return redirect()->route('donasi.index')->with('success', "Donasi {$kode} berhasil dihapus.");
     }
 
     // Edit donasi

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin — Panti Asuhan Mawar Kasih</title>
+    <title>Login — Panti Asuhan Mawar Kasih</title>
 
     <!-- Google Font Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
 </head>
 
 <body style="background-image: url('{{ asset('images/bg-login.webp') }}');" class="min-h-screen bg-cover bg-center bg-no-repeat font-['Plus_Jakarta_Sans',sans-serif] flex flex-col items-center justify-center px-4 py-8 relative">
-    <!-- <div class="absolute inset-0 bg-black/20"></div> -->
+    <div class="absolute inset-0 bg-black/20"></div>
 
     <!-- Glass Card Container -->
     <div class="relative z-10 w-full max-w-3xl bg-white/[0.18] backdrop-blur-[18px] border border-white/30 rounded-2xl shadow-2xl overflow-hidden">
@@ -47,9 +47,9 @@
 
             <!-- Form Kanan -->
             <div class="md:w-7/12 px-8 py-10">
-                <h1 class="text-2xl font-extrabold text-black leading-tight drop-shadow-md">Login Admin</h1>
+                <h1 class="text-2xl font-extrabold text-black leading-tight drop-shadow-md">Login</h1>
                 <p class="mt-2 text-sm text-white leading-relaxed font-medium">
-                    Silahkan masuk untuk mengakses<br>sistem pengelolaan data.
+                    Silahkan masuk untuk mengakses<br>sistem Mawar Kasih.
                 </p>
 
                 <form method="POST" action="{{ route('login') }}" class="space-y-5 mt-6">
@@ -120,7 +120,7 @@
                             <span class="ml-2 text-sm text-white/80 group-hover:text-white transition-colors">Ingat saya</span>
                         </label>
 
-                        <a href="{{ route('password.request') }}" class="text-sm font-semibold text-blue-400 hover:text-blue-300 hover:underline transition-all">
+                        <a href="{{ route('password.request') }}" class="text-sm font-semibold text-blue-500 hover:underline">
                             Lupa password?
                         </a>
                     </div>

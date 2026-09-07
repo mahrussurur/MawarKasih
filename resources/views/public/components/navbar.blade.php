@@ -1,36 +1,38 @@
-<nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+@php
+    $isHome = request()->routeIs('public.home');
+@endphp
+<nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 {{ $isHome ? 'nav-transparent bg-transparent backdrop-blur-md border-b border-white/20' : 'bg-white shadow-sm' }}">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 lg:h-[70px]">
 
             <!-- LOGO -->
             <div class="flex items-center gap-3 flex-shrink-0">
-
-                <img src="{{ asset('images/logo.webp') }}" alt="Panti Asuhan Mawar Kasih" class="h-14 w-auto">
-                <div class="hidden sm:block leading-tight">
-                    <div class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Panti Asuhan</div>
-                    <div class="text-base font-bold text-gray-900">Mawar Kasih</div>
-                </div>
+                <img src="{{ asset('images/logo2.webp') }}" alt="Panti Asuhan Mawar Kasih" class="h-11 w-auto bg-white rounded-lg">
+                <span class="brand-text flex flex-col hidden sm:flex leading-tight text-gray-900">
+                    <strong>Panti Asuhan</strong>
+                    <small>Mawar Kasih</small>
+                </span>
             </div>
 
             <!-- MENU DESKTOP -->
-            <ul class="hidden lg:flex items-center gap-1 text-sm font-medium text-gray-700">
+            <ul id="desktopMenu" class="hidden lg:flex items-center gap-1 text-sm font-medium text-gray-800">
 
                 <!-- Beranda -->
                 <li>
                     <a href="{{ route('public.home') }}"
-                        class="px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.home') ? 'text-brand-600 font-semibold' : '' }}">
+                        class="nav-link px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.home') ? 'active text-brand-600 font-semibold' : '' }}">
                         Beranda
                     </a>
                 </li>
 
                 <!-- Donasi -->
                 <li class="relative group">
-                    <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.donasi*') ? 'text-brand-600 font-semibold' : '' }}">
+                    <button class="nav-link flex items-center gap-1 px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.donasi*') ? 'active text-brand-600 font-semibold' : '' }}">
                         Donasi
                         <i data-lucide="chevron-down" class="w-4 h-4 transition group-hover:rotate-180"></i>
                     </button>
                     <!-- Dropdown Donasi -->
-                    <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
+                    <div class="absolute top-full left-0 mt-1 w-52 bg-white/80 backdrop-blur-lg rounded-xl shadow-lg border border-white/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1 overflow-hidden">
                         <a href="{{ route('public.donasi.form') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
                             <i data-lucide="heart" class="w-4 h-4"></i> Form Donasi
                         </a>
@@ -40,27 +42,24 @@
                         <a href="{{ route('public.donasi.rekening') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
                             <i data-lucide="credit-card" class="w-4 h-4"></i> Rekening Donasi
                         </a>
-                        <!-- <a href="{{ route('public.donasi.tutorial') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
-                            <i data-lucide="book-open" class="w-4 h-4"></i> Tutorial Berdonasi
-                        </a> -->
                     </div>
                 </li>
 
                 <!-- Artikel Kegiatan -->
                 <li>
                     <a href="{{ route('public.kegiatan.index') }}"
-                        class="px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.kegiatan.index') ? 'text-brand-600 font-semibold' : '' }}">
+                        class="nav-link px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.kegiatan.index') ? 'active text-brand-600 font-semibold' : '' }}">
                         Artikel Kegiatan
                     </a>
                 </li>
 
                 <!-- Tentang Kami Dropdown -->
                 <li class="relative group">
-                    <button class="flex items-center gap-1 px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.tentang*', 'public.galeri*') ? 'text-brand-600 font-semibold' : '' }}">
+                    <button class="nav-link flex items-center gap-1 px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.tentang*', 'public.galeri*') ? 'active text-brand-600 font-semibold' : '' }}">
                         Tentang Kami
                         <i data-lucide="chevron-down" class="w-4 h-4 transition group-hover:rotate-180"></i>
                     </button>
-                    <div class="absolute top-full left-0 mt-1 w-52 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1">
+                    <div class="absolute top-full left-0 mt-1 w-52 bg-white/80 backdrop-blur-lg rounded-xl shadow-lg border border-white/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1 overflow-hidden">
                         <a href="{{ route('public.tentang.profil') }}" class="flex items-center gap-2 px-4 py-2.5 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600">
                             <i data-lucide="building-2" class="w-4 h-4"></i> Profil Lembaga
                         </a>
@@ -87,7 +86,7 @@
                             <span title="{{ $currentDonatur->nama }}">{{ \Illuminate\Support\Str::words($currentDonatur->nama, 2, '') }}</span>
                             <i id="donaturMenuChevron" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
                         </button>
-                        <div id="donaturMenu" class="absolute right-0 top-[calc(100%+8px)] w-[200px] bg-white border border-slate-200 rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.12)] p-1.5 opacity-0 invisible transition-all duration-200 z-50">
+                        <div id="donaturMenu" class="absolute right-0 top-[calc(100%+8px)] w-[200px] bg-white/80 backdrop-blur-lg border border-white/50 rounded-xl shadow-lg p-1.5 opacity-0 invisible transition-all duration-200 z-50">
                             
                             <div class="px-3 pt-2.5 pb-2 border-b border-slate-100 mb-1">
                                 <div class="text-[13px] font-bold text-slate-900 truncate">{{ $currentDonatur->nama }}</div>
@@ -117,13 +116,15 @@
                     </div>
                 @else
                     @if(!request()->routeIs('public.donasi.login'))
-                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 text-sm font-semibold transition">Login</a>
+                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 text-sm font-semibold transition">
+                            Login
+                        </a>
                     @endif
                 @endif
             </div>
             
             <!-- HAMBURGER MOBILE -->
-            <button class="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition"
+            <button id="hamburgerBtn" class="lg:hidden p-2 rounded-lg text-gray-800 transition hover:bg-gray-100"
                 onclick="toggleMobileMenu()" aria-label="Menu">
                 <i data-lucide="menu" class="w-6 h-6" id="menuIcon"></i>
             </button>
@@ -131,7 +132,7 @@
     </div>
 
     <!-- MOBILE MENU -->
-    <div id="mobileMenu" class="lg:hidden absolute w-full top-full left-0 bg-white border-t border-gray-100 shadow-lg transition-all duration-300 ease-out opacity-0 -translate-y-4 invisible">
+    <div id="mobileMenu" class="lg:hidden absolute w-full top-full left-0 bg-white/80 backdrop-blur-xl border-t border-white/50 shadow-lg transition-all duration-300 ease-out opacity-0 -translate-y-4 invisible">
         <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
             <a href="{{ route('public.home') }}" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 {{ request()->routeIs('public.home') ? 'bg-brand-50 text-brand-600' : '' }}">
                 Beranda
@@ -142,11 +143,10 @@
                 <button class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50" onclick="toggleAccordion('acc-donasi', this)">
                     Donasi <i data-lucide="chevron-down" class="w-4 h-4 transition" id="chevron-acc-donasi"></i>
                 </button>
-                <div id="acc-donasi" class="hidden pl-4 mt-1 space-y-1">
+                <div id="acc-donasi" class="hidden pl-4 mt-1 space-y-1 overflow-hidden">
                     <a href="{{ route('public.donasi.form') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Form Donasi</a>
                     <a href="{{ route('public.donasi.validasi') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Validasi Donasi</a>
                     <a href="{{ route('public.donasi.rekening') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Rekening Donasi</a>
-                    <!-- <a href="{{ route('public.donasi.tutorial') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Tutorial Berdonasi</a> -->
                 </div>
             </div>
 
@@ -160,7 +160,7 @@
                 <button class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50" onclick="toggleAccordion('acc-tentang', this)">
                     Tentang Kami <i data-lucide="chevron-down" class="w-4 h-4 transition" id="chevron-acc-tentang"></i>
                 </button>
-                <div id="acc-tentang" class="hidden pl-4 mt-1 space-y-1">
+                <div id="acc-tentang" class="hidden pl-4 mt-1 space-y-1 overflow-hidden">
                     <a href="{{ route('public.tentang.profil') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Profil Lembaga</a>
                     <a href="{{ route('public.tentang.visi-misi') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Visi & Misi</a>
                     <a href="{{ route('public.galeri.index') }}" class="block px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">Galeri</a>
@@ -208,10 +208,56 @@
 <!-- OVERLAY MOBILE MENU -->
 <div id="mobileMenuOverlay" class="fixed top-16 inset-x-0 bottom-0 bg-black/50 z-40 backdrop-blur-sm transition-opacity duration-300 lg:hidden opacity-0 invisible" aria-hidden="true"></div>
 
+@if(!$isHome)
 <!-- Spacer agar konten tidak tertutup navbar fixed -->
 <div class="h-16 lg:h-[70px]"></div>
+@endif
+
+<style>
+    .nav-transparent .brand-text { color: #ffffff !important; }
+    .nav-transparent #desktopMenu { color: rgba(255, 255, 255, 0.9) !important; }
+    
+    .nav-transparent .nav-link { color: rgba(255, 255, 255, 0.9) !important; }
+    .nav-transparent .nav-link:hover { 
+        background-color: rgba(255, 255, 255, 0.15) !important; 
+        color: #ffffff !important; 
+    }
+    .nav-transparent .nav-link.active { 
+        color: #ffffff !important; 
+        font-weight: 700 !important; 
+    }
+    
+    .nav-transparent #hamburgerBtn { color: #ffffff !important; }
+    .nav-transparent #hamburgerBtn:hover { background-color: rgba(255, 255, 255, 0.15) !important; }
+    
+    .nav-transparent #donaturMenuButton { 
+        background-color: rgba(255, 255, 255, 0.15) !important; 
+        border-color: rgba(255, 255, 255, 0.3) !important; 
+        color: #ffffff !important; 
+        backdrop-filter: blur(8px);
+    }
+    .nav-transparent #donaturMenuButton:hover { 
+        background-color: rgba(255, 255, 255, 0.25) !important; 
+    }
+</style>
 
 <script>
+    // Navbar scroll effect
+    document.addEventListener('scroll', function() {
+        const nav = document.getElementById('mainNav');
+        const isHome = @json($isHome);
+        
+        if (isHome && nav) {
+            if (window.scrollY > 20) {
+                nav.classList.remove('nav-transparent', 'bg-transparent', 'backdrop-blur-md', 'border-b', 'border-white/20');
+                nav.classList.add('bg-white', 'shadow-sm');
+            } else {
+                nav.classList.add('nav-transparent', 'bg-transparent', 'backdrop-blur-md', 'border-b', 'border-white/20');
+                nav.classList.remove('bg-white', 'shadow-sm');
+            }
+        }
+    });
+
     // Toggle mobile menu
     function toggleMobileMenu() {
         const menu = document.getElementById('mobileMenu');

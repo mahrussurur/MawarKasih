@@ -7,10 +7,10 @@
             <div class="lg:col-span-2 flex flex-col items-center text-center lg:items-start lg:text-left">
                 <a href="{{ route('public.home') }}" class="flex flex-col lg:flex-row items-center gap-3 mb-4">
                     <img src="{{ asset('images/logo.webp') }}" alt="Mawar Kasih" class="h-28 sm:h-32 lg:h-11 w-auto brightness-200 object-contain">
-                    <div class="hidden lg:block leading-tight">
-                        <div class="text-xs text-gray-400 uppercase tracking-wider">Panti Asuhan</div>
-                        <div class="text-lg font-bold text-white">Mawar Kasih</div>
-                    </div>
+                    <span class="brand-text flex flex-col hidden sm:flex leading-tight text-white">
+                        <strong>Panti Asuhan</strong>
+                        <small>Mawar Kasih</small>
+                    </span>
                 </a>
 
                 <a href="https://www.google.com/maps/place/Panti+Asuhan+Mawar+Kasih,+Kabupaten+Banyuwangi/@-8.4913261,114.3107274,17z/data=!3m1!4b1!4m6!3m5!1s0x2dd3fbf2a718c7cb:0xc856a6741baaf690!8m2!3d-8.4913314!4d114.3133023!16s%2Fg%2F11mhs9wjcp?authuser=0&entry=ttu&g_ep=EgoyMDI2MDYxMC4wIKXMDSoASAFQAw%3D%3D"

@@ -5,378 +5,267 @@
 
 @section('content')
 
-<section id="heroCarousel" class="group relative h-[calc(100svh-70px)] lg:h-[calc(100vh-70px)] overflow-hidden bg-gray-950" data-aos="fade">
-    <div id="carouselTrack" class="relative w-full h-full flex">
-        
-        <div class="carousel-slide min-w-full relative h-full" aria-hidden="true">
-            <img src="{{ asset('images/hero/slide-3.webp') }}" alt="Clone Last" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
-        </div>
+<!-- HERO -->
+<section id="heroCarousel" class="group relative min-h-[100svh] lg:min-h-[100vh] flex flex-col overflow-hidden bg-gray-950" data-aos="fade">
 
-        <div class="carousel-slide min-w-full relative h-full">
-            <img src="{{ asset('images/hero/slide-1.webp') }}" alt="Slide 1 - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
-        </div>
+    <!-- Slide background -->
+    @php
+        $heroSlides = [
+            'images/hero/slide-1.webp',
+            'images/hero/slide-2.webp',
+            'images/hero/slide-3.webp',
+        ];
+    @endphp
 
-        <div class="carousel-slide min-w-full relative h-full">
-            <img src="{{ asset('images/hero/slide-2.webp') }}" alt="Slide 2 - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
-        </div>
-
-        <div class="carousel-slide min-w-full relative h-full">
-            <img src="{{ asset('images/hero/slide-3.webp') }}" alt="Slide 3 - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
-        </div>
-
-        <div class="carousel-slide min-w-full relative h-full" aria-hidden="true">
-            <img src="{{ asset('images/hero/slide-1.webp') }}" alt="Clone First" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/80 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/40 lg:to-transparent"></div>
-        </div>
-
+    <div id="carouselTrack" class="absolute inset-0 w-full h-full z-0">
+        @foreach ($heroSlides as $slide)
+            <div class="carousel-slide absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out z-0 {{ $loop->first ? 'opacity-100 blur-none' : 'opacity-0 blur-md' }}">
+                <img src="{{ asset($slide) }}" alt="Slide {{ $loop->iteration }} - Panti Asuhan Mawar Kasih" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/20 lg:bg-black/35"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent"></div>
+            </div>
+        @endforeach
     </div>
 
-    <!-- Wrapper utama -->
-    <div class="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex lg:items-center z-10 pointer-events-none">
-        
-        <!-- Inner Container: Mobile (Flex-col, justify-between untuk pisah atas-bawah), Desktop (Normal block/tengah) -->
-        <div class="pointer-events-auto w-full h-full flex flex-col justify-between pt-12 pb-6 lg:h-auto lg:block lg:py-0 max-w-xl mx-auto lg:mx-0">
+    {{-- Wrapper utama hero --}}
+    <div class="relative z-10 flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center pointer-events-none pt-24 pb-6 lg:pt-28 lg:pb-8">
+        <div class="pointer-events-auto w-full max-w-xl mx-auto lg:mx-0">
 
-            <!-- Boks Teks (Posisi Atas di Mobile) -->
-            <div class="text-center lg:text-left flex flex-col items-center lg:items-start w-full">
-                <span class="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] sm:text-xs font-semibold uppercase tracking-widest rounded-full mb-4 lg:mb-5">
+            <div class="w-full flex flex-col items-center lg:items-start text-center lg:text-left gap-4 sm:gap-5 lg:gap-6">
+
+                <span class="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-[10px] sm:text-xs font-semibold uppercase tracking-widest rounded-full">
                     Lembaga Panti Asuhan Mawar Kasih
                 </span>
 
-                <h1 class="text-3xl sm:text-5xl lg:text-[3.4rem] font-extrabold !leading-tight text-white mb-3 lg:mb-5 drop-shadow-md">
+                <h1 class="text-3xl sm:text-5xl lg:text-[3.4rem] font-extrabold !leading-tight text-white drop-shadow-md">
                     Dikasihi untuk<br>
-                    <span class="text-brand-400">Saling Mengasihi.</span>
+                    <span class="bg-gradient-to-r from-blue-500 via-cyan-500 to-sky-400 bg-clip-text text-transparent">
+                        Saling Mengasihi.
+                    </span>
                 </h1>
 
                 <p class="text-gray-200 text-sm sm:text-lg leading-relaxed drop-shadow">
                     Bersama kita hadirkan kasih sayang, pendidikan,<br class="hidden lg:block">
                     dan masa depan yang lebih baik untuk mereka.
                 </p>
-            </div>
 
-            <!-- Boks Tombol (Posisi Bawah di Mobile) -->
-            <div class="flex justify-center w-full lg:justify-start mt-auto lg:mt-8">
                 <a href="{{ route('public.donasi.rekening') }}"
-                    class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-500 text-white font-semibold px-8 py-3.5 lg:px-6 lg:py-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-brand-600/30 hover:-translate-y-0.5 w-[85%] sm:w-auto">
+                    class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-3.5 lg:px-6 lg:py-3 rounded-full shadow-lg">
                     <i data-lucide="heart" class="w-4 h-4"></i>
                     Donasi Sekarang
                 </a>
+
             </div>
 
         </div>
     </div>
 
-    <!-- Navigasi Slider -->
-    <button id="prevBtn" onclick="prevSlide()" class="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-40 w-8 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-lg items-center justify-center transition-all duration-200 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto">
-        <i data-lucide="chevron-left" class="w-6 h-6 text-white transition-transform hover:scale-110"></i>
-    </button>
+    <!-- Statistik -->
+    <div class="relative z-20 w-full mt-auto pb-10 pointer-events-auto">
+        <div class="absolute -bottom-1 left-0 w-full pointer-events-none z-0 translate-y-[2px]">
+            <img src="{{ asset('images/awan.png') }}" alt="Awan Transisi" class="w-full h-auto block object-cover scale-[1.01] origin-bottom">
+        </div>
 
-    <button id="nextBtn" onclick="nextSlide()" class="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-40 w-8 h-12 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-lg items-center justify-center transition-all duration-200 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto">
-        <i data-lucide="chevron-right" class="w-6 h-6 text-white transition-transform hover:scale-110"></i>
-    </button>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8" data-aos="fade-up">
 
+                @php
+                    $statItems = [
+                        ['icon' => 'users-round', 'value' => $stats['totalAnakAsuh'] ?? '44', 'label' => 'Anak Asuh', 'desc' => 'sedang kami bina dengan kasih'],
+                        ['icon' => 'users', 'value' => $stats['totalPengasuh'] ?? '6', 'label' => 'Pengurus', 'desc' => 'berdedikasi melayani'],
+                        ['icon' => 'user-check', 'value' => $stats['totalDonatur'] ?? '0', 'label' => 'Donatur', 'desc' => 'berbagi kebaikan'],
+                        ['icon' => 'heart-handshake', 'value' => $stats['totalDonasi'] ?? '0', 'label' => 'Donasi', 'desc' => 'sepanjang tahun'],
+                    ];
+                @endphp
+
+                @foreach ($statItems as $item)
+                    <div class="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 text-white hover:bg-white/15 transition-colors">
+                        <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0 border border-white/10">
+                            <i data-lucide="{{ $item['icon'] }}" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-extrabold text-white">{{ $item['value'] }}+</div>
+                            <div class="text-sm font-semibold text-gray-200">{{ $item['label'] }}</div>
+                            <div class="hidden lg:block text-xs text-gray-300 mt-0.5">{{ $item['desc'] }}</div>
+                        </div>
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
+    </div>
 </section>
 
 <script>
-    const track = document.getElementById('carouselTrack');
     const slides = document.querySelectorAll('.carousel-slide');
-    
-    let currentSlide = 1; 
-    const realSlidesCount = 3;
-    let isTransitioning = false;
-    let autoSlideInterval;
-
-    track.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-    function updateCarousel(animate = true) {
-        if (animate) {
-            track.style.transition = 'transform 0.7s ease-out';
-        } else {
-            track.style.transition = 'none';
-        }
-        track.style.transform = `translateX(-${currentSlide * 100}%)`;
-    }
-
-    track.addEventListener('transitionend', () => {
-        isTransitioning = false;
-        
-        if (currentSlide > realSlidesCount) {
-            track.style.transition = 'none';
-            currentSlide = 1;
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
-        
-        if (currentSlide < 1) {
-            track.style.transition = 'none';
-            currentSlide = realSlidesCount;
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }
-    });
+    let currentSlide = 0;
+    const realSlidesCount = slides.length;
 
     function nextSlide() {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        currentSlide++;
-        updateCarousel(true);
-        resetAutoSlide();
+        if (realSlidesCount === 0) return;
+
+        slides[currentSlide].classList.remove('opacity-100', 'blur-none');
+        slides[currentSlide].classList.add('opacity-0', 'blur-md');
+
+        currentSlide = (currentSlide + 1) % realSlidesCount;
+
+        slides[currentSlide].classList.remove('opacity-0', 'blur-md');
+        slides[currentSlide].classList.add('opacity-100', 'blur-none');
     }
 
-    function prevSlide() {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        currentSlide--;
-        updateCarousel(true);
-        resetAutoSlide();
-    }
-
-    function resetAutoSlide() {
-        clearInterval(autoSlideInterval);
+    let autoSlideInterval;
+    function startAutoSlide() {
         autoSlideInterval = setInterval(nextSlide, 5000);
     }
 
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    document.getElementById('heroCarousel').addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    document.getElementById('heroCarousel').addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        const swipeThreshold = 50;
-        if (touchStartX - touchEndX > swipeThreshold) {
-            nextSlide();
-        } else if (touchEndX - touchStartX > swipeThreshold) {
-            prevSlide();
-        }
-    }, { passive: true });
-
-    window.addEventListener('load', resetAutoSlide);
+    window.addEventListener('load', startAutoSlide);
 </script>
 
-<section class="py-6 bg-white border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8" data-aos="fade-up">
-
-            <!-- Anak Asuh -->
-            <div class="flex items-center gap-4 p-4">
-                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="users-round" class="w-6 h-6 text-blue-600"></i>
-                </div>
-                <div>
-                    <!-- Angka dari controller: $stats['totalAnakAsuh'] -->
-                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['totalAnakAsuh'] ?? '44' }}+</div>
-                    <div class="text-sm font-semibold text-gray-700">Anak Asuh</div>
-                    <div class="hidden lg:block text-xs text-gray-400">sedang kami bina dengan kasih</div>
-                </div>
-            </div>
-
-            <!-- Pengurus -->
-            <div class="flex items-center gap-4 p-4">
-                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="users" class="w-6 h-6 text-blue-600"></i>
-                </div>
-                <div>
-                    <!-- Angka dari controller: $stats['totalPengasuh'] -->
-                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['totalPengasuh'] ?? '6' }}+</div>
-                    <div class="text-sm font-semibold text-gray-700">Pengurus</div>
-                    <div class="hidden lg:block text-xs text-gray-400">berdedikasi melayani</div>
-                </div>
-            </div>
-
-            <!-- Donatur -->
-            <div class="flex items-center gap-4 p-4">
-                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="user-check" class="w-6 h-6 text-blue-600"></i>
-                </div>
-                <div>
-                    <!-- Angka dari controller: $stats['totalDonatur'] -->
-                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['totalDonatur'] ?? '0' }}+</div>
-                    <div class="text-sm font-semibold text-gray-700">Donatur</div>
-                    <div class="hidden lg:block text-xs text-gray-400">berbagi kebaikan bersama kami</div>
-                </div>
-            </div>
-
-            <!-- Kegiatan Aktif -->
-            <div class="flex items-center gap-4 p-4">
-                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <i data-lucide="heart-handshake" class="w-6 h-6 text-blue-600"></i>
-                </div>
-                <div>
-                    <!-- Angka dari controller: $stats['totalKegiatan'] -->
-                    <div class="text-2xl font-extrabold text-gray-900">{{ $stats['totalDonasi'] ?? '0' }}+</div>
-                    <div class="text-sm font-semibold text-gray-700">Donasi</div>
-                    <div class="hidden lg:block text-xs text-gray-400">sepanjang tahun</div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<section class="py-14 bg-gray-50">
+<!-- KEGIATAN -->
+<section class="py-14">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <!-- Header section sesuai dengan Screenshot 2026-06-09 212507.webp -->
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10" data-aos="fade-up">
-            <div>
-                <div class="flex items-center gap-4 mb-1">
-                    <span class="text-xs font-bold tracking-wider text-gray-400 uppercase">KEGIATAN</span>
-                    <div class="h-[2px] w-14 bg-blue-600"></div>
-                </div>
-                <h2 class="text-2xl md:text-3xl font-extrabold text-gray-700 tracking-tight uppercase">
-                    KEGIATAN TERKINI KAMI
-                </h2>
+        <div class="mb-10" data-aos="fade-up">
+            <div class="flex items-center gap-4 mb-1">
+                <span class="text-xs font-bold tracking-wider text-gray-400 uppercase">KEGIATAN</span>
+                <div class="h-[2px] w-14 bg-blue-600"></div>
             </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-gray-700 tracking-tight uppercase">
+                KEGIATAN TERKINI KAMI
+            </h2>
         </div>
 
-        <!-- Grid kartu kegiatan (Diubah menjadi 3 kolom agar ukuran & proporsi pas dengan screenshot) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             @forelse ($kegiatans ?? [] as $kegiatan)
-            <article class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 group flex flex-col h-full"
-                data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg border border-gray-100 hover:border-gray-200 transition-all duration-300 group flex flex-col h-full hover:-translate-y-1" data-aos="fade-up" data-aos-delay="{{ $loop->index * 80 }}">
 
-                <!-- Gambar kegiatan -->
-                <div class="aspect-[16/10] overflow-hidden bg-gray-100">
-                    @if($kegiatan->foto_dokumentasi)
-                        <img src="{{ get_webp_url($kegiatan->foto_dokumentasi) }}"
-                            alt="{{ $kegiatan->judul }}"
-                            class="w-full h-full object-cover"
-                            loading="lazy">
-                    @else
-                        <!-- Placeholder jika gambar tidak tersedia -->
-                        <div class="w-full h-full flex items-center justify-center bg-gray-50">
-                            <i data-lucide="image" class="w-10 h-10 text-gray-300"></i>
+                    <div class="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                        @if($kegiatan->foto_dokumentasi)
+                            <img src="{{ get_webp_url($kegiatan->foto_dokumentasi) }}"
+                                alt="{{ $kegiatan->nama_kegiatan }}"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                loading="lazy">
+                        @else
+                            <div class="w-full h-full flex items-center justify-center bg-gray-50">
+                                <i data-lucide="image" class="w-10 h-10 text-gray-300"></i>
+                            </div>
+                        @endif
+
+                        {{-- Floating date badge --}}
+                        <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-gray-700 text-[11px] font-semibold px-3 py-1 rounded-lg shadow-sm flex items-center gap-1.5 border border-white/60">
+                            <i data-lucide="clock" class="w-3.5 h-3.5 text-brand-600"></i>
+                            <time datetime="{{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->format('Y-m-d') }}">
+                                {{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->translatedFormat('d M Y') }}
+                            </time>
                         </div>
-                    @endif
-                </div>
+                    </div>
 
-                <!-- Konten kartu -->
-                <div class="p-5 flex flex-col flex-grow justify-between">
-                    <div>
-                        <!-- 1. Judul di bagian atas dengan gaya Uppercase -->
-                        <h3 class="font-bold text-gray-700 text-base md:text-lg mb-2 line-clamp-2 uppercase group-hover:text-blue-600 transition-colors leading-snug">
+                    <div class="p-5 sm:p-6 flex flex-col flex-grow">
+                        <h3 class="font-bold text-gray-800 text-base sm:text-lg mb-2 line-clamp-2 uppercase group-hover:text-brand-600 transition-colors leading-snug">
                             <a href="{{ route('public.kegiatan.show', $kegiatan->id) }}">
                                 {{ $kegiatan->nama_kegiatan }}
                             </a>
                         </h3>
 
-                        <!-- 2. Tanggal diletakkan di bawah Judul dengan icon Clock -->
-                        <div class="flex items-center gap-1.5 text-xs text-gray-400 mb-3">
-                            <i data-lucide="clock" class="w-3.5 h-3.5 opacity-60"></i>
-                            <time datetime="{{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->format('Y-m-d') }}">
-                                {{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->translatedFormat('d F Y') }}
-                            </time>
-                        </div>
-
-                        <!-- 3. Deskripsi singkat -->
-                        <p class="text-xs md:text-sm text-gray-500 line-clamp-3 mb-4 leading-relaxed">
+                        <p class="text-xs sm:text-sm text-gray-500 line-clamp-3 mb-5 leading-relaxed text-justify">
                             {{ $kegiatan->deskripsi }}
                         </p>
+
+                        <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-end">
+                            <a href="{{ route('public.kegiatan.show', $kegiatan->id) }}"
+                               class="inline-flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-sm hover:shadow transition-all duration-200 group/btn">
+                                <span>Selengkapnya</span>
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1"></i>
+                            </a>
+                        </div>
                     </div>
-
-                    <!-- 4. Tombol Read More di pojok kanan bawah -->
-                    <div class="flex justify-end pt-2">
-                        <a href="{{ route('public.kegiatan.show', $kegiatan->id) }}" 
-                           class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-1.5 rounded-xl transition-colors duration-200">
-                            Read More
-                        </a>
-                    </div>
-                </div>
-
-            </article>
-
+                </article>
             @empty
-            <div class="lg:col-span-3 py-12 text-center text-gray-400">
-                <i data-lucide="calendar-x" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
-                <p class="text-sm">Belum ada kegiatan yang dipublikasikan.</p>
-            </div>
-
+                <div class="lg:col-span-3 py-12 text-center text-gray-400">
+                    <i data-lucide="calendar-x" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
+                    <p class="text-sm">Belum ada kegiatan yang dipublikasikan.</p>
+                </div>
             @endforelse
-
         </div>
+
+        <div class="mt-8 text-center sm:hidden" data-aos="fade-up">
+            <a href="{{ route('public.kegiatan.index') }}" class="inline-flex items-center gap-2 bg-brand-50 text-brand-600 hover:bg-brand-100 font-semibold px-6 py-3 rounded-full text-xs transition">
+                Lihat Semua Kegiatan
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+        </div>
+
     </div>
 </section>
 
-<section class="py-14 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- FASILITAS -->
+<section class="relative pt-14 pb-20 lg:pb-28 bg-gray-50 overflow-hidden">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10" data-aos="fade-up">
-            <div>
-                <div class="flex items-center gap-4 mb-1">
-                    <span class="text-xs font-bold tracking-wider text-gray-400 uppercase">FASILITAS</span>
-                    <div class="h-[2px] w-14 bg-blue-600"></div>
-                </div>
-                <h2 class="text-2xl md:text-3xl font-extrabold text-gray-700 tracking-tight uppercase">
-                    FASILITAS KAMI
-                </h2>
+        <div class="mb-10" data-aos="fade-up">
+            <div class="flex items-center gap-4 mb-1">
+                <span class="text-xs font-bold tracking-wider text-gray-400 uppercase">FASILITAS</span>
+                <div class="h-[2px] w-14 bg-blue-600"></div>
             </div>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-gray-700 tracking-tight uppercase">
+                FASILITAS KAMI
+            </h2>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            @forelse ($fasilitas ?? [] as $f)
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-5 items-start transition-all duration-300 hover:shadow-md"
+                    data-aos="fade-up" data-aos-delay="{{ $loop->index * 60 }}">
 
-            @forelse($fasilitas ?? [] as $f)
-            <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-5 items-start transition-all duration-300 hover:shadow-md"
-                data-aos="fade-up" data-aos-delay="{{ $loop->index * 60 }}">
-                
-                <div class="w-full sm:w-40 md:w-48 aspect-[4/3] sm:aspect-square md:aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 shrink-0">
-                    @if($f->foto)
-                        <img src="{{ get_webp_url($f->foto) }}"
-                            alt="{{ $f->judul }}"
-                            onclick="openFasilitasModal('{{ get_webp_url($f->foto) }}')"
-                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-105 cursor-zoom-in">
-                    @else
-                        <div class="w-full h-full flex items-center justify-center bg-gray-50">
-                            <i data-lucide="image" class="w-8 h-8 text-gray-300"></i>
-                        </div>
-                    @endif
-                </div>
+                    <div class="w-full sm:w-40 md:w-48 aspect-[4/3] sm:aspect-square md:aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 shrink-0">
+                        @if($f->foto)
+                            <img src="{{ get_webp_url($f->foto) }}"
+                                alt="{{ $f->judul }}"
+                                onclick="openFasilitasModal('{{ get_webp_url($f->foto) }}')"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-105 cursor-zoom-in">
+                        @else
+                            <div class="w-full h-full flex items-center justify-center bg-gray-50">
+                                <i data-lucide="image" class="w-8 h-8 text-gray-300"></i>
+                            </div>
+                        @endif
+                    </div>
 
-                <div class="flex flex-col pt-1">
-                    <h3 class="font-bold text-gray-800 text-base md:text-lg mb-1 leading-snug">
-                        {{ $f->judul }}
-                    </h3>
-                    
-                    <p class="text-xs md:text-sm text-gray-500 leading-relaxed text-justify line-clamp-3 md:line-clamp-4">
-                        {{ $f->deskripsi }}
-                    </p>
+                    <div class="flex flex-col pt-1">
+                        <h3 class="font-bold text-gray-800 text-base md:text-lg mb-1 leading-snug">
+                            {{ $f->judul }}
+                        </h3>
+
+                        <p class="text-xs md:text-sm text-gray-500 leading-relaxed text-justify line-clamp-3 md:line-clamp-4">
+                            {{ $f->deskripsi }}
+                        </p>
+                    </div>
                 </div>
-            </div>
             @empty
-            <div class="col-span-full py-12 text-center text-gray-400">
-                <i data-lucide="building-2" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
-                <p class="text-sm">Belum ada fasilitas yang ditambahkan.</p>
-            </div>
+                <div class="col-span-full py-12 text-center text-gray-400">
+                    <i data-lucide="building-2" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
+                    <p class="text-sm">Belum ada fasilitas yang ditambahkan.</p>
+                </div>
             @endforelse
-
         </div>
+
+    </div>
+
+    <!-- Awan Transisi -->
+    <div class="absolute -bottom-1 left-0 w-full pointer-events-none z-0 translate-y-[2px]">
+        <img src="{{ asset('images/awan2.png') }}" alt="Awan Transisi" class="w-full h-auto block object-cover scale-[1.01] origin-bottom">
     </div>
 </section>
 
-<section class="py-14 bg-brand-50">
+<!-- CTA DONASI -->
+<section class="py-14 bg-brand-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="relative bg-white rounded-2xl overflow-hidden shadow-md" data-aos="fade-up">
 
-            <!-- Background foto ringan di kanan -->
             <div class="absolute right-0 top-0 bottom-0 w-1/2 hidden md:block">
-                <img src="{{ asset('images/anak-panti.webp') }}"
-                    alt="Anak-anak Mawar Kasih"
-                    class="w-full h-full object-cover object-center opacity-90">
-                <!-- Overlay gradient dari kiri -->
+                <img src="{{ asset('images/anak-panti.webp') }}" alt="Anak-anak Mawar Kasih" class="w-full h-full object-cover object-center opacity-90">
                 <div class="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent"></div>
             </div>
 
-            <!-- Konten teks -->
             <div class="relative px-8 py-12 lg:px-14 lg:py-16 max-w-lg">
                 <h2 class="text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight mb-4">
                     Mari Jadi Bagian dari<br>
@@ -386,13 +275,11 @@
                     Jadilah Donatur Tetap dan bantu menghadirkan kebutuhan pangan, pendidikan, serta masa depan yang lebih baik bagi anak-anak Panti Asuhan Mawar Kasih.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-5">
-                    <!-- Tombol utama -->
                     <a href="{{ route('public.donasi.registrasi') }}"
                         class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-3.5 rounded-full transition shadow-lg hover:shadow-brand-600/30 whitespace-nowrap">
                         <i data-lucide="user-plus" class="w-4 h-4 shrink-0"></i>
                         Registrasi Sekarang
                     </a>
-                    <!-- Tombol sekunder -->
                     <a href="{{ route('public.donasi.rekening') }}"
                         class="group inline-flex items-center justify-center gap-1.5 text-gray-900 font-semibold hover:text-blue-700 transition py-2 whitespace-nowrap">
                         Donasi Sekarang
@@ -411,7 +298,6 @@
     onclick="closeFasilitasModal(event)">
 
     <div class="bg-white rounded-2xl overflow-hidden max-w-lg w-full shadow-2xl transform scale-95 transition-transform duration-300" id="fasilitasModalBox">
-        <!-- Foto fasilitas (besar) -->
         <div class="aspect-video bg-gray-100">
             <img id="fasilitasModalImg" src="" alt="" class="w-full h-full object-cover">
         </div>
