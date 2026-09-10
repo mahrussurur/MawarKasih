@@ -28,7 +28,7 @@
                     <li><a href="{{ route('public.home') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Beranda</a></li>
                     <li><a href="{{ route('public.kegiatan.index') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Kegiatan</a></li>
                     <li><a href="{{ route('public.donasi.rekening') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Donasi</a></li>
-                    <li><a href="{{ route('public.donasi.registrasi') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Registrasi</a></li>
+                    <li><a href="{{ route('register') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Registrasi</a></li>
                 </ul>
             </div> 
 

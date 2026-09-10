@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('foto')->nullable();
             $table->string('nama');
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->text('alamat')->nullable();
             $table->string('jabatan');
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('no_hp');

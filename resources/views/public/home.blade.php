@@ -271,10 +271,10 @@
                     Jadilah Donatur Tetap dan bantu menghadirkan kebutuhan pangan, pendidikan, serta masa depan yang lebih baik bagi anak-anak Panti Asuhan Mawar Kasih.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-5">
-                    <a href="{{ route('public.donasi.registrasi') }}"
+                    <a href="{{ route('register') }}"
                         class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-6 py-3.5 rounded-xl transition shadow-lg hover:shadow-brand-600/30 whitespace-nowrap">
                         <i data-lucide="user-plus" class="w-4 h-4 shrink-0"></i>
-                        Registrasi Sekarang
+                        Daftar Donatur Tetap
                     </a>
                     <a href="{{ route('public.donasi.rekening') }}"
                         class="group inline-flex items-center justify-center gap-1.5 text-gray-900 font-semibold hover:text-blue-700 transition py-2 whitespace-nowrap">

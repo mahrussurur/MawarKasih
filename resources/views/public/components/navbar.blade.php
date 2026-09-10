@@ -79,48 +79,17 @@
 
             <!-- TOMBOL CTA -->
             <div class="hidden lg:flex items-center gap-3">
-                @if(!empty($currentDonatur))
-                    <div class="relative">
-                        <button id="donaturMenuButton" type="button" onclick="toggleDonaturMenu()" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-gray-100">
-                            <i data-lucide="user-check" class="w-4 h-4"></i>
-                            <span title="{{ $currentDonatur->nama }}">{{ \Illuminate\Support\Str::words($currentDonatur->nama, 2, '') }}</span>
-                            <i id="donaturMenuChevron" data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200"></i>
-                        </button>
-                        <div id="donaturMenu" class="absolute right-0 top-[calc(100%+8px)] w-[200px] bg-white/80 backdrop-blur-lg border border-white/50 rounded-xl shadow-lg p-1.5 opacity-0 invisible transition-all duration-200 z-50">
-                            
-                            <div class="px-3 pt-2.5 pb-2 border-b border-slate-100 mb-1">
-                                <div class="text-[13px] font-bold text-slate-900 truncate">{{ $currentDonatur->nama }}</div>
-                                <div class="text-[11px] font-medium text-slate-400">Donatur</div>
-                            </div>
-
-                            <a href="{{ route('public.donatur.profile') }}" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-gray-600 text-[13px] font-semibold hover:bg-gray-100 hover:text-gray-900 transition-colors w-full">
-                                <i data-lucide="user" class="w-4 h-4"></i>
-                                Profil Saya
-                            </a>
-                            
-                            <a href="{{ route('public.donatur.history') }}" class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-gray-600 text-[13px] font-semibold hover:bg-gray-100 hover:text-gray-900 transition-colors w-full">
-                                <i data-lucide="clock" class="w-4 h-4"></i>
-                                Riwayat Donasi
-                            </a>
-
-                            <div class="h-px bg-slate-100 my-1"></div>
-
-                            <form method="POST" action="{{ route('public.donatur.logout') }}">
-                                @csrf
-                                <button type="submit" class="flex items-center gap-2.5 w-full text-left px-3 py-2.5 rounded-lg text-red-500 text-[13px] font-semibold hover:bg-red-50 transition-colors cursor-pointer border-none bg-transparent">
-                                    <i data-lucide="log-out" class="w-4 h-4"></i>
-                                    Logout
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                @auth
+                    <a href="{{ route('dashboard') }}" class="flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 font-semibold transition">
+                        Dashboard
+                    </a>
                 @else
-                    @if(!request()->routeIs('public.donasi.login'))
-                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 font-semibold transition">
+                    @if(!request()->routeIs('login'))
+                        <a href="{{ route('login') }}" class="flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 font-semibold transition">
                             Login
                         </a>
                     @endif
-                @endif
+                @endauth
             </div>
             
             <!-- HAMBURGER MOBILE -->
@@ -169,37 +138,17 @@
             </div>
 
             <div class="pt-2">
-                @if(!empty($currentDonatur))
-                    <div>
-                        <button class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold text-blue-700 bg-blue-50 border border-blue-200 shadow-sm hover:bg-blue-100 transition-all" onclick="toggleAccordion('acc-profile', this)">
-                            <div class="flex items-center gap-2.5">
-                                <div class="bg-blue-100 p-1.5 rounded-full text-blue-600">
-                                    <i data-lucide="user-check" class="w-4 h-4"></i>
-                                </div>
-                                <span title="{{ $currentDonatur->nama }}" class="tracking-wide">{{ \Illuminate\Support\Str::words($currentDonatur->nama, 2, '') }}</span>
-                            </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-300" id="chevron-acc-profile"></i>
-                        </button>
-                        <div id="acc-profile" class="hidden pl-4 mt-2 space-y-1">
-                            <a href="{{ route('public.donatur.profile') }}" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">
-                                <i data-lucide="user" class="w-4 h-4"></i> Profil Saya
-                            </a>
-                            <a href="{{ route('public.donatur.history') }}" class="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">
-                                <i data-lucide="clock" class="w-4 h-4"></i> Riwayat Donasi
-                            </a>
-                            <form action="{{ route('public.donatur.logout') }}" method="POST" class="mt-1">
-                                @csrf
-                                <button type="submit" class="flex items-center gap-2 w-full text-left px-3 py-2.5 rounded-lg text-sm text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors">
-                                    <i data-lucide="log-out" class="w-4 h-4"></i> Logout
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                @elseif(!request()->routeIs('public.donasi.login'))
+                @auth
                     <div class="space-y-3">
-                        <a href="{{ route('public.donasi.login') }}" class="flex items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition">Login</a>
+                        <a href="{{ route('dashboard') }}" class="flex items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition">Dashboard</a>
                     </div>
-                @endif
+                @else
+                    @if(!request()->routeIs('login'))
+                        <div class="space-y-3">
+                            <a href="{{ route('login') }}" class="flex items-center justify-center gap-2 rounded-full bg-blue-600 hover:bg-blue-700 px-5 py-3 text-sm font-semibold text-white transition">Login</a>
+                        </div>
+                    @endif
+                @endauth
             </div>
         </div>
     </div>
@@ -229,16 +178,6 @@
     
     .nav-transparent #hamburgerBtn { color: #ffffff !important; }
     .nav-transparent #hamburgerBtn:hover { background-color: rgba(255, 255, 255, 0.15) !important; }
-    
-    .nav-transparent #donaturMenuButton { 
-        background-color: rgba(255, 255, 255, 0.15) !important; 
-        border-color: rgba(255, 255, 255, 0.3) !important; 
-        color: #ffffff !important; 
-        backdrop-filter: blur(8px);
-    }
-    .nav-transparent #donaturMenuButton:hover { 
-        background-color: rgba(255, 255, 255, 0.25) !important; 
-    }
 </style>
 
 <script>
@@ -280,31 +219,7 @@
         }
     }
 
-    function toggleDonaturMenu() {
-        const menu = document.getElementById('donaturMenu');
-        const chevron = document.getElementById('donaturMenuChevron');
-        if (!menu) return;
-        menu.classList.toggle('opacity-0');
-        menu.classList.toggle('invisible');
-        menu.classList.toggle('opacity-100');
-        menu.classList.toggle('visible');
-        if (chevron) chevron.classList.toggle('rotate-180');
-    }
-
     document.addEventListener('click', function (event) {
-        // --- Logika untuk Donatur Menu (Desktop) ---
-        const donaturBtn = document.getElementById('donaturMenuButton');
-        const donaturMenu = document.getElementById('donaturMenu');
-        const chevron = document.getElementById('donaturMenuChevron');
-        
-        if (donaturBtn && donaturMenu) {
-            if (!donaturBtn.contains(event.target) && !donaturMenu.contains(event.target)) {
-                donaturMenu.classList.add('opacity-0', 'invisible');
-                donaturMenu.classList.remove('opacity-100', 'visible');
-                if (chevron) chevron.classList.remove('rotate-180');
-            }
-        }
-
         // --- Logika untuk Mobile Menu ---
         const mobileMenu = document.getElementById('mobileMenu');
         const overlay = document.getElementById('mobileMenuOverlay');

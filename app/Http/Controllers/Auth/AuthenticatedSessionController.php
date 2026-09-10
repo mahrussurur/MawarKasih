@@ -40,7 +40,7 @@ class AuthenticatedSessionController extends Controller
         )) {
             // Jika gagal, kembalikan error
             return back()->withErrors([
-                'username' => 'Username atau password yang kamu masukkan salah.',
+                'username' => 'Username atau password tidak valid.',
             ])->onlyInput('username');
         }
 

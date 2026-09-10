@@ -36,8 +36,8 @@
         <div class="max-w-7xl mx-auto mb-12">
             <form action="{{ route('public.galeri.index') }}" method="GET" class="relative">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau deskripsi foto..." class="w-full pl-4 pr-20 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm">
-                <button type="submit" class="absolute right-1 top-1 bottom-1 bg-brand-600 hover:bg-brand-700 text-white rounded-lg px-4 py-1 transition-all shadow-sm">
-                    Cari
+                <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-600">
+                    <i data-lucide="search" class="w-5 h-5"></i>
                 </button>
             </form>
         </div>
@@ -71,12 +71,9 @@
                     </div>
                 </div>
             @empty
-                <div class="col-span-full py-20 flex flex-col items-center justify-center text-center bg-slate-50 rounded-3xl border border-slate-100 border-dashed">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm">
-                        <i data-lucide="image-off" class="w-8 h-8 text-slate-300"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold text-slate-800 mb-1">Belum Ada Galeri</h3>
-                    <p class="text-slate-500 text-sm">Saat ini belum ada foto yang ditambahkan ke galeri publik.</p>
+                <div class="lg:col-span-4 py-12 text-center text-gray-400">
+                    <i data-lucide="image-off" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
+                    <p class="text-sm">Belum ada galeri yang dipublikasikan.</p>
                 </div>
             @endforelse
         </div>
