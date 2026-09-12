@@ -164,20 +164,22 @@
     </head>
     <body class="bg-gray-100 text-gray-900 antialiased">
         <div class="flex h-screen overflow-hidden">
-            @include('admin.partials.sidebar')
+            @if(Auth::check())
+                @includeIf('components.sidebar.' . Auth::user()->role)
+            @endif
 
             <div class="fixed inset-0 z-40 hidden bg-gray-900/50 backdrop-blur-sm transition-opacity" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
             <div class="main-content flex h-screen flex-1 flex-col overflow-hidden relative">
-                @include('admin.partials.header')
+                @include('layouts.partials.header')
 
                 <main class="page-content min-h-0 flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 lg:p-8">@yield('content')
                 </main>
 
                 <!-- Modal Container: menutupi area konten di bawah header saja -->
                 <div id="adminModalContainer" class="pointer-events-none absolute inset-0 top-16 z-50">
-                    @include('admin.partials.modals')
-                    @include('admin.partials.image_preview_modal')
+                    @include('layouts.partials.modals')
+                    @include('layouts.partials.image_preview_modal')
                     @stack('modals')
                 </div>
             </div><!-- /.main-content -->

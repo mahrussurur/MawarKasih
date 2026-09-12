@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 @section('page-title', 'Edit Donatur')
 
 @section('content')

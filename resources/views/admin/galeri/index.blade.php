@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 @section('page-title', 'Data Galeri')
 @section('title', 'Data Galeri | Panti Asuhan Mawar Kasih')
 

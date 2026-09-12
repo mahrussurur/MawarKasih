@@ -1,4 +1,4 @@
-﻿@extends('admin.layouts.app')
+@extends('layouts.app')
 @section('page-title', 'Data Donasi')
 @section('title', 'Data Donasi | Panti Asuhan Mawar Kasih')
 
@@ -265,5 +265,5 @@
 @endsection
 
 @push('modals')
-    @include('admin.partials.donasi_action_modals')
+    @include('layouts.partials.donasi_action_modals')
 @endpush

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('username')->unique();       // username untuk login (unik)
             $table->string('email')->unique();          // email untuk login (unik)
             $table->string('password');                 // password (akan di-hash)
-            $table->enum('role', ['admin', 'guest', 'donatur_tetap', 'sekretaris', 'bendahara'])->default('guest');
+            $table->enum('role', ['admin', 'bendahara', 'sekretaris', 'pengasuh', 'donatur'])->default('donatur');
             $table->rememberToken();
             $table->timestamps();                       // created_at & updated_at
         });

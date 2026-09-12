@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Dashboard')
 @section('page-title', 'Dashboard')
@@ -437,5 +437,5 @@
 @endpush
 
 @push('modals')
-    @include('admin.partials.donasi_action_modals')
+    @include('layouts.partials.donasi_action_modals')
 @endpush

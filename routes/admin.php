@@ -11,11 +11,11 @@ use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\ProfileController;
 
 Route::prefix('admin')
-    ->middleware(['auth', \App\Http\Middleware\AdminSessionTimeout::class])
+    ->middleware(['auth', 'role:admin', \App\Http\Middleware\AdminSessionTimeout::class])
     ->group(function () {
 
         // Dashboard
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
         // Anak Asuh - tambahkan route cetak sebelum resource
         // agar tidak tertimpa oleh route resource {anak_asuh}
