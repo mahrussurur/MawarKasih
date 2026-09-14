@@ -18,6 +18,12 @@ Route::get('/dashboard', function () {
     };
 })->middleware('auth')->name('dashboard');
 
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
 // Load role-specific routes
 require __DIR__ . '/bendahara.php';
 require __DIR__ . '/sekretaris.php';

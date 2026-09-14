@@ -437,5 +437,5 @@
 @endpush
 
 @push('modals')
-    @include('layouts.partials.donasi_action_modals')
+    @include('layouts.partials.admin.donasi_action_modals')
 @endpush

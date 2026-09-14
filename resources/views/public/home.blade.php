@@ -1,4 +1,4 @@
-@extends('public.layouts.app')
+@extends('layouts.public')
 
 @section('title', 'Beranda')
 @section('meta_desc', 'Panti Asuhan Mawar Kasih - Menebar Kasih, Merangkai Harapan. Bersama kita hadirkan cinta, pendidikan, dan masa depan yang lebih baik untuk mereka.')

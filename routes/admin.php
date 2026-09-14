@@ -37,8 +37,4 @@ Route::prefix('admin')
         Route::get('cek-donasi', [DonasiController::class, 'cekStatus'])->name('donasi.cek');
  
 
-        // Profile pengguna yang sedang login
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });

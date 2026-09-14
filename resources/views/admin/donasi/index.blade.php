@@ -249,7 +249,7 @@
         </div>
 
         <!-- Pagination -->
-        @include('layouts.partials._pagination', ['paginator' => $donasi])
+        @include('layouts.partials.admin._pagination', ['paginator' => $donasi])
 
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
@@ -264,5 +264,5 @@
 @endsection
 
 @push('modals')
-    @include('layouts.partials.donasi_action_modals')
+    @include('layouts.partials.admin.donasi_action_modals')
 @endpush

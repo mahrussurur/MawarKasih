@@ -1,8 +1,8 @@
-@extends('public.layouts.app')
+@extends('layouts.public')
 @section('title', 'Donasi | Panti Asuhan Mawar Kasih')
 
 @section('content')
-@include('public.components.page-header', ['title' => 'Formulir Donasi'])
+@include('components.public.page-header', ['title' => 'Formulir Donasi'])
 @php
     $errorBag = $errors instanceof \Illuminate\Support\ViewErrorBag ? $errors : new \Illuminate\Support\ViewErrorBag();
 @endphp

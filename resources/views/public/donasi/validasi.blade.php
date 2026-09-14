@@ -1,9 +1,9 @@
-@extends('public.layouts.app')
+@extends('layouts.public')
 
 @section('title', 'Validasi Donasi')
 
 @section('content')
-@include('public.components.page-header', ['title' => 'Validasi Donasi'])
+@include('components.public.page-header', ['title' => 'Validasi Donasi'])
 <div class="bg-gray-50 py-10 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         @if(isset($donasi) && $donasi)

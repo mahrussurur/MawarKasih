@@ -34,7 +34,7 @@
                     @endphp
                     {{ $initials }}
                 </div>
-                <span class="hidden text-sm font-bold text-gray-900 md:inline">{{ Auth::user()->name ?? 'Admin' }}</span>
+                <span class="hidden text-sm font-bold text-gray-900 md:inline">{{ Auth::user()->name ?? 'User' }}</span>
                 <span class="text-gray-500 transition-transform duration-200" :class="open ? 'rotate-180' : ''">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -55,8 +55,8 @@
                 class="absolute right-0 top-[calc(100%+8px)] z-50 w-52 rounded-xl border border-gray-200 bg-white p-1.5 shadow-xl shadow-gray-200/80">
                 
                 <div class="border-b border-gray-100 px-3 py-2.5 mb-1">
-                    <div class="text-sm font-bold text-gray-900">{{ Auth::user()->name ?? 'Admin' }}</div>
-                    <div class="text-[11px] font-medium text-gray-400">Admin</div>
+                    <div class="text-sm font-bold text-gray-900">{{ Auth::user()->name ?? 'User' }}</div>
+                    <div class="text-[11px] font-medium text-gray-400 capitalize">{{ str_replace('_', ' ', Auth::user()->role ?? 'Guest') }}</div>
                 </div>
 
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold text-gray-600 transition hover:bg-gray-50 hover:text-gray-900">

@@ -85,13 +85,13 @@
     @yield('extra_styles')
 </head>
 <body class="font-sans bg-white text-gray-800 antialiased">
-    @include('public.components.navbar')
+    @include('components.public.navbar')
 
     <main>
         @yield('content')
     </main>
-    
-    @include('public.components.footer')
+
+    @include('components.public.footer')
 
     <button id="scrollTopBtn"
         class="fixed bottom-6 right-6 z-50 w-11 h-11 bg-brand-600 text-white rounded-full border-2 border-gray-900 shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-brand-700"

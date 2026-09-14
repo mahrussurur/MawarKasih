@@ -139,7 +139,7 @@
         </div>
 
         <!-- Pagination -->
-        @include('layouts.partials._pagination', ['paginator' => $users])
+        @include('layouts.partials.admin._pagination', ['paginator' => $users])
 
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">

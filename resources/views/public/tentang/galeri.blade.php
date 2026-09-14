@@ -1,8 +1,8 @@
-@extends('public.layouts.app')
+@extends('layouts.public')
 @section('title', 'Galeri | Panti Asuhan Mawar Kasih')
 
 @section('content')
-@include('public.components.page-header', ['title' => 'Galeri'])
+@include('components.public.page-header', ['title' => 'Galeri'])
 <style>
     .fancybox__caption {
         position: absolute !important;
