@@ -44,7 +44,7 @@
                     <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalPengasuh ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('pengasuh.index') }}" class="mt-5 block w-full rounded-xl bg-emerald-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-emerald-700">Lihat Data</a>
+            <a href="{{ route('users.index', ['role' => 'pengasuh']) }}" class="mt-5 block w-full rounded-xl bg-emerald-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-emerald-700">Lihat Data</a>
         </div>
 
         <!-- total donatur -->
@@ -60,7 +60,7 @@
                     <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalDonatur ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('donatur.index') }}" class="mt-5 block w-full rounded-xl bg-violet-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-violet-700">Lihat Data</a>
+            <a href="{{ route('users.index') }}" class="mt-5 block w-full rounded-xl bg-violet-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-violet-700">Lihat Data</a>
         </div>
 
         <!-- total kegiatan -->

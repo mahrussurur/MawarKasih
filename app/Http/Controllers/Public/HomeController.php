@@ -6,9 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\AnakAsuh;
-use App\Models\Pengasuh;
+use App\Models\User;
 use App\Models\Kegiatan;
-use App\Models\Donatur;
 use App\Models\Galeri;
 use App\Models\Donasi;
 
@@ -18,10 +17,10 @@ class HomeController extends Controller
     {
         $stats = [
             'totalAnakAsuh'  => AnakAsuh::count(),
-            'totalPengasuh'  => Pengasuh::count(),
+            'totalPengasuh'  => User::where('role', 'pengasuh')->count(),
             'totalKegiatan'  => Kegiatan::count(),
-            'totalDonatur'  => Donatur::count(),
-            'totalDonasi'  => Donasi::count(),
+            'totalDonatur'   => User::where('role', 'donatur')->count(),
+            'totalDonasi'    => Donasi::count(),
         ];
 
         $kegiatans = Kegiatan::latest('tanggal_pelaksanaan')

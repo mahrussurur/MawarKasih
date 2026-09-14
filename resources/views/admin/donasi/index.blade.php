@@ -4,7 +4,6 @@
 
 @section('content')
 <div>
-
     <!-- Summary Cards -->
     <div class="grid gap-4 grid-cols-1 md:grid-cols-3 mb-4">
         <!-- Total Semua Donasi -->
@@ -250,7 +249,7 @@
         </div>
 
         <!-- Pagination -->
-        @include('admin.partials._pagination', ['paginator' => $donasi])
+        @include('layouts.partials._pagination', ['paginator' => $donasi])
 
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">

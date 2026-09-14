@@ -27,7 +27,7 @@ return new class extends Migration
             $table->text('catatan_admin')->nullable();        // alasan ditolak, dll
             $table->text('keterangan')->nullable();
             $table->string('metode_pembayaran')->comment('Metode pembayaran yang dipilih donatur');
-            $table->foreignId('donatur_id')->nullable()->constrained('donaturs')->nullOnDelete();
+            $table->foreignId('donatur_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }

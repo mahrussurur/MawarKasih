@@ -79,7 +79,9 @@
                             <span class="text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal_lahir)->format('d - m - Y') }}</span>
                         </td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->jenis_kelamin ?? '-' }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->status_social_anak ?? '-' }}</td>
+                        <td class="px-6 py-4 text-gray-700">
+                            <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-semibold ring-1 ring-inset ring-gray-200">{{ $item->status_social_anak ?? '-' }}</span>
+                        </td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->nama_ayah ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->nama_ibu ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->tinggal_di_lksa_sejak ?? '-' }}</td>
@@ -124,7 +126,7 @@
         </div>
 
         <!-- Pagination -->
-        @include('admin.partials._pagination', ['paginator' => $data])
+        @include('layouts.partials._pagination', ['paginator' => $data])
 
         @else
         <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">

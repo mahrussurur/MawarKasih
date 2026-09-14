@@ -8,7 +8,7 @@ use App\Models\AnakAsuh;
 use App\Models\Kegiatan;
 use App\Models\Galeri;
 use App\Models\Donasi;
-use App\Models\Pengasuh;
+use App\Models\User;
 
 class MigrateImageToOriginal extends Command
 {
@@ -24,7 +24,7 @@ class MigrateImageToOriginal extends Command
             ['class' => Kegiatan::class, 'column' => 'foto_dokumentasi', 'folder' => 'kegiatan'],
             ['class' => Galeri::class, 'column' => 'foto', 'folder' => 'galeri'],
             ['class' => Donasi::class, 'column' => 'bukti_transfer', 'folder' => 'bukti_transfer'],
-            ['class' => Pengasuh::class, 'column' => 'foto', 'folder' => 'pengasuh'],
+            ['class' => User::class, 'column' => 'foto', 'folder' => 'users'],
         ];
 
         foreach ($models as $modelConfig) {

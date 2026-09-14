@@ -7,19 +7,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\AnakAsuh;
-use App\Models\Pengasuh;
+use App\Models\User;
 use App\Models\Donasi;
 use App\Models\Kegiatan;
-use App\Models\Donatur;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $totalAnak = AnakAsuh::count();
-        $totalPengasuh = Pengasuh::count();
+        $totalPengasuh = User::where('role', 'pengasuh')->count();
         $totalKegiatan = Kegiatan::count();
-        $totalDonatur = Donatur::count();
+        $totalDonatur = User::where('role', 'donatur')->count();
 
         $donasiTerbaru  = Donasi::where('status', 'pending')->latest()->take(5)->get();
         $totalDonasiPending = Donasi::where('status', 'pending')->count();

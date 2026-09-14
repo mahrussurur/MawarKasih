@@ -39,30 +39,23 @@
             Data
         </div>
 
-        <a href="{{ route('anak-asuh.index') }}" data-tooltip="Data Anak Asuh" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('anak-asuh.*') ? 'bg-white/15 text-white font-bold' : '' }}">
-            <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('anak-asuh.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
-            <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            <span class="nav-text">Data Anak Asuh</span>
-        </a>
-
-        <a href="{{ route('pengasuh.index') }}" data-tooltip="Data Pengasuh" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('pengasuh.*') ? 'bg-white/15 text-white font-bold' : '' }}">
-            <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('pengasuh.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+        <a href="{{ route('users.index') }}" data-tooltip="Data User" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('users.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+            <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('users.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
             <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                 <circle cx="9" cy="7" r="4"></circle>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
             </svg>
-            <span class="nav-text">Data Pengasuh</span>
+            <span class="nav-text">Data User</span>
         </a>
 
-        <a href="{{ route('donatur.index') }}" data-tooltip="Data Donatur" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('donatur.*') ? 'bg-white/15 text-white font-bold' : '' }}">
-            <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('donatur.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
-            <svg class="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/>
-            </svg>
-            <span class="nav-text">Data Donatur</span>
+        <a href="{{ route('anak-asuh.index') }}" data-tooltip="Data Anak Asuh" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('anak-asuh.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+            <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('anak-asuh.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+            <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <span class="nav-text">Data Anak Asuh</span>
         </a>
+
 
         <a href="{{ route('donasi.index') }}" data-tooltip="Data Donasi" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('donasi.*') ? 'bg-white/15 text-white font-bold' : '' }}">
             <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('donasi.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
