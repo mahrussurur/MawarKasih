@@ -4,12 +4,17 @@ namespace App\Http\Controllers\Bendahara;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donasi;
-use App\Models\TransaksiKeuangan;
+use App\Services\DonasiKeuanganService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DonasiController extends Controller
 {
+    public function __construct(protected DonasiKeuanganService $donasiKeuanganService)
+    {
+    }
+
     public function index(Request $request)
     {
         $query = Donasi::query()->latest();
@@ -65,22 +70,16 @@ class DonasiController extends Controller
             'catatan_admin' => 'nullable|string|max:500',
         ]);
 
-        $donasi->update([
-            'status'        => 'diterima',
-            'catatan_admin' => $request->catatan_admin ?? 'Donasi telah diterima. Terima kasih.',
-            'verified_by'   => Auth::id(),
-            'verified_at'   => now(),
-        ]);
+        DB::transaction(function () use ($donasi, $request) {
+            $donasi->update([
+                'status'        => 'diterima',
+                'catatan_admin' => $request->catatan_admin ?? 'Donasi telah diterima. Terima kasih.',
+                'verified_by'   => Auth::id(),
+                'verified_at'   => now(),
+            ]);
 
-        // Catat sebagai pemasukan di Transaksi Keuangan
-        TransaksiKeuangan::create([
-            'jenis'        => 'pemasukan',
-            'nominal'      => $donasi->nominal,
-            'keterangan'   => "Pemasukan donasi dari " . $donasi->nama_donatur . " (" . $donasi->kode_donasi . ")",
-            'tanggal'      => now(),
-            'donasi_id'    => $donasi->id,
-            'dicatat_oleh' => Auth::id(),
-        ]);
+            $this->donasiKeuanganService->catatPemasukan($donasi, Auth::id());
+        });
 
         return back()->with('success', "Donasi {$donasi->kode_donasi} berhasil divalidasi dan dicatat sebagai pemasukan.");
     }

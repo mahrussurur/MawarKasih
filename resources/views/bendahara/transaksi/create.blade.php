@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Tambah Transaksi Manual')
+@section('title', 'Tambah Data Keuangan Manual')
 @section('page-title', 'Catat Transaksi')
 
 @section('content')
@@ -56,3 +56,4 @@
     </form>
 </div>
 @endsection
+

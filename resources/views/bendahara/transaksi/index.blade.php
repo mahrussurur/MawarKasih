@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Data Transaksi Keuangan')
+@section('title', 'Data Keuangan')
 @section('page-title', 'Transaksi Keuangan')
 
 @section('content')
@@ -26,6 +26,10 @@
             <a href="{{ route('bendahara.transaksi.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 Catat Transaksi Manual
+            </a>
+            <a href="{{ route('bendahara.transaksi.cetak', request()->only(['jenis', 'search'])) }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-700 shadow-sm transition hover:border-gray-300 hover:bg-gray-100">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9V2h12v7m-12 9H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 01-2 2h-2m-12 0h12v4H6v-4z"/></svg>
+                Cetak Laporan
             </a>
         </div>
     </div>

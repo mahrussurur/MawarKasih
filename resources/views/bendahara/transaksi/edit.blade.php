@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', 'Edit Transaksi Manual')
-@section('page-title', 'Edit Transaksi')
+@section('title', 'Edit Data Keuangan Manual')
+@section('page-title', 'Edit Data Keuangan')
 
 @section('content')
 <div class="max-w-2xl mx-auto">
@@ -56,3 +56,4 @@
     </form>
 </div>
 @endsection
+

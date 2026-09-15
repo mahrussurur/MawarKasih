@@ -84,6 +84,11 @@
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                 <span class="nav-text">Donasi</span>
             </a>
+            <a href="{{ route('admin.keuangan.index') }}" data-tooltip="Data Keuangan" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('admin.keuangan.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('admin.keuangan.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="nav-text">Data Keuangan</span>
+            </a>
 
         @endif
 
@@ -94,10 +99,10 @@
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                 <span class="nav-text">Data Donasi</span>
             </a>
-            <a href="{{ route('bendahara.transaksi.index') }}" data-tooltip="Data Transaksi" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('bendahara.transaksi.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+            <a href="{{ route('bendahara.transaksi.index') }}" data-tooltip="Data Keuangan" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('bendahara.transaksi.*') ? 'bg-white/15 text-white font-bold' : '' }}">
                 <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('bendahara.transaksi.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="nav-text">Data Transaksi</span>
+                <span class="nav-text">Data Keuangan</span>
             </a>
         @endif
 

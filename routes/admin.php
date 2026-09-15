@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PengelolaController;
 use App\Http\Controllers\Admin\DokumenAdministrasiController;
+use App\Http\Controllers\Admin\KeuanganController;
 
 Route::prefix('admin')
     ->middleware(['auth', 'role:admin', \App\Http\Middleware\AdminSessionTimeout::class])
@@ -30,6 +31,15 @@ Route::prefix('admin')
         Route::patch('donasi/{donasi}/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
         Route::patch('donasi/{donasi}/tolak', [DonasiController::class, 'tolak'])->name('donasi.tolak');
         Route::resource('donasi', DonasiController::class);
+        Route::get('keuangan/cetak', [KeuanganController::class, 'cetak'])->name('admin.keuangan.cetak');
+        Route::resource('keuangan', KeuanganController::class)->except(['show'])->names([
+            'index'   => 'admin.keuangan.index',
+            'create'  => 'admin.keuangan.create',
+            'store'   => 'admin.keuangan.store',
+            'edit'    => 'admin.keuangan.edit',
+            'update'  => 'admin.keuangan.update',
+            'destroy' => 'admin.keuangan.destroy',
+        ]);
 
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('galeri',  GaleriController::class);

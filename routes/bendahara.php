@@ -12,5 +12,6 @@ Route::middleware(['auth', 'role:bendahara'])->prefix('bendahara')->name('bendah
     Route::patch('/donasi/{donasi}/tolak', [\App\Http\Controllers\Bendahara\DonasiController::class, 'tolak'])->name('donasi.tolak');
     Route::resource('donasi', \App\Http\Controllers\Bendahara\DonasiController::class)->only(['index', 'show']);
     // Transaksi Keuangan
+    Route::get('/transaksi/cetak', [\App\Http\Controllers\Bendahara\TransaksiController::class, 'cetak'])->name('transaksi.cetak');
     Route::resource('transaksi', \App\Http\Controllers\Bendahara\TransaksiController::class)->except(['show']);
 });

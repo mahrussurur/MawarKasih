@@ -5,17 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Donasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\DonasiKeuanganService;
 use App\Services\ImageService;
 
 class DonasiController extends Controller
 {
     protected $imageService;
+    protected $donasiKeuanganService;
 
-    public function __construct(ImageService $imageService)
+    public function __construct(ImageService $imageService, DonasiKeuanganService $donasiKeuanganService)
     {
         $this->imageService = $imageService;
+        $this->donasiKeuanganService = $donasiKeuanganService;
     }
     
     public function index(Request $request)
@@ -98,12 +103,16 @@ class DonasiController extends Controller
             'catatan_admin' => 'nullable|string|max:500',
         ]);
 
-        $donasi->update([
-            'status' => 'diterima',
-            'catatan_admin' => $request->catatan_admin ?? 'Donasi telah diterima.terima kasih.',
-        ]);
+        DB::transaction(function () use ($donasi, $request) {
+            $donasi->update([
+                'status' => 'diterima',
+                'catatan_admin' => $request->catatan_admin ?? 'Donasi telah diterima. Terima kasih.',
+            ]);
 
-        return back()->with('success', "Donasi {$donasi->kode_donasi} berhasil divalidasi.");
+            $this->donasiKeuanganService->catatPemasukan($donasi, Auth::id());
+        });
+
+        return back()->with('success', "Donasi {$donasi->kode_donasi} berhasil divalidasi dan dicatat sebagai pemasukan.");
     }
 
     // Tolak donasi: ubah status ke 'ditolak' + simpan catatan.

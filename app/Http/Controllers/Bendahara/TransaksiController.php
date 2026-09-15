@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\TransaksiKeuangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TransaksiController extends Controller
 {
@@ -100,5 +101,36 @@ class TransaksiController extends Controller
         $transaksi->delete();
 
         return redirect()->route('bendahara.transaksi.index')->with('success', 'Transaksi berhasil dihapus.');
+    }
+
+    public function cetak(Request $request)
+    {
+        $query = TransaksiKeuangan::query()->orderBy('tanggal', 'desc')->orderBy('id', 'desc');
+
+        $jenis = $request->get('jenis', 'semua');
+        if (in_array($jenis, ['pemasukan', 'pengeluaran'], true)) {
+            $query->where('jenis', $jenis);
+        }
+
+        if ($request->filled('search')) {
+            $query->where('keterangan', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('tahun')) {
+            $query->whereYear('tanggal', $request->tahun);
+        }
+
+        $transaksi  = $query->get();
+        $tahun      = $request->tahun ?? 'Semua Tahun';
+        $jenisLabel = match($jenis) {
+            'pemasukan'   => 'Pemasukan',
+            'pengeluaran' => 'Pengeluaran',
+            default       => 'Semua Transaksi',
+        };
+
+        $pdf = Pdf::loadView('bendahara.transaksi.cetak', compact('transaksi', 'tahun', 'jenisLabel'))
+                  ->setPaper('a4', 'portrait');
+
+        return $pdf->stream('Laporan_Keuangan_Mawar_Kasih.pdf');
     }
 }
