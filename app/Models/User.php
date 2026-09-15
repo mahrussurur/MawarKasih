@@ -47,4 +47,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Donasi yang dimiliki oleh user ini (sebagai donatur).
+     */
+    public function donasi()
+    {
+        return $this->hasMany(Donasi::class, 'donatur_id');
+    }
 }

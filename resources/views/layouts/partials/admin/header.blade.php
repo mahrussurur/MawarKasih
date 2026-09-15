@@ -22,18 +22,22 @@
                     class="flex items-center gap-2.5 rounded-full border border-gray-200 px-2 py-1.5 text-left transition hover:bg-gray-200 focus:outline-none" 
                     @click="open = !open" 
                     aria-label="Menu profil">
-                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">
-                    @php
-                        $name = Auth::user()->name ?? 'Admin';
-                        $words = preg_split('/\s+/', trim($name));
-                        if (count($words) >= 2) {
-                            $initials = strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1));
-                        } else {
-                            $initials = strtoupper(substr($words[0], 0, 1));
-                        }
-                    @endphp
-                    {{ $initials }}
-                </div>
+                @if(Auth::user()->foto)
+                    <img src="{{ asset('storage/' . Auth::user()->foto) }}" alt="Foto Profil" class="h-9 w-9 shrink-0 rounded-full object-cover border border-gray-200">
+                @else
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600">
+                        @php
+                            $name = Auth::user()->name ?? 'User';
+                            $words = preg_split('/\s+/', trim($name));
+                            if (count($words) >= 2) {
+                                $initials = strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1));
+                            } else {
+                                $initials = strtoupper(substr($words[0], 0, 1));
+                            }
+                        @endphp
+                        {{ $initials }}
+                    </div>
+                @endif
                 <span class="hidden text-sm font-bold text-gray-900 md:inline">{{ Auth::user()->name ?? 'User' }}</span>
                 <span class="text-gray-500 transition-transform duration-200" :class="open ? 'rotate-180' : ''">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
