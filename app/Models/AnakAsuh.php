@@ -24,4 +24,9 @@ class AnakAsuh extends Model
         'sekolah',
         'kelas',
     ];
+
+    public function catatanPerkembangan()
+    {
+        return $this->hasMany(CatatanPerkembangan::class, 'anak_asuh_id');
+    }
 }

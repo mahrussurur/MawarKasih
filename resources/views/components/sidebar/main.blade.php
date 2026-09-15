@@ -26,8 +26,8 @@
     <!-- Menu Navigasi -->
     <nav class="sidebar-nav flex-1 overflow-y-auto overflow-x-hidden px-3.5 py-3.5">
         @php
-            $role = Auth::user()->role ?? 'guest';
-            $dashboardRoute = $role === 'donatur_tetap' ? 'donatur.dashboard' : $role . '.dashboard';
+            $role = Auth::user()?->role ?? 'guest';
+            $dashboardRoute = $role . '.dashboard';
             
             // Fallback jika route tidak ditemukan (menghindari error)
             if (!Route::has($dashboardRoute)) {
@@ -86,6 +86,68 @@
                 <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('galeri.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 <span class="nav-text">Galeri Foto</span>
+            </a>
+        @endif
+
+        @if(Auth::user()->role === 'bendahara')
+            <div class="nav-label mt-3 overflow-hidden whitespace-nowrap px-2.5 pt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 transition-all duration-200">
+                Data Keuangan
+            </div>
+            <a href="{{ route('bendahara.donasi.index') }}" data-tooltip="Data Donasi" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('bendahara.donasi.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('bendahara.donasi.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                <span class="nav-text">Data Donasi</span>
+            </a>
+            
+            <a href="{{ route('bendahara.transaksi.index') }}" data-tooltip="Data Transaksi" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('bendahara.transaksi.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('bendahara.transaksi.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="nav-text">Data Transaksi</span>
+            </a>
+        @endif
+
+        @if(Auth::user()->role === 'sekretaris')
+            <div class="nav-label mt-3 overflow-hidden whitespace-nowrap px-2.5 pt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 transition-all duration-200">
+                Informasi
+            </div>
+            <a href="{{ route('sekretaris.kegiatan.index') }}" data-tooltip="Data Kegiatan" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('sekretaris.kegiatan.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('sekretaris.kegiatan.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/>
+                </svg>
+                <span class="nav-text">Data Kegiatan</span>
+            </a>
+            <a href="{{ route('sekretaris.galeri.index') }}" data-tooltip="Galeri Foto" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('sekretaris.galeri.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('sekretaris.galeri.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span class="nav-text">Galeri Foto</span>
+            </a>
+        @endif
+
+        @if(Auth::user()->role === 'pengasuh')
+            <div class="nav-label mt-3 overflow-hidden whitespace-nowrap px-2.5 pt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 transition-all duration-200">
+                Pendidikan & Asuhan
+            </div>
+            <a href="{{ route('pengasuh.anak-asuh.index') }}" data-tooltip="Data Anak Asuh" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('pengasuh.anak-asuh.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('pengasuh.anak-asuh.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <span class="nav-text">Data Anak Asuh</span>
+            </a>
+            <a href="{{ route('pengasuh.catatan-perkembangan.index') }}" data-tooltip="Catatan Perkembangan" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('pengasuh.catatan-perkembangan.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('pengasuh.catatan-perkembangan.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <span class="nav-text">Catatan Perkembangan</span>
+            </a>
+        @endif
+
+        @if(Auth::user()->role === 'donatur')
+            <div class="nav-label mt-3 overflow-hidden whitespace-nowrap px-2.5 pt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 transition-all duration-200">
+                Donasi Saya
+            </div>
+            <a href="{{ route('donatur.donasi.index') }}" data-tooltip="Riwayat Donasi" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('donatur.donasi.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('donatur.donasi.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="nav-text">Riwayat Donasi</span>
             </a>
         @endif
     </nav>

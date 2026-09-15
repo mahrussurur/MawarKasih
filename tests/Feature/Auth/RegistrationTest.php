@@ -8,10 +8,12 @@ test('registration screen can be rendered', function () {
 
 test('new users can register', function () {
     $response = $this->post('/register', [
-        'name' => 'Test User',
-        'email' => 'test@example.com',
-        'password' => 'password',
-        'password_confirmation' => 'password',
+        'name'                  => 'Test User',
+        'username'              => 'testuser' . uniqid(),
+        'email'                 => 'testregister' . uniqid() . '@example.com',
+        'no_hp'                 => '081234567890',
+        'password'              => 'Password123!',
+        'password_confirmation' => 'Password123!',
     ]);
 
     $this->assertAuthenticated();

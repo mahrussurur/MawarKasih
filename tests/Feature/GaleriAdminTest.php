@@ -15,6 +15,7 @@ function createAdmin(): User
         'username' => 'admin-galeri-' . uniqid(),
         'email' => 'admin-galeri-' . uniqid() . '@example.com',
         'password' => bcrypt('password123'),
+        'role' => 'admin',
     ]);
 }
 

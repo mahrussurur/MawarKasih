@@ -13,7 +13,7 @@ Route::get('/dashboard', function () {
         'sekretaris' => redirect()->route('sekretaris.dashboard'),
         'bendahara' => redirect()->route('bendahara.dashboard'),
         'pengasuh' => redirect()->route('pengasuh.dashboard'),
-        'donatur', 'donatur_tetap' => redirect()->route('donatur.dashboard'),
+        'donatur' => redirect()->route('donatur.dashboard'),
         default => redirect('/'),
     };
 })->middleware('auth')->name('dashboard');
@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [\App\Http\Controllers\Admin\ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('/password', [\App\Http\Controllers\Auth\PasswordController::class, 'update'])->name('password.update');
 });
 
 // Load role-specific routes
