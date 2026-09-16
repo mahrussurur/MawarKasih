@@ -15,11 +15,15 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return redirect('login');
         }
 
-        if (in_array(auth()->user()->role, $roles)) {
+        $user = $request->user();
+
+        // Admin is the internal superuser, while every non-admin role remains
+        // limited to the route groups explicitly assigned to it.
+        if ($user->role === 'admin' || in_array($user->role, $roles, true)) {
             return $next($request);
         }
 

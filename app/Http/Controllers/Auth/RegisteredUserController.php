@@ -8,6 +8,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -27,33 +28,43 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
+        $validated = $request->validate([
+            'nama' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username'],
-            'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
-            'no_hp'    => ['required', 'string', 'min:10', 'max:15', 'regex:/^[0-9]+$/'],
-            'alamat'   => ['nullable', 'string', 'max:1000'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+            'no_hp' => ['required', 'string', 'min:10', 'max:15', 'regex:/^[0-9]+$/'],
+            'alamat' => ['nullable', 'string', 'max:1000'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ], [
-            'name.required'      => 'Nama lengkap wajib diisi.',
-            'username.required'  => 'Username wajib diisi.',
-            'username.unique'    => 'Username sudah digunakan, pilih yang lain.',
-            'email.required'     => 'Email wajib diisi.',
-            'email.unique'       => 'Email sudah terdaftar.',
-            'no_hp.required'     => 'Nomor HP wajib diisi.',
-            'no_hp.min'          => 'Nomor HP minimal 10 digit.',
-            'no_hp.regex'        => 'Nomor HP hanya boleh berisi angka.',
-            'password.required'  => 'Password wajib diisi.',
+            'nama.required' => 'Nama lengkap wajib diisi.',
+            'username.required' => 'Username wajib diisi.',
+            'username.unique' => 'Username sudah digunakan, pilih yang lain.',
+            'email.required' => 'Email wajib diisi.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'no_hp.required' => 'Nomor HP wajib diisi.',
+            'no_hp.min' => 'Nomor HP minimal 10 digit.',
+            'no_hp.regex' => 'Nomor HP hanya boleh berisi angka.',
+            'password.required' => 'Password wajib diisi.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
 
-        $user = User::create([
-            'name'     => $request->name,
-            'username' => $request->username,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-            'role'     => 'donatur',
-        ]);
+        $user = DB::transaction(function () use ($validated): User {
+            $user = User::create([
+                'username' => $validated['username'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'role' => 'donatur',
+                'status' => 'aktif',
+            ]);
+
+            $user->profilDonatur()->create([
+                'nama' => $validated['nama'],
+                'no_hp' => $validated['no_hp'],
+                'alamat' => $validated['alamat'] ?? null,
+            ]);
+
+            return $user;
+        });
 
         event(new Registered($user));
 

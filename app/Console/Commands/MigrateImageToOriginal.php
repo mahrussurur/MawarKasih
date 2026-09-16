@@ -2,19 +2,19 @@
 
 namespace App\Console\Commands;
 
+use App\Models\AnakAsuh;
+use App\Models\Donasi;
+use App\Models\Galeri;
+use App\Models\Kegiatan;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use App\Models\AnakAsuh;
-use App\Models\Kegiatan;
-use App\Models\Galeri;
-use App\Models\Donasi;
-use App\Models\User;
 
 class MigrateImageToOriginal extends Command
 {
     protected $signature = 'image:migrate';
 
     protected $description = 'Memindahkan gambar lama ke struktur original/ dan memperbarui path database';
+
     public function handle()
     {
         $this->info('Memulai migrasi gambar lama ke folder original/ ...');
@@ -24,7 +24,6 @@ class MigrateImageToOriginal extends Command
             ['class' => Kegiatan::class, 'column' => 'foto_dokumentasi', 'folder' => 'kegiatan'],
             ['class' => Galeri::class, 'column' => 'foto', 'folder' => 'galeri'],
             ['class' => Donasi::class, 'column' => 'bukti_transfer', 'folder' => 'bukti_transfer'],
-            ['class' => User::class, 'column' => 'foto', 'folder' => 'users'],
         ];
 
         foreach ($models as $modelConfig) {
@@ -33,24 +32,24 @@ class MigrateImageToOriginal extends Command
             $folder = $modelConfig['folder'];
 
             $this->info("Memproses model {$class}...");
-            
+
             $records = $class::all();
             $count = 0;
 
             foreach ($records as $record) {
                 $oldPath = $record->$column;
-                
+
                 if (empty($oldPath) || str_starts_with($oldPath, 'original/')) {
                     continue;
                 }
                 if (Storage::disk('public')->exists($oldPath)) {
-                    $newPath = 'original/' . $oldPath;
-                    Storage::disk('public')->makeDirectory('original/' . dirname($oldPath));
+                    $newPath = 'original/'.$oldPath;
+                    Storage::disk('public')->makeDirectory('original/'.dirname($oldPath));
                     Storage::disk('public')->move($oldPath, $newPath);
-                    
+
                     $record->$column = $newPath;
                     $record->save();
-                    
+
                     $count++;
                 }
             }

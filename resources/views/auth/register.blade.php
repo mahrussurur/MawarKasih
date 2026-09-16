@@ -54,19 +54,19 @@
                 <!-- Nama & Username -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label for="name" class="block mb-1.5 text-sm font-semibold text-white/90">Nama Lengkap</label>
+                        <label for="nama" class="block mb-1.5 text-sm font-semibold text-white/90">Nama Lengkap</label>
                         <input
-                            id="name"
+                            id="nama"
                             type="text"
-                            name="name"
-                            value="{{ old('name') }}"
+                            name="nama"
+                            value="{{ old('nama') }}"
                             placeholder="Nama lengkap"
                             required
                             autofocus
                             autocomplete="name"
                             class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
                         >
-                        @error('name')
+                        @error('nama')
                             <p class="mt-1 text-xs text-red-300">{{ $message }}</p>
                         @enderror
                     </div>

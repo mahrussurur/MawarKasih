@@ -11,7 +11,6 @@ beforeEach(function () {
 function createAdmin(): User
 {
     return User::forceCreate([
-        'name' => 'Admin Galeri',
         'username' => 'admin-galeri-' . uniqid(),
         'email' => 'admin-galeri-' . uniqid() . '@example.com',
         'password' => bcrypt('password123'),

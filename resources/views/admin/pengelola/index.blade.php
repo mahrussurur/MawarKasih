@@ -10,11 +10,12 @@
 
     <!-- Toolbar -->
     <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-        {{-- Tombol Tambah User dengan filter role yang sudah tersisian --}}
-        <a href="{{ route('users.create') }}?default_role={{ $roleFilter }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+        @if($usesPengelolaProfile || $usesDonaturProfile)
+        <a href="{{ route('admin.pengelola.create', $roleFilter) }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            Tambah {{ ucfirst($roleLabel) }}
+            Tambah {{ $roleLabel }}
         </a>
+        @endif
         <form method="GET" action="{{ route('admin.pengelola.index', $roleFilter) }}" class="flex items-center gap-2">
             <label class="relative block">
                 <span class="pointer-events-none absolute inset-y-0 left-3 flex items-center text-gray-400">
@@ -43,20 +44,26 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @foreach($users as $i => $user)
+                    @php
+                        $profile = $usesPengelolaProfile ? $user->profilPengelola : $user->profilDonatur;
+                        $nama = $profile?->nama ?? $user->username;
+                        $foto = $usesPengelolaProfile ? $profile?->foto : null;
+                        $noHp = $profile?->no_hp;
+                    @endphp
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-4 py-3 text-center text-gray-600">{{ $users->firstItem() + $i }}</td>
                         <td class="px-4 py-3">
-                            @if($user->foto)
-                                <img src="{{ asset('storage/' . $user->foto) }}" alt="{{ $user->name }}" class="h-9 w-9 rounded-full object-cover" />
+                            @if($foto)
+                                <img src="{{ asset('storage/' . $foto) }}" alt="{{ $nama }}" class="h-9 w-9 rounded-full object-cover" />
                             @else
                                 <div class="flex h-9 w-9 items-center justify-center rounded-full bg-gray-200 text-sm font-bold text-gray-600">
-                                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                                    {{ strtoupper(substr($nama, 0, 1)) }}
                                 </div>
                             @endif
                         </td>
-                        <td class="px-4 py-3 font-semibold text-gray-900">{{ $user->name }}</td>
+                        <td class="px-4 py-3 font-semibold text-gray-900">{{ $nama }}</td>
                         <td class="px-4 py-3 text-gray-600">{{ $user->email }}</td>
-                        <td class="px-4 py-3 text-gray-600">{{ $user->no_hp ?? '-' }}</td>
+                        <td class="px-4 py-3 text-gray-600">{{ $noHp ?? '-' }}</td>
                         <td class="px-4 py-3">
                             <span class="inline-flex rounded-full px-2.5 py-0.5 text-[11px] font-semibold {{ $user->status === 'aktif' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700' }}">
                                 {{ ucfirst(str_replace('_', ' ', $user->status)) }}
@@ -79,7 +86,7 @@
                                 <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-600 border border-red-400 hover:bg-red-600 hover:text-white transition"
                                     title="Hapus"
                                     data-delete-route="{{ route('admin.pengelola.destroy', [$roleFilter, $user->id]) }}"
-                                    data-name="{{ $roleLabel }} {{ $user->name }}"
+                                    data-name="{{ $roleLabel }} {{ $nama }}"
                                     onclick="openDeleteModal(this)">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                 </button>
@@ -95,7 +102,7 @@
         <div class="flex min-h-[250px] flex-col items-center justify-center gap-2 text-center text-gray-500">
             <svg class="h-12 w-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/></svg>
             <p class="font-semibold text-gray-900">Belum ada data {{ $roleLabel }}</p>
-            <p class="text-sm">Tambahkan akun {{ $roleLabel }} lewat menu Tambah User atau Data User.</p>
+            <p class="text-sm">Tambahkan akun {{ $roleLabel }} melalui formulir yang tersedia.</p>
         </div>
         @endif
     </div>

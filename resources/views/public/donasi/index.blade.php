@@ -5,6 +5,8 @@
 @include('components.public.page-header', ['title' => 'Formulir Donasi'])
 @php
     $errorBag = $errors instanceof \Illuminate\Support\ViewErrorBag ? $errors : new \Illuminate\Support\ViewErrorBag();
+    $isDonatur = isset($donatur) && $donatur !== null;
+    $profilDonatur = $donatur?->profilDonatur;
 @endphp
 <div class="bg-gray-50 py-10 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -15,6 +17,13 @@
                     @csrf
                     <input type="text" name="website" value="" autocomplete="off" tabindex="-1" class="hidden" aria-hidden="true">
 
+                    @if($isDonatur)
+                        <div class="rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-800">
+                            Data identitas donasi diambil dari profil akun Anda dan disimpan sebagai snapshot transaksi.
+                            <a href="{{ route('profile.edit') }}" class="ml-1 font-bold underline">Perbarui profil</a>
+                        </div>
+                    @endif
+
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
                         <!-- Kolom Kiri: Input Nama -->
                         <div class="md:col-span-8 space-y-2">
@@ -24,10 +33,11 @@
                             <input
                                 type="text"
                                 name="nama_donatur"
-                                value="{{ old('nama_donatur') }}"
+                                value="{{ $isDonatur ? $profilDonatur?->nama : old('nama_donatur') }}"
                                 maxlength="255"
                                 placeholder="Nama"
                                 class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
+                                @readonly($isDonatur)
                                 required>
                             @error('nama_donatur')
                                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -41,15 +51,15 @@
                             </label>
                             <div class="flex flex-wrap items-center gap-4 h-[42px]"> <!-- h-[42px] untuk menyelaraskan tinggi dengan input sebelah kiri -->
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="tampilkan_nama" value="nama_asli" class="w-4 h-4 text-brand-600 focus:ring-brand-500" required checked>
+                                    <input type="radio" name="tampilkan_nama" value="nama_asli" class="w-4 h-4 text-brand-600 focus:ring-brand-500" required @checked(old('tampilkan_nama', 'nama_asli') === 'nama_asli')>
                                     <span class="text-sm font-semibold text-gray-700">Nama asli</span>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="tampilkan_nama" value="hamba_allah" class="w-4 h-4 text-brand-600 focus:ring-brand-500" required>
+                                    <input type="radio" name="tampilkan_nama" value="hamba_allah" class="w-4 h-4 text-brand-600 focus:ring-brand-500" required @checked(old('tampilkan_nama') === 'hamba_allah')>
                                     <span class="text-sm font-semibold text-gray-700">Hamba Tuhan</span>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="tampilkan_nama" value="anonim" class="w-4 h-4 text-brand-600 focus:ring-brand-500" required>
+                                    <input type="radio" name="tampilkan_nama" value="anonim" class="w-4 h-4 text-brand-600 focus:ring-brand-500" required @checked(old('tampilkan_nama') === 'anonim')>
                                     <span class="text-sm font-semibold text-gray-700">Anonim</span>
                                 </label>
                             </div>
@@ -66,11 +76,12 @@
                         <input
                             type="email"
                             name="email"
-                            value="{{ old('email') }}"
+                            value="{{ $isDonatur ? $donatur->email : old('email') }}"
                             maxlength="255"
                             placeholder="cth. contoh@gmail.com"
                             class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
                             pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                            @readonly($isDonatur)
                             required>
                         @error('email')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -84,13 +95,14 @@
                         <input
                             type="tel"
                             name="no_hp"
-                            value="{{ old('no_hp') }}"
+                            value="{{ $isDonatur ? $profilDonatur?->no_hp : old('no_hp') }}"
                             minlength="10"
                             maxlength="15"
                             placeholder="cth. 081234567890"
                             class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
                             pattern="[0-9]{10,15}"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                            @readonly($isDonatur)
                             required>
                         @error('no_hp')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -104,9 +116,10 @@
                         <textarea
                             name="alamat"
                             rows="3"
+                            @readonly($isDonatur)
                             class="mt-2 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm"
                             placeholder="Masukkan alamat Anda (opsional)"
-                        >{{ old('alamat') }}</textarea>
+                        >{{ $isDonatur ? $profilDonatur?->alamat : old('alamat') }}</textarea>
                         @error('alamat')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror

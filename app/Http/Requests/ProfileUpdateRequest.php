@@ -16,8 +16,14 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => ['required', 'string', 'max:255'],
+        $accountRules = [
+            'nama' => ['required', 'string', 'max:255'],
+            'username' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique(User::class)->ignore($this->user()->id),
+            ],
             'email' => [
                 'required',
                 'string',
@@ -26,13 +32,21 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
-            'foto' => ['nullable', 'image', 'max:2048'],
+            'no_hp' => ['nullable', 'string', 'max:20'],
+            'alamat' => ['nullable', 'string'],
+        ];
+
+        if ($this->user()->role === 'donatur') {
+            return $accountRules;
+        }
+
+        return [
+            ...$accountRules,
+            'foto' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
             'jabatan' => ['nullable', 'string', 'max:255'],
             'jenis_kelamin' => ['nullable', 'in:L,P'],
             'tempat_lahir' => ['nullable', 'string', 'max:255'],
             'tanggal_lahir' => ['nullable', 'date'],
-            'no_hp' => ['nullable', 'string', 'max:20'],
-            'alamat' => ['nullable', 'string'],
         ];
     }
 }

@@ -6,11 +6,11 @@ use App\Models\User;
 function buatDonasi(array $atribut = []): Donasi
 {
     return Donasi::create(array_merge([
-        'kode_donasi'       => Donasi::generateKode(),
-        'nama_donatur'      => 'Donatur Uji',
-        'nominal'           => 150000,
-        'tanggal'           => today(),
-        'status'            => 'pending',
+        'kode_donasi' => Donasi::generateKode(),
+        'nama_donatur' => 'Donatur Uji',
+        'nominal' => 150000,
+        'tanggal' => today(),
+        'status' => 'pending',
         'metode_pembayaran' => 'Transfer Bank',
     ], $atribut));
 }
@@ -27,9 +27,9 @@ it('mencatat donasi guest yang divalidasi admin sebagai pemasukan satu kali', fu
         ->assertSessionHas('success');
 
     $this->assertDatabaseHas('transaksi_keuangans', [
-        'donasi_id'  => $donasi->id,
-        'jenis'      => 'pemasukan',
-        'nominal'    => 150000,
+        'donasi_id' => $donasi->id,
+        'jenis' => 'pemasukan',
+        'nominal' => 150000,
         'keterangan' => "Pemasukan donasi dari Donatur Guest: Siti Guest ({$donasi->kode_donasi})",
     ]);
 
@@ -53,10 +53,34 @@ it('mencatat donasi donatur tetap yang divalidasi bendahara sebagai pemasukan', 
         ->assertSessionHas('success');
 
     $this->assertDatabaseHas('transaksi_keuangans', [
-        'donasi_id'  => $donasi->id,
-        'jenis'      => 'pemasukan',
-        'nominal'    => 150000,
+        'donasi_id' => $donasi->id,
+        'jenis' => 'pemasukan',
+        'nominal' => 150000,
         'keterangan' => "Pemasukan donasi dari Donatur Tetap: Andi Tetap ({$donasi->kode_donasi})",
         'dicatat_oleh' => $bendahara->id,
     ]);
+});
+
+it('mencatat donasi manual admin sebagai pemasukan satu kali', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+
+    $this->actingAs($admin)
+        ->post(route('donasi.store'), [
+            'nama_donatur' => 'Donatur Manual',
+            'no_hp' => '081234567890',
+            'nominal' => 200000,
+            'metode_pembayaran' => 'transfer',
+            'keterangan' => 'Pencatatan donasi langsung.',
+        ])
+        ->assertRedirect(route('donasi.index'));
+
+    $donasi = Donasi::where('nama_donatur', 'Donatur Manual')->firstOrFail();
+
+    $this->assertDatabaseHas('transaksi_keuangans', [
+        'donasi_id' => $donasi->id,
+        'jenis' => 'pemasukan',
+        'nominal' => 200000,
+        'dicatat_oleh' => $admin->id,
+    ]);
+    $this->assertDatabaseCount('transaksi_keuangans', 1);
 });

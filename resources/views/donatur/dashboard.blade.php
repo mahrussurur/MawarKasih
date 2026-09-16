@@ -6,7 +6,6 @@
 @section('content')
 <div>
     <div class="mb-6">
-        <h2 class="text-2xl font-extrabold text-gray-900">Selamat Datang, {{ Auth::user()->name }}!</h2>
         <p class="mt-1 text-sm font-medium text-gray-500">Terima kasih atas donasi dan kebaikan Anda.</p>
     </div>
     

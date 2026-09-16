@@ -10,6 +10,7 @@ class AnakAsuh extends Model
     use HasFactory;
 
     protected $table = 'anak_asuh';
+
     protected $fillable = [
         'foto',
         'nama',
@@ -24,9 +25,4 @@ class AnakAsuh extends Model
         'sekolah',
         'kelas',
     ];
-
-    public function catatanPerkembangan()
-    {
-        return $this->hasMany(CatatanPerkembangan::class, 'anak_asuh_id');
-    }
 }

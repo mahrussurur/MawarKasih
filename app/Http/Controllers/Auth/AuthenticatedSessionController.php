@@ -35,7 +35,10 @@ class AuthenticatedSessionController extends Controller
 
         // Coba autentikasi menggunakan username & password
         if (! Auth::attempt(
-            $request->only('username', 'password'),
+            [
+                ...$request->only('username', 'password'),
+                'status' => 'aktif',
+            ],
             $request->boolean('remember')
         )) {
             // Jika gagal, kembalikan error

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donasi;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Services\ImageService;
+use Illuminate\Http\Request;
 
 class DonasiPublicController extends Controller
 {
@@ -16,12 +16,13 @@ class DonasiPublicController extends Controller
     {
         $this->imageService = $imageService;
     }
-    public function form()
+
+    public function form(Request $request)
     {
-        return view('public.donasi.index');
+        return view('public.donasi.index', [
+            'donatur' => $this->authenticatedDonatur($request),
+        ]);
     }
-
-
 
     public function rekening()
     {
@@ -40,7 +41,7 @@ class DonasiPublicController extends Controller
 
         if ($kode) {
             $donasi = Donasi::where('kode_donasi', $kode)->first();
-            if (!$donasi && $request->has('kode_donasi')) {
+            if (! $donasi && $request->has('kode_donasi')) {
                 return redirect()->route('public.donasi.validasi')->with('error', 'Donasi dengan kode tersebut tidak ditemukan.');
             }
         }
@@ -51,7 +52,7 @@ class DonasiPublicController extends Controller
     public function uploadBukti(Request $request, $kode_donasi)
     {
         $donasi = Donasi::where('kode_donasi', $kode_donasi)->firstOrFail();
-        
+
         $request->validate([
             'bukti_transfer' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -69,6 +70,14 @@ class DonasiPublicController extends Controller
 
     public function kirim(Request $request)
     {
+        $donatur = $this->authenticatedDonatur($request);
+        $profilDonatur = $donatur?->profilDonatur;
+
+        if ($donatur && (! $profilDonatur || blank($profilDonatur->nama) || blank($profilDonatur->no_hp))) {
+            return redirect()->route('profile.edit')
+                ->with('error', 'Lengkapi nama dan nomor HP pada profil Anda sebelum membuat donasi.');
+        }
+
         $rules = [
             'nominal' => 'required|integer|min:1000|max:100000000',
             'metode_pembayaran' => 'required|string|in:qris,mandiri',
@@ -76,11 +85,19 @@ class DonasiPublicController extends Controller
             'keterangan' => 'nullable|string|max:500',
             'website' => 'nullable|string|max:0',
             'bukti_transfer' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'nama_donatur' => 'required|string|max:255',
-            'email' => 'required|email:rfc|max:255',
-            'no_hp' => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
-            'alamat' => 'nullable|string|max:1000',
         ];
+
+        // Donatur tetap memakai identitas profil yang tersimpan di server.
+        // Field identitas hanya wajib divalidasi untuk donasi guest.
+        if (! $donatur) {
+            $rules = [
+                ...$rules,
+                'nama_donatur' => 'required|string|max:255',
+                'email' => 'required|email:rfc|max:255',
+                'no_hp' => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
+                'alamat' => 'nullable|string|max:1000',
+            ];
+        }
 
         $messages = [
             'nominal.required' => 'Nominal donasi wajib diisi.',
@@ -110,7 +127,7 @@ class DonasiPublicController extends Controller
 
         $validated = $request->validate($rules, $messages);
 
-        if (!empty($request->input('website'))) {
+        if (! empty($request->input('website'))) {
             return back()->withInput()->withErrors(['website' => 'Permintaan tidak valid.']);
         }
 
@@ -119,31 +136,48 @@ class DonasiPublicController extends Controller
             $buktiPath = $this->imageService->uploadAndGenerateWebp($request->file('bukti_transfer'), 'bukti_transfer');
         }
 
-        // Jika user sudah login sebagai donatur, isi donatur_id otomatis
-        $donaturId = null;
-        if (Auth::check() && Auth::user()->role === 'donatur') {
-            $donaturId = Auth::id();
-        }
+        $identitasDonasi = $donatur
+            ? [
+                'donatur_id' => $donatur->id,
+                'nama_donatur' => $profilDonatur->nama,
+                'email' => $donatur->email,
+                'no_hp' => $profilDonatur->no_hp,
+                'alamat' => $profilDonatur->alamat,
+            ]
+            : [
+                'donatur_id' => null,
+                'nama_donatur' => $validated['nama_donatur'],
+                'email' => $validated['email'],
+                'no_hp' => $validated['no_hp'],
+                'alamat' => $validated['alamat'] ?? null,
+            ];
 
         $payload = [
-            'kode_donasi'       => Donasi::generateKode(),
-            'nominal'           => $validated['nominal'],
-            'tanggal'           => now(),
-            'bukti_transfer'    => $buktiPath,
-            'status'            => 'pending',
-            'catatan_admin'     => null,
+            'kode_donasi' => Donasi::generateKode(),
+            'nominal' => $validated['nominal'],
+            'tanggal' => now(),
+            'bukti_transfer' => $buktiPath,
+            'status' => 'pending',
+            'catatan_admin' => null,
             'metode_pembayaran' => $validated['metode_pembayaran'],
-            'tampilkan_nama'    => $validated['tampilkan_nama'],
-            'keterangan'        => $validated['keterangan'] ?? null,
-            'donatur_id'        => $donaturId,
-            'nama_donatur'      => $validated['nama_donatur'],
-            'no_hp'             => $validated['no_hp'],
-            'email'             => $validated['email'],
-            'alamat'            => $validated['alamat'] ?? null,
+            'tampilkan_nama' => $validated['tampilkan_nama'],
+            'keterangan' => $validated['keterangan'] ?? null,
+            ...$identitasDonasi,
         ];
 
         $donasi = Donasi::create($payload);
 
         return redirect()->route('public.donasi.validasi', ['kode_donasi' => $donasi->kode_donasi])->with('success', 'Donasi Anda berhasil!');
+    }
+
+    private function authenticatedDonatur(Request $request): ?User
+    {
+        $user = $request->user();
+
+        if (! $user || $user->role !== 'donatur') {
+            return null;
+        }
+
+        return $user->loadMissing('profilDonatur');
     }
 }

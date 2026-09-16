@@ -5,15 +5,14 @@ namespace App\Http\Controllers\Bendahara;
 use App\Http\Controllers\Controller;
 use App\Models\Donasi;
 use App\Services\DonasiKeuanganService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DonasiController extends Controller
 {
-    public function __construct(protected DonasiKeuanganService $donasiKeuanganService)
-    {
-    }
+    public function __construct(protected DonasiKeuanganService $donasiKeuanganService) {}
 
     public function index(Request $request)
     {
@@ -27,27 +26,27 @@ class DonasiController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('nama_donatur', 'like', "%{$search}%")
-                  ->orWhere('kode_donasi', 'like', "%{$search}%");
+                    ->orWhere('kode_donasi', 'like', "%{$search}%");
             });
         }
 
-        $donasi       = $query->paginate(10)->withQueryString();
-        $totalDonasi  = Donasi::count();
+        $donasi = $query->paginate(10)->withQueryString();
+        $totalDonasi = Donasi::count();
         $totalPending = Donasi::where('status', 'pending')->count();
-        $totalValid   = Donasi::where('status', 'diterima')->count();
+        $totalValid = Donasi::where('status', 'diterima')->count();
         $totalDitolak = Donasi::where('status', 'ditolak')->count();
         $totalNominal = Donasi::where('status', 'diterima')->sum('nominal');
 
         // Hitung total donatur (Umum dan Tetap) berdasarkan donasi yang diterima
-        $jumlahDonaturUmum  = Donasi::where('status', 'diterima')->whereNull('donatur_id')->distinct('nama_donatur')->count('nama_donatur');
+        $jumlahDonaturUmum = Donasi::where('status', 'diterima')->whereNull('donatur_id')->distinct('nama_donatur')->count('nama_donatur');
         $jumlahDonaturTetap = Donasi::where('status', 'diterima')->whereNotNull('donatur_id')->distinct('donatur_id')->count('donatur_id');
 
         // Daftar tahun tersedia untuk filter cetak
         $tahunList = Donasi::selectRaw('YEAR(tanggal) as tahun')
-                          ->distinct()
-                          ->orderByDesc('tahun')
-                          ->pluck('tahun')
-                          ->filter();
+            ->distinct()
+            ->orderByDesc('tahun')
+            ->pluck('tahun')
+            ->filter();
 
         return view('bendahara.donasi.index', compact(
             'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal', 'tahunList',
@@ -72,10 +71,8 @@ class DonasiController extends Controller
 
         DB::transaction(function () use ($donasi, $request) {
             $donasi->update([
-                'status'        => 'diterima',
+                'status' => 'diterima',
                 'catatan_admin' => $request->catatan_admin ?? 'Donasi telah diterima. Terima kasih.',
-                'verified_by'   => Auth::id(),
-                'verified_at'   => now(),
             ]);
 
             $this->donasiKeuanganService->catatPemasukan($donasi, Auth::id());
@@ -95,10 +92,8 @@ class DonasiController extends Controller
         ]);
 
         $donasi->update([
-            'status'        => 'ditolak',
+            'status' => 'ditolak',
             'catatan_admin' => $request->catatan_admin ?? 'Bukti transfer tidak valid.',
-            'verified_by'   => Auth::id(),
-            'verified_at'   => now(),
         ]);
 
         return back()->with('success', "Donasi {$donasi->kode_donasi} telah ditolak.");
@@ -112,12 +107,12 @@ class DonasiController extends Controller
             $query->whereYear('tanggal', $request->tahun);
         }
 
-        $donasi       = $query->get();
+        $donasi = $query->get();
         $totalNominal = $donasi->sum('nominal');
-        $tahun        = $request->tahun ?? 'Semua Tahun';
+        $tahun = $request->tahun ?? 'Semua Tahun';
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('bendahara.donasi.cetak', compact('donasi', 'totalNominal', 'tahun'))
-                  ->setPaper('a4', 'portrait');
+        $pdf = Pdf::loadView('bendahara.donasi.cetak', compact('donasi', 'totalNominal', 'tahun'))
+            ->setPaper('a4', 'portrait');
 
         return $pdf->stream('Laporan_Data_Donasi_Mawar_Kasih.pdf');
     }

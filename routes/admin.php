@@ -9,7 +9,6 @@ use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PengelolaController;
-use App\Http\Controllers\Admin\DokumenAdministrasiController;
 use App\Http\Controllers\Admin\KeuanganController;
 
 Route::prefix('admin')
@@ -23,9 +22,8 @@ Route::prefix('admin')
         // agar tidak tertimpa oleh route resource {anak_asuh}
         Route::get('/anak-asuh/cetak', [AnakAsuhController::class, 'cetak'])->name('anak-asuh.cetak');
         Route::resource('anak-asuh', AnakAsuhController::class);
-        // User (Pengganti Pengasuh & Donatur)
-        Route::get('/users/cetak', [UserController::class, 'cetak'])->name('users.cetak');
-        Route::resource('users', UserController::class);
+        // Manajemen akun login; profil dikelola dari menu Data Yayasan.
+        Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
         // Donasi - route cetak & aksi khusus didahulukan agar tidak tertimpa wildcard {donasi}
         Route::get('donasi/cetak', [DonasiController::class, 'cetak'])->name('donasi.cetak');
         Route::patch('donasi/{donasi}/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
@@ -44,26 +42,17 @@ Route::prefix('admin')
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('galeri',  GaleriController::class);
 
-        // Data Pengelola (filter by role, sumber data dari tabel users)
+        // Data Pengelola (filter role; sumber data users + profil_pengelola)
         Route::prefix('data/{roleFilter}')->name('admin.pengelola.')->group(function () {
             Route::get('/', [PengelolaController::class, 'index'])->name('index');
+            Route::get('/create', [PengelolaController::class, 'create'])->name('create');
+            Route::post('/', [PengelolaController::class, 'store'])->name('store');
             Route::get('/{user}', [PengelolaController::class, 'show'])->name('show');
             Route::get('/{user}/edit', [PengelolaController::class, 'edit'])->name('edit');
             Route::put('/{user}', [PengelolaController::class, 'update'])->name('update');
             Route::delete('/{user}', [PengelolaController::class, 'destroy'])->name('destroy');
             Route::patch('/{user}/toggle-status', [PengelolaController::class, 'toggleStatus'])->name('toggle-status');
         });
-
-        // Dokumen Administrasi (Admin)
-        Route::resource('dokumen', DokumenAdministrasiController::class)->names([
-            'index'   => 'admin.dokumen.index',
-            'create'  => 'admin.dokumen.create',
-            'store'   => 'admin.dokumen.store',
-            'show'    => 'admin.dokumen.show',
-            'edit'    => 'admin.dokumen.edit',
-            'update'  => 'admin.dokumen.update',
-            'destroy' => 'admin.dokumen.destroy',
-        ]);
 
         // ── ROUTE PUBLIK (di luar middleware auth) ──
         // Cek status donasi untuk donatur via kode_donasi

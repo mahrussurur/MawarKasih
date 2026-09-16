@@ -4,140 +4,68 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Services\ImageService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    protected $imageService;
-
-    public function __construct(ImageService $imageService)
+    /**
+     * List account credentials and account status only. Profile information is
+     * intentionally managed through the role-specific profile screens.
+     */
+    public function index(Request $request): View
     {
-        $this->imageService = $imageService;
-    }
-
-    public function index(Request $request)
-    {
-        $query = User::latest();
+        $query = User::query()->latest();
 
         if ($request->filled('role')) {
-            $query->where('role', $request->role);
+            $query->where('role', $request->string('role')->value());
         }
 
         if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('username', 'like', "%{$search}%");
+            $search = $request->string('search')->trim()->value();
+            $query->where(function ($query) use ($search): void {
+                $query->where('email', 'like', "%{$search}%")
+                    ->orWhere('username', 'like', "%{$search}%");
             });
         }
 
-        $users = $query->paginate(10)->withQueryString();
-        $activeRole = $request->role;
-
-        return view('admin.users.index', compact('users', 'activeRole'));
-    }
-
-    public function create()
-    {
-        return view('admin.users.create');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name'     => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|string|min:8',
-            'role'     => 'required|in:admin,bendahara,sekretaris,pengasuh,donatur',
-            'status'   => 'required|in:aktif,tidak_aktif',
-            'foto'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'jenis_kelamin' => 'nullable|in:L,P',
-            'tanggal_lahir' => 'nullable|date',
-            'no_hp'    => 'nullable|string|max:20',
+        return view('admin.users.index', [
+            'users' => $query->paginate(10)->withQueryString(),
+            'activeRole' => $request->input('role'),
         ]);
-
-        $data = $request->except(['password', 'foto']);
-        $data['password'] = Hash::make($request->password);
-
-        if ($request->hasFile('foto')) {
-            $data['foto'] = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'users');
-        }
-
-        User::create($data);
-
-        return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan.');
     }
 
-    public function show(string $id)
+    public function edit(User $user): View
     {
-        $user = User::findOrFail($id);
-        return view('admin.users.show', compact('user'));
-    }
-
-    public function edit(string $id)
-    {
-        $user = User::findOrFail($id);
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(Request $request, string $id)
+    /**
+     * Update credentials and account status without permitting role changes.
+     */
+    public function update(Request $request, User $user): RedirectResponse
     {
-        $user = User::findOrFail($id);
-
-        $request->validate([
-            'name'     => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
-            'email'    => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8',
-            'role'     => 'required|in:admin,bendahara,sekretaris,pengasuh,donatur',
-            'status'   => 'required|in:aktif,tidak_aktif',
-            'foto'     => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-            'jenis_kelamin' => 'nullable|in:L,P',
-            'tanggal_lahir' => 'nullable|date',
-            'no_hp'    => 'nullable|string|max:20',
+        $validated = $request->validate([
+            'username' => ['required', 'string', 'max:255', 'unique:users,username,'.$user->id],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$user->id],
+            'password' => ['nullable', 'string', 'min:8'],
+            'status' => ['required', 'in:aktif,tidak_aktif'],
         ]);
 
-        $data = $request->except(['password', 'foto', '_token', '_method']);
+        $accountData = [
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'status' => $validated['status'],
+        ];
 
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($request->password);
+        if (filled($validated['password'] ?? null)) {
+            $accountData['password'] = Hash::make($validated['password']);
         }
 
-        if ($request->hasFile('foto')) {
-            // Hapus foto lama jika ada
-            if ($user->foto) {
-                $this->imageService->deleteImage($user->foto);
-            }
-            $data['foto'] = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'users');
-        }
+        $user->update($accountData);
 
-        $user->update($data);
-
-        return redirect()->route('users.index')->with('success', 'User berhasil diperbarui.');
-    }
-
-    public function destroy(string $id)
-    {
-        $user = User::findOrFail($id);
-
-        // Hapus foto jika ada
-        if ($user->foto) {
-            $this->imageService->deleteImage($user->foto);
-        }
-
-        $user->delete();
-
-        return redirect()->route('users.index')->with('success', 'User berhasil dihapus.');
-    }
-
-    public function cetak(Request $request)
-    {
-        // Placeholder untuk fitur cetak PDF di masa mendatang
-        abort(404, 'Fitur cetak belum tersedia.');
+        return redirect()->route('users.index')->with('success', 'Akun berhasil diperbarui.');
     }
 }
