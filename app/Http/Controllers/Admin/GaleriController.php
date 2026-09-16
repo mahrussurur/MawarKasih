@@ -6,9 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Galeri;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ImageService;
 
 class GaleriController extends Controller
 {
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
     public function index(Request $request)
     {
         $kategori = $request->input('kategori', 'semua');
@@ -46,7 +53,7 @@ class GaleriController extends Controller
             'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $fotoPath = $request->file('foto')->store('galeri', 'public');
+        $fotoPath = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'galeri');
 
         Galeri::create([
             'judul' => $request->judul,
@@ -85,11 +92,8 @@ class GaleriController extends Controller
         $fotoPath = $galeri->foto;
 
         if ($request->hasFile('foto')) {
-            if ($galeri->foto) {
-                Storage::disk('public')->delete($galeri->foto);
-            }
-
-            $fotoPath = $request->file('foto')->store('galeri', 'public');
+            $this->imageService->deleteImage($galeri->foto);
+            $fotoPath = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'galeri');
         }
 
         $galeri->update([
@@ -106,9 +110,7 @@ class GaleriController extends Controller
     {
         $galeri = Galeri::findOrFail($id);
 
-        if ($galeri->foto) {
-            Storage::disk('public')->delete($galeri->foto);
-        }
+        $this->imageService->deleteImage($galeri->foto);
 
         $galeri->delete();
 

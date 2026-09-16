@@ -15,6 +15,8 @@ class Donasi extends Model
     protected $fillable = [
         'kode_donasi',
         'nama_donatur',
+        'email',
+        'alamat',
         'no_hp',
         'nominal',
         'tanggal',
@@ -24,6 +26,7 @@ class Donasi extends Model
         'keterangan',
         'donatur_id',
         'metode_pembayaran',
+        'tampilkan_nama',
     ];
 
     // Saat ambil data dari DB, format ke d-m-Y
@@ -67,7 +70,7 @@ class Donasi extends Model
     {
         return match($this->status) {
             'pending'  => 'Pending',
-            'valid'    => 'Valid',
+            'diterima' => 'Diterima',
             'ditolak'  => 'Ditolak',
             default    => $this->status,
         };
@@ -76,10 +79,10 @@ class Donasi extends Model
     public function getStatusColorAttribute(): string
     {
         return match($this->status) {
-            'pending' => 'warning',
-            'valid'   => 'success',
-            'ditolak' => 'danger',
-            default   => 'secondary',
+            'pending'  => 'warning',
+            'diterima' => 'success',
+            'ditolak'  => 'danger',
+            default    => 'secondary',
         };
     }
 }

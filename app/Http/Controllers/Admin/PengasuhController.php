@@ -7,9 +7,16 @@ use App\Models\Pengasuh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\ImageService;
 
 class PengasuhController extends Controller
 {
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
     public function index(Request $request)
     {
         $query = Pengasuh::latest();
@@ -46,7 +53,7 @@ class PengasuhController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            $validated['foto'] = $request->file('foto')->store('pengasuh', 'public');
+            $validated['foto'] = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'pengasuh');
         }
 
         Pengasuh::create($validated);
@@ -78,10 +85,8 @@ class PengasuhController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            if ($pengasuh->foto) {
-                Storage::disk('public')->delete($pengasuh->foto);
-            }
-            $validated['foto'] = $request->file('foto')->store('pengasuh', 'public');
+            $this->imageService->deleteImage($pengasuh->foto);
+            $validated['foto'] = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'pengasuh');
         }
 
         $pengasuh->update($validated);
@@ -92,7 +97,7 @@ class PengasuhController extends Controller
     public function destroy($id)
     {
         $pengasuh = Pengasuh::findOrFail($id);
-        if($pengasuh->foto) Storage::disk('public')->delete($pengasuh->foto);
+        $this->imageService->deleteImage($pengasuh->foto);
         $pengasuh->delete();
         
         return redirect()->route('pengasuh.index')->with('success', 'Data berhasil dihapus');

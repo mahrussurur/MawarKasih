@@ -9,9 +9,17 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class DonaturController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Donatur::latest()->paginate(10);
+        $search = $request->input('search');
+
+        $query = Donatur::query()->latest();
+
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        }
+
+        $data = $query->paginate(10);
         return view('admin.donatur.index', compact('data'));
     }
 

@@ -3,47 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    {{-- ======================================================
-         SEO META TAGS
-         Ubah default di sini jika perlu.
-    ====================================================== --}}
     <title>@yield('title', 'Beranda') | Panti Asuhan Mawar Kasih</title>
-    <meta name="description" content="@yield('meta_desc', 'Panti Asuhan Mawar Kasih - Bersama kita hadirkan cinta, pendidikan, dan masa depan yang lebih baik untuk mereka.')">
+    <meta name="description" content="@yield('meta_desc', 'Panti Asuhan Mawar Kasih - Bersama kita hadirkan kasih sayang, pendidikan, dan masa depan yang lebih baik untuk mereka.')">
     <meta name="keywords" content="panti asuhan, mawar kasih, bandung, donasi, anak yatim">
-
-    {{-- Open Graph (untuk share sosial media) --}}
     <meta property="og:title" content="@yield('title', 'Beranda') | Panti Asuhan Mawar Kasih">
-    <meta property="og:description" content="@yield('meta_desc', 'Bersama kita hadirkan cinta, pendidikan, dan masa depan yang lebih baik.')">
-    <meta property="og:image" content="{{ asset('images/og-image.jpg') }}">
+    <meta property="og:description" content="@yield('meta_desc', 'Bersama kita hadirkan kasih sayang, pendidikan, dan masa depan yang lebih baik.')">
+    <meta property="og:image" content="{{ asset('images/og-image.webp') }}">
     <meta property="og:url" content="{{ url()->current() }}">
 
-    {{-- ======================================================
-         FAVICON
-         Ganti path sesuai file favicon Anda di public/images/
-    ====================================================== --}}
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo2.webp') }}">
 
-    {{-- ======================================================
-         FONTS - Plus Jakarta Sans
-         Digunakan sebagai font utama seluruh website.
-         Ganti di sini jika ingin mengganti font global.
-    ====================================================== --}}
+    <!-- FONTS - Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    {{-- ======================================================
-         TAILWIND CSS
-         Jika sudah pakai Vite/Mix, hapus CDN ini dan
-         ganti dengan: @vite(['resources/css/app.css'])
-    ====================================================== --}}
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // ======================================================
-        // TAILWIND CONFIG - Warna & Font Kustom
-        // Ubah warna brand di sini jika perlu.
-        // ======================================================
         tailwind.config = {
             theme: {
                 extend: {
@@ -84,11 +60,6 @@
          CSS global yang berlaku di seluruh website.
     ====================================================== --}}
     <style>
-        /* Scrollbar kustom */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #3e3e3e; border-radius: 1px; }
-
         /* Smooth scroll untuk anchor link */
         html { scroll-behavior: smooth; }
 
@@ -111,35 +82,17 @@
         }
     </style>
 
-    {{-- Section untuk CSS tambahan per halaman --}}
     @yield('extra_styles')
 </head>
 <body class="font-sans bg-white text-gray-800 antialiased">
-
-    {{-- ======================================================
-         NAVBAR - Include komponen navbar
-         File: resources/views/public/components/navbar.blade.php
-    ====================================================== --}}
     @include('public.components.navbar')
 
-    {{-- ======================================================
-         KONTEN UTAMA HALAMAN
-         Diisi oleh masing-masing halaman child.
-    ====================================================== --}}
     <main>
         @yield('content')
     </main>
-
-    {{-- ======================================================
-         FOOTER - Include komponen footer
-         File: resources/views/public/components/footer.blade.php
-    ====================================================== --}}
+    
     @include('public.components.footer')
 
-    {{-- ======================================================
-         SCROLL TO TOP BUTTON
-         Muncul otomatis saat scroll ke bawah.
-    ====================================================== --}}
     <button id="scrollTopBtn"
         class="fixed bottom-6 right-6 z-50 w-11 h-11 bg-brand-600 text-white rounded-full border-2 border-gray-900 shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-brand-700"
         onclick="window.scrollTo({top:0,behavior:'smooth'})"
@@ -183,6 +136,9 @@
 
     {{-- Section untuk JS tambahan per halaman --}}
     @yield('extra_scripts')
+
+    {{-- Toast Notification --}}
+    <x-toast />
 
 </body>
 </html>

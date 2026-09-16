@@ -3,8 +3,8 @@
 @section('title', 'Tutorial Donasi')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="bg-gray-50 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div class="rounded-3xl border border-gray-200 bg-white p-10 shadow-sm">
             <h1 class="text-3xl font-bold text-gray-900">Tutorial Donasi</h1>
             <p class="mt-4 text-sm text-gray-600">Ikuti langkah sederhana ini untuk menyelesaikan donasi Anda.</p>

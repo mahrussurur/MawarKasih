@@ -2,18 +2,15 @@
 @section('page-title', 'Detail Donatur')
 
 @section('content')
-<div class="p-4 md:p-6 bg-gray-100 min-h-screen">
-    
-    <!-- Container lebih sempit: max-w-3xl (768px) -->
-    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow overflow-hidden">
+<div class="max-w-4xl mx-auto overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm my-4">
         
         <!-- Header -->
-        <div class="p-2 md:p-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
+        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
             <div class="min-w-0">
                 <h2 class="text-lg font-bold text-white truncate">Detail Donatur</h2>
-                <p class="text-xs md:text-sm text-gray-300">Informasi lengkap donatur.</p>
+                <p class="text-xs md:text-sm text-gray-200">Informasi lengkap donatur.</p>
             </div>
-            <a href="{{ route('donatur.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
+            <a href="{{ route('donatur.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-200 flex items-center transition-colors whitespace-nowrap">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
@@ -22,8 +19,6 @@
         </div>
 
         <div class="p-4 md:p-6">
-
-            <!-- Layout: Foto di atas (mobile) / kiri (desktop) -->
             <div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
 
                 <!-- Foto Section (Icon Placeholder) -->
@@ -45,7 +40,7 @@
                 </div>
 
                 <!-- Divider vertikal (desktop only) -->
-                <div class="hidden md:block w-px h-32 bg-gray-200"></div>
+                <div class="hidden md:block w-px self-stretch bg-gray-200"></div>
                 <!-- Divider horizontal (mobile only) -->
                 <div class="md:hidden w-full h-px bg-gray-200"></div>
 
@@ -80,12 +75,15 @@
 
             <!-- Tombol Aksi -->
             <div class="mt-6 pt-4 border-t border-gray-200 flex flex-wrap gap-3 justify-center">
-                <a href="{{ route('donatur.edit', $donatur->id) }}"
-                class="rounded-2xl bg-orange-500 px-5 py-2 text-sm font-semibold text-white border border-orange-600  transition hover:bg-orange-600">
+                <a href="{{ route('donatur.edit', $donatur->id) }}" 
+                class="rounded-xl px-5 py-2 text-sm font-semibold text-amber-600 border border-amber-500 bg-yellow-100 transition hover:bg-amber-500 hover:text-white">
                     Edit
                 </a>
-                <button onclick="openDeleteModal({{ $donatur->id }})"
-                class="rounded-2xl bg-red-600 px-5 py-2 text-sm font-semibold text-white border border-red-700  transition hover:bg-red-700">
+                <button type="button"
+                        onclick="openDeleteModal(this)"
+                        data-delete-route="{{ route('donatur.destroy', $donatur->id) }}"
+                        data-name="{{ $donatur->nama }}"
+                        class="rounded-xl px-5 py-2 text-sm font-semibold text-red-500 border border-red-500 bg-red-100 transition hover:bg-red-500 hover:text-white">
                     Hapus
                 </button>
             </div>
@@ -93,39 +91,5 @@
     </div>
 </div>
 
-<!-- Delete Modal -->
-<div id="deleteModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black bg-opacity-50">
-    <div class="rounded-lg bg-white p-6 shadow-lg max-w-sm w-full mx-4">
-        <h2 class="text-lg font-bold text-gray-800 mb-4">Konfirmasi Hapus</h2>
-        <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus data donatur "{{ $donatur->nama }}"? Tindakan ini tidak dapat dibatalkan.</p>
-        <div class="flex justify-end gap-3">
-            <button type="button" onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition">
-                Batal
-            </button>
-            <form action="{{ route('donatur.destroy', $donatur->id) }}" method="POST" class="inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
-                    Hapus
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
 
-<script>
-    function openDeleteModal() {
-        document.getElementById('deleteModal').classList.remove('hidden');
-    }
-
-    function closeDeleteModal() {
-        document.getElementById('deleteModal').classList.add('hidden');
-    }
-
-    document.getElementById('deleteModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeDeleteModal();
-        }
-    });
-</script>
 @endsection

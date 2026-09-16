@@ -6,13 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Donasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Barryvdh\DomPDF\Facade\Pdf; // pastikan package dompdf terinstall
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Services\ImageService;
 
 class DonasiController extends Controller
 {
-    /**
-     * Halaman daftar donasi — dengan filter status & search.
-     */
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+    
     public function index(Request $request)
     {
         $query = Donasi::query()->latest();
@@ -36,69 +41,72 @@ class DonasiController extends Controller
         // Hitung total per status untuk summary cards
         $totalDonasi   = Donasi::count();
         $totalPending  = Donasi::where('status', 'pending')->count();
-        $totalValid    = Donasi::where('status', 'valid')->count();
+        $totalValid    = Donasi::where('status', 'diterima')->count();
         $totalDitolak  = Donasi::where('status', 'ditolak')->count();
-        $totalNominal  = Donasi::where('status', 'valid')->sum('nominal');
+        $totalNominal  = Donasi::where('status', 'diterima')->sum('nominal');
+
+        // Hitung total donatur (Umum dan Tetap) berdasarkan donasi yang diterima
+        $jumlahDonaturUmum  = Donasi::where('status', 'diterima')->whereNull('donatur_id')->distinct('nama_donatur')->count('nama_donatur');
+        $jumlahDonaturTetap = Donasi::where('status', 'diterima')->whereNotNull('donatur_id')->distinct('donatur_id')->count('donatur_id');
 
         return view('admin.donasi.index', compact(
-            'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal'
+            'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal',
+            'jumlahDonaturUmum', 'jumlahDonaturTetap'
         ));
     }
 
-    /**
-     * Halaman tambah donasi baru (untuk admin).
-     */
+    // Halaman tambah donasi baru (untuk admin).
     public function create()
     {
         return view('admin.donasi.create');
     }
 
-    /**
-     * Simpan donasi baru dari admin.
-     */
+    // Simpan donasi baru dari admin.
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama_donatur' => 'required|string|max:255',
-            'no_hp'        => 'nullable|digits_between:10,15',
-            'nominal'      => 'required|integer|min:1000',
-            'keterangan'   => 'nullable|string|max:1000',
+            'nama_donatur'      => 'required|string|max:255',
+            'no_hp'             => 'nullable|digits_between:10,15',
+            'nominal'           => 'required|integer|min:1000',
+            'metode_pembayaran' => 'required|string|max:50',
+            'keterangan'        => 'nullable|string|max:1000',
         ]);
 
         $validated['kode_donasi'] = Donasi::generateKode();
         $validated['tanggal'] = now()->format('d-m-Y H:i:s');
-        $validated['status'] = 'valid'; // Langsung valid karena dari admin
+        $validated['status'] = 'diterima'; // Langsung diterima karena dari admin
 
         Donasi::create($validated);
 
         return redirect()->route('donasi.index')->with('success', 'Donasi berhasil ditambahkan.');
     }
 
-    /**
-     * Detail donasi (modal / halaman detail).
-     */
+    // Detail donasi (modal / halaman detail).
     public function show(Donasi $donasi)
     {
         return view('admin.donasi.show', compact('donasi'));
     }
 
-    /**
-     * Validasi donasi: ubah status ke 'valid'.
-     */
-    public function validasi(Donasi $donasi)
+    // Validasi donasi: ubah status ke 'diterima'.
+    public function validasi(Request $request, Donasi $donasi)
     {
         if ($donasi->status !== 'pending') {
             return back()->with('error', 'Hanya donasi berstatus pending yang bisa divalidasi.');
         }
 
-        $donasi->update(['status' => 'valid']);
+        $request->validate([
+            'catatan_admin' => 'nullable|string|max:500',
+        ]);
+
+        $donasi->update([
+            'status' => 'diterima',
+            'catatan_admin' => $request->catatan_admin ?? 'Donasi telah diterima.terima kasih.',
+        ]);
 
         return back()->with('success', "Donasi {$donasi->kode_donasi} berhasil divalidasi.");
     }
 
-    /**
-     * Tolak donasi: ubah status ke 'ditolak' + simpan catatan.
-     */
+    // Tolak donasi: ubah status ke 'ditolak' + simpan catatan.
     public function tolak(Request $request, Donasi $donasi)
     {
         if ($donasi->status !== 'pending') {
@@ -117,25 +125,18 @@ class DonasiController extends Controller
         return back()->with('success', "Donasi {$donasi->kode_donasi} telah ditolak.");
     }
 
-    /**
-     * Hapus donasi.
-     */
+    // Hapus donasi
     public function destroy(Donasi $donasi)
     {
-        // Hapus file bukti transfer jika ada
-        if ($donasi->bukti_transfer) {
-            Storage::disk('public')->delete($donasi->bukti_transfer);
-        }
+        $this->imageService->deleteImage($donasi->bukti_transfer);
 
         $kode = $donasi->kode_donasi;
         $donasi->delete();
 
-        return back()->with('success', "Donasi {$kode} berhasil dihapus.");
+        return redirect()->route('donasi.index')->with('success', "Donasi {$kode} berhasil dihapus.");
     }
 
-    /**
-     * Edit donasi.
-     */
+    // Edit donasi
     public function edit(Donasi $donasi)
     {
         return view('admin.donasi.edit', compact('donasi'));
@@ -144,33 +145,30 @@ class DonasiController extends Controller
     public function update(Request $request, Donasi $donasi)
     {
         $request->validate([
-            'nama_donatur'  => 'required|string|max:255',
-            'no_hp'         => 'required|string|max:20',
-            'nominal'       => 'required|integer|min:1000',
-            'tanggal'       => 'required|date',
-            'keterangan'    => 'required|string|max:1000',
-            'bukti_transfer'=> 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'nama_donatur'      => 'required|string|max:255',
+            'no_hp'             => 'required|string|max:20',
+            'nominal'           => 'required|integer|min:1000',
+            'metode_pembayaran' => 'required|string|max:50',
+            'tanggal'           => 'required|date',
+            'keterangan'        => 'required|string|max:1000',
+            'bukti_transfer'    => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data = $request->only('nama_donatur', 'no_hp', 'nominal', 'tanggal', 'keterangan');
+        $data = $request->only('nama_donatur', 'no_hp', 'nominal', 'metode_pembayaran', 'tanggal', 'keterangan');
 
         if ($request->hasFile('bukti_transfer')) {
-            if ($donasi->bukti_transfer) {
-                Storage::disk('public')->delete($donasi->bukti_transfer);
-            }
-            $data['bukti_transfer'] = $request->file('bukti_transfer')->store('bukti_transfer', 'public');
+            $this->imageService->deleteImage($donasi->bukti_transfer);
+            $data['bukti_transfer'] = $this->imageService->uploadAndGenerateWebp($request->file('bukti_transfer'), 'bukti_transfer');
         }
 
         $donasi->update($data);
         return redirect()->route('donasi.index')->with('success', 'Data donasi berhasil diperbarui.');
     }
 
-    /**
-     * Cetak laporan donasi valid (PDF via DomPDF).
-     */
+    // Cetak laporan donasi valid (PDF via DomPDF).
     public function cetak(Request $request)
     {
-        $query = Donasi::where('status', 'valid')->orderBy('tanggal', 'desc');
+        $query = Donasi::where('status', 'diterima')->orderBy('tanggal', 'desc');
 
         // Filter tahun jika ada
         if ($request->filled('tahun')) {
@@ -181,16 +179,14 @@ class DonasiController extends Controller
         $totalNominal = $donasi->sum('nominal');
         $tahun        = $request->tahun ?? 'Semua Tahun';
 
-        $pdf = Pdf::loadView('donasi.cetak', compact('donasi', 'totalNominal', 'tahun'))
-                  ->setPaper('a4', 'landscape');
+        $pdf = Pdf::loadView('admin.donasi.cetak', compact('donasi', 'totalNominal', 'tahun'))
+                  ->setPaper('a4', 'portrait');
 
-        return $pdf->download('laporan-donasi-' . now()->format('YmdHis') . '.pdf');
+        return $pdf->stream('Laporan_Data_Donasi_Mawar_Kasih.pdf');
     }
 
-    /**
-     * CEK STATUS DONASI — untuk donatur di web publik.
-     * Cek berdasarkan kode_donasi.
-     */
+    // CEK STATUS DONASI — untuk donatur di web publik.
+    // Cek berdasarkan kode_donasi.
     public function cekStatus(Request $request)
     {
         $request->validate([

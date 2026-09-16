@@ -2,12 +2,10 @@
 @section('page-title', 'Tambah Donatur')
 
 @section('content')
-<div class="p-4 md:p-6 bg-gray-100 min-h-screen">
-    
-    <div class="max-w-3xl mx-auto bg-white rounded-xl shadow overflow-hidden">
+<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
 
         <!-- Header -->
-        <div class="p-2 md:p-4 border-b border-gray-200 flex justify-between items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center">
+        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
             <div class="min-w-0">
                 <h2 class="text-lg font-bold text-white truncate">Tambah Data Donatur</h2>
                 <p class="text-xs md:text-sm text-gray-300">Formulir Penambahan Data Donatur.</p>
@@ -25,27 +23,27 @@
                 @csrf
 
                 <div class="mb-5">
-                    <label class="block text-gray-800 font-semibold mb-2">Nama Lengkap</label>
-                    <input type="text" name="nama" placeholder="Masukkan Nama Lengkap..." value="{{ old('nama') }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Lengkap</label>
+                    <input type="text" name="nama" placeholder="Masukkan Nama Lengkap..." value="{{ old('nama') }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
 
                 <div class="mb-5">
-                    <label class="block text-gray-800 font-semibold mb-2">Email</label>
-                    <input type="email" name="email" placeholder="Masukkan Email..." value="{{ old('email') }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Email</label>
+                    <input type="email" name="email" placeholder="Masukkan Email..." value="{{ old('email') }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
 
                 <div class="mb-5">
-                    <label class="block text-gray-800 font-semibold mb-2">No. HP</label>
-                    <input type="number" name="no_hp" placeholder="Masukkan No. HP..." value="{{ old('no_hp') }}" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">No. HP</label>
+                    <input type="number" name="no_hp" placeholder="Masukkan No. HP..." value="{{ old('no_hp') }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
 
                 <div class="mb-5">
-                    <label class="block text-gray-800 font-semibold mb-2">Alamat</label>
-                    <textarea name="alamat" rows="2" placeholder="Masukkan Alamat..." class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder:text-sm placeholder:text-gray-400" required>{{ old('alamat') }}</textarea>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Alamat</label>
+                    <textarea name="alamat" rows="2" placeholder="Masukkan Alamat..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>{{ old('alamat') }}</textarea>
                 </div>
 
                 <div class="mb-8">
-                    <label class="block text-gray-800 font-semibold mb-2">Status</label>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Status</label>
                     <div class="flex gap-6 items-center">
                         <label class="flex items-center gap-2 cursor-pointer">
                             <input type="radio" name="status" value="aktif" class="w-4 h-4 text-blue-600 focus:ring-blue-500" required>
@@ -59,15 +57,14 @@
                 </div>
 
                 <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
-                    <a href="{{ route('donatur.index') }}" class="rounded-2xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300  transition hover:bg-gray-300">
+                    <a href="{{ route('donatur.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
                         Batal
                     </a>
-                    <button type="submit" class="rounded-2xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-600">
+                    <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
                         Simpan
                     </button>
                 </div>
             </form>
         </div>
     </div>
-</div>
 @endsection

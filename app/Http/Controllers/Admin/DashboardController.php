@@ -20,22 +20,33 @@ class DashboardController extends Controller
         $totalPengasuh = Pengasuh::count();
         $totalKegiatan = Kegiatan::count();
         $totalDonatur = Donatur::count();
-        // $totalDonasi  = Donasi::distinct('nama_donatur')->count();
 
-        // ── Data Terbaru ──
-        $donasiTerbaru  = Donasi::latest()->take(5)->get();
+        $donasiTerbaru  = Donasi::where('status', 'pending')->latest()->take(5)->get();
+        $totalDonasiPending = Donasi::where('status', 'pending')->count();
         $kegiatanTerbaru = Kegiatan::latest()->take(5)->get();
 
-        $donasiTerbaru   = collect(); // collection kosong
+        $donations = Donasi::where('status', 'diterima')
+            ->whereYear('tanggal', date('Y'))
+            ->get();
+            
+        $donasiPerBulanData = array_fill(1, 12, 0);
+        foreach ($donations as $donasi) {
+            if ($donasi->tanggal) {
+                $month = $donasi->tanggal->format('n');
+                $donasiPerBulanData[$month] += 1;
+            }
+        }
+        $donasiPerBulan = array_values($donasiPerBulanData);
 
         return view('admin.dashboard', compact(
             'totalAnak',
             'totalPengasuh',
             'totalKegiatan',
             'totalDonatur',
-            // 'totalDonasi',
             'donasiTerbaru',
-            'kegiatanTerbaru'
+            'totalDonasiPending',
+            'kegiatanTerbaru',
+            'donasiPerBulan'
         ));
     }
 }
