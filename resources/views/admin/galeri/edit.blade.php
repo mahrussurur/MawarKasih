@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 @section('page-title', 'Edit Galeri')
 
 @section('content')
@@ -34,7 +34,7 @@
                     class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                         <option value="" disabled {{old('kategori', $galeri->kategori) === '' ? 'selected' : ''}}>Pilih Kategori</option>
                         <option value="Umum" {{old('kategori', $galeri->kategori) === 'Umum' ? 'selected' : ''}}>Umum</option>
-                        <option value="Fasilitas Panti" {{old('kategori', $galeri->kategori) === 'Fasilitas Panti' ? 'selected' : ''}}>Fasilitas Panti</option>
+                        <option value="Fasilitas" {{old('kategori', $galeri->kategori) === 'Fasilitas' ? 'selected' : ''}}>Fasilitas Panti</option>
                     </select>
                 </div>
 

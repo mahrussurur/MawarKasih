@@ -11,7 +11,6 @@
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\KegiatanPublicController;
 use App\Http\Controllers\Public\DonasiPublicController;
-use App\Http\Controllers\Public\DonaturPublicController;
 use App\Http\Controllers\Public\GaleriPublicController;
 use App\Http\Controllers\Public\TentangController;
 
@@ -30,21 +29,7 @@ Route::prefix('')->name('public.')->group(function () {
     Route::get('/donasi/tutorial', [DonasiPublicController::class, 'tutorial'])->name('donasi.tutorial');
     Route::get('/donasi/validasi/{kode_donasi?}', [DonasiPublicController::class, 'validasi'])->name('donasi.validasi');
     Route::post('/donasi/validasi/{kode_donasi}/upload', [DonasiPublicController::class, 'uploadBukti'])->name('donasi.validasi.upload');
-    Route::get('/donasi/login', [DonasiPublicController::class, 'login'])->name('donasi.login');
-    Route::post('/donasi/login', [DonasiPublicController::class, 'loginStore'])->name('donasi.login.submit');
-    Route::get('/donasi/registrasi', [DonasiPublicController::class, 'registrasi'])->name('donasi.registrasi');
-    Route::post('/donasi/registrasi', [DonasiPublicController::class, 'registrasiStore'])->name('donasi.registrasi.submit');
     Route::post('/donasi/kirim', [DonasiPublicController::class, 'kirim'])->name('donasi.kirim');
-
-    Route::get('/profil-donatur', [DonaturPublicController::class, 'profile'])->name('donatur.profile');
-    Route::get('/riwayat-donasi', [DonaturPublicController::class, 'history'])->name('donatur.history');
-    Route::post('/donatur/logout', [DonaturPublicController::class, 'logout'])->name('donatur.logout');
-
-    // Password Reset Routes for Donatur
-    Route::get('/donasi/lupa-sandi', [\App\Http\Controllers\Public\DonaturPasswordResetController::class, 'createLinkRequest'])->name('donasi.password.request');
-    Route::post('/donasi/lupa-sandi', [\App\Http\Controllers\Public\DonaturPasswordResetController::class, 'storeLinkRequest'])->name('donasi.password.email');
-    Route::get('/donasi/reset-sandi/{token}', [\App\Http\Controllers\Public\DonaturPasswordResetController::class, 'createReset'])->name('donasi.password.reset');
-    Route::post('/donasi/reset-sandi', [\App\Http\Controllers\Public\DonaturPasswordResetController::class, 'storeReset'])->name('donasi.password.update');
 
     // ── Tentang Kami ─────────────────────────────────────────
     Route::get('/tentang/profil', [TentangController::class, 'profil'])->name('tentang.profil');

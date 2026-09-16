@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Dashboard')
 @section('page-title', 'Dashboard')
@@ -7,7 +7,7 @@
 <div>
     
     <div class="mb-6">
-        <h2 class="text-2xl font-extrabold text-gray-900">Selamat Datang, {{ Auth::user()->name }}!</h2>
+        <h2 class="text-2xl font-extrabold text-gray-900">Selamat Datang, {{ Auth::user()->nama }}!</h2>
         <p class="mt-1 text-sm font-medium text-gray-500">Ini adalah dashboard utama pengelolaan Yayasan Mawar Kasih.</p>
     </div>
 
@@ -44,7 +44,7 @@
                     <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalPengasuh ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('pengasuh.index') }}" class="mt-5 block w-full rounded-xl bg-emerald-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-emerald-700">Lihat Data</a>
+            <a href="{{ route('users.index', ['role' => 'pengasuh']) }}" class="mt-5 block w-full rounded-xl bg-emerald-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-emerald-700">Lihat Data</a>
         </div>
 
         <!-- total donatur -->
@@ -60,7 +60,7 @@
                     <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalDonatur ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('donatur.index') }}" class="mt-5 block w-full rounded-xl bg-violet-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-violet-700">Lihat Data</a>
+            <a href="{{ route('users.index') }}" class="mt-5 block w-full rounded-xl bg-violet-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-violet-700">Lihat Data</a>
         </div>
 
         <!-- total kegiatan -->
@@ -437,5 +437,5 @@
 @endpush
 
 @push('modals')
-    @include('admin.partials.donasi_action_modals')
+    @include('layouts.partials.admin.donasi_action_modals')
 @endpush

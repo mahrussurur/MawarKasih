@@ -19,6 +19,15 @@ Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
+// Halaman registrasi (GET) - tampilkan form
+Route::get('register', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'create'])
+    ->middleware('guest')
+    ->name('register');
+
+// Proses registrasi (POST) - submit form
+Route::post('register', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])
+    ->middleware('guest');
+
 // Password Reset Routes
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
     ->middleware('guest')

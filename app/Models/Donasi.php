@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class Donasi extends Model
@@ -49,7 +51,7 @@ class Donasi extends Model
     public static function generateKode(): string
     {
         do {
-            $kode = 'DON-' . strtoupper(Str::random(8));
+            $kode = 'DON-'.strtoupper(Str::random(8));
         } while (self::where('kode_donasi', $kode)->exists());
 
         return $kode;
@@ -60,7 +62,7 @@ class Donasi extends Model
      */
     public function getNominalRupiahAttribute(): string
     {
-        return 'Rp ' . number_format($this->nominal, 0, ',', '.');
+        return 'Rp '.number_format($this->nominal, 0, ',', '.');
     }
 
     /**
@@ -68,21 +70,26 @@ class Donasi extends Model
      */
     public function getStatusLabelAttribute(): string
     {
-        return match($this->status) {
-            'pending'  => 'Pending',
+        return match ($this->status) {
+            'pending' => 'Pending',
             'diterima' => 'Diterima',
-            'ditolak'  => 'Ditolak',
-            default    => $this->status,
+            'ditolak' => 'Ditolak',
+            default => $this->status,
         };
     }
 
     public function getStatusColorAttribute(): string
     {
-        return match($this->status) {
-            'pending'  => 'warning',
+        return match ($this->status) {
+            'pending' => 'warning',
             'diterima' => 'success',
-            'ditolak'  => 'danger',
-            default    => 'secondary',
+            'ditolak' => 'danger',
+            default => 'secondary',
         };
+    }
+
+    public function donatur(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'donatur_id');
     }
 }

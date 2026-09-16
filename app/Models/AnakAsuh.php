@@ -10,6 +10,7 @@ class AnakAsuh extends Model
     use HasFactory;
 
     protected $table = 'anak_asuh';
+
     protected $fillable = [
         'foto',
         'nama',

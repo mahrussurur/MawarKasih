@@ -1,9 +1,9 @@
-@extends('public.layouts.app')
+@extends('layouts.public')
 
 @section('title', 'Rekening Donasi')
 
 @section('content')
-@include('public.components.page-header', ['title' => 'Rekening Donasi'])
+@include('components.public.page-header', ['title' => 'Rekening Donasi'])
 <div class="bg-gray-50 py-10 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div class="rounded-3xl border border-gray-200 bg-white p-6 md:p-10 shadow-sm text-center">

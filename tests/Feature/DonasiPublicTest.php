@@ -1,63 +1,77 @@
 <?php
 
-use App\Models\Donasi;
-use App\Models\Donatur;
+use App\Models\ProfilDonatur;
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 it('menyimpan donasi guest dengan data guest dan donatur_id null', function () {
     Storage::fake('public');
+    $email = 'guest_test_'.uniqid().'@gmail.com';
 
     $response = $this->post(route('public.donasi.kirim'), [
         'nama_donatur' => 'Guest Donor',
-        'email' => 'guest@example.com',
+        'email' => $email,
         'no_hp' => '081234567890',
         'nominal' => 50000,
+        'metode_pembayaran' => 'qris',
+        'tampilkan_nama' => 'nama_asli',
         'bukti_transfer' => UploadedFile::fake()->image('bukti.jpg'),
         'agree' => true,
         'website' => '',
     ]);
 
-    $response->assertRedirect(route('public.home'));
+    $response->assertRedirect();
     $response->assertSessionHas('success');
 
     $this->assertDatabaseHas('donasi', [
         'nama_donatur' => 'Guest Donor',
+        'email' => $email,
         'no_hp' => '081234567890',
         'nominal' => 50000,
         'donatur_id' => null,
-        'keterangan' => 'Guest',
     ]);
 });
 
-it('menyimpan donasi donatur tetap dengan donatur_id dan data profil tetap', function () {
-    Storage::fake('public');
-
-    $donatur = Donatur::create([
-        'nama' => 'Tetap Donor',
-        'email' => 'tetap@example.com',
-        'no_hp' => '081234567891',
-        'alamat' => 'Jl. Contoh No. 1',
-        'password' => bcrypt('password123'),
+it('uses the authenticated donor profile as the donation identity snapshot', function () {
+    $donatur = User::factory()->create([
+        'email' => 'dina.donatur@example.test',
+        'role' => 'donatur',
         'status' => 'aktif',
     ]);
+    ProfilDonatur::create([
+        'user_id' => $donatur->id,
+        'nama' => 'Dina dari Profil',
+        'no_hp' => '081234567891',
+        'alamat' => 'Jl. Profil Donatur 8',
+    ]);
 
-    $response = $this->withSession(['donatur_id' => $donatur->id])
-        ->post(route('public.donasi.kirim'), [
-            'nominal' => 75000,
-            'bukti_transfer' => UploadedFile::fake()->image('bukti-tetap.jpg'),
-            'agree' => true,
-            'website' => '',
-        ]);
+    $this->actingAs($donatur)
+        ->get(route('public.donasi.form'))
+        ->assertOk()
+        ->assertSee('Data identitas donasi diambil dari profil akun Anda')
+        ->assertSee('Dina dari Profil');
 
-    $response->assertRedirect(route('public.home'));
-    $response->assertSessionHas('success');
+    $response = $this->actingAs($donatur)->post(route('public.donasi.kirim'), [
+        'nominal' => 75000,
+        'metode_pembayaran' => 'mandiri',
+        'tampilkan_nama' => 'hamba_allah',
+        'keterangan' => 'Semoga bermanfaat.',
+        // Data berikut tidak boleh dapat mengganti snapshot milik donatur login.
+        'nama_donatur' => 'Identitas Palsu',
+        'email' => 'palsu@example.test',
+        'no_hp' => '089999999999',
+        'alamat' => 'Alamat Palsu',
+    ]);
+
+    $response->assertRedirect();
 
     $this->assertDatabaseHas('donasi', [
-        'nama_donatur' => 'Tetap Donor',
-        'no_hp' => '081234567891',
-        'nominal' => 75000,
         'donatur_id' => $donatur->id,
-        'keterangan' => 'Donatur Tetap',
+        'nama_donatur' => 'Dina dari Profil',
+        'email' => 'dina.donatur@example.test',
+        'no_hp' => '081234567891',
+        'alamat' => 'Jl. Profil Donatur 8',
+        'nominal' => 75000,
     ]);
 });

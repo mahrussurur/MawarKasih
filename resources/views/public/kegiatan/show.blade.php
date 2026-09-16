@@ -1,4 +1,4 @@
-@extends('public.layouts.app')
+@extends('layouts.public')
 @section('title', ($kegiatan->nama_kegiatan ?? 'Detail Kegiatan').' — Panti Asuhan Mawar Kasih')
 
 @section('content')

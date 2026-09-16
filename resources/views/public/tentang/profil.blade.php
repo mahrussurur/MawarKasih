@@ -1,8 +1,8 @@
-@extends('public.layouts.app')
+@extends('layouts.public')
 @section('title', 'Profil Lembaga — Panti Asuhan Mawar Kasih')
 
 @section('content')
-@include('public.components.page-header', ['title' => 'Profil Lembaga'])
+@include('components.public.page-header', ['title' => 'Profil Lembaga'])
 <div class="bg-gray-50 py-10 lg:py-16 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         

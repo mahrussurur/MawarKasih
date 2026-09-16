@@ -12,7 +12,7 @@ test('users can authenticate using the login screen', function () {
     $user = User::factory()->create();
 
     $response = $this->post('/login', [
-        'email' => $user->email,
+        'username' => $user->username,
         'password' => 'password',
     ]);
 
@@ -31,11 +31,23 @@ test('users can not authenticate with invalid password', function () {
     $this->assertGuest();
 });
 
+test('inactive accounts can not authenticate', function () {
+    $user = User::factory()->create(['status' => 'tidak_aktif']);
+
+    $response = $this->post('/login', [
+        'username' => $user->username,
+        'password' => 'password',
+    ]);
+
+    $response->assertSessionHasErrors('username');
+    $this->assertGuest();
+});
+
 test('users can logout', function () {
     $user = User::factory()->create();
 
     $response = $this->actingAs($user)->post('/logout');
 
     $this->assertGuest();
-    $response->assertRedirect('/');
+    $response->assertRedirect('/login');
 });

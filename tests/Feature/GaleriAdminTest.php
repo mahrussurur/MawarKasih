@@ -11,10 +11,10 @@ beforeEach(function () {
 function createAdmin(): User
 {
     return User::forceCreate([
-        'name' => 'Admin Galeri',
         'username' => 'admin-galeri-' . uniqid(),
         'email' => 'admin-galeri-' . uniqid() . '@example.com',
         'password' => bcrypt('password123'),
+        'role' => 'admin',
     ]);
 }
 
@@ -25,7 +25,7 @@ it('admin dapat menambahkan galeri foto dengan kategori dan deskripsi', function
         ->post(route('galeri.store'), [
             'judul' => 'Aktivitas Pembelajaran',
             'deskripsi' => 'Anak-anak belajar bersama di ruang belajar.',
-            'kategori' => 'umum',
+            'kategori' => 'Umum',
             'foto' => UploadedFile::fake()->image('pembelajaran.jpg'),
         ]);
 
@@ -34,7 +34,7 @@ it('admin dapat menambahkan galeri foto dengan kategori dan deskripsi', function
 
     $this->assertDatabaseHas('galeris', [
         'judul' => 'Aktivitas Pembelajaran',
-        'kategori' => 'umum',
+        'kategori' => 'Umum',
         'deskripsi' => 'Anak-anak belajar bersama di ruang belajar.',
     ]);
 });
@@ -45,7 +45,7 @@ it('admin dapat memperbarui dan menghapus galeri', function () {
     $galeri = \App\Models\Galeri::create([
         'judul' => 'Ruang Makan',
         'deskripsi' => 'Ruang makan utama panti.',
-        'kategori' => 'fasilitas',
+        'kategori' => 'Fasilitas',
         'foto' => 'galeri/ruang-makan.jpg',
     ]);
 
@@ -53,7 +53,7 @@ it('admin dapat memperbarui dan menghapus galeri', function () {
         ->put(route('galeri.update', $galeri), [
             'judul' => 'Ruang Makan Baru',
             'deskripsi' => 'Ruang makan utama panti setelah renovasi.',
-            'kategori' => 'fasilitas',
+            'kategori' => 'Fasilitas',
         ]);
 
     $editResponse->assertRedirect(route('galeri.index'));
@@ -63,7 +63,7 @@ it('admin dapat memperbarui dan menghapus galeri', function () {
         'id' => $galeri->id,
         'judul' => 'Ruang Makan Baru',
         'deskripsi' => 'Ruang makan utama panti setelah renovasi.',
-        'kategori' => 'fasilitas',
+        'kategori' => 'Fasilitas',
     ]);
 
     $deleteResponse = $this->actingAs($admin)
@@ -80,19 +80,19 @@ it('admin dapat memfilter galeri berdasarkan kategori', function () {
     \App\Models\Galeri::create([
         'judul' => 'Aktivitas Umum',
         'deskripsi' => 'Foto kegiatan umum panti.',
-        'kategori' => 'umum',
+        'kategori' => 'Umum',
         'foto' => 'galeri/umum.jpg',
     ]);
 
     \App\Models\Galeri::create([
         'judul' => 'Asrama Putri',
         'deskripsi' => 'Foto fasilitas asrama putri.',
-        'kategori' => 'fasilitas',
+        'kategori' => 'Fasilitas',
         'foto' => 'galeri/fasilitas.jpg',
     ]);
 
     $response = $this->actingAs($admin)
-        ->get(route('galeri.index', ['kategori' => 'fasilitas']));
+        ->get(route('galeri.index', ['kategori' => 'Fasilitas']));
 
     $response->assertOk();
     $response->assertSee('Asrama Putri');

@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 @section('page-title', 'Detail Galeri')
 
 @section('content')
@@ -38,7 +38,7 @@
                         <span class="inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
                             {{ \Carbon\Carbon::parse($galeri->created_at)->translatedFormat('d F Y') }}
                         </span>
-                        <span class="inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-semibold {{ $galeri->kategori === 'fasilitas' ? 'bg-emerald-100 text-emerald-700' : 'bg-sky-100 text-sky-700' }}">
+                        <span class="inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-semibold {{ $galeri->kategori === 'Fasilitas' ? 'bg-emerald-100 text-emerald-700' : 'bg-sky-100 text-sky-700' }}">
                             {{ ucfirst($galeri->kategori) }}
                         </span>
                     </div>

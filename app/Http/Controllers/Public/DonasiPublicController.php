@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Models\Donasi;
-use App\Models\Donatur;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use App\Services\ImageService;
+use Illuminate\Http\Request;
 
 class DonasiPublicController extends Controller
 {
@@ -17,55 +16,12 @@ class DonasiPublicController extends Controller
     {
         $this->imageService = $imageService;
     }
-    public function form()
-    {
-        $donatur = session('donatur_id') ? Donatur::find(session('donatur_id')) : null;
-        return view('public.donasi.index', compact('donatur'));
-    }
 
-    public function login()
+    public function form(Request $request)
     {
-        return view('public.donasi.login');
-    }
-
-    public function loginStore(Request $request)
-    {
-        $validated = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string|min:6',
+        return view('public.donasi.index', [
+            'donatur' => $this->authenticatedDonatur($request),
         ]);
-
-        $donatur = Donatur::where('email', $validated['email'])->first();
-
-        if (!$donatur || !Hash::check($validated['password'], $donatur->password)) {
-            return back()->withInput()->withErrors(['email' => 'Email atau password salah.']);
-        }
-
-        session(['donatur_id' => $donatur->id]);
-        return redirect()->route('public.donatur.profile')->with('success', 'Login berhasil');
-    }
-
-    public function registrasi()
-    {
-        return view('public.donasi.registrasi');
-    }
-
-    public function registrasiStore(Request $request)
-    {
-        $validated = $request->validate([
-            'nama'   => 'required|string|max:255',
-            'email'  => 'required|email|unique:donaturs,email',
-            'no_hp'  => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
-            'alamat' => 'required|string',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        $validated['password'] = Hash::make($validated['password']);
-
-        $donatur = Donatur::create($validated);
-        session(['donatur_id' => $donatur->id]);
-
-        return redirect()->route('public.home')->with('success', 'Registrasi berhasil');
     }
 
     public function rekening()
@@ -85,7 +41,7 @@ class DonasiPublicController extends Controller
 
         if ($kode) {
             $donasi = Donasi::where('kode_donasi', $kode)->first();
-            if (!$donasi && $request->has('kode_donasi')) {
+            if (! $donasi && $request->has('kode_donasi')) {
                 return redirect()->route('public.donasi.validasi')->with('error', 'Donasi dengan kode tersebut tidak ditemukan.');
             }
         }
@@ -96,7 +52,7 @@ class DonasiPublicController extends Controller
     public function uploadBukti(Request $request, $kode_donasi)
     {
         $donasi = Donasi::where('kode_donasi', $kode_donasi)->firstOrFail();
-        
+
         $request->validate([
             'bukti_transfer' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -114,7 +70,13 @@ class DonasiPublicController extends Controller
 
     public function kirim(Request $request)
     {
-        $donatur = session('donatur_id') ? Donatur::find(session('donatur_id')) : null;
+        $donatur = $this->authenticatedDonatur($request);
+        $profilDonatur = $donatur?->profilDonatur;
+
+        if ($donatur && (! $profilDonatur || blank($profilDonatur->nama) || blank($profilDonatur->no_hp))) {
+            return redirect()->route('profile.edit')
+                ->with('error', 'Lengkapi nama dan nomor HP pada profil Anda sebelum membuat donasi.');
+        }
 
         $rules = [
             'nominal' => 'required|integer|min:1000|max:100000000',
@@ -125,13 +87,16 @@ class DonasiPublicController extends Controller
             'bukti_transfer' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
 
-        if (!$donatur) {
-            $rules = array_merge($rules, [
+        // Donatur tetap memakai identitas profil yang tersimpan di server.
+        // Field identitas hanya wajib divalidasi untuk donasi guest.
+        if (! $donatur) {
+            $rules = [
+                ...$rules,
                 'nama_donatur' => 'required|string|max:255',
-                'email' => 'required|email:rfc,dns|max:255',
+                'email' => 'required|email:rfc|max:255',
                 'no_hp' => 'required|string|min:10|max:15|regex:/^[0-9]+$/',
                 'alamat' => 'nullable|string|max:1000',
-            ]);
+            ];
         }
 
         $messages = [
@@ -162,7 +127,7 @@ class DonasiPublicController extends Controller
 
         $validated = $request->validate($rules, $messages);
 
-        if (!empty($request->input('website'))) {
+        if (! empty($request->input('website'))) {
             return back()->withInput()->withErrors(['website' => 'Permintaan tidak valid.']);
         }
 
@@ -170,6 +135,22 @@ class DonasiPublicController extends Controller
         if ($request->hasFile('bukti_transfer')) {
             $buktiPath = $this->imageService->uploadAndGenerateWebp($request->file('bukti_transfer'), 'bukti_transfer');
         }
+
+        $identitasDonasi = $donatur
+            ? [
+                'donatur_id' => $donatur->id,
+                'nama_donatur' => $profilDonatur->nama,
+                'email' => $donatur->email,
+                'no_hp' => $profilDonatur->no_hp,
+                'alamat' => $profilDonatur->alamat,
+            ]
+            : [
+                'donatur_id' => null,
+                'nama_donatur' => $validated['nama_donatur'],
+                'email' => $validated['email'],
+                'no_hp' => $validated['no_hp'],
+                'alamat' => $validated['alamat'] ?? null,
+            ];
 
         $payload = [
             'kode_donasi' => Donasi::generateKode(),
@@ -181,23 +162,22 @@ class DonasiPublicController extends Controller
             'metode_pembayaran' => $validated['metode_pembayaran'],
             'tampilkan_nama' => $validated['tampilkan_nama'],
             'keterangan' => $validated['keterangan'] ?? null,
-            'donatur_id' => $donatur?->id,
+            ...$identitasDonasi,
         ];
-
-        if ($donatur) {
-            $payload['nama_donatur'] = $donatur->nama;
-            $payload['no_hp'] = $donatur->no_hp;
-            $payload['email'] = $donatur->email;
-            $payload['alamat'] = $donatur->alamat;
-        } else {
-            $payload['nama_donatur'] = $validated['nama_donatur'];
-            $payload['no_hp'] = $validated['no_hp'];
-            $payload['email'] = $validated['email'];
-            $payload['alamat'] = $validated['alamat'] ?? null;
-        }
 
         $donasi = Donasi::create($payload);
 
         return redirect()->route('public.donasi.validasi', ['kode_donasi' => $donasi->kode_donasi])->with('success', 'Donasi Anda berhasil!');
+    }
+
+    private function authenticatedDonatur(Request $request): ?User
+    {
+        $user = $request->user();
+
+        if (! $user || $user->role !== 'donatur') {
+            return null;
+        }
+
+        return $user->loadMissing('profilDonatur');
     }
 }

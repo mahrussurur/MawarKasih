@@ -1,8 +1,8 @@
-@extends('public.layouts.app')
+@extends('layouts.public')
 @section('title', 'Kegiatan | Panti Asuhan Mawar Kasih')
 
 @section('content')
-@include('public.components.page-header', ['title' => 'Artikel Kegiatan'])
+@include('components.public.page-header', ['title' => 'Artikel Kegiatan'])
 <div class="bg-gray-50 py-10 lg:py-16 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -76,15 +76,12 @@
             </div>
         @else
             <div class="bg-white rounded-3xl p-12 text-center border border-gray-200 shadow-sm">
-                <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Tidak ada kegiatan ditemukan</h3>
-                <p class="text-gray-500">
+                <i data-lucide="calendar-x" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
+                <p class="text-gray-400 text-sm">
                     @if(request('search'))
                         Kami tidak menemukan kegiatan yang cocok dengan pencarian "{{ request('search') }}".
                     @else
-                        Belum ada data kegiatan yang dipublikasikan saat ini.
+                        Belum ada kegiatan yang dipublikasikan.
                     @endif
                 </p>
                 @if(request('search'))

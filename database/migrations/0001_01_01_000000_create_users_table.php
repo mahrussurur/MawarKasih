@@ -18,6 +18,15 @@ return new class extends Migration
             $table->string('username')->unique();       // username untuk login (unik)
             $table->string('email')->unique();          // email untuk login (unik)
             $table->string('password');                 // password (akan di-hash)
+            $table->string('foto')->nullable();
+            $table->string('tempat_lahir')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->text('alamat')->nullable();
+            $table->string('jabatan')->nullable();
+            $table->enum('jenis_kelamin', ['L', 'P'])->nullable();
+            $table->string('no_hp', 20)->nullable();
+            $table->enum('status', ['aktif', 'tidak_aktif'])->default('aktif');
+            $table->enum('role', ['admin', 'bendahara', 'sekretaris', 'pengasuh', 'donatur'])->default('donatur');
             $table->rememberToken();
             $table->timestamps();                       // created_at & updated_at
         });
