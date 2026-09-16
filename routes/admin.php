@@ -30,7 +30,9 @@ Route::prefix('admin')
         Route::patch('donasi/{donasi}/tolak', [DonasiController::class, 'tolak'])->name('donasi.tolak');
         Route::resource('donasi', DonasiController::class);
         Route::get('keuangan/cetak', [KeuanganController::class, 'cetak'])->name('admin.keuangan.cetak');
-        Route::resource('keuangan', KeuanganController::class)->except(['show'])->names([
+        Route::resource('keuangan', KeuanganController::class)->parameters([
+            'keuangan' => 'transaksi',
+        ])->except(['show'])->names([
             'index'   => 'admin.keuangan.index',
             'create'  => 'admin.keuangan.create',
             'store'   => 'admin.keuangan.store',

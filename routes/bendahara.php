@@ -1,17 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Bendahara\DashboardController;
+use App\Http\Controllers\Bendahara\DonasiController;
+use App\Http\Controllers\Bendahara\KeuanganController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'role:bendahara'])->prefix('bendahara')->name('bendahara.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
-    // Donasi management for Bendahara
-    Route::get('/donasi/cetak', [\App\Http\Controllers\Bendahara\DonasiController::class, 'cetak'])->name('donasi.cetak');
-    Route::patch('/donasi/{donasi}/validasi', [\App\Http\Controllers\Bendahara\DonasiController::class, 'validasi'])->name('donasi.validasi');
-    Route::patch('/donasi/{donasi}/tolak', [\App\Http\Controllers\Bendahara\DonasiController::class, 'tolak'])->name('donasi.tolak');
-    Route::resource('donasi', \App\Http\Controllers\Bendahara\DonasiController::class)->only(['index', 'show']);
-    // Transaksi Keuangan
-    Route::get('/transaksi/cetak', [\App\Http\Controllers\Bendahara\TransaksiController::class, 'cetak'])->name('transaksi.cetak');
-    Route::resource('transaksi', \App\Http\Controllers\Bendahara\TransaksiController::class)->except(['show']);
+
+    // Donasi
+    Route::get('/donasi/cetak', [DonasiController::class, 'cetak'])->name('donasi.cetak');
+    Route::patch('/donasi/{donasi}/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
+    Route::patch('/donasi/{donasi}/tolak', [DonasiController::class, 'tolak'])->name('donasi.tolak');
+    Route::resource('donasi', DonasiController::class);
+    // Keuangan
+    Route::get('/keuangan/cetak', [KeuanganController::class, 'cetak'])->name('keuangan.cetak');
+    Route::resource('keuangan', KeuanganController::class)->except(['show']);
 });

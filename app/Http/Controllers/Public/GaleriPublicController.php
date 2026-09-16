@@ -10,7 +10,7 @@ class GaleriPublicController extends Controller
 {
     public function index()
     {
-        $galleries = Galeri::where('kategori', 'umum')->latest()->paginate(12);
+        $galleries = Galeri::where('kategori', 'Umum')->latest()->paginate(12);
         return view('public.tentang.galeri', compact('galleries'));
     }
 

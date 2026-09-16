@@ -26,7 +26,7 @@ class HomeController extends Controller
         $kegiatans = Kegiatan::latest('tanggal_pelaksanaan')
             ->get();
 
-        $fasilitas = Galeri::where('kategori', 'fasilitas')->latest()->get();
+        $fasilitas = Galeri::where('kategori', 'Fasilitas')->latest()->get();
 
         return view('public.home', compact('stats', 'kegiatans', 'fasilitas'));
     }

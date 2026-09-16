@@ -18,7 +18,7 @@
         </div>
 
         <div class="p-4 md:p-6">
-            <form action="{{ route('bendahara.donasi.store') }}" method="POST">
+            <form action="{{ route('bendahara.donasi.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Nama Donatur -->

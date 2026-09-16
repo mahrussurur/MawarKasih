@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->text('deskripsi');
-            $table->string('kategori')->default('umum');
+            $table->string('kategori')->default('Umum');
             $table->string('foto')->nullable();
             $table->timestamps();
         });

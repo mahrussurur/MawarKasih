@@ -92,8 +92,8 @@
 <body>
 
     @php
-        $totalPemasukan = $transaksi->where('jenis', 'pemasukan')->sum('nominal');
-        $totalPengeluaran = $transaksi->where('jenis', 'pengeluaran')->sum('nominal');
+        $totalPemasukan = $keuangan->where('jenis', 'pemasukan')->sum('nominal');
+        $totalPengeluaran = $keuangan->where('jenis', 'pengeluaran')->sum('nominal');
         $saldo = $totalPemasukan - $totalPengeluaran;
     @endphp
 
@@ -108,7 +108,7 @@
     <div class="info">
         <strong>Periode:</strong> {{ $tahun }} &nbsp;|&nbsp;
         <strong>Jenis:</strong> {{ $jenisLabel }} &nbsp;|&nbsp;
-        <strong>Total Data:</strong> {{ $transaksi->count() }} transaksi &nbsp;|&nbsp;
+        <strong>Total Data:</strong> {{ $keuangan->count() }} data keuangan &nbsp;|&nbsp;
         <strong>Dicetak:</strong> {{ now()->translatedFormat('d F Y, H:i') }}
     </div>
 
@@ -125,7 +125,7 @@
             </tr>
         </thead>
         <tbody>
-            @forelse($transaksi as $index => $item)
+            @forelse($keuangan as $index => $item)
             <tr>
                 <td class="center">{{ $index + 1 }}</td>
                 <td>{{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d M Y') }}</td>
@@ -155,7 +155,7 @@
             @endforelse
 
             {{-- Baris Total --}}
-            @if($transaksi->count() > 0)
+            @if($keuangan->count() > 0)
             <tr class="total-row">
                 <td colspan="3" style="text-align: right;">TOTAL PEMASUKAN:</td>
                 <td class="right">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</td>

@@ -92,7 +92,7 @@ it('allows sekretaris to manage independent gallery data', function () {
         ->post(route('sekretaris.galeri.store'), [
             'judul' => 'Galeri Uji',
             'deskripsi' => 'Deskripsi galeri uji.',
-            'kategori' => 'umum',
+            'kategori' => 'Umum',
             'foto' => UploadedFile::fake()->image('galeri.jpg'),
         ])
         ->assertRedirect(route('sekretaris.galeri.index'));
@@ -103,7 +103,7 @@ it('allows sekretaris to manage independent gallery data', function () {
         ->put(route('sekretaris.galeri.update', $galeri), [
             'judul' => 'Galeri Diperbarui',
             'deskripsi' => 'Deskripsi galeri terbaru.',
-            'kategori' => 'fasilitas',
+            'kategori' => 'Fasilitas',
         ])
         ->assertRedirect(route('sekretaris.galeri.index'));
 

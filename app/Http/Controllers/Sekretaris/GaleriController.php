@@ -19,12 +19,12 @@ class GaleriController extends Controller
 
     public function index(Request $request)
     {
-        $kategori = $request->input('kategori', 'semua');
+        $kategori = $request->input('kategori', 'Semua');
         $search = $request->input('search');
 
         $query = Galeri::query()->latest();
 
-        if ($request->filled('kategori') && $kategori !== 'semua') {
+        if ($request->filled('kategori') && $kategori !== 'Semua') {
             $query->where('kategori', $kategori);
         }
 
@@ -34,8 +34,8 @@ class GaleriController extends Controller
 
         $galeris = $query->paginate(10)->withQueryString();
         $totalGaleri = Galeri::count();
-        $totalUmum = Galeri::where('kategori', 'umum')->count();
-        $totalFasilitas = Galeri::where('kategori', 'fasilitas')->count();
+        $totalUmum = Galeri::where('kategori', 'Umum')->count();
+        $totalFasilitas = Galeri::where('kategori', 'Fasilitas')->count();
 
         return view('sekretaris.galeri.index', compact('galeris', 'kategori', 'totalGaleri', 'totalUmum', 'totalFasilitas'));
     }
@@ -50,7 +50,7 @@ class GaleriController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'kategori' => 'required|in:umum,fasilitas',
+            'kategori' => 'required|in:Umum,Fasilitas',
             'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -83,7 +83,7 @@ class GaleriController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'kategori' => 'required|in:umum,fasilitas',
+            'kategori' => 'required|in:Umum,Fasilitas',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 

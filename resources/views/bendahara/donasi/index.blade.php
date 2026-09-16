@@ -7,75 +7,40 @@
     <!-- Summary Cards -->
     <div class="grid gap-4 grid-cols-1 md:grid-cols-3 mb-4">
         <!-- Total Semua Donasi -->
-        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M3.75 5.25h16.5a1.5 1.5 0 011.5 1.5v10.5a1.5 1.5 0 01-1.5 1.5H3.75a1.5 1.5 0 01-1.5-1.5V6.75a1.5 1.5 0 011.5-1.5z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 14.25h2.25" />
-                </svg>
-            </div>
-            <div class="min-w-0">
-                <p class="truncate text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">
-                    Total Donasi Keseluruhan
-                </p>
-                <p class="truncate text-lg font-bold text-gray-900">
-                    Rp {{ number_format($totalNominal, 0, ',', '.') }}
-                </p>
-            </div>
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Total Donasi Keseluruhan</p>
+            <p class="text-xl font-bold text-gray-900 mt-1">Rp {{ number_format($totalNominal, 0, ',', '.') }}</p>
         </div>
 
         <!-- Jumlah Donatur Tetap -->
-        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
-                <svg class="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/>
-                </svg>
-            </div>
-            <div class="min-w-0">
-                <p class="truncate text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">
-                    Jumlah Donatur Tetap
-                </p>
-                <p class="truncate text-lg font-bold text-gray-900">
-                    {{ $jumlahDonaturTetap }} <span class="text-sm font-normal text-gray-500">Orang</span>
-                </p>
-            </div>
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Jumlah Donatur Tetap</p>
+            <p class="text-xl font-bold text-gray-900 mt-1">{{ $jumlahDonaturTetap }} Orang</p>
         </div>
         
         <!-- Jumlah Donatur Umum -->
-        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-gray-100 text-gray-600">
-                <svg class="h-5 w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                </svg>
-            </div>
-            <div class="min-w-0">
-                <p class="truncate text-xs font-semibold uppercase tracking-[0.18em] text-gray-500">
-                    Jumlah Donatur Umum
-                </p>
-                <p class="truncate text-lg font-bold text-gray-900">
-                    {{ $jumlahDonaturUmum }} <span class="text-sm font-normal text-gray-500">Orang</span>
-                </p>
-            </div>
+        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Jumlah Donatur Umum</p>
+            <p class="text-xl font-bold text-gray-900 mt-1">{{ $jumlahDonaturUmum }} Orang</p>
         </div>
+    </div>
 
     </div>
 
-    <div class="flex justify-end mb-4">
-        <form method="GET" action="{{ route('bendahara.donasi.cetak') }}" target="_blank" class="flex items-center gap-2">
-            <select name="tahun"
-                    class="rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option value="">Semua Tahun</option>
-                @foreach($tahunList as $t)
-                    <option value="{{ $t }}">{{ $t }}</option>
-                @endforeach
-            </select>
-            <button type="submit"
-                    class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-sm transition hover:border-gray-300 hover:bg-gray-100">
+    <!-- Toolbar -->
+    <div class="flex justify-between mb-4">
+        <div class="flex flex-wrap items-center gap-3">
+            <a href="{{ route('bendahara.donasi.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Tambah Donasi
+            </a>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+            <a href="{{ route('bendahara.donasi.cetak') }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm transition hover:border-gray-300 hover:bg-gray-100">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                 Cetak Laporan
-            </button>
-        </form>
+            </a>
+        </div>
     </div>
 
     <!-- Kotak Utama Konten -->
@@ -192,10 +157,10 @@
                         <td class="px-6 py-4 text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
                             <div class="flex justify-center gap-1">
                                 <!-- Tombol Lihat Detail -->
-                                <a href="{{ route('bendahara.donasi.show', $item->id) }}"
-                                   class="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-blue-500 bg-sky-100 text-blue-600 transition hover:bg-blue-500 hover:text-white"
+                                <a href="{{ route('bendahara.donasi.show', $item) }}"
+                                   class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-blue-400 bg-blue-50 text-blue-600 transition hover:bg-blue-600 hover:text-white"
                                    title="Lihat Detail">
-                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                     </svg>
@@ -223,7 +188,23 @@
                                         </svg>
                                     </button>
                                 @else
-                                    <!-- Hanya tampilkan badge status (tombol aksi edit/hapus hanya untuk Admin) -->
+                                    <a href="{{ route('bendahara.donasi.edit', $item) }}"
+                                       class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-amber-400 bg-amber-50 text-amber-600 transition hover:bg-amber-500 hover:text-white"
+                                       title="Edit">
+                                        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                        </svg>
+                                    </a>
+                                    <button type="button"
+                                            class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-red-400 bg-red-50 text-red-600 transition hover:bg-red-600 hover:text-white"
+                                            title="Hapus"
+                                            data-delete-route="{{ route('bendahara.donasi.destroy', $item) }}"
+                                            data-name="{{ $item->kode_donasi }}"
+                                            onclick="openDeleteModal(this)">
+                                        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
                                 @endif
                             </div>
                         </td>

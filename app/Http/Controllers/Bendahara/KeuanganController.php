@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class TransaksiController extends Controller
+class KeuanganController extends Controller
 {
     public function index(Request $request)
     {
@@ -23,20 +23,20 @@ class TransaksiController extends Controller
             $query->where('keterangan', 'like', "%{$search}%");
         }
 
-        $transaksi = $query->paginate(10)->withQueryString();
+        $keuangan = $query->paginate(10)->withQueryString();
         
         $totalPemasukan = TransaksiKeuangan::where('jenis', 'pemasukan')->sum('nominal');
         $totalPengeluaran = TransaksiKeuangan::where('jenis', 'pengeluaran')->sum('nominal');
         $saldo = $totalPemasukan - $totalPengeluaran;
 
-        return view('bendahara.transaksi.index', compact(
-            'transaksi', 'totalPemasukan', 'totalPengeluaran', 'saldo'
+        return view('bendahara.keuangan.index', compact(
+            'keuangan', 'totalPemasukan', 'totalPengeluaran', 'saldo'
         ));
     }
 
     public function create()
     {
-        return view('bendahara.transaksi.create');
+        return view('bendahara.keuangan.create');
     }
 
     public function store(Request $request)
@@ -56,23 +56,22 @@ class TransaksiController extends Controller
             'dicatat_oleh' => Auth::id(),
         ]);
 
-        return redirect()->route('bendahara.transaksi.index')->with('success', 'Transaksi berhasil ditambahkan.');
+        return redirect()->route('bendahara.keuangan.index')->with('success', 'Data Keuangan berhasil ditambahkan.');
     }
 
-    public function edit(TransaksiKeuangan $transaksi)
+    public function edit(TransaksiKeuangan $keuangan)
     {
-        // Cegah edit transaksi yang tergenerate dari donasi (optional/bisnis rule)
-        if ($transaksi->donasi_id) {
-            return redirect()->route('bendahara.transaksi.index')->with('error', 'Transaksi dari donasi otomatis tidak bisa diedit secara manual. Edit donasinya jika diperlukan.');
+        if ($keuangan->donasi_id) {
+            return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa diedit secara manual. Edit donasinya jika diperlukan.');
         }
 
-        return view('bendahara.transaksi.edit', compact('transaksi'));
+        return view('bendahara.keuangan.edit', compact('keuangan'));
     }
 
-    public function update(Request $request, TransaksiKeuangan $transaksi)
+    public function update(Request $request, TransaksiKeuangan $keuangan)
     {
-        if ($transaksi->donasi_id) {
-            return redirect()->route('bendahara.transaksi.index')->with('error', 'Transaksi dari donasi otomatis tidak bisa diedit secara manual.');
+        if ($keuangan->donasi_id) {
+            return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa diedit secara manual.');
         }
 
         $request->validate([
@@ -82,25 +81,25 @@ class TransaksiController extends Controller
             'tanggal'    => 'required|date',
         ]);
 
-        $transaksi->update([
+        $keuangan->update([
             'jenis'      => $request->jenis,
             'nominal'    => $request->nominal,
             'keterangan' => $request->keterangan,
             'tanggal'    => $request->tanggal,
         ]);
 
-        return redirect()->route('bendahara.transaksi.index')->with('success', 'Transaksi berhasil diperbarui.');
+        return redirect()->route('bendahara.keuangan.index')->with('success', 'Data Keuangan berhasil diperbarui.');
     }
 
-    public function destroy(TransaksiKeuangan $transaksi)
+    public function destroy(TransaksiKeuangan $keuangan)
     {
-        if ($transaksi->donasi_id) {
-            return redirect()->route('bendahara.transaksi.index')->with('error', 'Transaksi dari donasi otomatis tidak bisa dihapus. Tolak donasi tersebut jika ingin membatalkan.');
+        if ($keuangan->donasi_id) {
+            return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa dihapus. Tolak donasi tersebut jika ingin membatalkan.');
         }
 
-        $transaksi->delete();
+        $keuangan->delete();
 
-        return redirect()->route('bendahara.transaksi.index')->with('success', 'Transaksi berhasil dihapus.');
+        return redirect()->route('bendahara.keuangan.index')->with('success', 'Data Keuangan berhasil dihapus.');
     }
 
     public function cetak(Request $request)
@@ -120,15 +119,15 @@ class TransaksiController extends Controller
             $query->whereYear('tanggal', $request->tahun);
         }
 
-        $transaksi  = $query->get();
+        $keuangan   = $query->get();
         $tahun      = $request->tahun ?? 'Semua Tahun';
         $jenisLabel = match($jenis) {
             'pemasukan'   => 'Pemasukan',
             'pengeluaran' => 'Pengeluaran',
-            default       => 'Semua Transaksi',
+            default       => 'Semua Data Keuangan',
         };
 
-        $pdf = Pdf::loadView('bendahara.transaksi.cetak', compact('transaksi', 'tahun', 'jenisLabel'))
+        $pdf = Pdf::loadView('bendahara.keuangan.cetak', compact('keuangan', 'tahun', 'jenisLabel'))
                   ->setPaper('a4', 'portrait');
 
         return $pdf->stream('Laporan_Keuangan_Mawar_Kasih.pdf');

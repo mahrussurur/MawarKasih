@@ -36,6 +36,40 @@
                 transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s ease;
             }
 
+            /* Scrollbar menu sidebar: tipis dan menyatu dengan warna navigasi */
+            .sidebar-nav {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(191, 219, 254, 0.72) transparent;
+                scrollbar-gutter: stable;
+            }
+
+            .sidebar-nav::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            .sidebar-nav::-webkit-scrollbar-track {
+                margin: 8px 0;
+                background: transparent;
+            }
+
+            .sidebar-nav::-webkit-scrollbar-thumb {
+                min-height: 48px;
+                border: 3px solid transparent;
+                border-radius: 999px;
+                background: rgba(191, 219, 254, 0.72);
+                background-clip: padding-box;
+            }
+
+            .sidebar-nav::-webkit-scrollbar-thumb:hover {
+                background-color: rgba(255, 255, 255, 0.9);
+            }
+
+            .sidebar-nav::-webkit-scrollbar-button {
+                display: none;
+                width: 0;
+                height: 0;
+            }
+
             .main-content {
                 margin-left: var(--sidebar-width);
                 min-width: 0;

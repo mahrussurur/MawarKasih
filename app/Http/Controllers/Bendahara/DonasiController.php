@@ -5,14 +5,19 @@ namespace App\Http\Controllers\Bendahara;
 use App\Http\Controllers\Controller;
 use App\Models\Donasi;
 use App\Services\DonasiKeuanganService;
+use App\Services\ImageService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DonasiController extends Controller
 {
-    public function __construct(protected DonasiKeuanganService $donasiKeuanganService) {}
+    public function __construct(
+        protected ImageService $imageService,
+        protected DonasiKeuanganService $donasiKeuanganService,
+    ) {}
 
     public function index(Request $request)
     {
@@ -42,11 +47,13 @@ class DonasiController extends Controller
         $jumlahDonaturTetap = Donasi::where('status', 'diterima')->whereNotNull('donatur_id')->distinct('donatur_id')->count('donatur_id');
 
         // Daftar tahun tersedia untuk filter cetak
-        $tahunList = Donasi::selectRaw('YEAR(tanggal) as tahun')
-            ->distinct()
-            ->orderByDesc('tahun')
-            ->pluck('tahun')
-            ->filter();
+        $tahunList = Donasi::query()
+            ->whereNotNull('tanggal')
+            ->orderByDesc('tanggal')
+            ->pluck('tanggal')
+            ->map(fn ($tanggal) => Carbon::parse($tanggal)->year)
+            ->unique()
+            ->values();
 
         return view('bendahara.donasi.index', compact(
             'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal', 'tahunList',
@@ -57,6 +64,81 @@ class DonasiController extends Controller
     public function show(Donasi $donasi)
     {
         return view('bendahara.donasi.show', compact('donasi'));
+    }
+
+    public function create()
+    {
+        return view('bendahara.donasi.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'nama_donatur' => 'required|string|max:255',
+            'no_hp' => 'nullable|digits_between:10,15',
+            'nominal' => 'required|integer|min:1000',
+            'metode_pembayaran' => 'required|string|max:50',
+            'keterangan' => 'nullable|string|max:1000',
+            'bukti_transfer' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        DB::transaction(function () use ($request, $validated): void {
+            $validated['kode_donasi'] = Donasi::generateKode();
+            $validated['tanggal'] = now()->toDateString();
+            $validated['status'] = 'diterima';
+
+            if ($request->hasFile('bukti_transfer')) {
+                $validated['bukti_transfer'] = $this->imageService->uploadAndGenerateWebp(
+                    $request->file('bukti_transfer'),
+                    'bukti_transfer',
+                );
+            }
+
+            $donasi = Donasi::create($validated);
+            $this->donasiKeuanganService->catatPemasukan($donasi, Auth::id());
+        });
+
+        return redirect()->route('bendahara.donasi.index')->with('success', 'Donasi berhasil ditambahkan.');
+    }
+
+    public function edit(Donasi $donasi)
+    {
+        return view('bendahara.donasi.edit', compact('donasi'));
+    }
+
+    public function update(Request $request, Donasi $donasi)
+    {
+        $validated = $request->validate([
+            'nama_donatur' => 'required|string|max:255',
+            'no_hp' => 'nullable|string|max:20',
+            'nominal' => 'required|integer|min:1000',
+            'metode_pembayaran' => 'required|string|max:50',
+            'tanggal' => 'required|date',
+            'keterangan' => 'nullable|string|max:1000',
+            'bukti_transfer' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        if ($request->hasFile('bukti_transfer')) {
+            $this->imageService->deleteImage($donasi->bukti_transfer);
+            $validated['bukti_transfer'] = $this->imageService->uploadAndGenerateWebp(
+                $request->file('bukti_transfer'),
+                'bukti_transfer',
+            );
+        }
+
+        $donasi->update($validated);
+
+        return redirect()->route('bendahara.donasi.index')->with('success', 'Data donasi berhasil diperbarui.');
+    }
+
+    public function destroy(Donasi $donasi)
+    {
+        $this->imageService->deleteImage($donasi->bukti_transfer);
+
+        $kode = $donasi->kode_donasi;
+        $donasi->delete();
+
+        return redirect()->route('bendahara.donasi.index')->with('success', "Donasi {$kode} berhasil dihapus.");
     }
 
     public function validasi(Request $request, Donasi $donasi)

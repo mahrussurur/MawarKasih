@@ -32,7 +32,7 @@ it('shows finance, donation, report, and profile menus to treasurers only', func
     $this->actingAs($bendahara)
         ->get(route('bendahara.dashboard'))
         ->assertOk()
-        ->assertSee(['Data Donasi', 'Transaksi Keuangan', 'Laporan Keuangan', 'Profil Saya'])
+        ->assertSee(['Data Donasi', 'Keuangan', 'Laporan Keuangan', 'Profil Saya'])
         ->assertDontSee(['Data Anak Asuh', 'Data Kegiatan', 'Dokumen Administrasi']);
 });
 

@@ -11,7 +11,7 @@
         </a>
     </div>
 
-    <form method="POST" action="{{ route('admin.keuangan.update', $transaksi->id) }}" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
+    <form method="POST" action="{{ route('admin.keuangan.update', ['transaksi' => $transaksi]) }}" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
         @csrf @method('PUT')
         
         <h3 class="text-lg font-bold text-gray-900 mb-6">Ubah Informasi Transaksi</h3>
@@ -56,4 +56,3 @@
     </form>
 </div>
 @endsection
-
