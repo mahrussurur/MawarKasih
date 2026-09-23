@@ -110,12 +110,7 @@
                         <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->kode_donasi }}</td>
                         <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->nama_donatur ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">
-                            @if($item->donatur_id)
-                                <span class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold text-emerald-800">Tetap</span>
-                                <!-- <div class="mt-1 text-[11px] text-gray-500">ID: {{ $item->donatur_id }}</div> -->
-                            @else
-                                <span class="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-[11px] font-semibold text-gray-700">Umum</span>
-                            @endif
+                            <span class="inline-flex rounded-md px-2 py-1 text-xs font-semibold ring-1 ring-inset {{ $item->donatur_id ? 'bg-green-50 text-green-700 ring-green-600/20' : 'bg-gray-50 text-gray-700 ring-gray-600/10' }}">{{ $item->donatur_id ? 'Tetap' : 'Umum' }}</span>
                         </td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->no_hp ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($item->tanggal)->format('d - m - Y') }}</td>
@@ -142,12 +137,12 @@
                         <td class="px-6 py-4 text-center">
                             @php
                                 $statusClasses = [
-                                    'pending' => 'bg-amber-100 text-amber-800',
-                                    'diterima' => 'bg-emerald-100 text-emerald-800',
-                                    'ditolak' => 'bg-red-100 text-red-800',
+                                    'pending' => 'bg-amber-50 text-amber-700 ring-amber-600/20',
+                                    'diterima' => 'bg-green-50 text-green-700 ring-green-600/20',
+                                    'ditolak' => 'bg-red-50 text-red-700 ring-red-600/10',
                                 ];
                             @endphp
-                            <span class="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold {{ $statusClasses[$item->status] ?? 'bg-gray-100 text-gray-700' }}">
+                            <span class="inline-flex rounded-md px-2 py-1 text-xs font-semibold ring-1 ring-inset {{ $statusClasses[$item->status] ?? 'bg-gray-50 text-gray-700 ring-gray-600/10' }}">
                                 {{ ucfirst($item->status) }}
                             </span>
                         </td>
