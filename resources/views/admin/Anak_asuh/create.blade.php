@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('page-title', 'Data Anak Asuh')
-@section('title', 'Data Anak Asuh | Panti Asuhan Mawar Kasih')
 
 @section('content')
 <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
@@ -113,9 +112,9 @@
                     </div>
                 </div>
 
-                <!-- Upload Foto Anak -->
+                <!-- Foto Anak -->
                 <div class="mb-8">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Upload Foto Anak</label>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Foto Anak</label>
                     <input type="file" id="foto_input" name="foto" accept="image/*" class="w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-gray-200 rounded-xl bg-gray-50">
                     <div id="preview_container" class="mt-3 hidden">
                         <img id="foto_preview" src="#" alt="Preview Foto" class="max-h-48 w-auto rounded-lg object-cover border border-gray-200 shadow-sm">

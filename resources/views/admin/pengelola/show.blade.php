@@ -9,67 +9,177 @@
     $nama = $profile?->nama ?? $user->username;
     $foto = $usesPengelolaProfile ? $profile?->foto : null;
 @endphp
-<div class="mx-auto max-w-3xl">
-    <div class="mb-4">
-        <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 transition hover:text-gray-800">
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-            Kembali ke Data {{ $roleLabel }}
+<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+    <!-- Header -->
+    <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
+        <div class="min-w-0">
+            <h2 class="text-lg font-bold text-white truncate">Detail {{ $roleLabel }}</h2>
+            <p class="text-xs md:text-sm text-gray-200">Informasi lengkap data {{ $roleLabel }}.</p>
+        </div>
+        <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-200 flex items-center transition-colors whitespace-nowrap">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            <span class="hidden sm:inline">Kembali</span>
         </a>
     </div>
 
-    <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
-        <div class="flex flex-col items-start gap-6 sm:flex-row">
-            <div class="shrink-0">
+    <div class="p-4 md:p-6">
+
+        <!-- Layout: Foto di atas (mobile) / kiri (desktop) -->
+        <div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
+
+            <!-- Foto Section -->
+            <div class="flex flex-col items-center gap-3 flex-shrink-0">
                 @if($foto)
-                    <img src="{{ asset('storage/' . $foto) }}" alt="{{ $nama }}" class="h-24 w-24 rounded-2xl object-cover ring-4 ring-gray-100" />
+                    <button type="button"
+                            onclick="openImagePreview('{{ asset('storage/' . $foto) }}')"
+                            aria-label="Perbesar foto {{ $nama }}">
+                        <img src="{{ asset('storage/' . $foto) }}"
+                             class="w-32 h-32 md:w-40 md:h-40 rounded-lg object-cover border-2 border-gray-200 cursor-pointer transition duration-200 hover:scale-105"
+                             alt="Foto {{ $nama }}"
+                             title="Klik untuk perbesar">
+                    </button>
                 @else
-                    <div class="flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-2xl font-bold text-white">
+                    <div class="flex w-32 h-32 md:w-40 md:h-40 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-4xl font-bold text-white border-2 border-gray-200">
                         {{ strtoupper(substr($nama, 0, 1)) }}
                     </div>
                 @endif
+                <div class="text-center">
+                    <span class="text-base md:text-lg font-bold text-gray-900 block truncate max-w-[180px] md:max-w-none">
+                        {{ $nama }}
+                    </span>
+                    <span class="inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-semibold {{ $user->status === 'aktif' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700' }}">
+                        {{ ucfirst(str_replace('_', ' ', $user->status)) }}
+                    </span>
+                </div>
             </div>
-            <div class="min-w-0 flex-1">
-                <h2 class="text-xl font-bold text-gray-900">{{ $nama }}</h2>
-                <p class="text-sm text-gray-500">{{ $roleLabel }} &bull; {{ $user->email }}</p>
-                <span class="mt-2 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold {{ $user->status === 'aktif' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700' }}">
-                    {{ ucfirst(str_replace('_', ' ', $user->status)) }}
-                </span>
-            </div>
-            <a href="{{ route('admin.pengelola.edit', [$roleFilter, $user->id]) }}" class="inline-flex items-center gap-1.5 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-700 transition hover:bg-amber-100">
-                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                Edit Profil
-            </a>
-        </div>
 
-        <div class="mt-6 grid grid-cols-1 gap-4 border-t border-gray-100 pt-6 sm:grid-cols-2">
-            @if($usesPengelolaProfile)
-                @foreach(['jabatan' => 'Jabatan', 'jenis_kelamin' => 'Jenis Kelamin', 'tempat_lahir' => 'Tempat Lahir', 'tanggal_lahir' => 'Tanggal Lahir', 'no_hp' => 'No. HP', 'alamat' => 'Alamat'] as $field => $label)
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">{{ $label }}</p>
-                        <p class="mt-0.5 text-sm text-gray-900">
-                            @if($field === 'jenis_kelamin')
+            <!-- Divider horizontal (mobile only) -->
+            <div class="md:hidden w-full h-px bg-gray-200"></div>
+
+            <!-- Detail Section -->
+            <div class="w-full space-y-2.5">
+
+                @if($usesPengelolaProfile)
+                    <!-- Jabatan -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">Jabatan</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $profile?->jabatan ?? '-' }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Jenis Kelamin -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">Jenis Kelamin</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">
                                 {{ $profile?->jenis_kelamin === 'L' ? 'Laki-laki' : ($profile?->jenis_kelamin === 'P' ? 'Perempuan' : '-') }}
-                            @elseif($field === 'tanggal_lahir')
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Tempat Lahir -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">Tempat Lahir</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $profile?->tempat_lahir ?? '-' }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Tanggal Lahir -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">Tanggal Lahir</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">
                                 {{ $profile?->tanggal_lahir?->format('d M Y') ?? '-' }}
-                            @else
-                                {{ $profile?->$field ?? '-' }}
-                            @endif
-                        </p>
+                            </span>
+                        </div>
                     </div>
-                @endforeach
-            @else
-                @foreach(['username' => 'Username', 'no_hp' => 'No. HP', 'alamat' => 'Alamat'] as $field => $label)
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-gray-400">{{ $label }}</p>
-                        <p class="mt-0.5 text-sm text-gray-900">{{ $field === 'username' ? $user->username : ($profile?->$field ?? '-') }}</p>
+
+                    <!-- No. HP -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">No. HP</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $profile?->no_hp ?? '-' }}</span>
+                        </div>
                     </div>
-                @endforeach
-            @endif
+
+                    <!-- Alamat -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">Alamat</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $profile?->alamat ?? '-' }}</span>
+                        </div>
+                    </div>
+
+                @else
+                    <!-- Username -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">Username</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $user->username }}</span>
+                        </div>
+                    </div>
+
+                    <!-- No. HP -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">No. HP</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $profile?->no_hp ?? '-' }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Alamat -->
+                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">Alamat</span>
+                            <span class="text-gray-400">:</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $profile?->alamat ?? '-' }}</span>
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Divider Akun Login -->
+                <p class="pt-1 text-xs font-bold uppercase tracking-wide text-gray-500 border-b border-gray-200 pb-1">Akun Login</p>
+
+                <!-- Email -->
+                <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">Email</span>
+                        <span class="text-gray-400">:</span>
+                        <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $user->email }}</span>
+                    </div>
+                </div>
+
+                <!-- Username (hanya untuk pengelola profile) -->
+                @if($usesPengelolaProfile)
+                <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-semibold text-gray-600 w-32 flex-shrink-0">Username</span>
+                        <span class="text-gray-400">:</span>
+                        <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $user->username }}</span>
+                    </div>
+                </div>
+                @endif
+
+            </div>
         </div>
 
         @if($usesDonaturProfile)
-            <div class="mt-6 border-t border-gray-100 pt-6">
-                <h3 class="mb-3 text-sm font-bold text-gray-900">Riwayat Donasi Terbaru</h3>
+            <!-- Riwayat Donasi -->
+            <div class="mt-6 pt-4 border-t border-gray-200">
+                <p class="mb-3 text-xs font-bold uppercase tracking-wide text-gray-500">Riwayat Donasi Terbaru</p>
                 @if($donasi->isNotEmpty())
                     <div class="overflow-x-auto rounded-xl border border-gray-200">
                         <table class="w-full text-left text-sm">
@@ -98,6 +208,22 @@
                 @endif
             </div>
         @endif
+
+        <!-- Tombol Aksi -->
+        <div class="mt-6 pt-4 border-t border-gray-200 flex flex-wrap gap-3 justify-center">
+            <a href="{{ route('admin.pengelola.edit', [$roleFilter, $user->id]) }}"
+               class="rounded-xl px-5 py-2 text-sm font-semibold text-amber-600 border border-amber-500 bg-yellow-100 transition hover:bg-amber-500 hover:text-white">
+                Edit
+            </a>
+            <button type="button"
+                    onclick="openDeleteModal(this)"
+                    data-delete-route="{{ route('admin.pengelola.destroy', [$roleFilter, $user->id]) }}"
+                    data-name="{{ $nama }}"
+                    class="rounded-xl px-5 py-2 text-sm font-semibold text-red-500 border border-red-500 bg-red-100 transition hover:bg-red-500 hover:text-white">
+                Hapus
+            </button>
+        </div>
+
     </div>
 </div>
 @endsection

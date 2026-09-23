@@ -11,10 +11,6 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    /**
-     * List account credentials and account status only. Profile information is
-     * intentionally managed through the role-specific profile screens.
-     */
     public function index(Request $request): View
     {
         $query = User::query()->latest();
@@ -42,19 +38,21 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
-    /**
-     * Update credentials and account status without permitting role changes.
-     */
     public function update(Request $request, User $user): RedirectResponse
     {
         $validated = $request->validate([
+            'role' => ['required', 'in:admin,bendahara,sekretaris,pengasuh,donatur'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username,'.$user->id],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'password' => ['nullable', 'string', 'min:8'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'status' => ['required', 'in:aktif,tidak_aktif'],
+        ], [
+            'password.min' => 'Password minimal harus 8 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.',
         ]);
 
         $accountData = [
+            'role' => $validated['role'],
             'username' => $validated['username'],
             'email' => $validated['email'],
             'status' => $validated['status'],
@@ -67,5 +65,13 @@ class UserController extends Controller
         $user->update($accountData);
 
         return redirect()->route('users.index')->with('success', 'Akun berhasil diperbarui.');
+    }
+    public function toggleStatus(User $user): RedirectResponse
+    {
+        $user->update([
+            'status' => $user->status === 'aktif' ? 'tidak_aktif' : 'aktif',
+        ]);
+
+        return back()->with('success', 'Status akun berhasil diubah.');
     }
 }

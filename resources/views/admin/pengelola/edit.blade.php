@@ -1,22 +1,28 @@
 @extends('layouts.app')
 
-@section('title', 'Edit ' . $roleLabel)
-@section('page-title', 'Edit ' . $roleLabel)
+@section('title', 'Data' . $roleLabel)
+@section('page-title', 'Data ' . $roleLabel)
 
 @section('content')
 @php
     $profile = $usesPengelolaProfile ? $user->profilPengelola : $user->profilDonatur;
 @endphp
-<div class="mx-auto max-w-3xl">
-    <div class="mb-4">
-        <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 transition hover:text-gray-800">
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-            Kembali ke Data {{ $roleLabel }}
+<div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <div class="flex items-center justify-between gap-4 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+        <div>
+            <h2 class="text-lg font-bold text-white">Edit Data {{ $roleLabel }}</h2>
+            <p class="text-sm text-blue-100">Perbarui informasi profil {{ strtolower($roleLabel) }}.</p>
+        </div>
+        <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            <span class="hidden sm:inline">Kembali</span>
         </a>
     </div>
 
-    <form method="POST" action="{{ route('admin.pengelola.update', [$roleFilter, $user->id]) }}" enctype="multipart/form-data" class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
-        @csrf @method('PUT')
+    <form method="POST" action="{{ route('admin.pengelola.update', [$roleFilter, $user->id]) }}" enctype="multipart/form-data" class="p-4 md:p-6">
+        @csrf @method('PATCH')
 
         @if($errors->any())
             <div class="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -27,21 +33,12 @@
         @endif
 
         <div class="space-y-5">
-            <h3 class="border-b border-gray-100 pb-3 text-sm font-bold uppercase tracking-wide text-gray-500">Data Profil</h3>
 
             @if($usesPengelolaProfile)
-                <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Foto</label>
-                    @if($profile?->foto)
-                        <img src="{{ asset('storage/' . $profile->foto) }}" alt="Foto {{ $profile->nama }}" class="mb-2 h-16 w-16 rounded-xl object-cover" />
-                    @endif
-                    <input type="file" name="foto" accept="image/jpeg,image/png" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
-                </div>
-
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
-                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">Nama <span class="text-red-500">*</span></label>
-                        <input type="text" name="nama" value="{{ old('nama', $profile?->nama) }}" required class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">Nama</label>
+                        <input type="text" name="nama" value="{{ old('nama', $profile?->nama) }}" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div>
                         <label class="mb-1.5 block text-sm font-semibold text-gray-700">Jabatan</label>
@@ -92,36 +89,31 @@
                 <textarea name="alamat" rows="3" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500">{{ old('alamat', $profile?->alamat) }}</textarea>
             </div>
 
-            <h3 class="border-b border-gray-100 pb-3 pt-3 text-sm font-bold uppercase tracking-wide text-gray-500">Akun Login</h3>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Username <span class="text-red-500">*</span></label>
-                    <input type="text" name="username" value="{{ old('username', $user->username) }}" required autocomplete="username" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
-                </div>
-                <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Email <span class="text-red-500">*</span></label>
-                    <input type="email" name="email" value="{{ old('email', $user->email) }}" required autocomplete="email" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
-                </div>
+            <div>
+                <label class="text-sm font-bold text-gray-800 block mb-2">Foto {{ $roleLabel }}</label>
+            
+                @if($profile->foto)
+                    <div class="mb-3">
+                        <p class="text-sm text-gray-500 mb-1">Foto saat ini:</p>
+                        <img src="{{ asset('storage/' . $profile->foto) }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
+                    </div>
+                @endif
+                <input type="file" name="foto" accept="image/*" class="w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-gray-200 rounded-xl bg-gray-50">
+                <p class="text-xs text-gray-500 mt-2">Biarkan kosong jika tidak ingin mengubah foto. Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
             </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Password Baru</label>
-                    <input type="password" name="password" autocomplete="new-password" placeholder="Kosongkan jika tidak diubah" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
-                </div>
-                <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Status <span class="text-red-500">*</span></label>
-                    <select name="status" required class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
-                        <option value="aktif" @selected(old('status', $user->status) === 'aktif')>Aktif</option>
-                        <option value="tidak_aktif" @selected(old('status', $user->status) === 'tidak_aktif')>Tidak Aktif</option>
-                    </select>
-                </div>
-            </div>
+
         </div>
 
-        <div class="mt-8 flex justify-end gap-3 border-t border-gray-100 pt-6">
-            <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="rounded-xl border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50">Batal</a>
-            <button type="submit" class="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">Simpan Perubahan</button>
+        <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
+            <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
+                Batal
+            </a>
+            <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+                Simpan
+            </button>
         </div>
     </form>
 </div>
+
+
 @endsection

@@ -88,7 +88,7 @@ class PengelolaController extends Controller
                     'email' => $validated['email'],
                     'password' => Hash::make($validated['password']),
                     'role' => $roleFilter,
-                    'status' => $validated['status'],
+                    'status' => 'aktif',
                 ]);
 
                 $user->profilPengelola()->create([
@@ -162,9 +162,6 @@ class PengelolaController extends Controller
         }
 
         $validated = $this->validatedPengelolaData($request, $user);
-        // A profile normally already exists through the backfill migration.  The
-        // explicit key also keeps an update safe for an older account that has
-        // not been backfilled yet.
         $profile = $user->profilPengelola()->firstOrNew([
             'user_id' => $user->id,
         ]);
@@ -179,17 +176,6 @@ class PengelolaController extends Controller
 
                 $effectiveFoto = $storedFoto ?? $profile->foto;
 
-                $accountData = [
-                    'username' => $validated['username'],
-                    'email' => $validated['email'],
-                    'status' => $validated['status'],
-                ];
-
-                if (! empty($validated['password'])) {
-                    $accountData['password'] = Hash::make($validated['password']);
-                }
-
-                $user->update($accountData);
                 $profile->fill($this->profileData($validated, $effectiveFoto))->save();
             });
         } catch (\Throwable $exception) {
@@ -226,24 +212,13 @@ class PengelolaController extends Controller
 
     public function toggleStatus(string $roleFilter, User $user)
     {
-        $this->ensureSupportedRole($roleFilter);
-        $this->ensureMatchingRole($roleFilter, $user);
-
-        $user->update([
-            'status' => $user->status === 'aktif' ? 'tidak_aktif' : 'aktif',
-        ]);
-
-        return back()->with('success', 'Status akun berhasil diubah.');
+        abort(404);
     }
 
     private function validatedPengelolaData(Request $request, ?User $user = null): array
     {
-        return $request->validate([
+        $rules = [
             'nama' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users,username'.($user ? ','.$user->id : '')],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'.($user ? ','.$user->id : '')],
-            'password' => [$user ? 'nullable' : 'required', 'string', 'min:8'],
-            'status' => ['required', 'in:aktif,tidak_aktif'],
             'foto' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
             'tempat_lahir' => ['nullable', 'string', 'max:255'],
             'tanggal_lahir' => ['nullable', 'date'],
@@ -251,7 +226,15 @@ class PengelolaController extends Controller
             'jenis_kelamin' => ['nullable', 'in:L,P'],
             'no_hp' => ['nullable', 'string', 'max:20'],
             'alamat' => ['nullable', 'string'],
-        ]);
+        ];
+
+        if (!$user) {
+            $rules['username'] = ['required', 'string', 'max:255', 'unique:users,username'];
+            $rules['email'] = ['required', 'email', 'max:255', 'unique:users,email'];
+            $rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
+        }
+
+        return $request->validate($rules);
     }
 
     private function profileData(array $validated, ?string $foto): array
@@ -278,7 +261,7 @@ class PengelolaController extends Controller
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
                 'role' => 'donatur',
-                'status' => $validated['status'],
+                'status' => 'aktif',
             ]);
 
             $user->profilDonatur()->create($this->donaturProfileData($validated));
@@ -296,17 +279,6 @@ class PengelolaController extends Controller
         ]);
 
         DB::transaction(function () use ($validated, $user, $profile): void {
-            $accountData = [
-                'username' => $validated['username'],
-                'email' => $validated['email'],
-                'status' => $validated['status'],
-            ];
-
-            if (! empty($validated['password'])) {
-                $accountData['password'] = Hash::make($validated['password']);
-            }
-
-            $user->update($accountData);
             $profile->fill($this->donaturProfileData($validated))->save();
         });
 
@@ -316,15 +288,19 @@ class PengelolaController extends Controller
 
     private function validatedDonaturData(Request $request, ?User $user = null): array
     {
-        return $request->validate([
+        $rules = [
             'nama' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:users,username'.($user ? ','.$user->id : '')],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'.($user ? ','.$user->id : '')],
-            'password' => [$user ? 'nullable' : 'required', 'string', 'min:8'],
-            'status' => ['required', 'in:aktif,tidak_aktif'],
             'no_hp' => ['nullable', 'string', 'max:20'],
             'alamat' => ['nullable', 'string'],
-        ]);
+        ];
+
+        if (!$user) {
+            $rules['username'] = ['required', 'string', 'max:255', 'unique:users,username'];
+            $rules['email'] = ['required', 'email', 'max:255', 'unique:users,email'];
+            $rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
+        }
+
+        return $request->validate($rules);
     }
 
     private function donaturProfileData(array $validated): array

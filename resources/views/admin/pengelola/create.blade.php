@@ -1,124 +1,209 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah ' . $roleLabel)
-@section('page-title', 'Tambah ' . $roleLabel)
+@section('page-title', 'Data ' . $roleLabel)
 
 @section('content')
-<div class="mx-auto max-w-3xl">
-    <div class="mb-4">
-        <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 transition hover:text-gray-800">
-            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-            Kembali ke Data {{ $roleLabel }}
+<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+
+    <!-- Header -->
+    <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
+        <div class="min-w-0">
+            <h2 class="text-lg font-bold text-white truncate">Tambah Data {{ $roleLabel }}</h2>
+            <p class="text-xs md:text-sm text-gray-300">Formulir Penambahan Data {{ $roleLabel }}.</p>
+        </div>
+        <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            <span class="hidden sm:inline">Kembali</span>
         </a>
     </div>
 
-    <form method="POST" action="{{ route('admin.pengelola.store', $roleFilter) }}" enctype="multipart/form-data" class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
-        @csrf
-
-        @if($errors->any())
-            <div class="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                <ul class="ml-4 list-disc space-y-1">
-                    @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
-                </ul>
-            </div>
-        @endif
-
-        <div class="space-y-5">
-            <h3 class="border-b border-gray-100 pb-3 text-sm font-bold uppercase tracking-wide text-gray-500">Data Profil</h3>
+    <div class="p-4 md:p-6">
+        <form method="POST" action="{{ route('admin.pengelola.store', $roleFilter) }}" enctype="multipart/form-data">
+            @csrf
 
             @if($usesPengelolaProfile)
-                <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Foto</label>
-                    <input type="file" name="foto" accept="image/jpeg,image/png" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
-                    <p class="mt-1.5 text-xs text-gray-500">JPG atau PNG, maksimal 2 MB.</p>
+                <!-- Foto -->
+                <div class="mb-5">
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Upload Foto</label>
+                    <input type="file" id="foto_input" name="foto" accept="image/jpeg,image/png,image/jpg"
+                        class="w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-gray-200 rounded-xl bg-gray-50">
+                    <div id="preview_container" class="mt-3 hidden">
+                        <img id="foto_preview" src="#" alt="Preview Foto" class="max-h-48 w-auto rounded-lg object-cover border border-gray-200 shadow-sm">
+                        <button type="button" id="remove_preview" class="mt-2 text-sm text-red-600 hover:text-red-700 font-medium focus:outline-none">Hapus Foto</button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Format: JPG, PNG. Maksimal 2MB.</p>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <!-- Nama & Jabatan -->
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                     <div>
-                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">Nama <span class="text-red-500">*</span></label>
-                        <input type="text" name="nama" value="{{ old('nama') }}" required class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        <label class="text-sm font-bold text-gray-800 block mb-2">Nama <span class="text-red-500">*</span></label>
+                        <input type="text" name="nama" value="{{ old('nama') }}" placeholder="Masukkan Nama Lengkap..."
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">Jabatan</label>
-                        <input type="text" name="jabatan" value="{{ old('jabatan') }}" placeholder="Contoh: Kepala Pengasuh" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div>
-                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">Tempat Lahir</label>
-                        <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir') }}" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
-                    </div>
-                    <div>
-                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">Tanggal Lahir</label>
-                        <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        <label class="text-sm font-bold text-gray-800 block mb-2">Jabatan</label>
+                        <input type="text" name="jabatan" value="{{ old('jabatan') }}" placeholder="Contoh: Kepala Pengasuh"
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <!-- Tempat & Tanggal Lahir -->
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                     <div>
-                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">Jenis Kelamin</label>
-                        <select name="jenis_kelamin" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
-                            <option value="">Pilih</option>
-                            <option value="L" @selected(old('jenis_kelamin') === 'L')>Laki-laki</option>
-                            <option value="P" @selected(old('jenis_kelamin') === 'P')>Perempuan</option>
-                        </select>
+                        <label class="text-sm font-bold text-gray-800 block mb-2">Tempat Lahir</label>
+                        <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir') }}" placeholder="Masukkan Tempat Lahir..."
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">No. HP</label>
-                        <input type="text" name="no_hp" value="{{ old('no_hp') }}" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        <label class="text-sm font-bold text-gray-800 block mb-2">Tanggal Lahir</label>
+                        <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-500">
                     </div>
                 </div>
+
+                <!-- Jenis Kelamin & No. HP -->
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
+                    <div>
+                        <label class="text-sm font-bold text-gray-800 block mb-2">Jenis Kelamin</label>
+                        <div class="flex gap-6 items-center mt-1">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="jenis_kelamin" value="L" class="w-4 h-4 text-blue-600 focus:ring-blue-500" @checked(old('jenis_kelamin') === 'L')>
+                                <span class="text-gray-700 font-medium">Laki-laki</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="jenis_kelamin" value="P" class="w-4 h-4 text-blue-600 focus:ring-blue-500" @checked(old('jenis_kelamin') === 'P')>
+                                <span class="text-gray-700 font-medium">Perempuan</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-sm font-bold text-gray-800 block mb-2">No. HP</label>
+                        <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Contoh: 08123456789"
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    </div>
+                </div>
+
             @else
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <!-- Donatur: Nama & No. HP -->
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                     <div>
-                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">Nama <span class="text-red-500">*</span></label>
-                        <input type="text" name="nama" value="{{ old('nama') }}" required class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        <label class="text-sm font-bold text-gray-800 block mb-2">Nama <span class="text-red-500">*</span></label>
+                        <input type="text" name="nama" value="{{ old('nama') }}" placeholder="Masukkan Nama Lengkap..."
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                     </div>
                     <div>
-                        <label class="mb-1.5 block text-sm font-semibold text-gray-700">No. HP</label>
-                        <input type="text" name="no_hp" value="{{ old('no_hp') }}" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        <label class="text-sm font-bold text-gray-800 block mb-2">No. HP</label>
+                        <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Contoh: 08123456789"
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                     </div>
                 </div>
             @endif
 
-            <div>
-                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Alamat</label>
-                <textarea name="alamat" rows="3" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500">{{ old('alamat') }}</textarea>
+            <!-- Alamat -->
+            <div class="mb-5">
+                <label class="text-sm font-bold text-gray-800 block mb-2">Alamat</label>
+                <textarea name="alamat" rows="3" placeholder="Masukkan Alamat Lengkap..."
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('alamat') }}</textarea>
             </div>
 
-            <h3 class="border-b border-gray-100 pb-3 pt-3 text-sm font-bold uppercase tracking-wide text-gray-500">Akun Login</h3>
+            <!-- Akun Login -->
+            <p class="mb-4 mt-2 text-xs font-bold uppercase tracking-wide text-gray-500 border-b border-gray-100 pb-2">Akun Login</p>
 
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <!-- Username & Email -->
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Username <span class="text-red-500">*</span></label>
-                    <input type="text" name="username" value="{{ old('username') }}" required autocomplete="username" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Username <span class="text-red-500">*</span></label>
+                    <input type="text" name="username" value="{{ old('username') }}" placeholder="Masukkan Username..." required autocomplete="username"
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
                 <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Email <span class="text-red-500">*</span></label>
-                    <input type="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Email <span class="text-red-500">*</span></label>
+                    <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan Email..." required autocomplete="email"
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <!-- Password & Konfirmasi Password -->
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Password <span class="text-red-500">*</span></label>
-                    <input type="password" name="password" required autocomplete="new-password" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                    <label for="password" class="text-sm font-bold text-gray-800 block mb-2">Password <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <input id="password" type="password" name="password" placeholder="Masukkan Password..." required autocomplete="new-password"
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400 pr-12 @error('password') border-red-400 ring-1 ring-red-400 @enderror">
+                        <button type="button" onclick="togglePassword('password', 'icon-eye-pw', 'icon-eye-off-pw')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors" aria-label="Tampilkan password">
+                            <svg id="icon-eye-pw" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <circle cx="12" cy="12" r="3" stroke-width="2.5"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            <svg id="icon-eye-off-pw" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                            </svg>
+                        </button>
+                    </div>
+                    @error('password')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
                 </div>
+
                 <div>
-                    <label class="mb-1.5 block text-sm font-semibold text-gray-700">Status <span class="text-red-500">*</span></label>
-                    <select name="status" required class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500">
-                        <option value="aktif" @selected(old('status', 'aktif') === 'aktif')>Aktif</option>
-                        <option value="tidak_aktif" @selected(old('status') === 'tidak_aktif')>Tidak Aktif</option>
-                    </select>
+                    <label for="password_confirmation" class="text-sm font-bold text-gray-800 block mb-2">Konfirmasi Password <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Ulangi Password..." required autocomplete="new-password"
+                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400 pr-12">
+                        <button type="button" onclick="togglePassword('password_confirmation', 'icon-eye-conf', 'icon-eye-off-conf')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors" aria-label="Tampilkan konfirmasi password">
+                            <svg id="icon-eye-conf" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <circle cx="12" cy="12" r="3" stroke-width="2.5"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                            </svg>
+                            <svg id="icon-eye-off-conf" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="mt-8 flex justify-end gap-3 border-t border-gray-100 pt-6">
-            <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="rounded-xl border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 transition hover:bg-gray-50">Batal</a>
-            <button type="submit" class="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">Simpan {{ $roleLabel }}</button>
-        </div>
-    </form>
+            <!-- Tombol Aksi -->
+            <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-4 pb-2">
+                <a href="{{ route('admin.pengelola.index', $roleFilter) }}"
+                    class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
+                    Batal
+                </a>
+                <button type="submit"
+                    class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+                    Simpan
+                </button>
+            </div>
+
+        </form>
+    </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function togglePassword(inputId, iconOnId, iconOffId) {
+        const input = document.getElementById(inputId);
+        const iconOn = document.getElementById(iconOnId);
+        const iconOff = document.getElementById(iconOffId);
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            iconOn.classList.add('hidden');
+            iconOff.classList.remove('hidden');
+        } else {
+            input.type = 'password';
+            iconOn.classList.remove('hidden');
+            iconOff.classList.add('hidden');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        @if($usesPengelolaProfile)
+        // Aktifkan preview foto
+        setupImagePreview('foto_input', 'preview_container', 'foto_preview', 'remove_preview');
+        @endif
+    });
+</script>
+@endpush

@@ -1,19 +1,18 @@
 @extends('layouts.app')
 @section('page-title', 'Data Anak Asuh')
-@section('title', 'Data Anak Asuh | Panti Asuhan Mawar Kasih')
 
 @section('content')
 <div>
     <!-- Toolbar -->
     <div class="flex justify-between mb-4">
         <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ route('anak-asuh.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+            <a href="{{ route('anak-asuh.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 Tambah Anak Asuh
             </a>
         </div>
         <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ route('anak-asuh.cetak') }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm transition hover:border-gray-300 hover:bg-gray-100">
+            <a href="{{ route('anak-asuh.cetak') }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold transition hover:border-gray-300 hover:bg-gray-100">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                 Cetak Laporan
             </a>
@@ -43,7 +42,7 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center w-12">No</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 w-20">Foto</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">Foto</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Nama Lengkap</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Nama Panggilan</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Tempat, Tanggal Lahir</th>
@@ -61,13 +60,10 @@
                     @foreach($data as $index => $item)
                     <tr class="hover:bg-gray-50 transition-colors group">
                         <td class="px-6 py-4 text-center text-gray-700">{{ $data->firstItem() + $index }}</td>
-                        <td class="px-6 py-4 text-center">
-                            <button type="button"
-                                    class="inline-flex"
-                                    onclick="openImagePreview('{{ asset('storage/'.$item->foto) }}')"
-                                    aria-label="Perbesar foto {{ $item->nama }}">
+                        <td class="px-6 py-4">
+                            <button type="button" class="inline-flex" onclick="openImagePreview('{{ asset('storage/'.$item->foto) }}')">
                                 <img src="{{ asset('storage/'.$item->foto) }}"
-                                     class="w-12 h-12 rounded object-cover mx-auto cursor-pointer transition duration-200 hover:scale-105"
+                                     class="h-10 w-10 shrink-0 rounded-full object-cover cursor-pointer"
                                      alt="Foto {{ $item->nama }}"
                                      title="Klik untuk perbesar">
                             </button>

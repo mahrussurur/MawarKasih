@@ -24,6 +24,7 @@ Route::prefix('admin')
         Route::resource('anak-asuh', AnakAsuhController::class);
         // Manajemen akun login; profil dikelola dari menu Data Yayasan.
         Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
+        Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
         // Donasi - route cetak & aksi khusus didahulukan agar tidak tertimpa wildcard {donasi}
         Route::get('donasi/cetak', [DonasiController::class, 'cetak'])->name('donasi.cetak');
         Route::patch('donasi/{donasi}/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
@@ -51,9 +52,9 @@ Route::prefix('admin')
             Route::post('/', [PengelolaController::class, 'store'])->name('store');
             Route::get('/{user}', [PengelolaController::class, 'show'])->name('show');
             Route::get('/{user}/edit', [PengelolaController::class, 'edit'])->name('edit');
-            Route::put('/{user}', [PengelolaController::class, 'update'])->name('update');
+            Route::patch('/{user}', [PengelolaController::class, 'update'])->name('update');
             Route::delete('/{user}', [PengelolaController::class, 'destroy'])->name('destroy');
-            Route::patch('/{user}/toggle-status', [PengelolaController::class, 'toggleStatus'])->name('toggle-status');
+
         });
 
         // ── ROUTE PUBLIK (di luar middleware auth) ──

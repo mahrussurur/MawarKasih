@@ -49,7 +49,6 @@
                         id="username"
                         type="text"
                         name="username"
-                        value="{{ old('username') }}"
                         placeholder="Masukkan username"
                         autofocus
                         autocomplete="username"

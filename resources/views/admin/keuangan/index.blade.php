@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Data Keuangan')
 @section('page-title', 'Transaksi Keuangan')
 
 @section('content')
@@ -107,7 +106,7 @@
                                 </button>
                             </div>
                             @else
-                                <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">Sistem (Donasi)</span>
+                                <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">(Donasi)</span>
                             @endif
                         </td>
                     </tr>

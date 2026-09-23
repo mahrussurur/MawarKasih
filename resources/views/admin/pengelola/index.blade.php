@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@section('title', 'Data ' . ucfirst($roleLabel))
 @section('page-title', 'Data ' . ucfirst($roleLabel))
 
 @section('content')
@@ -28,6 +27,7 @@
             </form>
         </div>
 
+        <!-- Table Data -->
         @if($users->count() > 0)
         <div class="overflow-x-auto">
             <table class="w-full text-left divide-y divide-gray-200 text-sm border-b border-gray-200 whitespace-nowrap">
@@ -54,9 +54,9 @@
                         <td class="px-6 py-4 text-center text-gray-700">{{ $users->firstItem() + $i }}</td>
                         <td class="px-6 py-4">
                             @if($foto)
-                                <img src="{{ asset('storage/' . $foto) }}" alt="{{ $nama }}" class="h-9 w-9 rounded-full object-cover" />
+                                <img src="{{ asset('storage/' . $foto) }}" alt="{{ $nama }}" class="h-10 w-10 rounded-full object-cover" />
                             @else
-                                <div class="flex h-9 w-9 items-center justify-center rounded-full bg-gray-200 text-sm font-bold text-gray-600">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-sm font-bold text-gray-600">
                                     {{ strtoupper(substr($nama, 0, 1)) }}
                                 </div>
                             @endif
@@ -69,7 +69,7 @@
                                 {{ ucfirst(str_replace('_', ' ', $user->status)) }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
+                        <td class="text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
                             <div class="flex justify-center gap-1">
                                 <a href="{{ route('admin.pengelola.show', [$roleFilter, $user->id]) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600 border border-blue-400 hover:bg-blue-600 hover:text-white transition" title="Detail">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
@@ -77,12 +77,7 @@
                                 <a href="{{ route('admin.pengelola.edit', [$roleFilter, $user->id]) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber-600 border border-amber-400 hover:bg-amber-500 hover:text-white transition" title="Edit Profil">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                 </a>
-                                <form method="POST" action="{{ route('admin.pengelola.toggle-status', [$roleFilter, $user->id]) }}" class="inline">
-                                    @csrf @method('PATCH')
-                                    <button type="submit" class="inline-flex h-8 w-8 items-center justify-center rounded-lg {{ $user->status === 'aktif' ? 'bg-orange-50 text-orange-600 border border-orange-400 hover:bg-orange-500' : 'bg-emerald-50 text-emerald-600 border border-emerald-400 hover:bg-emerald-500' }} hover:text-white transition" title="{{ $user->status === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}">
-                                        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
-                                    </button>
-                                </form>
+
                                 <button type="button" class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-600 border border-red-400 hover:bg-red-600 hover:text-white transition"
                                     title="Hapus"
                                     data-delete-route="{{ route('admin.pengelola.destroy', [$roleFilter, $user->id]) }}"

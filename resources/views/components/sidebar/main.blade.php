@@ -7,7 +7,7 @@
                     onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'text-[11px] font-extrabold text-white/80\'>MTK</span>'">
             </div>
             <div class="sidebar-brand-text overflow-hidden whitespace-nowrap transition-all duration-200">
-                <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-white/50">Yayasan</div>
+                <div class="text-[10px] font-bold uppercase tracking-[0.18em] text-white/50">Panti asuhan</div>
                 <div class="mt-0.5 text-[15px] font-bold text-white">Mawar Kasih</div>
             </div>
         </div>

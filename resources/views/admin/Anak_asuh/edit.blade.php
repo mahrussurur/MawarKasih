@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('page-title', 'Data Anak Asuh')
-@section('title', 'Data Anak Asuh | Panti Asuhan Mawar Kasih')
 
 @section('content')
 <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">      
@@ -8,9 +7,9 @@
     <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
         <div class="min-w-0">
             <h2 class="text-lg font-bold text-white truncate">Edit Data Anak Asuh</h2>
-            <p class="text-xs md:text-sm text-gray-300">Ubah detail data anak asuh di bawah ini.</p>
+            <p class="text-xs text-gray-300">Ubah detail data anak asuh di bawah ini.</p>
         </div>
-        <a href="{{ route('anak-asuh.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
+        <a href="{{ route('anak-asuh.index') }}" class="text-xs font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
@@ -90,7 +89,7 @@
                 </div>
             </div>
             <div class="mb-8">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Foto Dokumentasi</label>
+                <label class="text-sm font-bold text-gray-800 block mb-2">Foto Anak Asuh</label>
             
                 @if($anakAsuh->foto)
                     <div class="mb-3">
@@ -106,7 +105,7 @@
                     Batal
                 </a>
                 <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
-                    Update
+                    Simpan
                 </button>
             </div>
         </form>

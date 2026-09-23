@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('page-title', 'Data Kegiatan')
-@section('title', 'Data Kegiatan | Panti Asuhan Mawar Kasih')
 
 @section('content')
 <div>
