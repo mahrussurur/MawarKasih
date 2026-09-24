@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('page-title', 'Transaksi Keuangan')
 
 @section('content')
@@ -22,13 +21,13 @@
     <!-- Toolbar -->
     <div class="flex justify-between mb-4">
         <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ route('admin.keuangan.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+            <a href="{{ route('admin.keuangan.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 Catat Keuangan
             </a>
         </div>
         <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ route('admin.keuangan.cetak', request()->only(['jenis', 'search'])) }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-semibold shadow-sm transition hover:border-gray-300 hover:bg-gray-100">
+            <a href="{{ route('admin.keuangan.cetak', request()->only(['jenis', 'search'])) }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-sm transition hover:border-gray-300 hover:bg-gray-100">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
                 Cetak Laporan
             </a>
@@ -63,35 +62,36 @@
                 </label>
             </form>
         </div>
-
+        
+        <!-- Table data -->
         @if($transaksi->count() > 0)
-        <div class="overflow-x-auto mt-4">
+        <div class="overflow-x-auto">
             <table class="w-full text-left text-sm whitespace-nowrap">
-                <thead class="bg-gray-50 border-b border-gray-100">
+                <thead class="bg-gray-50 border-b border-gray-200">
                     <tr>
-                        <th class="px-4 py-3 font-semibold text-gray-600 text-center w-10">No</th>
-                        <th class="px-4 py-3 font-semibold text-gray-600">Tanggal</th>
-                        <th class="px-4 py-3 font-semibold text-gray-600">Jenis</th>
-                        <th class="px-4 py-3 font-semibold text-gray-600">Nominal</th>
-                        <th class="px-4 py-3 font-semibold text-gray-600">Keterangan</th>
-                        <th class="px-4 py-3 font-semibold text-gray-600 text-center">Aksi</th>
+                        <th class="px-6 py-4 font-semibold text-gray-600 text-center w-10">No</th>
+                        <th class="px-6 py-4 font-semibold text-gray-600">Tanggal</th>
+                        <th class="px-6 py-4 font-semibold text-gray-600">Jenis</th>
+                        <th class="px-6 py-4 font-semibold text-gray-600">Nominal</th>
+                        <th class="px-6 py-4 font-semibold text-gray-600">Keterangan</th>
+                        <th class="px-6 py-4 font-semibold text-gray-600 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @foreach($transaksi as $index => $item)
                     <tr class="hover:bg-gray-50 transition-colors">
-                        <td class="px-4 py-3 text-center text-gray-600">{{ $transaksi->firstItem() + $index }}</td>
-                        <td class="px-4 py-3 text-gray-600">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
-                        <td class="px-4 py-3 font-semibold">
+                        <td class="px-6 py-4 text-center text-gray-600">{{ $transaksi->firstItem() + $index }}</td>
+                        <td class="px-6 py-4 text-gray-600">{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
+                        <td class="px-6 py-4 text-xs font-semibold">
                             @if($item->jenis === 'pemasukan')
                                 <span class="text-emerald-600">Pemasukan</span>
                             @else
                                 <span class="text-red-600">Pengeluaran</span>
                             @endif
                         </td>
-                        <td class="px-4 py-3 font-bold text-gray-900">Rp {{ number_format($item->nominal, 0, ',', '.') }}</td>
-                        <td class="px-4 py-3 text-gray-600 whitespace-normal min-w-[250px]">{{ $item->keterangan }}</td>
-                        <td class="px-4 py-3 text-center">
+                        <td class="px-6 py-4 font-bold text-gray-900">Rp {{ number_format($item->nominal, 0, ',', '.') }}</td>
+                        <td class="px-6 py-4 text-gray-600 whitespace-normal min-w-[250px]">{{ $item->keterangan }}</td>
+                        <td class="px-6 py-4 text-center">
                             @if(!$item->donasi_id)
                             <div class="flex justify-center gap-2">
                                 <a href="{{ route('admin.keuangan.edit', $item->id) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-amber-400 bg-amber-50 text-amber-600 transition hover:bg-amber-500 hover:text-white" title="Edit">

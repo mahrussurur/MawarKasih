@@ -113,13 +113,16 @@
             }
 
             .sidebar-collapsed .sidebar .nav-item {
+                height: 42px;
+                padding: 0;
                 justify-content: center;
-                padding-left: 0;
-                padding-right: 0;
                 gap: 0;
             }
 
-            /* Tooltip Hover pada Desktop Collapsed */
+            .sidebar-collapsed .sidebar .sidebar-nav {
+                padding-right: 6px;
+            }
+
             .sidebar-collapsed .sidebar .nav-item::after {
                 content: attr(data-tooltip);
                 position: absolute;

@@ -31,13 +31,13 @@
         </form>
     </div>
 
-    <!-- table data user -->
+    <!-- table data -->
     @if($users->isNotEmpty())
         <div class="overflow-x-auto">
-            <table class="w-full text-left divide-y divide-gray-200 text-sm border-b border-gray-200 whitespace-nowrap">
-                <thead class="bg-gray-50">
+            <table class="w-full text-left text-sm whitespace-nowrap">
+                <thead class="bg-gray-50 border-b border-gray-200">
                     <tr>
-                        <th class="w-12 px-6 py-4 text-center font-semibold text-gray-700">No</th>
+                        <th class="px-6 py-4 text-center font-semibold text-gray-700 w-12">No</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Username</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Email</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Role</th>

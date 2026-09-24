@@ -30,8 +30,8 @@
         <!-- Table Data -->
         @if($users->count() > 0)
         <div class="overflow-x-auto">
-            <table class="w-full text-left divide-y divide-gray-200 text-sm border-b border-gray-200 whitespace-nowrap">
-                <thead class="bg-gray-50">
+            <table class="w-full text-left text-sm whitespace-nowrap">
+                <thead class="bg-gray-50 border-b border-gray-200">
                     <tr>
                         <th class="px-6 py-4 font-semibold text-gray-700 w-12 text-center">No</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Foto</th>
