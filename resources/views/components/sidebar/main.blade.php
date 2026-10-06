@@ -71,6 +71,11 @@
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 <span class="nav-text">Data Anak Asuh</span>
             </a>
+            <a href="{{ route('alumni.index') }}" data-tooltip="Alumni" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('alumni.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('alumni.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6" /></svg>
+                <span class="nav-text">Data Alumni</span>
+            </a>
             <a href="{{ route('kegiatan.index') }}" data-tooltip="Data Kegiatan" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('kegiatan.*') ? 'bg-white/15 text-white font-bold' : '' }}">
                 <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('kegiatan.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="3" ry="3"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
@@ -126,6 +131,11 @@
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 <span class="nav-text">Data Anak Asuh</span>
             </a>
+            <a href="{{ route('sekretaris.alumni.index') }}" data-tooltip="Alumni" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('sekretaris.alumni.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('sekretaris.alumni.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6"/></svg>
+                <span class="nav-text">Data Alumni</span>
+            </a>
             <a href="{{ route('sekretaris.kegiatan.index') }}" data-tooltip="Data Kegiatan" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('sekretaris.kegiatan.*') ? 'bg-white/15 text-white font-bold' : '' }}">
                 <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('sekretaris.kegiatan.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="3" ry="3"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
@@ -157,6 +167,11 @@
                 <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('pengasuh.anak-asuh.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                 <span class="nav-text">Data Anak Asuh</span>
+            </a>
+            <a href="{{ route('pengasuh.alumni.index') }}" data-tooltip="Alumni" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('pengasuh.alumni.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('pengasuh.alumni.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6" /></svg>
+                <span class="nav-text">Data Alumni</span>
             </a>
         @elseif($role === 'donatur')
             <div class="nav-label mt-3 overflow-hidden whitespace-nowrap px-2.5 pt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 transition-all duration-200">

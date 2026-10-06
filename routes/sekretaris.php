@@ -29,4 +29,8 @@ Route::middleware(['auth', 'role:sekretaris'])->prefix('sekretaris')->name('sekr
     // Data Keuangan
     Route::get('/keuangan/cetak', [\App\Http\Controllers\Sekretaris\KeuanganController::class, 'cetak'])->name('keuangan.cetak');
     Route::get('/keuangan', [\App\Http\Controllers\Sekretaris\KeuanganController::class, 'index'])->name('keuangan.index');
+
+    // Data Alumni (read-only)
+    Route::get('/alumni', [\App\Http\Controllers\Sekretaris\AlumniController::class, 'index'])->name('alumni.index');
+    Route::get('/alumni/{alumni}', [\App\Http\Controllers\Sekretaris\AlumniController::class, 'show'])->name('alumni.show');
 });

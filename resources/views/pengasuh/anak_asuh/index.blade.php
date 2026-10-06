@@ -106,17 +106,17 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
                                 </a>
-                                <!-- Tombol Hapus -->
-                                <button type="button"
-                                        class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-red-400 bg-red-50 text-red-600 transition hover:bg-red-600 hover:text-white"
-                                        title="Hapus"
-                                        data-delete-route="{{ route('pengasuh.anak-asuh.destroy', $item->id) }}"
-                                        data-name="{{ $item->nama }}"
-                                        onclick="openDeleteModal(this)">
+                                <!-- Tombol Jadikan Alumni -->
+                                <a href="{{ route('pengasuh.alumni.create', $item->id) }}"
+                                        class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-purple-400 bg-purple-50 text-purple-600 transition hover:bg-purple-600 hover:text-white"
+                                        title="Jadikan Alumni">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                                        <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6" />
                                     </svg>
-                                </button>
+                                </a>
+
                             </div>
                         </td>
                     </tr>

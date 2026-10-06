@@ -142,13 +142,10 @@
             class="rounded-xl px-5 py-2 text-sm font-semibold text-amber-600 border border-amber-500 bg-yellow-100 transition hover:bg-amber-500 hover:text-white">
                 Edit
             </a>
-            <button type="button"
-                    onclick="openDeleteModal(this)"
-                    data-delete-route="{{ route('pengasuh.anak-asuh.destroy', $anakAsuh->id) }}"
-                    data-name="{{ $anakAsuh->nama }}"
-                    class="rounded-xl px-5 py-2 text-sm font-semibold text-red-500 border border-red-500 bg-red-100 transition hover:bg-red-500 hover:text-white">
-                Hapus
-            </button>
+            <a href="{{ route('pengasuh.alumni.create', $anakAsuh->id) }}"
+                class="rounded-xl px-5 py-2 text-sm font-semibold text-purple-600 border border-purple-500 bg-purple-100 transition hover:bg-purple-500 hover:text-white">
+                Jadikan Alumni
+            </a>
         </div>
     </div>
 </div>

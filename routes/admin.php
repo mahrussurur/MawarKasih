@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AnakAsuhController;
+use App\Http\Controllers\Admin\AlumniController;
 use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\DonasiController;
 use App\Http\Controllers\Admin\GaleriController;
@@ -22,6 +23,12 @@ Route::prefix('admin')
         // agar tidak tertimpa oleh route resource {anak_asuh}
         Route::get('/anak-asuh/cetak', [AnakAsuhController::class, 'cetak'])->name('anak-asuh.cetak');
         Route::resource('anak-asuh', AnakAsuhController::class);
+
+        // Alumni
+        Route::get('/anak-asuh/{anak_asuh_id}/jadikan-alumni', [AlumniController::class, 'create'])->name('alumni.create');
+        Route::post('/anak-asuh/{anak_asuh_id}/jadikan-alumni', [AlumniController::class, 'store'])->name('alumni.store');
+        Route::resource('alumni', AlumniController::class)->except(['create', 'store', 'destroy'])->parameters(['alumni' => 'alumni']);
+
         // Manajemen akun login; profil dikelola dari menu Data Yayasan.
         Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
         Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');

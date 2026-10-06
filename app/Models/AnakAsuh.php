@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AnakAsuh extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'anak_asuh';
 
@@ -25,4 +26,9 @@ class AnakAsuh extends Model
         'sekolah',
         'kelas',
     ];
+
+    public function alumni()
+    {
+        return $this->hasOne(Alumni::class);
+    }
 }

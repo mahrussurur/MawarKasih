@@ -4,7 +4,7 @@
 @section('content')
 <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">      
     <!-- Header -->
-    <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
+    <div class="border-b border-gray-200 bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4 flex justify-between items-center gap-4">
         <div class="min-w-0">
             <h2 class="text-lg font-bold text-white truncate">Edit Data Anak Asuh</h2>
             <p class="text-xs text-gray-300">Ubah detail data anak asuh di bawah ini.</p>
@@ -104,7 +104,7 @@
                 <a href="{{ route('anak-asuh.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
                     Batal
                 </a>
-                <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+                <button type="submit" class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
                     Simpan
                 </button>
             </div>
@@ -162,13 +162,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 inputIbu.value = '';
             }
         }
-        // 'Dhuafa' atau default: tampilkan semua
     }
 
-    // Jalankan saat halaman load (untuk edit form / old value)
     toggleParentFields();
-    
-    // Jalankan saat user ganti pilihan
     statusSelect.addEventListener('change', toggleParentFields);
 });
 </script>

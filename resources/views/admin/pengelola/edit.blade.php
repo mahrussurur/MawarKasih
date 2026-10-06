@@ -7,13 +7,13 @@
 @php
     $profile = $usesPengelolaProfile ? $user->profilPengelola : $user->profilDonatur;
 @endphp
-<div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-    <div class="flex items-center justify-between gap-4 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4">
+<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    <div class="border-b border-gray-200 bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4 flex justify-between items-center gap-4">
         <div>
             <h2 class="text-lg font-bold text-white">Edit Data {{ $roleLabel }}</h2>
-            <p class="text-sm text-blue-100">Perbarui informasi profil {{ strtolower($roleLabel) }}.</p>
+            <p class="text-xs text-gray-200">Perbarui informasi profil {{ strtolower($roleLabel) }}.</p>
         </div>
-        <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
+        <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="text-xs font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
@@ -108,7 +108,7 @@
             <a href="{{ route('admin.pengelola.index', $roleFilter) }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
                 Batal
             </a>
-            <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+            <button type="submit" class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
                 Simpan
             </button>
         </div>
