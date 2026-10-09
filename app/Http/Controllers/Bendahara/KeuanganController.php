@@ -4,12 +4,24 @@ namespace App\Http\Controllers\Bendahara;
 
 use App\Http\Controllers\Controller;
 use App\Models\TransaksiKeuangan;
+use App\Models\LaporanKeuanganBulanan;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Carbon;
 
 class KeuanganController extends Controller
 {
+    public function __construct(protected ImageService $imageService) {}
+
+    private function isPeriodLocked($tanggal): bool
+    {
+        $date = Carbon::parse($tanggal);
+        $laporan = LaporanKeuanganBulanan::where('tahun', $date->year)->where('bulan', $date->month)->first();
+        return $laporan && in_array($laporan->status, ['submitted', 'approved']);
+    }
+
     public function index(Request $request)
     {
         $query = TransaksiKeuangan::query()->latest('tanggal')->latest('id');
@@ -41,20 +53,36 @@ class KeuanganController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'jenis'      => 'required|in:pemasukan,pengeluaran',
+            'kategori'   => 'required|string|in:DONASI,PENDIDIKAN,KONSUMSI,KESEHATAN,OPERASIONAL,TRANSPORTASI,GAJI,LAINNYA',
             'nominal'    => 'required|numeric|min:1',
             'keterangan' => 'required|string|max:255',
             'tanggal'    => 'required|date',
+            'bukti_transaksi' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        TransaksiKeuangan::create([
+        if ($this->isPeriodLocked($request->tanggal)) {
+            return redirect()->back()->withInput()->with('error', 'Transaksi tidak dapat ditambah karena laporan keuangan pada bulan tersebut sudah dikunci (Submitted/Approved).');
+        }
+
+        $data = [
             'jenis'        => $request->jenis,
+            'kategori'     => $request->kategori,
             'nominal'      => $request->nominal,
             'keterangan'   => $request->keterangan,
             'tanggal'      => $request->tanggal,
             'dicatat_oleh' => Auth::id(),
-        ]);
+        ];
+
+        if ($request->hasFile('bukti_transaksi')) {
+            $data['bukti_transaksi'] = $this->imageService->uploadAndGenerateWebp(
+                $request->file('bukti_transaksi'),
+                'bukti_transaksi',
+            );
+        }
+
+        TransaksiKeuangan::create($data);
 
         return redirect()->route('bendahara.keuangan.index')->with('success', 'Data Keuangan berhasil ditambahkan.');
     }
@@ -74,19 +102,32 @@ class KeuanganController extends Controller
             return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa diedit secara manual.');
         }
 
-        $request->validate([
+        $validated = $request->validate([
             'jenis'      => 'required|in:pemasukan,pengeluaran',
+            'kategori'   => 'required|string|in:DONASI,PENDIDIKAN,KONSUMSI,KESEHATAN,OPERASIONAL,TRANSPORTASI,GAJI,LAINNYA',
             'nominal'    => 'required|numeric|min:1',
             'keterangan' => 'required|string|max:255',
             'tanggal'    => 'required|date',
+            'bukti_transaksi' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $keuangan->update([
-            'jenis'      => $request->jenis,
-            'nominal'    => $request->nominal,
-            'keterangan' => $request->keterangan,
-            'tanggal'    => $request->tanggal,
-        ]);
+        if ($this->isPeriodLocked($keuangan->tanggal) || $this->isPeriodLocked($request->tanggal)) {
+            return redirect()->back()->withInput()->with('error', 'Transaksi tidak dapat diubah karena laporan keuangan pada bulan lama atau baru sudah dikunci.');
+        }
+
+        $data = $request->only('jenis', 'kategori', 'nominal', 'keterangan', 'tanggal');
+
+        if ($request->hasFile('bukti_transaksi')) {
+            if ($keuangan->bukti_transaksi) {
+                $this->imageService->deleteImage($keuangan->bukti_transaksi);
+            }
+            $data['bukti_transaksi'] = $this->imageService->uploadAndGenerateWebp(
+                $request->file('bukti_transaksi'),
+                'bukti_transaksi',
+            );
+        }
+
+        $keuangan->update($data);
 
         return redirect()->route('bendahara.keuangan.index')->with('success', 'Data Keuangan berhasil diperbarui.');
     }
@@ -95,6 +136,14 @@ class KeuanganController extends Controller
     {
         if ($keuangan->donasi_id) {
             return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa dihapus. Tolak donasi tersebut jika ingin membatalkan.');
+        }
+
+        if ($this->isPeriodLocked($keuangan->tanggal)) {
+            return redirect()->back()->with('error', 'Transaksi tidak dapat dihapus karena laporan keuangan pada bulan tersebut sudah dikunci.');
+        }
+
+        if ($keuangan->bukti_transaksi) {
+            $this->imageService->deleteImage($keuangan->bukti_transaksi);
         }
 
         $keuangan->delete();

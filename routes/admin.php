@@ -40,14 +40,16 @@ Route::prefix('admin')
         Route::get('keuangan/cetak', [KeuanganController::class, 'cetak'])->name('admin.keuangan.cetak');
         Route::resource('keuangan', KeuanganController::class)->parameters([
             'keuangan' => 'transaksi',
-        ])->except(['show'])->names([
+        ])->only(['index'])->names([
             'index'   => 'admin.keuangan.index',
-            'create'  => 'admin.keuangan.create',
-            'store'   => 'admin.keuangan.store',
-            'edit'    => 'admin.keuangan.edit',
-            'update'  => 'admin.keuangan.update',
-            'destroy' => 'admin.keuangan.destroy',
         ]);
+
+        // Laporan Bulanan (Review dan Approval)
+        Route::get('laporan-bulanan', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'index'])->name('admin.laporan-bulanan.index');
+        Route::get('laporan-bulanan/{laporan}/cetak', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'cetak'])->name('admin.laporan-bulanan.cetak');
+        Route::get('laporan-bulanan/{laporan}', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'show'])->name('admin.laporan-bulanan.show');
+        Route::post('laporan-bulanan/{laporan}/approve', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'approve'])->name('admin.laporan-bulanan.approve');
+        Route::post('laporan-bulanan/{laporan}/return', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'return'])->name('admin.laporan-bulanan.return');
 
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('galeri',  GaleriController::class);

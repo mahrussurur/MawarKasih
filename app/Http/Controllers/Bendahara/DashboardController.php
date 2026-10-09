@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Bendahara;
 use App\Http\Controllers\Controller;
 use App\Models\Donasi;
 use App\Models\TransaksiKeuangan;
+use App\Models\LaporanKeuanganBulanan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
@@ -35,6 +37,26 @@ class DashboardController extends Controller
         $totalPengeluaran = TransaksiKeuangan::where('jenis', 'pengeluaran')->sum('nominal');
         $saldo = $totalPemasukan - $totalPengeluaran;
 
+        $now = Carbon::now();
+        $pemasukanBulanIni = TransaksiKeuangan::where('jenis', 'pemasukan')
+            ->whereMonth('tanggal', $now->month)
+            ->whereYear('tanggal', $now->year)
+            ->sum('nominal');
+            
+        $pengeluaranBulanIni = TransaksiKeuangan::where('jenis', 'pengeluaran')
+            ->whereMonth('tanggal', $now->month)
+            ->whereYear('tanggal', $now->year)
+            ->sum('nominal');
+            
+        $saldoBulanIni = $pemasukanBulanIni - $pengeluaranBulanIni;
+
+        $laporanCounts = [
+            'draft'     => LaporanKeuanganBulanan::where('status', 'draft')->count(),
+            'submitted' => LaporanKeuanganBulanan::where('status', 'submitted')->count(),
+            'returned'  => LaporanKeuanganBulanan::where('status', 'returned')->count(),
+            'approved'  => LaporanKeuanganBulanan::where('status', 'approved')->count(),
+        ];
+
         return view('bendahara.dashboard', compact(
             'totalPending',
             'totalDiterima',
@@ -42,7 +64,11 @@ class DashboardController extends Controller
             'totalNominal',
             'donasiTerbaru',
             'nominalPerBulan',
-            'saldo'
+            'saldo',
+            'pemasukanBulanIni',
+            'pengeluaranBulanIni',
+            'saldoBulanIni',
+            'laporanCounts'
         ));
     }
 }

@@ -11,11 +11,13 @@ class TransaksiKeuangan extends Model
 
     protected $fillable = [
         'jenis',
+        'kategori',
         'nominal',
         'keterangan',
         'tanggal',
         'donasi_id',
-        'dicatat_oleh'
+        'dicatat_oleh',
+        'bukti_transaksi'
     ];
 
     protected $casts = [

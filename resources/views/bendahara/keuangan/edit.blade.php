@@ -11,7 +11,7 @@
         </a>
     </div>
 
-    <form method="POST" action="{{ route('bendahara.keuangan.update', ['keuangan' => $keuangan]) }}" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
+    <form method="POST" action="{{ route('bendahara.keuangan.update', ['keuangan' => $keuangan]) }}" class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8" enctype="multipart/form-data">
         @csrf @method('PUT')
         
         <h3 class="text-lg font-bold text-gray-900 mb-6">Ubah Informasi Keuangan</h3>
@@ -24,6 +24,21 @@
                     <option value="pengeluaran" {{ old('jenis', $keuangan->jenis) == 'pengeluaran' ? 'selected' : '' }}>Pengeluaran</option>
                 </select>
                 @error('jenis') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Kategori</label>
+                <select name="kategori" class="w-full rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" required>
+                    <option value="LAINNYA" {{ old('kategori', $keuangan->kategori) == 'LAINNYA' ? 'selected' : '' }}>Lainnya</option>
+                    <option value="DONASI" {{ old('kategori', $keuangan->kategori) == 'DONASI' ? 'selected' : '' }}>Donasi</option>
+                    <option value="PENDIDIKAN" {{ old('kategori', $keuangan->kategori) == 'PENDIDIKAN' ? 'selected' : '' }}>Pendidikan</option>
+                    <option value="KONSUMSI" {{ old('kategori', $keuangan->kategori) == 'KONSUMSI' ? 'selected' : '' }}>Konsumsi</option>
+                    <option value="KESEHATAN" {{ old('kategori', $keuangan->kategori) == 'KESEHATAN' ? 'selected' : '' }}>Kesehatan</option>
+                    <option value="OPERASIONAL" {{ old('kategori', $keuangan->kategori) == 'OPERASIONAL' ? 'selected' : '' }}>Operasional</option>
+                    <option value="TRANSPORTASI" {{ old('kategori', $keuangan->kategori) == 'TRANSPORTASI' ? 'selected' : '' }}>Transportasi</option>
+                    <option value="GAJI" {{ old('kategori', $keuangan->kategori) == 'GAJI' ? 'selected' : '' }}>Gaji</option>
+                </select>
+                @error('kategori') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
 
             <div>
@@ -45,6 +60,20 @@
                 <textarea name="keterangan" rows="3" placeholder="Deskripsi data keuangan..."
                           class="w-full rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" required>{{ old('keterangan', $keuangan->keterangan) }}</textarea>
                 @error('keterangan') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
+            </div>
+
+            <div>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-700">Bukti Transaksi (Opsional)</label>
+                @if($keuangan->bukti_transaksi)
+                    <div class="mb-2">
+                        <p class="text-xs text-gray-500 mb-1">Bukti Saat Ini:</p>
+                        <a href="{{ asset('storage/' . $keuangan->bukti_transaksi) }}" target="_blank" class="text-sm text-blue-600 hover:underline">Lihat Bukti</a>
+                    </div>
+                @endif
+                <input type="file" name="bukti_transaksi" accept="image/png, image/jpeg, image/jpg"
+                       class="w-full rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                <p class="mt-1 text-xs text-gray-500">Maks. 2MB (JPG/PNG). Kosongkan jika tidak ingin mengubah.</p>
+                @error('bukti_transaksi') <p class="mt-1 text-xs text-red-500">{{ $message }}</p> @enderror
             </div>
         </div>
 

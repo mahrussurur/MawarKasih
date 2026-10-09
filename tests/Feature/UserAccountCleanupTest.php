@@ -29,7 +29,7 @@ it('keeps only account fields in users after profile cleanup', function () {
     ]))->toBeFalse();
 });
 
-it('updates account credentials and status without allowing a role change', function () {
+it('updates account credentials, status, and role', function () {
     $admin = User::factory()->create(['role' => 'admin', 'status' => 'aktif']);
     $pengasuh = User::factory()->create(['role' => 'pengasuh', 'status' => 'aktif']);
 
@@ -37,6 +37,7 @@ it('updates account credentials and status without allowing a role change', func
         'username' => 'pengasuh.diperbarui',
         'email' => 'pengasuh.diperbarui@example.test',
         'password' => 'kata-sandi-baru',
+        'password_confirmation' => 'kata-sandi-baru',
         'status' => 'tidak_aktif',
         'role' => 'admin',
     ]);
@@ -46,7 +47,7 @@ it('updates account credentials and status without allowing a role change', func
         'id' => $pengasuh->id,
         'username' => 'pengasuh.diperbarui',
         'email' => 'pengasuh.diperbarui@example.test',
-        'role' => 'pengasuh',
+        'role' => 'admin',
         'status' => 'tidak_aktif',
     ]);
     expect(Hash::check('kata-sandi-baru', $pengasuh->fresh()->password))->toBeTrue();

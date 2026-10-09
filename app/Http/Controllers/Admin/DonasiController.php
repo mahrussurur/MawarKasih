@@ -71,10 +71,11 @@ class DonasiController extends Controller
     {
         $validated = $request->validate([
             'nama_donatur' => 'required|string|max:255',
-            'no_hp' => 'nullable|digits_between:10,15',
-            'nominal' => 'required|integer|min:1000',
+            'email'        => 'required|email|max:255',
+            'no_hp'        => 'nullable|digits_between:10,15',
+            'nominal'      => 'required|integer|min:1000',
             'metode_pembayaran' => 'required|string|max:50',
-            'keterangan' => 'nullable|string|max:1000',
+            'keterangan'   => 'nullable|string|max:1000',
         ]);
 
         DB::transaction(function () use ($validated): void {
@@ -157,16 +158,17 @@ class DonasiController extends Controller
     public function update(Request $request, Donasi $donasi)
     {
         $request->validate([
-            'nama_donatur' => 'required|string|max:255',
-            'no_hp' => 'required|string|max:20',
-            'nominal' => 'required|integer|min:1000',
+            'nama_donatur'      => 'required|string|max:255',
+            'email'             => 'required|email|max:255',
+            'no_hp'             => 'required|string|max:20',
+            'nominal'           => 'required|integer|min:1000',
             'metode_pembayaran' => 'required|string|max:50',
-            'tanggal' => 'required|date',
-            'keterangan' => 'required|string|max:1000',
-            'bukti_transfer' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'tanggal'           => 'required|date',
+            'keterangan'        => 'nullable|string|max:1000',
+            'bukti_transfer'    => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data = $request->only('nama_donatur', 'no_hp', 'nominal', 'metode_pembayaran', 'tanggal', 'keterangan');
+        $data = $request->only('nama_donatur', 'email', 'no_hp', 'nominal', 'metode_pembayaran', 'tanggal', 'keterangan');
 
         if ($request->hasFile('bukti_transfer')) {
             $this->imageService->deleteImage($donasi->bukti_transfer);
@@ -174,6 +176,8 @@ class DonasiController extends Controller
         }
 
         $donasi->update($data);
+
+        $this->donasiKeuanganService->syncPemasukan($donasi);
 
         return redirect()->route('donasi.index')->with('success', 'Data donasi berhasil diperbarui.');
     }

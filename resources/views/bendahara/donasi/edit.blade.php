@@ -55,13 +55,8 @@
                             class="w-full h-[48px] px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-500 appearance-none"
                             required> 
                             <option value="" disabled>Pilih Metode Pembayaran</option>
-                            <option value="Tunai" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'Tunai' ? 'selected' : '' }}>Tunai</option>
-                            <option value="bca" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'bca' ? 'selected' : '' }}>Transfer BCA</option>
                             <option value="mandiri" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'mandiri' ? 'selected' : '' }}>Transfer Mandiri</option>
-                            <option value="bni" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'bni' ? 'selected' : '' }}>Transfer BNI</option>
-                            <option value="bri" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'bri' ? 'selected' : '' }}>Transfer BRI</option>
                             <option value="qris" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'qris' ? 'selected' : '' }}>QRIS</option>
-                            <option value="Lainnya" {{ old('metode_pembayaran', $donasi->metode_pembayaran) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                         </select>
                     </div>
                 </div>

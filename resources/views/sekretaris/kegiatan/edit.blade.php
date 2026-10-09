@@ -39,8 +39,8 @@
                 <!-- Input Deskripsi -->
                 <div class="mb-5">
                     <label class="text-sm font-bold text-gray-800 block mb-2">Deskripsi Kegiatan</label>
-                    <!-- Teks area tidak pakai atribut value, tapi diletakkan di antara tag penutup -->
-                    <textarea name="deskripsi" rows="2" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>{{ old('deskripsi', $kegiatan->deskripsi) }}</textarea>
+                    <input type="hidden" name="deskripsi" id="deskripsi_input">
+                    <div id="editor-container">{!! old('deskripsi', $kegiatan->deskripsi) !!}</div>
                 </div>
 
                 <!-- Input Foto -->
@@ -73,3 +73,58 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<style>
+    .ql-toolbar.ql-snow {
+        border-color: #e5e7eb;
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+        background-color: #f9fafb;
+    }
+    .ql-container.ql-snow {
+        border-color: #e5e7eb;
+        border-bottom-left-radius: 0.75rem;
+        border-bottom-right-radius: 0.75rem;
+        background-color: #f9fafb;
+        min-height: 150px;
+        font-family: inherit;
+        font-size: 0.875rem;
+    }
+    .ql-editor {
+        min-height: 150px;
+    }
+    .ql-editor.ql-blank::before {
+        color: #9ca3af;
+        font-style: normal;
+    }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const quill = new Quill('#editor-container', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'header': 1 }, { 'header': 2 }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['link']
+            ]
+        }
+    });
+
+    const deskripsiInput = document.getElementById('deskripsi_input');
+    const form = deskripsiInput.closest('form');
+
+    form.addEventListener('submit', function(e) {
+        if (quill.getText().trim().length === 0) {
+            deskripsiInput.value = '';
+        } else {
+            deskripsiInput.value = quill.root.innerHTML;
+        }
+    });
+});
+</script>
+@endpush

@@ -10,6 +10,9 @@ use App\Models\AnakAsuh;
 use App\Models\User;
 use App\Models\Donasi;
 use App\Models\Kegiatan;
+use App\Models\TransaksiKeuangan;
+use App\Models\LaporanKeuanganBulanan;
+use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
@@ -37,6 +40,26 @@ class DashboardController extends Controller
         }
         $donasiPerBulan = array_values($donasiPerBulanData);
 
+        $now = Carbon::now();
+        $pemasukanBulanIni = TransaksiKeuangan::where('jenis', 'pemasukan')
+            ->whereMonth('tanggal', $now->month)
+            ->whereYear('tanggal', $now->year)
+            ->sum('nominal');
+            
+        $pengeluaranBulanIni = TransaksiKeuangan::where('jenis', 'pengeluaran')
+            ->whereMonth('tanggal', $now->month)
+            ->whereYear('tanggal', $now->year)
+            ->sum('nominal');
+            
+        $saldoBulanIni = $pemasukanBulanIni - $pengeluaranBulanIni;
+
+        $totalPemasukan = TransaksiKeuangan::where('jenis', 'pemasukan')->sum('nominal');
+        $totalPengeluaran = TransaksiKeuangan::where('jenis', 'pengeluaran')->sum('nominal');
+        $saldoSaatIni = $totalPemasukan - $totalPengeluaran;
+
+        $laporanMenungguApproval = LaporanKeuanganBulanan::where('status', 'submitted')->count();
+        $laporanTerbaru = LaporanKeuanganBulanan::with('submitter')->latest('tahun')->latest('bulan')->take(5)->get();
+
         return view('admin.dashboard', compact(
             'totalAnak',
             'totalPengasuh',
@@ -45,7 +68,13 @@ class DashboardController extends Controller
             'donasiTerbaru',
             'totalDonasiPending',
             'kegiatanTerbaru',
-            'donasiPerBulan'
+            'donasiPerBulan',
+            'pemasukanBulanIni',
+            'pengeluaranBulanIni',
+            'saldoBulanIni',
+            'saldoSaatIni',
+            'laporanMenungguApproval',
+            'laporanTerbaru'
         ));
     }
 }

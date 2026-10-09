@@ -50,7 +50,7 @@
                         <div class="flex items-center gap-2">
                             <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Deskripsi</span>
                             <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $kegiatan->deskripsi ?? '-' }}</span>
+                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden prose prose-sm max-w-none">{!! $kegiatan->deskripsi ?? '-' !!}</span>
                         </div>
                     </div>
                 </div>

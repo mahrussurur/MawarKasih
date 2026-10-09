@@ -51,10 +51,12 @@ class KegiatanController extends Controller
             $fotoPath = $this->imageService->uploadAndGenerateWebp($request->file('foto_dokumentasi'), 'kegiatan');
         }
 
+        $deskripsiHtml = $this->sanitizeHtml($request->deskripsi);
+
         Kegiatan::create([
             'nama_kegiatan' => $request->nama_kegiatan,
             'tanggal_pelaksanaan' => $request->tanggal_pelaksanaan,
-            'deskripsi' => $request->deskripsi,
+            'deskripsi' => $deskripsiHtml,
             'foto_dokumentasi' => $fotoPath,
         ]);
 
@@ -112,5 +114,19 @@ class KegiatanController extends Controller
         $kegiatan->delete();
 
         return redirect()->route('kegiatan.index')->with('success', 'Data kegiatan berhasil dihapus!');
+    }
+
+    private function sanitizeHtml($html)
+    {
+        if (empty($html)) return null;
+        
+        $allowedTags = '<p><br><strong><em><u><h1><h2><ul><ol><li><a>';
+        $html = strip_tags($html, $allowedTags);
+
+        // Hapus atribut on* dan javascript: URL menggunakan regex dasar
+        $html = preg_replace('#(<[^>]+?[\x00-\x20"\'])(on|xmlns)[^>]*+>#i', '$1>', $html);
+        $html = preg_replace('#href=[\'"]?javascript:[^\'"]*[\'"]?#i', 'href="#"', $html);
+
+        return $html;
     }
 }

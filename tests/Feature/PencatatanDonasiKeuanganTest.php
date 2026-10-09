@@ -84,3 +84,44 @@ it('mencatat donasi manual admin sebagai pemasukan satu kali', function () {
     ]);
     $this->assertDatabaseCount('transaksi_keuangans', 1);
 });
+
+it('donasi pending tidak membuat transaksi (Test 1)', function () {
+    $donasi = buatDonasi(['status' => 'pending']);
+    
+    $this->assertDatabaseMissing('transaksi_keuangans', [
+        'donasi_id' => $donasi->id,
+    ]);
+});
+
+it('donasi ditolak tidak membuat transaksi (Test 5)', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+    $donasi = buatDonasi(['status' => 'pending']);
+
+    $this->actingAs($admin)
+        ->patch(route('donasi.tolak', $donasi), ['catatan_admin' => 'Bukti palsu.'])
+        ->assertSessionHas('success');
+
+    $this->assertDatabaseMissing('transaksi_keuangans', [
+        'donasi_id' => $donasi->id,
+    ]);
+});
+
+it('tanggal transaksi sama dengan tanggal donasi saat divalidasi (Test 4)', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+    $tanggalDonasi = '2026-05-15';
+    
+    $donasi = buatDonasi([
+        'tanggal' => $tanggalDonasi,
+        'status' => 'pending',
+    ]);
+
+    // Validasi dilakukan hari ini (misal 2026-10-06)
+    $this->actingAs($admin)
+        ->patch(route('donasi.validasi', $donasi), ['catatan_admin' => 'Ok'])
+        ->assertSessionHas('success');
+
+    $this->assertDatabaseHas('transaksi_keuangans', [
+        'donasi_id' => $donasi->id,
+        'tanggal' => $tanggalDonasi . ' 00:00:00',
+    ]);
+});

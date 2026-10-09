@@ -99,7 +99,7 @@
 
     {{-- HEADER --}}
     <div class="header">
-        <h1>LAPORAN DATA KEUANGAN</h1>
+        <h1>LAPORAN KAS MASUK/KELUAR</h1>
         <h2>LKSA MAWAR KASIH</h2>
         <h3>BANYUWANGI</h3>
     </div>

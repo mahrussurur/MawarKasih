@@ -5,7 +5,7 @@
 <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
 
         <!-- Header -->
-        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
+        <div class="border-b border-gray-200 bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4 flex justify-between items-center gap-4">
             <div class="min-w-0">
                 <h2 class="text-lg font-bold text-white truncate">Edit Data Galeri</h2>
                 <p class="text-xs md:text-sm text-gray-300">Ubah detail data galeri di bawah ini dan kategori jika diperlukan.</p>
@@ -25,7 +25,8 @@
 
                 <div class="mb-5">
                     <label class="text-sm font-bold text-gray-800 block mb-2">Judul Foto</label>
-                    <input type="text" name="judul" value="{{ old('judul', $galeri->judul) }}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 placeholder:text-sm placeholder:text-gray-400" required>
+                    <input type="text" name="judul" value="{{ old('judul', $galeri->judul) }}"
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
 
                 <div class="mb-5">
@@ -63,8 +64,8 @@
                     <a href="{{ route('galeri.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
                         Batal
                     </a>
-                    <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
-                        Update
+                    <button type="submit" class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
+                        Simpan
                     </button>
                 </div>
             </form>

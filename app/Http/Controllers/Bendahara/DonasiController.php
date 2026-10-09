@@ -128,6 +128,8 @@ class DonasiController extends Controller
 
         $donasi->update($validated);
 
+        $this->donasiKeuanganService->syncPemasukan($donasi);
+
         return redirect()->route('bendahara.donasi.index')->with('success', 'Data donasi berhasil diperbarui.');
     }
 

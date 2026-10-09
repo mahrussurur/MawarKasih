@@ -5,12 +5,62 @@
 
 @section('content')
 <div>
-    
-    <div class="mb-6">
-        <h2 class="text-2xl font-extrabold text-gray-900">Selamat Datang, {{ Auth::user()->nama }}!</h2>
-        <p class="mt-1 text-sm font-medium text-gray-500">Ini adalah dashboard utama pengelolaan Yayasan Mawar Kasih.</p>
+    <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h2 class="text-2xl font-extrabold text-gray-900">Selamat Datang, {{ Auth::user()->nama }}!</h2>
+            <p class="mt-1 text-sm font-medium text-gray-500">Ini adalah dashboard utama pengelolaan Yayasan Mawar Kasih.</p>
+        </div>
+        @if(isset($laporanMenungguApproval) && $laporanMenungguApproval > 0)
+        <a href="{{ route('admin.laporan-bulanan.index', ['status' => 'submitted']) }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-50 px-4 py-2 text-sm font-bold text-blue-700 hover:bg-blue-100 transition ring-1 ring-blue-200">
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-white text-xs">{{ $laporanMenungguApproval }}</span>
+            Laporan Perlu Review
+        </a>
+        @endif
     </div>
 
+    <!-- Keuangan Summary Grid -->
+    <h3 class="text-lg font-bold text-gray-900 mb-3 mt-8">Ringkasan Keuangan (Bulan Berjalan)</h3>
+    <div class="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition duration-200">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Saldo Saat Ini</p>
+                <p class="text-xl font-bold text-gray-900">Rp {{ number_format($saldoSaatIni ?? 0, 0, ',', '.') }}</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition duration-200">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-green-100 text-green-600">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Pemasukan Bulan Ini</p>
+                <p class="text-lg font-bold text-gray-900">+Rp {{ number_format($pemasukanBulanIni ?? 0, 0, ',', '.') }}</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition duration-200">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-red-100 text-red-600">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/></svg>
+            </div>
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Pengeluaran Bulan Ini</p>
+                <p class="text-lg font-bold text-gray-900">-Rp {{ number_format($pengeluaranBulanIni ?? 0, 0, ',', '.') }}</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-gradient-to-br from-blue-500 to-blue-600 p-5 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition duration-200">
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.16em] text-blue-100">Saldo Bulan Ini</p>
+                <p class="text-xl font-bold text-white">Rp {{ number_format($saldoBulanIni ?? 0, 0, ',', '.') }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Master -->
+    <h3 class="text-lg font-bold text-gray-900 mb-3">Distribusi Data Utama</h3>
     <div class="mb-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <!-- total anak asuh -->
         <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
@@ -81,6 +131,61 @@
     </div>
 
     <div class="grid gap-5">
+        <!-- Section Laporan Keuangan Terbaru -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6 mb-2">
+            <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4 lg:flex-row lg:items-center lg:justify-between">
+                <div class="flex items-center gap-3">
+                    <h3 class="text-base font-extrabold text-gray-900">Laporan Bulanan Terbaru</h3>
+                </div>
+                <a href="{{ route('admin.laporan-bulanan.index') }}" class="text-sm font-bold text-blue-600 hover:text-blue-700">Manajemen Laporan →</a>
+            </div>
+
+            @if(isset($laporanTerbaru) && $laporanTerbaru->count() > 0)
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left text-sm whitespace-nowrap">
+                    <thead class="border-b border-gray-200 bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2.5 font-semibold text-gray-700">Periode</th>
+                            <th class="px-4 py-2.5 font-semibold text-gray-700">Pemasukan</th>
+                            <th class="px-4 py-2.5 font-semibold text-gray-700">Pengeluaran</th>
+                            <th class="px-4 py-2.5 font-semibold text-gray-700">Saldo Akhir</th>
+                            <th class="px-4 py-2.5 font-semibold text-gray-700 text-center">Status</th>
+                            <th class="sticky right-0 z-10 bg-gray-50 px-4 py-2.5 text-center font-semibold text-gray-700 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @foreach($laporanTerbaru as $lap)
+                        <tr class="group transition-colors hover:bg-gray-50">
+                            <td class="px-4 py-2.5 font-medium text-gray-900">{{ \Carbon\Carbon::create()->month($lap->bulan)->translatedFormat('F') }} {{ $lap->tahun }}</td>
+                            <td class="px-4 py-2.5 text-green-600 font-medium">+Rp {{ number_format($lap->total_pemasukan, 0, ',', '.') }}</td>
+                            <td class="px-4 py-2.5 text-red-600 font-medium">-Rp {{ number_format($lap->total_pengeluaran, 0, ',', '.') }}</td>
+                            <td class="px-4 py-2.5 font-bold text-gray-900">Rp {{ number_format($lap->saldo_akhir, 0, ',', '.') }}</td>
+                            <td class="px-4 py-2.5 text-center">
+                                @if($lap->status === 'draft')
+                                    <span class="inline-flex rounded-md bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">Draft</span>
+                                @elseif($lap->status === 'submitted')
+                                    <span class="inline-flex rounded-md bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-700 animate-pulse">Menunggu Review</span>
+                                @elseif($lap->status === 'returned')
+                                    <span class="inline-flex rounded-md bg-red-100 px-2 py-1 text-xs font-semibold text-red-700">Returned</span>
+                                @elseif($lap->status === 'approved')
+                                    <span class="inline-flex rounded-md bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">Approved</span>
+                                @endif
+                            </td>
+                            <td class="sticky right-0 z-10 bg-white px-4 py-2.5 text-center shadow-[inset_1px_0_0_#e5e7eb] transition-colors group-hover:bg-gray-50">
+                                <a href="{{ route('admin.laporan-bulanan.show', $lap) }}" class="inline-flex rounded-md bg-white px-3 py-1 text-xs font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Lihat</a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @else
+            <div class="flex min-h-[150px] flex-col items-center justify-center text-center text-gray-500">
+                <p class="text-sm font-semibold">Belum ada laporan bulanan.</p>
+            </div>
+            @endif
+        </div>
+
         <!-- Section Donasi Terbaru -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
             <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4 lg:flex-row lg:items-center lg:justify-between">

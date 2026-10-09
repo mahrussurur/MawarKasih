@@ -61,12 +61,18 @@
                     <tr class="hover:bg-gray-50 transition-colors group">
                         <td class="px-6 py-4 text-center text-gray-700">{{ $data->firstItem() + $index }}</td>
                         <td class="px-6 py-4">
-                            <button type="button" class="inline-flex" onclick="openImagePreview('{{ asset('storage/'.$item->foto) }}')">
-                                <img src="{{ asset('storage/'.$item->foto) }}"
-                                     class="h-10 w-10 shrink-0 rounded-full object-cover cursor-pointer"
-                                     alt="Foto {{ $item->nama }}"
-                                     title="Klik untuk perbesar">
-                            </button>
+                            @if($item->foto)
+                                <button type="button" class="inline-flex" onclick="openImagePreview('{{ asset('storage/'.$item->foto) }}')">
+                                    <img src="{{ asset('storage/'.$item->foto) }}"
+                                         class="h-10 w-10 shrink-0 rounded-full object-cover cursor-pointer"
+                                         alt="Foto {{ $item->nama }}"
+                                         title="Klik untuk perbesar">
+                                </button>
+                            @else
+                                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 text-sm font-bold text-gray-600">
+                                    {{ strtoupper(substr($item->nama, 0, 1)) }}
+                                </div>
+                            @endif
                         </td>
                         <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->nama }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->nama_panggilan ?? '-' }}</td>

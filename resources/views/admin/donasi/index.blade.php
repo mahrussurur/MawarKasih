@@ -93,6 +93,7 @@
                         <th class="px-6 py-4 font-semibold text-gray-700">Kode Donasi</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Nama Donatur</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Sumber Donatur</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700">Email</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">No. HP</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Tanggal</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Keterangan</th>
@@ -112,6 +113,7 @@
                         <td class="px-6 py-4 text-gray-700">
                             <span class="inline-flex rounded-md px-2 py-1 text-xs font-semibold ring-1 ring-inset {{ $item->donatur_id ? 'bg-green-50 text-green-700 ring-green-600/20' : 'bg-gray-50 text-gray-700 ring-gray-600/10' }}">{{ $item->donatur_id ? 'Tetap' : 'Umum' }}</span>
                         </td>
+                        <td class="px-6 py-4 text-gray-700">{{ $item->email ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->no_hp ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($item->tanggal)->format('d - m - Y') }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->keterangan ? \Illuminate\Support\Str::limit($item->keterangan, 35) : '-' }}</td>

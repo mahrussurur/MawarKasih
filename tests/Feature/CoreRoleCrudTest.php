@@ -49,8 +49,7 @@ it('allows admin and pengasuh to manage child-care data', function (string $role
     $this->actingAs($user)
         ->delete(route("{$prefix}.destroy", $anak))
         ->assertRedirect(route("{$prefix}.index"));
-
-    $this->assertDatabaseMissing('anak_asuh', ['id' => $anak->id]);
+    $this->assertSoftDeleted('anak_asuh', ['id' => $anak->id]);
 })->with([
     'admin' => ['admin', 'anak-asuh'],
     'pengasuh' => ['pengasuh', 'pengasuh.anak-asuh'],

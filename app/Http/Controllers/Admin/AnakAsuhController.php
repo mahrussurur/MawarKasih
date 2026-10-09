@@ -46,7 +46,7 @@ class AnakAsuhController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'foto'                  => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'foto'                  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'nama'                  => 'required|string|max:255',
             'nama_panggilan'        => 'required|string|max:255',
             'tempat_lahir'          => 'required|string|max:255',

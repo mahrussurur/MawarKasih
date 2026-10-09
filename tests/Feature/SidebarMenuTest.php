@@ -11,17 +11,19 @@ it('shows the complete administration menu only to admins', function () {
         ->assertSee([
             'Manajemen Akun',
             'Data User',
-            'Data Anak Asuh',
+            'Data Lembaga',
             'Data Pengasuh',
             'Data Bendahara',
             'Data Sekretaris',
             'Data Donatur',
+            'Data Anak Asuh',
+            'Data Alumni',
             'Data Kegiatan',
             'Galeri',
+            'Donasi & keuangan',
             'Donasi',
-            'Transaksi Keuangan',
-            'Laporan Keuangan',
-            'Profil Saya',
+            'Keuangan',
+            'Laporan Bulanan',
         ])
         ->assertDontSee('Dokumen Administrasi');
 });
@@ -32,7 +34,7 @@ it('shows finance, donation, report, and profile menus to treasurers only', func
     $this->actingAs($bendahara)
         ->get(route('bendahara.dashboard'))
         ->assertOk()
-        ->assertSee(['Data Donasi', 'Keuangan', 'Laporan Keuangan', 'Profil Saya'])
+        ->assertSee(['Data Donasi', 'Keuangan', 'Laporan Bulanan'])
         ->assertDontSee(['Data Anak Asuh', 'Data Kegiatan', 'Dokumen Administrasi']);
 });
 
@@ -42,8 +44,17 @@ it('shows only foundation content and profile menus to secretaries', function ()
     $this->actingAs($sekretaris)
         ->get(route('sekretaris.dashboard'))
         ->assertOk()
-        ->assertSee(['Data Kegiatan', 'Galeri', 'Profil Saya'])
-        ->assertDontSee(['Data Donasi', 'Transaksi Keuangan', 'Dokumen Administrasi']);
+        ->assertSee([
+            'Data Pengasuh',
+            'Data Bendahara',
+            'Data Sekretaris',
+            'Data Donatur',
+            'Data Anak Asuh',
+            'Data Alumni',
+            'Data Kegiatan',
+            'Galeri',
+        ])
+        ->assertDontSee(['Data Donasi', 'Transaksi Keuangan', 'Dokumen Administrasi', 'Laporan Bulanan']);
 });
 
 it('shows child-care and profile menus to caregivers only', function () {
@@ -52,7 +63,7 @@ it('shows child-care and profile menus to caregivers only', function () {
     $this->actingAs($pengasuh)
         ->get(route('pengasuh.dashboard'))
         ->assertOk()
-        ->assertSee(['Data Anak Asuh', 'Profil Saya'])
+        ->assertSee(['Data Anak Asuh', 'Data Alumni'])
         ->assertDontSee(['Data Donasi', 'Data Kegiatan', 'Catatan Perkembangan']);
 });
 
@@ -62,6 +73,6 @@ it('shows new donation, donation history, and profile menus to donors only', fun
     $this->actingAs($donatur)
         ->get(route('donatur.dashboard'))
         ->assertOk()
-        ->assertSee(['Donasi Baru', 'Riwayat Donasi', 'Profil Saya'])
+        ->assertSee(['Donasi Baru', 'Riwayat Donasi'])
         ->assertDontSee(['Data User', 'Data Anak Asuh', 'Data Kegiatan']);
 });

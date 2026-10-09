@@ -23,37 +23,43 @@
 
                 <!-- Nama Donatur -->
                 <div class="mb-5">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Donatur</label>
-                    <input type="text" name="nama_donatur" value="{{ old('nama_donatur') }}" placeholder="Masukkan Nama Donatur..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Donatur <span class="text-red-500">*</span></label>
+                    <input type="text" name="nama_donatur" value="{{ old('nama_donatur') }}" placeholder="Nama Donatur..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-5">
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Email <span class="text-red-500">*</span></label>
+                    <input type="email" name="email" value="{{ old('email') }}" placeholder="cth. contoh@gmail.com" maxlength="255" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
 
                 <!-- No. HP -->
                 <div class="mb-5">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">No. HP</label>
-                    <input type="number" name="no_hp" value="{{ old('no_hp') }}" placeholder="Contoh: 08xxxxxxxxxx" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">No. HP <span class="text-red-500">*</span></label>
+                    <input type="tel" name="no_hp" value="{{ old('no_hp') }}" placeholder="cth. 081234567890" minlength="10" maxlength="15" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <!-- Nominal -->
                     <div>
-                        <label class="text-sm font-bold text-gray-800 block mb-2">Nominal</label>
-                        <input type="number" name="nominal" value="{{ old('nominal') }}" placeholder="Masukkan Nominal Donasi..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" min="1000" required>
+                        <label class="text-sm font-bold text-gray-800 block mb-2">Nominal <span class="text-red-500">*</span></label>
+                        <div class="flex bg-gray-50 border border-gray-200 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent">
+                            <span class="inline-flex items-center px-4 border-r border-gray-200 text-sm font-medium text-gray-600 select-none">Rp</span>
+                            <input type="text" id="nominal_display" class="w-full bg-transparent px-4 py-3 text-sm text-gray-900 placeholder-gray-400 border-none outline-none focus:outline-none focus:ring-0" placeholder="Nominal donasi...">
+                        </div>
+                        <input type="hidden" name="nominal" id="nominal_hidden" value="{{ old('nominal') }}" required>
                     </div>
 
                     <!-- Metode Pembayaran -->
                     <div>
-                        <label class="text-sm font-bold text-gray-800 block mb-2">Metode Pembayaran</label>
+                        <label class="text-sm font-bold text-gray-800 block mb-2">Metode Pembayaran <span class="text-red-500">*</span></label>
                         <select name="metode_pembayaran" id="metode_pembayaran"
                             class="w-full h-[48px] px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-500 appearance-none"
                             required
                             onchange="this.classList.remove('text-gray-400','text-sm'); this.classList.add('text-gray-900')"> 
                             
                             <option value="" disabled selected>Pilih Metode Pembayaran</option>
-                            <option class="text-gray-900" value="Tunai" {{ old('metode_pembayaran') == 'Tunai' ? 'selected' : '' }}>Tunai</option>
-                            <option class="text-gray-900" value="bca" {{ old('metode_pembayaran') == 'bca' ? 'selected' : '' }}>Transfer BCA</option>
                             <option class="text-gray-900" value="mandiri" {{ old('metode_pembayaran') == 'mandiri' ? 'selected' : '' }}>Transfer Mandiri</option>
-                            <option class="text-gray-900" value="bni" {{ old('metode_pembayaran') == 'bni' ? 'selected' : '' }}>Transfer BNI</option>
-                            <option class="text-gray-900" value="bri" {{ old('metode_pembayaran') == 'bri' ? 'selected' : '' }}>Transfer BRI</option>
                             <option class="text-gray-900" value="qris" {{ old('metode_pembayaran') == 'qris' ? 'selected' : '' }}>QRIS</option>
                         </select>
                     </div>
@@ -81,7 +87,7 @@
                     <a href="{{ route('donasi.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
                         Batal
                     </a>
-                    <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+                    <button type="submit" class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
                         Simpan
                     </button>
                 </div>
@@ -95,6 +101,24 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     setupImagePreview('bukti_transfer_input', 'preview_container', 'bukti_transfer_preview', 'remove_preview');
+
+    const display = document.getElementById('nominal_display');
+    const hidden  = document.getElementById('nominal_hidden');
+
+    function formatRupiah(value) {
+        return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    display.addEventListener('input', function () {
+        let raw = this.value.replace(/[^0-9]/g, '');
+        this.value = formatRupiah(raw);
+        hidden.value = raw;
+    });
+
+    // Load old value on page load
+    if (hidden.value) {
+        display.value = formatRupiah(hidden.value);
+    }
 });
 </script>
 @endpush

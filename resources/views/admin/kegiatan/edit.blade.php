@@ -5,7 +5,7 @@
 <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
         
         <!-- Header -->
-        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
+        <div class="border-b border-gray-200 bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4 flex justify-between items-center gap-4">
             <div class="min-w-0">
                 <h2 class="text-lg font-bold text-white truncate">Edit Data Kegiatan</h2>
                 <p class="text-xs md:text-sm text-gray-300">Ubah detail data kegiatan di bawah ini.</p>
@@ -25,22 +25,22 @@
 
                 <!-- Input Nama Kegiatan -->
                 <div class="mb-5">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Kegiatan</label>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Kegiatan <span class="text-red-500">*</span></label>
                     <!-- Tambahkan value dari database -->
                     <input type="text" name="nama_kegiatan" value="{{ old('nama_kegiatan', $kegiatan->nama_kegiatan) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
 
                 <!-- Input Tanggal -->
                 <div class="mb-5">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Tanggal Pelaksanaan</label>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Tanggal Pelaksanaan <span class="text-red-500">*</span></label>
                     <input type="date" name="tanggal_pelaksanaan" value="{{ old('tanggal_pelaksanaan', $kegiatan->tanggal_pelaksanaan) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
 
                 <!-- Input Deskripsi -->
                 <div class="mb-5">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Deskripsi Kegiatan</label>
-                    <!-- Teks area tidak pakai atribut value, tapi diletakkan di antara tag penutup -->
-                    <textarea name="deskripsi" rows="2" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>{{ old('deskripsi', $kegiatan->deskripsi) }}</textarea>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Deskripsi Kegiatan <span class="text-red-500">*</span></label>
+                    <input type="hidden" name="deskripsi" id="deskripsi_input">
+                    <div id="editor-container">{!! old('deskripsi', $kegiatan->deskripsi) !!}</div>
                 </div>
 
                 <!-- Input Foto -->
@@ -64,8 +64,8 @@
                     <a href="{{ route('kegiatan.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
                         Batal
                     </a>
-                    <button type="submit" class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
-                        Update
+                    <button type="submit" class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
+                        Simpan
                     </button>
                 </div>
 
@@ -73,3 +73,58 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+<style>
+    .ql-toolbar.ql-snow {
+        border-color: #e5e7eb;
+        border-top-left-radius: 0.75rem;
+        border-top-right-radius: 0.75rem;
+        background-color: #f9fafb;
+    }
+    .ql-container.ql-snow {
+        border-color: #e5e7eb;
+        border-bottom-left-radius: 0.75rem;
+        border-bottom-right-radius: 0.75rem;
+        background-color: #f9fafb;
+        min-height: 150px;
+        font-family: inherit;
+        font-size: 0.875rem;
+    }
+    .ql-editor {
+        min-height: 150px;
+    }
+    .ql-editor.ql-blank::before {
+        color: #9ca3af;
+        font-style: normal;
+    }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const quill = new Quill('#editor-container', {
+        theme: 'snow',
+        modules: {
+            toolbar: [
+                ['bold', 'italic', 'underline'],
+                [{ 'header': 1 }, { 'header': 2 }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                ['link']
+            ]
+        }
+    });
+
+    const deskripsiInput = document.getElementById('deskripsi_input');
+    const form = deskripsiInput.closest('form');
+
+    form.addEventListener('submit', function(e) {
+        if (quill.getText().trim().length === 0) {
+            deskripsiInput.value = '';
+        } else {
+            deskripsiInput.value = quill.root.innerHTML;
+        }
+    });
+});
+</script>
+@endpush

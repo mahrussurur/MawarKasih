@@ -34,74 +34,7 @@ class KeuanganController extends Controller
         ));
     }
 
-    public function create()
-    {
-        return view('admin.keuangan.create');
-    }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'jenis'      => 'required|in:pemasukan,pengeluaran',
-            'nominal'    => 'required|numeric|min:1',
-            'keterangan' => 'required|string|max:255',
-            'tanggal'    => 'required|date',
-        ]);
-
-        TransaksiKeuangan::create([
-            'jenis'        => $request->jenis,
-            'nominal'      => $request->nominal,
-            'keterangan'   => $request->keterangan,
-            'tanggal'      => $request->tanggal,
-            'dicatat_oleh' => Auth::id(),
-        ]);
-
-        return redirect()->route('admin.keuangan.index')->with('success', 'Data Keuangan berhasil ditambahkan.');
-    }
-
-    public function edit(TransaksiKeuangan $transaksi)
-    {
-        // Cegah edit transaksi yang tergenerate dari donasi (optional/bisnis rule)
-        if ($transaksi->donasi_id) {
-            return redirect()->route('admin.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa diedit secara manual. Edit donasinya jika diperlukan.');
-        }
-
-        return view('admin.keuangan.edit', compact('transaksi'));
-    }
-
-    public function update(Request $request, TransaksiKeuangan $transaksi)
-    {
-        if ($transaksi->donasi_id) {
-            return redirect()->route('admin.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa diedit secara manual.');
-        }
-
-        $request->validate([
-            'jenis'      => 'required|in:pemasukan,pengeluaran',
-            'nominal'    => 'required|numeric|min:1',
-            'keterangan' => 'required|string|max:255',
-            'tanggal'    => 'required|date',
-        ]);
-
-        $transaksi->update([
-            'jenis'      => $request->jenis,
-            'nominal'    => $request->nominal,
-            'keterangan' => $request->keterangan,
-            'tanggal'    => $request->tanggal,
-        ]);
-
-        return redirect()->route('admin.keuangan.index')->with('success', 'Data Keuangan berhasil diperbarui.');
-    }
-
-    public function destroy(TransaksiKeuangan $transaksi)
-    {
-        if ($transaksi->donasi_id) {
-            return redirect()->route('admin.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa dihapus. Tolak donasi tersebut jika ingin membatalkan.');
-        }
-
-        $transaksi->delete();
-
-        return redirect()->route('admin.keuangan.index')->with('success', 'Data Keuangan berhasil dihapus.');
-    }
     public function cetak(Request $request)
     {
         $query = TransaksiKeuangan::query()->orderBy('tanggal', 'desc')->orderBy('id', 'desc');

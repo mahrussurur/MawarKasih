@@ -22,74 +22,74 @@
             @csrf
             @method('PATCH')
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Nama Lengkap</label>
-                <input type="text" name="nama" value="{{ old('nama', $anakAsuh->nama) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                <label class="text-sm font-bold text-gray-800 block mb-2">Nama Lengkap<span class="text-red-500">*</span></label>
+                <input type="text" name="nama" value="{{ old('nama', $anakAsuh->nama) }}" placeholder="Nama Lengkap..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
             </div>
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Nama Panggilan</label>
-                <input type="text" name="nama_panggilan" value="{{ old('nama_panggilan', $anakAsuh->nama_panggilan) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                <label class="text-sm font-bold text-gray-800 block mb-2">Nama Panggilan<span class="text-red-500">*</span></label>
+                <input type="text" name="nama_panggilan" value="{{ old('nama_panggilan', $anakAsuh->nama_panggilan) }}" placeholder="Nama Panggilan..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
             </div>
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Tempat Lahir</label>
-                    <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir', $anakAsuh->tempat_lahir) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Tempat Lahir<span class="text-red-500">*</span></label>
+                    <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir', $anakAsuh->tempat_lahir) }}" placeholder="Tempat Lahir..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Tanggal Lahir</label>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Tanggal Lahir<span class="text-red-500">*</span></label>
                     <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $anakAsuh->tanggal_lahir) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-500" required>
                 </div>
             </div>
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Tinggal di LKSA sejak</label>
-                <input type="text" name="tinggal_di_lksa_sejak" value="{{ old('tinggal_di_lksa_sejak', $anakAsuh->tinggal_di_lksa_sejak) }}" placeholder="Contoh: Dari kandungan ibu tahun 2023 atau Tahun 2024" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                <label class="text-sm font-bold text-gray-800 block mb-2">Tinggal di LKSA sejak<span class="text-red-500">*</span></label>
+                <input type="text" name="tinggal_di_lksa_sejak" value="{{ old('tinggal_di_lksa_sejak', $anakAsuh->tinggal_di_lksa_sejak) }}" placeholder="Cth: Dari kandungan ibu tahun 2023 atau Tahun 2024" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 <p class="text-xs text-gray-500 mt-1">Isikan apakah sejak dalam kandungan atau tahun masuk LKSA.</p>
             </div>
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Sekolah</label>
-                    <input type="text" name="sekolah" value="{{ old('sekolah', $anakAsuh->sekolah) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Sekolah<span class="text-red-500">*</span></label>
+                    <input type="text" name="sekolah" value="{{ old('sekolah', $anakAsuh->sekolah) }}" placeholder="Nama Sekolah..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Kelas</label>
-                    <input type="text" name="kelas" value="{{ old('kelas', $anakAsuh->kelas) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Kelas<span class="text-red-500">*</span></label>
+                    <input type="text" name="kelas" value="{{ old('kelas', $anakAsuh->kelas) }}" placeholder="Kelas..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
             </div>
-            <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Jenis Kelamin</label>
-                <div class="flex gap-6 items-center">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="radio" name="jenis_kelamin" value="L" {{ old('jenis_kelamin', $anakAsuh->jenis_kelamin) === 'L' ? 'checked' : '' }} class="w-4 h-4 text-blue-600 focus:ring-blue-500" required>
-                        <span class="text-gray-700 font-medium">Laki-laki</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="radio" name="jenis_kelamin" value="P" {{ old('jenis_kelamin', $anakAsuh->jenis_kelamin) === 'P' ? 'checked' : '' }} class="w-4 h-4 text-blue-600 focus:ring-blue-500" required>
-                        <span class="text-gray-700 font-medium">Perempuan</span>
-                    </label>
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
+                <div>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Jenis Kelamin<span class="text-red-500">*</span></label>
+                    <select name="jenis_kelamin" id="jenis_kelamin"
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-900 appearance-none"
+                        required>
+                        <option value="" disabled>Pilih Jenis Kelamin...</option>
+                        <option value="L" {{ old('jenis_kelamin', $anakAsuh->jenis_kelamin) === 'L' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="P" {{ old('jenis_kelamin', $anakAsuh->jenis_kelamin) === 'P' ? 'selected' : '' }}>Perempuan</option>
+                    </select>
                 </div>
-            </div>
-            <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Status Sosial Anak</label>
-                <select name="status_social_anak" id="status-social-anak" 
-                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
-                    <option value="" disabled {{ old('status_social_anak', $anakAsuh->status_social_anak) ? '' : 'selected' }}>Pilih Status...</option>
-                    <option value="Yatim" {{ old('status_social_anak', $anakAsuh->status_social_anak) === 'Yatim' ? 'selected' : '' }}>Yatim</option>
-                    <option value="Piatu" {{ old('status_social_anak', $anakAsuh->status_social_anak) === 'Piatu' ? 'selected' : '' }}>Piatu</option>
-                    <option value="Yatim Piatu" {{ old('status_social_anak', $anakAsuh->status_social_anak) === 'Yatim Piatu' ? 'selected' : '' }}>Yatim Piatu</option>
-                    <option value="Dhuafa" {{ old('status_social_anak', $anakAsuh->status_social_anak) === 'Dhuafa' ? 'selected' : '' }}>Dhuafa</option>
-                </select>
+                <div>
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Status Sosial Anak<span class="text-red-500">*</span></label>
+                    <select name="status_social_anak" id="status-social-anak" 
+                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-900 appearance-none" 
+                        required>
+                        <option value="" disabled {{ old('status_social_anak', $anakAsuh->status_social_anak) ? '' : 'selected' }}>Pilih Status...</option>
+                        <option value="Yatim" {{ old('status_social_anak', $anakAsuh->status_social_anak) === 'Yatim' ? 'selected' : '' }}>Yatim</option>
+                        <option value="Piatu" {{ old('status_social_anak', $anakAsuh->status_social_anak) === 'Piatu' ? 'selected' : '' }}>Piatu</option>
+                        <option value="Yatim Piatu" {{ old('status_social_anak', $anakAsuh->status_social_anak) === 'Yatim Piatu' ? 'selected' : '' }}>Yatim Piatu</option>
+                        <option value="Dhuafa" {{ old('status_social_anak', $anakAsuh->status_social_anak) === 'Dhuafa' ? 'selected' : '' }}>Dhuafa</option>
+                    </select>
+                </div>
             </div>
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div id="field-nama-ayah">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Ayah</label>
-                    <input type="text" name="nama_ayah" value="{{ old('nama_ayah', $anakAsuh->nama_ayah) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Ayah<span class="text-red-500">*</span></label>
+                    <input type="text" name="nama_ayah" value="{{ old('nama_ayah', $anakAsuh->nama_ayah) }}" placeholder="Nama Ayah..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
                 <div id="field-nama-ibu">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Ibu</label>
-                    <input type="text" name="nama_ibu" value="{{ old('nama_ibu', $anakAsuh->nama_ibu) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Ibu<span class="text-red-500">*</span></label>
+                    <input type="text" name="nama_ibu" value="{{ old('nama_ibu', $anakAsuh->nama_ibu) }}" placeholder="Nama Ibu..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
             </div>
-            <div class="mb-8">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Foto Anak Asuh</label>
+            <div class="mb-5">
+                <label class="text-sm font-bold text-gray-800 block mb-2">Foto Anak</label>
             
                 @if($anakAsuh->foto)
                     <div class="mb-3">
@@ -97,7 +97,11 @@
                         <img src="{{ asset('storage/' . $anakAsuh->foto) }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
                     </div>
                 @endif
-                <input type="file" name="foto" accept="image/*" class="w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-gray-200 rounded-xl bg-gray-50">
+                <input type="file" id="foto_input" name="foto" accept="image/*" class="w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-gray-200 rounded-xl bg-gray-50">
+                <div id="preview_container" class="mt-3 hidden">
+                    <img id="foto_preview" src="#" alt="Preview Foto" class="max-h-48 w-auto rounded-lg object-cover border border-gray-200 shadow-sm">
+                    <button type="button" id="remove_preview" class="mt-2 text-sm text-red-600 hover:text-red-700 font-medium focus:outline-none">Hapus Foto</button>
+                </div>
                 <p class="text-xs text-gray-500 mt-2">Biarkan kosong jika tidak ingin mengubah foto. Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
             </div>
             <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
@@ -166,6 +170,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     toggleParentFields();
     statusSelect.addEventListener('change', toggleParentFields);
+
+    // Aktifkan preview foto
+    if (typeof setupImagePreview === 'function') {
+        setupImagePreview('foto_input', 'preview_container', 'foto_preview', 'remove_preview');
+    }
+
 });
 </script>
 @endpush

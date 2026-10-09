@@ -49,11 +49,7 @@
                             onchange="this.classList.remove('text-gray-400','text-sm'); this.classList.add('text-gray-900')"> 
                             
                             <option value="" disabled selected>Pilih Metode Pembayaran</option>
-                            <option class="text-gray-900" value="Tunai" {{ old('metode_pembayaran') == 'Tunai' ? 'selected' : '' }}>Tunai</option>
-                            <option class="text-gray-900" value="bca" {{ old('metode_pembayaran') == 'bca' ? 'selected' : '' }}>Transfer BCA</option>
                             <option class="text-gray-900" value="mandiri" {{ old('metode_pembayaran') == 'mandiri' ? 'selected' : '' }}>Transfer Mandiri</option>
-                            <option class="text-gray-900" value="bni" {{ old('metode_pembayaran') == 'bni' ? 'selected' : '' }}>Transfer BNI</option>
-                            <option class="text-gray-900" value="bri" {{ old('metode_pembayaran') == 'bri' ? 'selected' : '' }}>Transfer BRI</option>
                             <option class="text-gray-900" value="qris" {{ old('metode_pembayaran') == 'qris' ? 'selected' : '' }}>QRIS</option>
                         </select>
                     </div>

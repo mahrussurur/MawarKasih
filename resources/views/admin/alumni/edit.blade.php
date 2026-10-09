@@ -37,39 +37,39 @@
 
             <div class="mb-5">
                 <label class="text-sm font-bold text-gray-800 block mb-2">Tanggal Keluar <span class="text-red-500">*</span></label>
-                <input type="date" name="tanggal_keluar" value="{{ old('tanggal_keluar', $alumni->tanggal_keluar) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm" required>
+                <input type="date" name="tanggal_keluar" value="{{ old('tanggal_keluar', $alumni->tanggal_keluar) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm" required>
             </div>
 
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
                     <label class="text-sm font-bold text-gray-800 block mb-2">Pendidikan Terakhir</label>
-                    <input type="text" name="pendidikan_terakhir" value="{{ old('pendidikan_terakhir', $alumni->pendidikan_terakhir) }}" placeholder="Contoh: SMA / S1" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <input type="text" name="pendidikan_terakhir" value="{{ old('pendidikan_terakhir', $alumni->pendidikan_terakhir) }}" placeholder="Cth: SMA / S1" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
                 <div>
                     <label class="text-sm font-bold text-gray-800 block mb-2">Nama Sekolah Terakhir</label>
-                    <input type="text" name="nama_sekolah_terakhir" value="{{ old('nama_sekolah_terakhir', $alumni->nama_sekolah_terakhir) }}" placeholder="Masukkan Sekolah Terakhir..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <input type="text" name="nama_sekolah_terakhir" value="{{ old('nama_sekolah_terakhir', $alumni->nama_sekolah_terakhir) }}" placeholder="Sekolah Terakhir..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
             </div>
 
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
                     <label class="text-sm font-bold text-gray-800 block mb-2">Pekerjaan</label>
-                    <input type="text" name="pekerjaan" value="{{ old('pekerjaan', $alumni->pekerjaan) }}" placeholder="Masukkan Pekerjaan saat ini..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <input type="text" name="pekerjaan" value="{{ old('pekerjaan', $alumni->pekerjaan) }}" placeholder="Pekerjaan saat ini..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
                 <div>
                     <label class="text-sm font-bold text-gray-800 block mb-2">No. HP</label>
-                    <input type="text" name="no_hp" value="{{ old('no_hp', $alumni->no_hp) }}" placeholder="Masukkan Nomor HP..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <input type="tel" name="no_hp" value="{{ old('no_hp', $alumni->no_hp) }}" placeholder="cth. 081234567890" minlength="10" maxlength="15" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
             </div>
 
             <div class="mb-5">
                 <label class="text-sm font-bold text-gray-800 block mb-2">Alamat Lengkap</label>
-                <textarea name="alamat" rows="3" placeholder="Masukkan Alamat Lengkap..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('alamat', $alumni->alamat) }}</textarea>
+                <textarea name="alamat" rows="3" placeholder="Alamat Lengkap..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('alamat', $alumni->alamat) }}</textarea>
             </div>
 
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Catatan (Opsional)</label>
-                <textarea name="catatan" rows="3" placeholder="Tambahkan catatan khusus..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('catatan', $alumni->catatan) }}</textarea>
+                <label class="text-sm font-bold text-gray-800 block mb-2">Catatan</label>
+                <textarea name="catatan" rows="3" placeholder="Catatan Khusus..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('catatan', $alumni->catatan) }}</textarea>
             </div>
 
             <!-- Tombol Aksi -->

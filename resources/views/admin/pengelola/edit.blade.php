@@ -68,7 +68,10 @@
                     </div>
                     <div>
                         <label class="mb-1.5 block text-sm font-semibold text-gray-700">No. HP</label>
-                        <input type="text" name="no_hp" value="{{ old('no_hp', $profile?->no_hp) }}" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        <input type="tel" name="no_hp" value="{{ old('no_hp', $profile?->no_hp) }}" minlength="10" maxlength="15" placeholder="cth. 081234567890" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        @error('no_hp')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             @else
@@ -79,7 +82,10 @@
                     </div>
                     <div>
                         <label class="mb-1.5 block text-sm font-semibold text-gray-700">No. HP</label>
-                        <input type="text" name="no_hp" value="{{ old('no_hp', $profile?->no_hp) }}" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        <input type="tel" name="no_hp" value="{{ old('no_hp', $profile?->no_hp) }}" minlength="10" maxlength="15" placeholder="cth. 081234567890" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full rounded-xl border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500" />
+                        @error('no_hp')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
             @endif

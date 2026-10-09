@@ -354,9 +354,6 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        // ────────────────────────────────────────────────
-        // 1. Nominal handler
-        // ────────────────────────────────────────────────
         const forms = document.querySelectorAll('form');
 
         forms.forEach(form => {
