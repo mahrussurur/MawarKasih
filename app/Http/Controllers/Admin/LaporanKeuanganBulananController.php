@@ -46,19 +46,19 @@ class LaporanKeuanganBulananController extends Controller
 
     public function approve(LaporanKeuanganBulanan $laporan)
     {
-        if ($laporan->status !== 'submitted') {
-            return redirect()->back()->with('error', 'Hanya laporan dengan status Submitted yang dapat di-approve.');
+        if ($laporan->status !== 'diajukan') {
+            return redirect()->back()->with('error', 'Hanya laporan dengan status Diajukan yang dapat disetujui.');
         }
 
         $this->laporanService->approve($laporan, Auth::user());
 
-        return redirect()->route('admin.laporan-bulanan.index')->with('success', 'Laporan berhasil di-approve (Final).');
+        return redirect()->route('admin.laporan-bulanan.index')->with('success', 'Laporan berhasil disetujui.');
     }
 
     public function return(Request $request, LaporanKeuanganBulanan $laporan)
     {
-        if ($laporan->status !== 'submitted') {
-            return redirect()->back()->with('error', 'Hanya laporan dengan status Submitted yang dapat dikembalikan.');
+        if ($laporan->status !== 'diajukan') {
+            return redirect()->back()->with('error', 'Hanya laporan dengan status Diajukan yang dapat dikembalikan.');
         }
 
         $request->validate([

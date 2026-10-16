@@ -24,7 +24,7 @@ class AdminSessionTimeout
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
 
-                return redirect()->route('login')->with('error', 'Sesi Anda telah berakhir (1 hari). Silakan login kembali.');
+                return redirect()->route('login')->with('error', 'Sesi Anda telah berakhir.');
             }
 
             session(['admin_last_activity' => time()]);

@@ -68,7 +68,7 @@ it('bendahara dapat create transaksi (Test 9)', function () {
 it('bendahara tidak dapat approve laporan (Test 10)', function () {
     $bendahara = User::factory()->create(['role' => 'bendahara']);
     $laporan = LaporanKeuanganBulanan::factory()->create([
-        'status' => 'submitted'
+        'status' => 'diajukan'
     ]);
 
     $this->actingAs($bendahara)
@@ -77,6 +77,6 @@ it('bendahara tidak dapat approve laporan (Test 10)', function () {
 
     $this->assertDatabaseHas('laporan_keuangan_bulanans', [
         'id' => $laporan->id,
-        'status' => 'submitted', // Tidak berubah
+        'status' => 'diajukan', // Tidak berubah
     ]);
 });

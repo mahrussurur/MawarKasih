@@ -55,60 +55,39 @@ it('allows admin and pengasuh to manage child-care data', function (string $role
     'pengasuh' => ['pengasuh', 'pengasuh.anak-asuh'],
 ]);
 
-it('allows sekretaris to manage independent kegiatan data', function () {
+it('allows sekretaris to view independent kegiatan data', function () {
     $sekretaris = User::factory()->create(['role' => 'sekretaris', 'status' => 'aktif']);
+    $kegiatan = Kegiatan::create([
+        'nama_kegiatan' => 'Kegiatan Uji',
+        'tanggal_pelaksanaan' => '2026-09-16',
+        'deskripsi' => 'Deskripsi kegiatan uji.',
+        'foto_dokumentasi' => 'kegiatan.jpg',
+    ]);
 
     $this->actingAs($sekretaris)
-        ->post(route('sekretaris.kegiatan.store'), [
-            'nama_kegiatan' => 'Kegiatan Uji',
-            'tanggal_pelaksanaan' => '2026-09-16',
-            'deskripsi' => 'Deskripsi kegiatan uji.',
-            'foto_dokumentasi' => UploadedFile::fake()->image('kegiatan.jpg'),
-        ])
-        ->assertRedirect(route('sekretaris.kegiatan.index'));
-
-    $kegiatan = Kegiatan::where('nama_kegiatan', 'Kegiatan Uji')->firstOrFail();
+        ->get(route('sekretaris.kegiatan.index'))
+        ->assertOk();
 
     $this->actingAs($sekretaris)
-        ->put(route('sekretaris.kegiatan.update', $kegiatan), [
-            'nama_kegiatan' => 'Kegiatan Diperbarui',
-            'tanggal_pelaksanaan' => '2026-09-17',
-            'deskripsi' => 'Deskripsi terbaru.',
-        ])
-        ->assertRedirect(route('sekretaris.kegiatan.index'));
-
-    $this->actingAs($sekretaris)
-        ->delete(route('sekretaris.kegiatan.destroy', $kegiatan))
-        ->assertRedirect(route('sekretaris.kegiatan.index'));
-
-    $this->assertDatabaseMissing('kegiatans', ['id' => $kegiatan->id]);
+        ->get(route('sekretaris.kegiatan.show', $kegiatan))
+        ->assertOk();
 });
 
-it('allows sekretaris to manage independent gallery data', function () {
+it('allows sekretaris to view independent gallery data', function () {
     $sekretaris = User::factory()->create(['role' => 'sekretaris', 'status' => 'aktif']);
+    $galeri = Galeri::create([
+        'judul' => 'Galeri Uji',
+        'deskripsi' => 'Deskripsi galeri uji.',
+        'kategori' => 'Umum',
+        'foto' => 'galeri.jpg',
+    ]);
 
     $this->actingAs($sekretaris)
-        ->post(route('sekretaris.galeri.store'), [
-            'judul' => 'Galeri Uji',
-            'deskripsi' => 'Deskripsi galeri uji.',
-            'kategori' => 'Umum',
-            'foto' => UploadedFile::fake()->image('galeri.jpg'),
-        ])
-        ->assertRedirect(route('sekretaris.galeri.index'));
-
-    $galeri = Galeri::where('judul', 'Galeri Uji')->firstOrFail();
+        ->get(route('sekretaris.galeri.index'))
+        ->assertOk();
 
     $this->actingAs($sekretaris)
-        ->put(route('sekretaris.galeri.update', $galeri), [
-            'judul' => 'Galeri Diperbarui',
-            'deskripsi' => 'Deskripsi galeri terbaru.',
-            'kategori' => 'Fasilitas',
-        ])
-        ->assertRedirect(route('sekretaris.galeri.index'));
-
-    $this->actingAs($sekretaris)
-        ->delete(route('sekretaris.galeri.destroy', $galeri))
-        ->assertRedirect(route('sekretaris.galeri.index'));
-
-    $this->assertDatabaseMissing('galeris', ['id' => $galeri->id]);
+        ->get(route('sekretaris.galeri.show', $galeri))
+        ->assertOk();
 });
+

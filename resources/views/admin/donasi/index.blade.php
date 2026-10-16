@@ -10,17 +10,15 @@
             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Total Donasi Keseluruhan</p>
             <p class="text-xl font-bold text-gray-900 mt-1">Rp {{ number_format($totalNominal, 0, ',', '.') }}</p>
         </div>
-
-        <!-- Jumlah Donatur Tetap -->
+        <!-- Total Donasi Donatur Tetap -->
         <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Jumlah Donatur Tetap</p>
-            <p class="text-xl font-bold text-gray-900 mt-1">{{ $jumlahDonaturTetap }} Orang</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Total Donasi Donatur Tetap</p>
+            <p class="text-xl font-bold text-gray-900 mt-1">Rp {{ number_format($nominalDonaturTetap ?? 0, 0, ',', '.') }}</p>
         </div>
-        
-        <!-- Jumlah Donatur Umum -->
+        <!-- Total Donasi Donatur Umum -->
         <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
-            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Jumlah Donatur Umum</p>
-            <p class="text-xl font-bold text-gray-900 mt-1">{{ $jumlahDonaturUmum }} Orang</p>
+            <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Total Donasi Donatur Umum</p>
+            <p class="text-xl font-bold text-gray-900 mt-1">Rp {{ number_format($nominalDonaturUmum ?? 0, 0, ',', '.') }}</p>
         </div>
     </div>
 

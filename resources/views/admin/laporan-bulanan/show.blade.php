@@ -6,7 +6,7 @@
 <div class="space-y-6">
 
     <!-- Banner Status Laporan -->
-    @if($laporan->status === 'submitted')
+    @if($laporan->status === 'diajukan')
         <div class="flex flex-col gap-4 rounded-2xl border border-blue-200 bg-blue-50 p-5 md:flex-row md:items-center md:justify-between">
             <div class="flex items-start gap-3">
                 <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
@@ -15,27 +15,27 @@
                     </svg>
                 </div>
                 <div>
-                    <h4 class="text-base font-bold text-blue-900">Laporan Menunggu Review</h4>
+                    <h4 class="text-base font-bold text-blue-900">Laporan Diajukan</h4>
                     <p class="mt-0.5 text-sm text-blue-700">
-                        Disubmit oleh <span class="font-semibold text-blue-900">{{ $laporan->submitter->name ?? 'Bendahara' }}</span> pada {{ $laporan->submitted_at ? $laporan->submitted_at->format('d/m/Y H:i') : '-' }}
+                        Diajukan oleh <span class="font-semibold text-blue-900">{{ $laporan->submitter->name ?? 'Bendahara' }}</span> pada {{ $laporan->submitted_at ? $laporan->submitted_at->format('d/m/Y H:i') : '-' }}
                     </p>
                 </div>
             </div>
             <div class="flex items-center gap-2 self-end md:self-auto">
                 <button type="button" onclick="document.getElementById('modalReturn').classList.remove('hidden')" class="inline-flex items-center gap-1.5 rounded-xl border border-red-300 bg-white px-4 py-2 text-sm font-semibold text-red-600 shadow-sm transition hover:bg-red-50">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
-                    <span>Kembalikan (Return)</span>
+                    <span>Kembalikan</span>
                 </button>
-                <form method="POST" action="{{ route('admin.laporan-bulanan.approve', $laporan) }}" onsubmit="return confirm('Yakin ingin Approve laporan ini? Aksi ini akan mengunci laporan secara permanen.');">
+                <form method="POST" action="{{ route('admin.laporan-bulanan.approve', $laporan) }}" onsubmit="return confirm('Yakin ingin menyetujui laporan ini? Aksi ini akan mengunci laporan secara permanen.');">
                     @csrf
                     <button type="submit" class="inline-flex items-center gap-1.5 rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-green-700">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        <span>Approve Laporan</span>
+                        <span>Setujui Laporan</span>
                     </button>
                 </form>
             </div>
         </div>
-    @elseif($laporan->status === 'returned')
+    @elseif($laporan->status === 'dikembalikan')
         <div class="flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 p-5">
             <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-red-100 text-red-600">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -50,7 +50,7 @@
                 </p>
             </div>
         </div>
-    @elseif($laporan->status === 'approved')
+    @elseif($laporan->status === 'disetujui')
         <div class="flex items-start gap-3 rounded-2xl border border-green-200 bg-green-50 p-5">
             <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-green-100 text-green-600">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

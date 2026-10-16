@@ -18,7 +18,7 @@ class LaporanKeuanganService
             ['status' => 'draft']
         );
 
-        if (in_array($laporan->status, ['draft', 'returned'])) {
+        if (in_array($laporan->status, ['draft', 'dikembalikan'])) {
             $this->calculate($tahun, $bulan);
             $laporan->refresh();
         }
@@ -32,7 +32,7 @@ class LaporanKeuanganService
     public function calculate(int $tahun, int $bulan): void
     {
         $laporan = LaporanKeuanganBulanan::where('tahun', $tahun)->where('bulan', $bulan)->first();
-        if (!$laporan || in_array($laporan->status, ['submitted', 'approved'])) {
+        if (!$laporan || in_array($laporan->status, ['diajukan', 'disetujui'])) {
             return;
         }
 
@@ -70,13 +70,13 @@ class LaporanKeuanganService
 
     public function submit(LaporanKeuanganBulanan $laporan, $user): void
     {
-        if (in_array($laporan->status, ['draft', 'returned'])) {
+        if (in_array($laporan->status, ['draft', 'dikembalikan'])) {
             // Kalkulasi ulang sebelum submit untuk memastikan validitas
             $this->calculate($laporan->tahun, $laporan->bulan);
             $laporan->refresh();
 
             $laporan->update([
-                'status' => 'submitted',
+                'status' => 'diajukan',
                 'submitted_at' => now(),
                 'submitted_by' => $user->id,
             ]);
@@ -85,9 +85,9 @@ class LaporanKeuanganService
 
     public function approve(LaporanKeuanganBulanan $laporan, $admin): void
     {
-        if ($laporan->status === 'submitted') {
+        if ($laporan->status === 'diajukan') {
             $laporan->update([
-                'status' => 'approved',
+                'status' => 'disetujui',
                 'approved_at' => now(),
                 'approved_by' => $admin->id,
             ]);
@@ -96,9 +96,9 @@ class LaporanKeuanganService
 
     public function return(LaporanKeuanganBulanan $laporan, $admin, string $catatan): void
     {
-        if ($laporan->status === 'submitted') {
+        if ($laporan->status === 'diajukan') {
             $laporan->update([
-                'status' => 'returned',
+                'status' => 'dikembalikan',
                 'returned_at' => now(),
                 'returned_by' => $admin->id,
                 'catatan_return' => $catatan,

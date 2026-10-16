@@ -51,10 +51,10 @@ class DashboardController extends Controller
         $saldoBulanIni = $pemasukanBulanIni - $pengeluaranBulanIni;
 
         $laporanCounts = [
-            'draft'     => LaporanKeuanganBulanan::where('status', 'draft')->count(),
-            'submitted' => LaporanKeuanganBulanan::where('status', 'submitted')->count(),
-            'returned'  => LaporanKeuanganBulanan::where('status', 'returned')->count(),
-            'approved'  => LaporanKeuanganBulanan::where('status', 'approved')->count(),
+            'draft'        => LaporanKeuanganBulanan::where('status', 'draft')->count(),
+            'diajukan'     => LaporanKeuanganBulanan::where('status', 'diajukan')->count(),
+            'dikembalikan' => LaporanKeuanganBulanan::where('status', 'dikembalikan')->count(),
+            'disetujui'    => LaporanKeuanganBulanan::where('status', 'disetujui')->count(),
         ];
 
         return view('bendahara.dashboard', compact(

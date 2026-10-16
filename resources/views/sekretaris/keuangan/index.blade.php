@@ -3,7 +3,7 @@
 
 @section('content')
 <div>
-    <div class="mb-6 grid gap-4 grid-cols-1 sm:grid-cols-3">
+    <div class="mb-4 grid gap-4 grid-cols-1 sm:grid-cols-3">
         <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Saldo Yayasan</p>
             <p class="text-xl font-bold text-gray-900 mt-1">Rp {{ number_format($saldo, 0, ',', '.') }}</p>
@@ -58,9 +58,9 @@
         </div>
 
         @if($transaksi->count() > 0)
-        <div class="overflow-x-auto mt-4">
+        <div class="overflow-x-auto">
             <table class="w-full text-left text-sm whitespace-nowrap">
-                <thead class="bg-gray-50 border-b border-gray-100">
+                <thead class="bg-gray-50 border-b border-gray-200">
                     <tr>
                         <th class="px-6 py-4 font-semibold text-gray-600 text-center w-12">No</th>
                         <th class="px-6 py-4 font-semibold text-gray-600">Tanggal</th>

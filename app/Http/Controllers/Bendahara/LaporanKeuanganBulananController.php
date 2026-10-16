@@ -25,13 +25,13 @@ class LaporanKeuanganBulananController extends Controller
 
     public function submit(Request $request, LaporanKeuanganBulanan $laporan)
     {
-        if (in_array($laporan->status, ['submitted', 'approved'])) {
-            return redirect()->back()->with('error', 'Laporan sudah disubmit atau diapprove.');
+        if (in_array($laporan->status, ['diajukan', 'disetujui'])) {
+            return redirect()->back()->with('error', 'Laporan sudah diajukan atau disetujui.');
         }
 
         $this->laporanService->submit($laporan, Auth::user());
 
-        return redirect()->back()->with('success', 'Laporan berhasil disubmit. Transaksi pada periode ini telah dikunci.');
+        return redirect()->back()->with('success', 'Laporan berhasil diajukan. Transaksi pada periode ini telah dikunci.');
     }
 
     public function cetak(LaporanKeuanganBulanan $laporan)

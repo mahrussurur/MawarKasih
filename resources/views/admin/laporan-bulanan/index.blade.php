@@ -14,9 +14,9 @@
             <select name="status" onchange="this.form.submit()" class="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm font-semibold text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-brand-500 lg:w-52">
                 <option value="">Semua Status</option>
                 <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>Draft</option>
-                <option value="submitted" {{ request('status') === 'submitted' ? 'selected' : '' }}>Submitted (Menunggu)</option>
-                <option value="returned" {{ request('status') === 'returned' ? 'selected' : '' }}>Returned (Dikembalikan)</option>
-                <option value="approved" {{ request('status') === 'approved' ? 'selected' : '' }}>Approved (Disetujui)</option>
+                <option value="diajukan" {{ request('status') === 'diajukan' ? 'selected' : '' }}>Diajukan</option>
+                <option value="dikembalikan" {{ request('status') === 'dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
+                <option value="disetujui" {{ request('status') === 'disetujui' ? 'selected' : '' }}>Disetujui</option>
             </select>
         </form>
     </div>
@@ -55,12 +55,12 @@
                             <td class="px-6 py-4">
                                 @if($laporan->status === 'draft')
                                     <span class="inline-flex rounded-md bg-gray-50 px-2 py-1 text-xs font-semibold text-gray-700 ring-1 ring-inset ring-gray-600/20">Draft</span>
-                                @elseif($laporan->status === 'submitted')
-                                    <span class="inline-flex rounded-md bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-700 ring-1 ring-inset ring-blue-600/20">Menunggu Review</span>
-                                @elseif($laporan->status === 'returned')
-                                    <span class="inline-flex rounded-md bg-red-50 px-2 py-1 text-xs font-semibold text-red-700 ring-1 ring-inset ring-red-600/10">Returned</span>
-                                @elseif($laporan->status === 'approved')
-                                    <span class="inline-flex rounded-md bg-green-50 px-2 py-1 text-xs font-semibold text-green-700 ring-1 ring-inset ring-green-600/20">Approved</span>
+                                @elseif($laporan->status === 'diajukan')
+                                    <span class="inline-flex rounded-md bg-blue-50 px-2 py-1 text-xs font-semibold text-blue-700 ring-1 ring-inset ring-blue-600/20">Diajukan</span>
+                                @elseif($laporan->status === 'dikembalikan')
+                                    <span class="inline-flex rounded-md bg-red-50 px-2 py-1 text-xs font-semibold text-red-700 ring-1 ring-inset ring-red-600/10">Dikembalikan</span>
+                                @elseif($laporan->status === 'disetujui')
+                                    <span class="inline-flex rounded-md bg-green-50 px-2 py-1 text-xs font-semibold text-green-700 ring-1 ring-inset ring-green-600/20">Disetujui</span>
                                 @endif
                             </td>
                             <td class="px-6 py-4 text-center">

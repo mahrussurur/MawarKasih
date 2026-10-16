@@ -30,7 +30,7 @@
                 <!-- No. HP -->
                 <div class="mb-5">
                     <label class="text-sm font-bold text-gray-800 block mb-2">No. HP</label>
-                    <input type="number" name="no_hp" value="{{ old('no_hp') }}" placeholder="Contoh: 08xxxxxxxxxx" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                    <input type="tel" name="no_hp" value="{{ old('no_hp') }}" placeholder="Contoh: 08xxxxxxxxxx" maxlength="15" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
@@ -62,7 +62,7 @@
                 <!-- Keterangan -->
                 <div class="mb-5">
                     <label class="text-sm font-bold text-gray-800 block mb-2">Keterangan</label>
-                    <textarea name="keterangan" value="{{ old('keterangan') }}" rows="2" placeholder="Masukkan Keterangan..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>{{ old('keterangan') }}</textarea>
+                    <textarea name="keterangan" rows="2" placeholder="Masukkan Keterangan..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('keterangan') }}</textarea>
                 </div>
 
                 <!-- Upload Bukti Transfer -->

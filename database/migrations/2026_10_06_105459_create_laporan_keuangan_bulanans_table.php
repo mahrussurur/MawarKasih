@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('total_pemasukan')->default(0);
             $table->bigInteger('total_pengeluaran')->default(0);
             $table->bigInteger('saldo_akhir')->default(0);
-            $table->string('status')->default('draft'); // draft, submitted, returned, approved
+            $table->string('status')->default('draft'); // draft, diajukan, dikembalikan, disetujui
             
             $table->timestamp('submitted_at')->nullable();
             $table->foreignId('submitted_by')->nullable()->constrained('users')->nullOnDelete();

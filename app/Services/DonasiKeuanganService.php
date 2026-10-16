@@ -14,9 +14,9 @@ class DonasiKeuanganService
     {
         $date = Carbon::parse($tanggal);
         $laporan = LaporanKeuanganBulanan::where('tahun', $date->year)->where('bulan', $date->month)->first();
-        if ($laporan && in_array($laporan->status, ['submitted', 'approved'])) {
+        if ($laporan && in_array($laporan->status, ['diajukan', 'disetujui'])) {
             throw ValidationException::withMessages([
-                'tanggal' => 'Transaksi tidak dapat dilakukan karena laporan keuangan pada bulan tersebut sudah dikunci (Submitted/Approved).'
+                'tanggal' => 'Transaksi tidak dapat dilakukan karena laporan keuangan pada bulan tersebut sudah dikunci (Diajukan/Disetujui).'
             ]);
         }
     }
@@ -36,7 +36,7 @@ class DonasiKeuanganService
                 'jenis'        => 'pemasukan',
                 'kategori'     => 'DONASI',
                 'nominal'      => $donasi->nominal,
-                'keterangan'   => "Donasi dari {$tipeDonatur}: {$donasi->nama_donatur} ({$donasi->kode_donasi})",
+                'keterangan'   => "Pemasukan donasi dari {$tipeDonatur}: {$donasi->nama_donatur} ({$donasi->kode_donasi})",
                 'tanggal'      => Carbon::parse($donasi->tanggal)->toDateString(),
                 'dicatat_oleh' => $dicatatOleh,
             ]
@@ -64,6 +64,21 @@ class DonasiKeuanganService
             } else {
                 $this->catatPemasukan($donasi);
             }
+        }
+    }
+
+    /**
+     * Hapus data transaksi keuangan yang terkait dengan donasi.
+     */
+    public function hapusPemasukan(Donasi $donasi): void
+    {
+        $transaksis = TransaksiKeuangan::where('donasi_id', $donasi->id)->get();
+        foreach ($transaksis as $transaksi) {
+            $this->validateNotLocked($transaksi->tanggal);
+            if ($transaksi->bukti_transaksi) {
+                app(\App\Services\ImageService::class)->deleteImage($transaksi->bukti_transaksi);
+            }
+            $transaksi->delete();
         }
     }
 }

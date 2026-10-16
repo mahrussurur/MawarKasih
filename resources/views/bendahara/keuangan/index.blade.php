@@ -87,7 +87,7 @@
                         <td class="px-4 py-3 font-bold text-gray-900">Rp {{ number_format($item->nominal, 0, ',', '.') }}</td>
                         <td class="px-4 py-3 text-gray-600 whitespace-normal min-w-[250px]">{{ $item->keterangan }}</td>
                         <td class="px-4 py-3 text-center">
-                            @if(!$item->donasi_id)
+                            @if(!$item->donasi_id && $item->kategori !== 'DONASI')
                             <div class="flex justify-center gap-2">
                                 <a href="{{ route('bendahara.keuangan.edit', $item->id) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-amber-400 bg-amber-50 text-amber-600 transition hover:bg-amber-500 hover:text-white" title="Edit">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -101,7 +101,7 @@
                                 </button>
                             </div>
                             @else
-                                <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">Sistem (Donasi)</span>
+                                <span class="text-xs font-medium text-gray-400">-</span>
                             @endif
                         </td>
                     </tr>
@@ -109,10 +109,14 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">{{ $keuangan->links() }}</div>
+
+        <!-- Pagination -->
+        @include('layouts.partials.admin._pagination', ['paginator' => $keuangan])
+
         @else
-        <div class="flex min-h-[250px] flex-col items-center justify-center gap-2 text-center text-gray-500 mt-4">
-            <p class="font-semibold text-gray-900">Belum ada data keuangan</p>
+        <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
+            <p class="text-base font-semibold text-gray-900">Belum ada data keuangan</p>
+            <span class="text-sm text-gray-500">{{ request('search') ? 'Data "'. request('search') . '" tidak ditemukan' : 'Belum ada data transaksi keuangan yang tercatat' }}</span>
         </div>
         @endif
     </div>

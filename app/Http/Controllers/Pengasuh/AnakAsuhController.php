@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\AnakAsuh;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\ImageService;
 
 class AnakAsuhController extends Controller
@@ -119,12 +118,5 @@ class AnakAsuhController extends Controller
         $this->imageService->deleteImage($anakAsuh->foto);
         $anakAsuh->delete();
         return redirect()->route('pengasuh.anak-asuh.index')->with('success', 'Data berhasil dihapus');
-    }
-
-    public function cetak()
-    {
-        $data = AnakAsuh::all();
-        $pdf = Pdf::loadView('pengasuh.anak_asuh.cetak', compact('data'));
-        return $pdf->stream('Laporan_Data_Anak_Asuh_Mawar_Kasih.pdf');
     }
 }

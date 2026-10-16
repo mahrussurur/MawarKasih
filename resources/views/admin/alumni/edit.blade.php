@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('page-title', 'Edit Alumni')
+@section('page-title', 'Data Alumni')
 
 @section('content')
 <div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">

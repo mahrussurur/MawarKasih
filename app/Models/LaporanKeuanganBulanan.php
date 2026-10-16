@@ -47,3 +47,4 @@ class LaporanKeuanganBulanan extends Model
         return $this->belongsTo(User::class, 'returned_by');
     }
 }
+

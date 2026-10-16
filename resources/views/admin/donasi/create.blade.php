@@ -18,7 +18,7 @@
         </div>
 
         <div class="p-4 md:p-6">
-            <form action="{{ route('donasi.store') }}" method="POST">
+            <form action="{{ route('donasi.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Nama Donatur -->
@@ -68,7 +68,7 @@
                 <!-- Keterangan -->
                 <div class="mb-5">
                     <label class="text-sm font-bold text-gray-800 block mb-2">Keterangan</label>
-                    <textarea name="keterangan" value="{{ old('keterangan') }}" rows="2" placeholder="Masukkan Keterangan..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>{{ old('keterangan') }}</textarea>
+                    <textarea name="keterangan" rows="2" placeholder="Masukkan Keterangan..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('keterangan') }}</textarea>
                 </div>
 
                 <!-- Upload Bukti Transfer -->

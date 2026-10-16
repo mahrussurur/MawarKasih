@@ -70,21 +70,21 @@
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-gray-600 flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-blue-500"></span> Menunggu Approval
+                            <span class="w-2 h-2 rounded-full bg-blue-500"></span> Diajukan
                         </span>
-                        <span class="font-bold text-gray-900">{{ $laporanCounts['submitted'] ?? 0 }}</span>
+                        <span class="font-bold text-gray-900">{{ $laporanCounts['diajukan'] ?? 0 }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-gray-600 flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-red-500"></span> Returned (Perlu Revisi)
+                            <span class="w-2 h-2 rounded-full bg-red-500"></span> Dikembalikan
                         </span>
-                        <span class="font-bold text-red-600">{{ $laporanCounts['returned'] ?? 0 }}</span>
+                        <span class="font-bold text-red-600">{{ $laporanCounts['dikembalikan'] ?? 0 }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-sm text-gray-600 flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-green-500"></span> Approved
+                            <span class="w-2 h-2 rounded-full bg-green-500"></span> Disetujui
                         </span>
-                        <span class="font-bold text-gray-900">{{ $laporanCounts['approved'] ?? 0 }}</span>
+                        <span class="font-bold text-gray-900">{{ $laporanCounts['disetujui'] ?? 0 }}</span>
                     </div>
                 </div>
             </div>

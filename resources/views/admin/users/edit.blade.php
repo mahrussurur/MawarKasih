@@ -24,7 +24,7 @@
             @method('PATCH')
 
             <div class="mb-5">
-                <label for="role" class="mb-2 block text-sm font-bold text-gray-800">Role</label>
+                <label for="role" class="mb-2 block text-sm font-bold text-gray-800">Role <span class="text-red-500">*</span></label>
                 <select id="role" name="role" required class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('role') border-red-400 @enderror">
                     <option value="admin" @selected(old('role', $user->role) === 'admin')>Admin</option>
                     <option value="bendahara" @selected(old('role', $user->role) === 'bendahara')>Bendahara</option>
@@ -36,13 +36,13 @@
             </div>
 
             <div class="mb-5">
-                <label for="username" class="mb-2 block text-sm font-bold text-gray-800">Username</label>
+                <label for="username" class="mb-2 block text-sm font-bold text-gray-800">Username <span class="text-red-500">*</span></label>
                 <input id="username" type="text" name="username" value="{{ old('username', $user->username) }}" required autocomplete="username" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('username') border-red-400 @enderror">
                 @error('username')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
             </div>
 
             <div class="mb-5">
-                <label for="email" class="mb-2 block text-sm font-bold text-gray-800">Email</label>
+                <label for="email" class="mb-2 block text-sm font-bold text-gray-800">Email <span class="text-red-500">*</span></label>
                 <input id="email" type="email" name="email" value="{{ old('email', $user->email) }}" required autocomplete="email" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-400 @enderror">
                 @error('email')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
             </div>

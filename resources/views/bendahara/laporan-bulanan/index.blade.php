@@ -31,9 +31,9 @@
     </div>
 
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8 relative overflow-hidden">
-        @if($laporan->status === 'returned')
+        @if($laporan->status === 'dikembalikan')
             <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
-                <h4 class="font-bold text-red-800">Laporan Dikembalikan (Return)</h4>
+                <h4 class="font-bold text-red-800">Laporan Dikembalikan</h4>
                 <p class="text-sm text-red-700 mt-1">{{ $laporan->catatan_return }}</p>
                 <p class="text-xs text-red-500 mt-2">Oleh: {{ $laporan->returner->name ?? 'Admin' }} pada {{ $laporan->returned_at->format('d/m/Y H:i') }}</p>
             </div>
@@ -47,12 +47,12 @@
             <div class="flex items-center gap-3">
                 @if($laporan->status === 'draft')
                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">Draft</span>
-                @elseif($laporan->status === 'submitted')
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">Submitted</span>
-                @elseif($laporan->status === 'returned')
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">Returned</span>
-                @elseif($laporan->status === 'approved')
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">Approved</span>
+                @elseif($laporan->status === 'diajukan')
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">Diajukan</span>
+                @elseif($laporan->status === 'dikembalikan')
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">Dikembalikan</span>
+                @elseif($laporan->status === 'disetujui')
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">Disetujui</span>
                 @endif
 
                 @if($laporan->id)
@@ -86,12 +86,12 @@
             </div>
         </div>
 
-        @if(in_array($laporan->status, ['draft', 'returned']))
+        @if(in_array($laporan->status, ['draft', 'dikembalikan']))
             <div class="border-t border-gray-100 pt-6 flex justify-end">
-                <form method="POST" action="{{ route('bendahara.laporan-bulanan.submit', $laporan) }}" onsubmit="return confirm('Apakah Anda yakin ingin submit laporan ini? Transaksi pada periode ini akan dikunci dan tidak bisa diubah lagi.');">
+                <form method="POST" action="{{ route('bendahara.laporan-bulanan.submit', $laporan) }}" onsubmit="return confirm('Apakah Anda yakin ingin mengajukan laporan ini? Transaksi pada periode ini akan dikunci dan tidak bisa diubah lagi.');">
                     @csrf
                     <button type="submit" class="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Submit Laporan
+                        Ajukan Laporan
                     </button>
                 </form>
             </div>

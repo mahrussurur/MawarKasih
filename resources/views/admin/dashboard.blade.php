@@ -5,17 +5,9 @@
 
 @section('content')
 <div>
-    <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-            <h2 class="text-2xl font-extrabold text-gray-900">Selamat Datang, {{ Auth::user()->nama }}!</h2>
-            <p class="mt-1 text-sm font-medium text-gray-500">Ini adalah dashboard utama pengelolaan Yayasan Mawar Kasih.</p>
-        </div>
-        @if(isset($laporanMenungguApproval) && $laporanMenungguApproval > 0)
-        <a href="{{ route('admin.laporan-bulanan.index', ['status' => 'submitted']) }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-50 px-4 py-2 text-sm font-bold text-blue-700 hover:bg-blue-100 transition ring-1 ring-blue-200">
-            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-white text-xs">{{ $laporanMenungguApproval }}</span>
-            Laporan Perlu Review
-        </a>
-        @endif
+    <div class="mb-6">
+        <h2 class="text-2xl font-extrabold text-gray-900">Selamat Datang, {{ Auth::user()->nama }}!</h2>
+        <p class="mt-1 text-sm font-medium text-gray-500">Ini adalah dashboard utama pengelolaan Yayasan Mawar Kasih.</p>
     </div>
 
     <!-- Keuangan Summary Grid -->
@@ -78,7 +70,25 @@
             <a href="{{ route('anak-asuh.index') }}" class="mt-5 block w-full rounded-xl bg-blue-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-blue-700">Lihat Data</a>
         </div>
 
-        <!-- total pengasuh -->
+        <!-- total alumni -->
+        <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+            <div class="flex items-center gap-4">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-100 text-violet-600">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Alumni</p>
+                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalAlumni ?? 0 }}</p>
+                </div>
+            </div>
+            <a href="{{ route('alumni.index') }}" class="mt-5 block w-full rounded-xl bg-violet-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-violet-700">Lihat Data</a>
+        </div>
+
+        <!-- total pengelola -->
         <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
             <div class="flex items-center gap-4">
                 <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
@@ -90,17 +100,17 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Pengasuh</p>
-                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalPengasuh ?? 0 }}</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Pengelola</p>
+                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalPengelola ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('users.index', ['role' => 'pengasuh']) }}" class="mt-5 block w-full rounded-xl bg-emerald-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-emerald-700">Lihat Data</a>
+            <a href="{{ route('users.index') }}" class="mt-5 block w-full rounded-xl bg-emerald-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-emerald-700">Lihat Data</a>
         </div>
 
         <!-- total donatur -->
         <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
             <div class="flex items-center gap-4">
-                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-100 text-violet-600">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
                     <svg class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/>
                     </svg>
@@ -110,32 +120,21 @@
                     <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalDonatur ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('users.index') }}" class="mt-5 block w-full rounded-xl bg-violet-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-violet-700">Lihat Data</a>
-        </div>
-
-        <!-- total kegiatan -->
-        <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
-            <div class="flex items-center gap-4">
-                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
-                    <svg class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/>
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Kegiatan</p>
-                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalKegiatan ?? 0 }}</p>
-                </div>
-            </div>
-            <a href="{{ route('kegiatan.index') }}" class="mt-5 block w-full rounded-xl bg-amber-500 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-amber-600">Lihat Data</a>
+            <a href="{{ route('users.index', ['role' => 'donatur']) }}" class="mt-5 block w-full rounded-xl bg-amber-500 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-amber-600">Lihat Data</a>
         </div>
     </div>
 
     <div class="grid gap-5">
         <!-- Section Laporan Keuangan Terbaru -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6 mb-2">
-            <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4 lg:flex-row lg:items-center lg:justify-between">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
+            <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
                 <div class="flex items-center gap-3">
                     <h3 class="text-base font-extrabold text-gray-900">Laporan Bulanan Terbaru</h3>
+                    @if(isset($laporanMenungguApproval) && $laporanMenungguApproval > 0)
+                        <span class="inline-flex items-center justify-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-bold text-blue-800">
+                            {{ $laporanMenungguApproval }} Diajukan
+                        </span>
+                    @endif
                 </div>
                 <a href="{{ route('admin.laporan-bulanan.index') }}" class="text-sm font-bold text-blue-600 hover:text-blue-700">Manajemen Laporan →</a>
             </div>
@@ -156,19 +155,27 @@
                     <tbody class="divide-y divide-gray-100">
                         @foreach($laporanTerbaru as $lap)
                         <tr class="group transition-colors hover:bg-gray-50">
-                            <td class="px-4 py-2.5 font-medium text-gray-900">{{ \Carbon\Carbon::create()->month($lap->bulan)->translatedFormat('F') }} {{ $lap->tahun }}</td>
+                            <td class="px-4 py-2.5 font-medium text-gray-900">
+                                <div>{{ \Carbon\Carbon::create()->month($lap->bulan)->translatedFormat('F') }} {{ $lap->tahun }}</div>
+                                <div class="text-xs font-normal text-gray-500 mt-0.5">
+                                    Diajukan oleh: <span class="font-medium text-gray-700">{{ $lap->submitter?->nama ?? 'Bendahara' }}</span>
+                                    @if($lap->submitted_at)
+                                        • {{ $lap->submitted_at->translatedFormat('d M Y') }}
+                                    @endif
+                                </div>
+                            </td>
                             <td class="px-4 py-2.5 text-green-600 font-medium">+Rp {{ number_format($lap->total_pemasukan, 0, ',', '.') }}</td>
                             <td class="px-4 py-2.5 text-red-600 font-medium">-Rp {{ number_format($lap->total_pengeluaran, 0, ',', '.') }}</td>
                             <td class="px-4 py-2.5 font-bold text-gray-900">Rp {{ number_format($lap->saldo_akhir, 0, ',', '.') }}</td>
                             <td class="px-4 py-2.5 text-center">
                                 @if($lap->status === 'draft')
                                     <span class="inline-flex rounded-md bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">Draft</span>
-                                @elseif($lap->status === 'submitted')
-                                    <span class="inline-flex rounded-md bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-700 animate-pulse">Menunggu Review</span>
-                                @elseif($lap->status === 'returned')
-                                    <span class="inline-flex rounded-md bg-red-100 px-2 py-1 text-xs font-semibold text-red-700">Returned</span>
-                                @elseif($lap->status === 'approved')
-                                    <span class="inline-flex rounded-md bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">Approved</span>
+                                @elseif($lap->status === 'diajukan')
+                                    <span class="inline-flex rounded-md bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-700 animate-pulse">Diajukan</span>
+                                @elseif($lap->status === 'dikembalikan')
+                                    <span class="inline-flex rounded-md bg-red-100 px-2 py-1 text-xs font-semibold text-red-700">Dikembalikan</span>
+                                @elseif($lap->status === 'disetujui')
+                                    <span class="inline-flex rounded-md bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">Disetujui</span>
                                 @endif
                             </td>
                             <td class="sticky right-0 z-10 bg-white px-4 py-2.5 text-center shadow-[inset_1px_0_0_#e5e7eb] transition-colors group-hover:bg-gray-50">
@@ -180,15 +187,16 @@
                 </table>
             </div>
             @else
-            <div class="flex min-h-[150px] flex-col items-center justify-center text-center text-gray-500">
-                <p class="text-sm font-semibold">Belum ada laporan bulanan.</p>
+            <div class="flex min-h-[150px] flex-col items-center justify-center text-center text-gray-500 p-6">
+                <p class="text-sm font-semibold text-gray-700">Belum ada laporan bulanan yang diajukan.</p>
+                <p class="text-xs text-gray-400 mt-1">Laporan yang diajukan oleh Bendahara akan muncul di sini.</p>
             </div>
             @endif
         </div>
 
         <!-- Section Donasi Terbaru -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
-            <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 mb-4 lg:flex-row lg:items-center lg:justify-between">
+            <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
                 <div class="flex items-center gap-3">
                     <h3 class="text-base font-extrabold text-gray-900">Donasi Terbaru</h3>
                     @if(isset($totalDonasiPending) && $totalDonasiPending > 0)
@@ -334,16 +342,16 @@
 
                 @php
                     $tAnak = $totalAnak ?? 0;
-                    $tPengasuh = $totalPengasuh ?? 0;
+                    $tAlumni = $totalAlumni ?? 0;
+                    $tPengelola = $totalPengelola ?? 0;
                     $tDonatur = $totalDonatur ?? 0;
-                    $tKegiatan = $totalKegiatan ?? 0;
-                    $grandTotal = $tAnak + $tPengasuh + $tDonatur + $tKegiatan;
+                    $grandTotal = $tAnak + $tAlumni + $tPengelola + $tDonatur;
 
                     $items = [
                         ['label' => 'Anak Asuh', 'value' => $tAnak, 'bg' => 'bg-blue-500', 'lightBg' => 'bg-blue-50', 'textColor' => 'text-blue-600'],
-                        ['label' => 'Pengasuh', 'value' => $tPengasuh, 'bg' => 'bg-emerald-500', 'lightBg' => 'bg-emerald-50', 'textColor' => 'text-emerald-600'],
-                        ['label' => 'Donatur', 'value' => $tDonatur, 'bg' => 'bg-violet-500', 'lightBg' => 'bg-violet-50', 'textColor' => 'text-violet-600'],
-                        ['label' => 'Kegiatan', 'value' => $tKegiatan, 'bg' => 'bg-amber-500', 'lightBg' => 'bg-amber-50', 'textColor' => 'text-amber-600'],
+                        ['label' => 'Alumni', 'value' => $tAlumni, 'bg' => 'bg-violet-500', 'lightBg' => 'bg-violet-50', 'textColor' => 'text-violet-600'],
+                        ['label' => 'Pengelola', 'value' => $tPengelola, 'bg' => 'bg-emerald-500', 'lightBg' => 'bg-emerald-50', 'textColor' => 'text-emerald-600'],
+                        ['label' => 'Donatur', 'value' => $tDonatur, 'bg' => 'bg-amber-500', 'lightBg' => 'bg-amber-50', 'textColor' => 'text-amber-600'],
                     ];
                 @endphp
 
@@ -398,7 +406,7 @@
                 <!-- Header Card -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-gray-100 pb-4 mb-6">
                     <div>
-                        <h3 class="text-base font-bold text-gray-900">Jumlah Donatur (Tahun Ini)</h3>
+                        <h3 class="text-base font-bold text-gray-900">Jumlah Donasi ({{ date('Y') }})</h3>
                     </div>
                 </div>
 
@@ -420,18 +428,18 @@
         const dataDistributionChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Anak Asuh', 'Pengasuh', 'Donatur', 'Kegiatan'],
+                labels: ['Anak Asuh', 'Alumni', 'Pengelola', 'Donatur'],
                 datasets: [{
                     data: [
                         {{ $totalAnak ?? 0 }},
-                        {{ $totalPengasuh ?? 0 }},
-                        {{ $totalDonatur ?? 0 }},
-                        {{ $totalKegiatan ?? 0 }}
+                        {{ $totalAlumni ?? 0 }},
+                        {{ $totalPengelola ?? 0 }},
+                        {{ $totalDonatur ?? 0 }}
                     ],
                     backgroundColor: [
                         '#3b82f6', // blue-500
-                        '#10b981', // emerald-500
                         '#8b5cf6', // violet-500
+                        '#10b981', // emerald-500
                         '#f59e0b'  // amber-500
                     ],
                     borderWidth: 2,
@@ -475,31 +483,57 @@
         });
 
         const ctxDonation = document.getElementById('monthlyDonationChart').getContext('2d');
+
+        // Gradient fill
+        const gradientDonation = ctxDonation.createLinearGradient(0, 0, 0, 300);
+        gradientDonation.addColorStop(0, 'rgba(59, 130, 246, 0.35)'); // Warna atas
+        gradientDonation.addColorStop(1, 'rgba(59, 130, 246, 0.0)');  // Warna bawah (transparan)
+
         const monthlyDonationChart = new Chart(ctxDonation, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
                 datasets: [{
-                    label: 'Jumlah Donatur',
+                    label: 'Total Donasi',
                     data: @json($donasiPerBulan ?? array_fill(0, 12, 0)),
-                    backgroundColor: '#3b82f6',
-                    hoverBackgroundColor: '#1d4ed8',
-                    borderRadius: 8,
-                    borderSkipped: false,
-                    maxBarThickness: 28
+                    borderColor: '#3b82f6',
+                    borderWidth: 3,
+                    backgroundColor: gradientDonation,
+                    fill: true,
+                    tension: 0.4, // Kurva halus mirip IHSG
+                    pointRadius: 4,
+                    pointHoverRadius: 7,
+                    pointBackgroundColor: '#3b82f6',
+                    pointHoverBackgroundColor: '#1d4ed8',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 1,
-                            precision: 0,
                             font: { family: "'Inter', sans-serif", size: 11 },
-                            color: '#9ca3af'
+                            color: '#9ca3af',
+                            callback: function(value) {
+                                if (value >= 1000000000) {
+                                    return 'Rp ' + (value / 1000000000).toFixed(1).replace(/\.0$/, '') + ' M';
+                                }
+                                if (value >= 1000000) {
+                                    return 'Rp ' + (value / 1000000).toFixed(1).replace(/\.0$/, '') + ' Jt';
+                                }
+                                if (value >= 1000) {
+                                    return 'Rp ' + (value / 1000).toFixed(0) + ' Rb';
+                                }
+                                return 'Rp ' + value;
+                            }
                         },
                         grid: {
                             color: '#f3f4f6',
@@ -529,8 +563,15 @@
                         bodyFont: { family: "'Inter', sans-serif", size: 13, weight: 'bold' },
                         displayColors: false,
                         callbacks: {
+                            // Format Rupiah lengkap saat hover (misal: Rp 1.500.000)
                             label: function(context) {
-                                return `Donatur: ${context.parsed.y} Orang`;
+                                const val = context.parsed.y || 0;
+                                const formatted = new Intl.NumberFormat('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR',
+                                    minimumFractionDigits: 0
+                                }).format(val);
+                                return `Total Donasi: ${formatted}`;
                             }
                         }
                     }

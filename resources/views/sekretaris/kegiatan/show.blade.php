@@ -56,22 +56,6 @@
                 </div>
                 
             </div>
-
-            <!-- Tombol Aksi -->
-            <div class="mt-6 pt-4 border-t border-gray-200 flex flex-wrap gap-3 justify-center">
-                <a href="{{ route('sekretaris.kegiatan.edit', $kegiatan->id) }}" 
-                class="rounded-xl px-5 py-2 text-sm font-semibold text-amber-600 border border-amber-500 bg-yellow-100 transition hover:bg-amber-500 hover:text-white">
-                    Edit
-                </a>
-                <button type="button"
-                        onclick="openDeleteModal(this)"
-                        data-delete-route="{{ route('sekretaris.kegiatan.destroy', $kegiatan->id) }}"
-                        data-name="{{ $kegiatan->nama_kegiatan }}"
-                        class="rounded-xl px-5 py-2 text-sm font-semibold text-red-500 border border-red-500 bg-red-100 transition hover:bg-red-500 hover:text-white">
-                    Hapus
-                </button>
-            </div>
-
         </div>
     </div>
 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sekretaris;
 use App\Http\Controllers\Controller;
 use App\Models\Alumni;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AlumniController extends Controller
 {
@@ -29,5 +30,13 @@ class AlumniController extends Controller
     public function show(Alumni $alumni)
     {
         return view('sekretaris.alumni.show', compact('alumni'));
+    }
+
+    public function cetak()
+    {
+        $data = Alumni::latest()->get();
+        $pdf = Pdf::loadView('sekretaris.alumni.cetak', compact('data'))
+                  ->setPaper('a4', 'portrait');
+        return $pdf->stream('Laporan_Data_Alumni_Mawar_Kasih.pdf');
     }
 }

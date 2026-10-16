@@ -41,7 +41,7 @@ it('preview tidak mengunci transaksi (Test 12)', function () {
     $this->assertDatabaseCount('transaksi_keuangans', 1);
 });
 
-it('submit mengubah status draft ke submitted (Test 13)', function () {
+it('submit mengubah status draft ke diajukan (Test 13)', function () {
     $bendahara = User::factory()->create(['role' => 'bendahara']);
     $laporan = LaporanKeuanganBulanan::factory()->create([
         'tahun' => 2026,
@@ -55,17 +55,17 @@ it('submit mengubah status draft ke submitted (Test 13)', function () {
 
     $this->assertDatabaseHas('laporan_keuangan_bulanans', [
         'id' => $laporan->id,
-        'status' => 'submitted',
+        'status' => 'diajukan',
         'submitted_by' => $bendahara->id,
     ]);
 });
 
-it('setelah submitted, create/update/delete transaksi periode ditolak (Test 14)', function () {
+it('setelah diajukan, create/update/delete transaksi periode ditolak (Test 14)', function () {
     $bendahara = User::factory()->create(['role' => 'bendahara']);
     LaporanKeuanganBulanan::factory()->create([
         'tahun' => 2026,
         'bulan' => 10,
-        'status' => 'submitted',
+        'status' => 'diajukan',
     ]);
 
     $this->actingAs($bendahara)
@@ -81,12 +81,12 @@ it('setelah submitted, create/update/delete transaksi periode ditolak (Test 14)'
     $this->assertDatabaseCount('transaksi_keuangans', 0);
 });
 
-it('admin approve mengubah status submitted ke approved (Test 15)', function () {
+it('admin approve mengubah status diajukan ke disetujui (Test 15)', function () {
     $admin = User::factory()->create(['role' => 'admin']);
     $laporan = LaporanKeuanganBulanan::factory()->create([
         'tahun' => 2026,
         'bulan' => 10,
-        'status' => 'submitted',
+        'status' => 'diajukan',
     ]);
 
     $this->actingAs($admin)
@@ -95,17 +95,17 @@ it('admin approve mengubah status submitted ke approved (Test 15)', function () 
 
     $this->assertDatabaseHas('laporan_keuangan_bulanans', [
         'id' => $laporan->id,
-        'status' => 'approved',
+        'status' => 'disetujui',
         'approved_by' => $admin->id,
     ]);
 });
 
-it('admin return mengubah status submitted ke returned (Test 17)', function () {
+it('admin return mengubah status diajukan ke dikembalikan (Test 17)', function () {
     $admin = User::factory()->create(['role' => 'admin']);
     $laporan = LaporanKeuanganBulanan::factory()->create([
         'tahun' => 2026,
         'bulan' => 10,
-        'status' => 'submitted',
+        'status' => 'diajukan',
     ]);
 
     $this->actingAs($admin)
@@ -116,18 +116,18 @@ it('admin return mengubah status submitted ke returned (Test 17)', function () {
 
     $this->assertDatabaseHas('laporan_keuangan_bulanans', [
         'id' => $laporan->id,
-        'status' => 'returned',
+        'status' => 'dikembalikan',
         'catatan_return' => 'Tolong perbaiki mutasi bank',
         'returned_by' => $admin->id,
     ]);
 });
 
-it('returned bendahara dapat memperbaiki transaksi (Test 18)', function () {
+it('dikembalikan bendahara dapat memperbaiki transaksi (Test 18)', function () {
     $bendahara = User::factory()->create(['role' => 'bendahara']);
     LaporanKeuanganBulanan::factory()->create([
         'tahun' => 2026,
         'bulan' => 10,
-        'status' => 'returned',
+        'status' => 'dikembalikan',
     ]);
 
     $this->actingAs($bendahara)
@@ -143,12 +143,12 @@ it('returned bendahara dapat memperbaiki transaksi (Test 18)', function () {
     $this->assertDatabaseCount('transaksi_keuangans', 1);
 });
 
-it('submit ulang returned menjadi submitted (Test 19)', function () {
+it('submit ulang dikembalikan menjadi diajukan (Test 19)', function () {
     $bendahara = User::factory()->create(['role' => 'bendahara']);
     $laporan = LaporanKeuanganBulanan::factory()->create([
         'tahun' => 2026,
         'bulan' => 10,
-        'status' => 'returned',
+        'status' => 'dikembalikan',
     ]);
 
     $this->actingAs($bendahara)
@@ -157,7 +157,7 @@ it('submit ulang returned menjadi submitted (Test 19)', function () {
 
     $this->assertDatabaseHas('laporan_keuangan_bulanans', [
         'id' => $laporan->id,
-        'status' => 'submitted',
+        'status' => 'diajukan',
     ]);
 });
 
@@ -194,3 +194,18 @@ it('saldo akhir = saldo awal + pemasukan - pengeluaran (Test 20)', function () {
         'saldo_akhir' => 550000, // 500k + 200k - 150k
     ]);
 });
+
+it('status database langsung bernilai draft, diajukan, dikembalikan, dan disetujui', function () {
+    $lapDraft = new LaporanKeuanganBulanan(['status' => 'draft']);
+    expect($lapDraft->status)->toBe('draft');
+
+    $lapDiajukan = new LaporanKeuanganBulanan(['status' => 'diajukan']);
+    expect($lapDiajukan->status)->toBe('diajukan');
+
+    $lapDikembalikan = new LaporanKeuanganBulanan(['status' => 'dikembalikan']);
+    expect($lapDikembalikan->status)->toBe('dikembalikan');
+
+    $lapDisetujui = new LaporanKeuanganBulanan(['status' => 'disetujui']);
+    expect($lapDisetujui->status)->toBe('disetujui');
+});
+

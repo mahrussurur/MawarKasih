@@ -3,7 +3,7 @@
 
 @section('content')
 <div>
-    <div class="mb-6 grid gap-4 grid-cols-1 sm:grid-cols-3">
+    <div class="mb-4 grid gap-4 grid-cols-1 sm:grid-cols-3">
         <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Saldo Yayasan</p>
             <p class="text-xl font-bold text-gray-900 mt-1">Rp {{ number_format($saldo, 0, ',', '.') }}</p>
@@ -90,10 +90,14 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">{{ $transaksi->links() }}</div>
+
+        <!-- Pagination -->
+        @include('layouts.partials.admin._pagination', ['paginator' => $transaksi])
+
         @else
-        <div class="flex min-h-[250px] flex-col items-center justify-center gap-2 text-center text-gray-500 mt-4">
-            <p class="font-semibold text-gray-900">Belum ada transaksi</p>
+        <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
+            <p class="text-base font-semibold text-gray-900">Belum ada data transaksi</p>
+            <span class="text-sm text-gray-500">{{ request('search') ? 'Data "'. request('search') . '" tidak ditemukan' : 'Belum ada data transaksi keuangan yang tercatat' }}</span>
         </div>
         @endif
     </div>

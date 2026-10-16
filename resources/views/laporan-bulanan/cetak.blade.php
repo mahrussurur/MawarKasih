@@ -35,7 +35,7 @@
 </head>
 <body>
 
-    @if(in_array($laporan->status, ['draft', 'returned']))
+    @if(in_array($laporan->status, ['draft', 'dikembalikan']))
     <div class="draft-watermark">
         DRAFT / BELUM DISETUJUI
     </div>
@@ -106,12 +106,12 @@
                     <p style="font-weight: bold; font-size: 14px;">{{ strtoupper($laporan->status) }}</p>
                 </td>
                 <td>
-                    @if($laporan->status === 'approved')
+                    @if($laporan->status === 'disetujui')
                         <p>Disetujui oleh:</p>
                         <p class="name" style="margin-top: 50px;">{{ $laporan->approver->name ?? '(Admin)' }}</p>
                         <p>Tanggal: {{ $laporan->approved_at ? $laporan->approved_at->format('d/m/Y') : '-' }}</p>
-                    @elseif($laporan->status === 'submitted')
-                        <p>Disubmit oleh:</p>
+                    @elseif($laporan->status === 'diajukan')
+                        <p>Diajukan oleh:</p>
                         <p class="name" style="margin-top: 50px;">{{ $laporan->submitter->name ?? '(Bendahara)' }}</p>
                         <p>Tanggal: {{ $laporan->submitted_at ? $laporan->submitted_at->format('d/m/Y') : '-' }}</p>
                     @endif

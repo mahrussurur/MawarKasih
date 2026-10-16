@@ -19,7 +19,7 @@ class KeuanganController extends Controller
     {
         $date = Carbon::parse($tanggal);
         $laporan = LaporanKeuanganBulanan::where('tahun', $date->year)->where('bulan', $date->month)->first();
-        return $laporan && in_array($laporan->status, ['submitted', 'approved']);
+        return $laporan && in_array($laporan->status, ['diajukan', 'disetujui']);
     }
 
     public function index(Request $request)
@@ -63,7 +63,7 @@ class KeuanganController extends Controller
         ]);
 
         if ($this->isPeriodLocked($request->tanggal)) {
-            return redirect()->back()->withInput()->with('error', 'Transaksi tidak dapat ditambah karena laporan keuangan pada bulan tersebut sudah dikunci (Submitted/Approved).');
+            return redirect()->back()->withInput()->with('error', 'Transaksi tidak dapat ditambah karena laporan keuangan pada bulan tersebut sudah dikunci (Diajukan/Disetujui).');
         }
 
         $data = [
@@ -89,8 +89,8 @@ class KeuanganController extends Controller
 
     public function edit(TransaksiKeuangan $keuangan)
     {
-        if ($keuangan->donasi_id) {
-            return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa diedit secara manual. Edit donasinya jika diperlukan.');
+        if ($keuangan->donasi_id || $keuangan->kategori === 'DONASI') {
+            return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi tidak bisa diedit secara manual. Edit donasinya jika diperlukan.');
         }
 
         return view('bendahara.keuangan.edit', compact('keuangan'));
@@ -98,8 +98,8 @@ class KeuanganController extends Controller
 
     public function update(Request $request, TransaksiKeuangan $keuangan)
     {
-        if ($keuangan->donasi_id) {
-            return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa diedit secara manual.');
+        if ($keuangan->donasi_id || $keuangan->kategori === 'DONASI') {
+            return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi tidak bisa diedit secara manual.');
         }
 
         $validated = $request->validate([
@@ -134,8 +134,8 @@ class KeuanganController extends Controller
 
     public function destroy(TransaksiKeuangan $keuangan)
     {
-        if ($keuangan->donasi_id) {
-            return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi otomatis tidak bisa dihapus. Tolak donasi tersebut jika ingin membatalkan.');
+        if ($keuangan->donasi_id || $keuangan->kategori === 'DONASI') {
+            return redirect()->route('bendahara.keuangan.index')->with('error', 'Data keuangan dari donasi tidak bisa dihapus dari menu keuangan. Hapus atau tolak data donasinya jika ingin membatalkan.');
         }
 
         if ($this->isPeriodLocked($keuangan->tanggal)) {

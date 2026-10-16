@@ -135,9 +135,13 @@ class DonasiController extends Controller
 
     public function destroy(Donasi $donasi)
     {
-        $this->imageService->deleteImage($donasi->bukti_transfer);
+        if ($donasi->bukti_transfer) {
+            $this->imageService->deleteImage($donasi->bukti_transfer);
+        }
 
         $kode = $donasi->kode_donasi;
+
+        $this->donasiKeuanganService->hapusPemasukan($donasi);
         $donasi->delete();
 
         return redirect()->route('bendahara.donasi.index')->with('success', "Donasi {$kode} berhasil dihapus.");

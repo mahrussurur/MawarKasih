@@ -53,8 +53,9 @@ it('shows only foundation content and profile menus to secretaries', function ()
             'Data Alumni',
             'Data Kegiatan',
             'Galeri',
+            'Laporan Bulanan',
         ])
-        ->assertDontSee(['Data Donasi', 'Transaksi Keuangan', 'Dokumen Administrasi', 'Laporan Bulanan']);
+        ->assertDontSee(['Data Donasi', 'Transaksi Keuangan', 'Dokumen Administrasi']);
 });
 
 it('shows child-care and profile menus to caregivers only', function () {

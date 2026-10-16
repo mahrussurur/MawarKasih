@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\AnakAsuh;
+use App\Models\Alumni;
 use App\Models\User;
 use App\Models\Donasi;
 use App\Models\Kegiatan;
@@ -19,8 +20,8 @@ class DashboardController extends Controller
     public function index()
     {
         $totalAnak = AnakAsuh::count();
-        $totalPengasuh = User::where('role', 'pengasuh')->count();
-        $totalKegiatan = Kegiatan::count();
+        $totalAlumni = Alumni::count();
+        $totalPengelola = User::whereIn('role', ['pengasuh', 'bendahara', 'sekretaris'])->count();
         $totalDonatur = User::where('role', 'donatur')->count();
 
         $donasiTerbaru  = Donasi::where('status', 'pending')->latest()->take(5)->get();
@@ -35,7 +36,7 @@ class DashboardController extends Controller
         foreach ($donations as $donasi) {
             if ($donasi->tanggal) {
                 $month = $donasi->tanggal->format('n');
-                $donasiPerBulanData[$month] += 1;
+                $donasiPerBulanData[$month] += $donasi->nominal;
             }
         }
         $donasiPerBulan = array_values($donasiPerBulanData);
@@ -57,13 +58,18 @@ class DashboardController extends Controller
         $totalPengeluaran = TransaksiKeuangan::where('jenis', 'pengeluaran')->sum('nominal');
         $saldoSaatIni = $totalPemasukan - $totalPengeluaran;
 
-        $laporanMenungguApproval = LaporanKeuanganBulanan::where('status', 'submitted')->count();
-        $laporanTerbaru = LaporanKeuanganBulanan::with('submitter')->latest('tahun')->latest('bulan')->take(5)->get();
+        $laporanMenungguApproval = LaporanKeuanganBulanan::where('status', 'diajukan')->count();
+        $laporanTerbaru = LaporanKeuanganBulanan::with(['submitter.profilPengelola'])
+            ->where('status', 'diajukan')
+            ->orderByDesc('tahun')
+            ->orderByDesc('bulan')
+            ->take(5)
+            ->get();
 
         return view('admin.dashboard', compact(
             'totalAnak',
-            'totalPengasuh',
-            'totalKegiatan',
+            'totalAlumni',
+            'totalPengelola',
             'totalDonatur',
             'donasiTerbaru',
             'totalDonasiPending',

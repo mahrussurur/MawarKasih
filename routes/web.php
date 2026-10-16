@@ -7,6 +7,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    session()->reflash();
     $role = auth()->user()->role;
     return match ($role) {
         'admin' => redirect()->route('admin.dashboard'),

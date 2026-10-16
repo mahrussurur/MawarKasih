@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -91,5 +92,23 @@ class Donasi extends Model
     public function donatur(): BelongsTo
     {
         return $this->belongsTo(User::class, 'donatur_id');
+    }
+
+    public function transaksiKeuangan(): HasOne
+    {
+        return $this->hasOne(TransaksiKeuangan::class, 'donasi_id');
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Donasi $donasi) {
+            $transaksis = TransaksiKeuangan::where('donasi_id', $donasi->id)->get();
+            foreach ($transaksis as $transaksi) {
+                if ($transaksi->bukti_transaksi) {
+                    app(\App\Services\ImageService::class)->deleteImage($transaksi->bukti_transaksi);
+                }
+                $transaksi->delete();
+            }
+        });
     }
 }
