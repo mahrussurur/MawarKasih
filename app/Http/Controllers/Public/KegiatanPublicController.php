@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
+use App\Models\Donasi;
 use App\Models\Kegiatan;
+use Illuminate\Http\Request;
 
 class KegiatanPublicController extends Controller
 {
@@ -21,7 +21,7 @@ class KegiatanPublicController extends Controller
         }
 
         // Urutkan dari yang terbaru berdasarkan tanggal pelaksanaan
-        $kegiatans = $query->orderBy('tanggal_pelaksanaan', 'desc')->paginate(9);
+        $kegiatans = $query->orderBy('tanggal_pelaksanaan', 'desc')->paginate(9)->withQueryString();
 
         return view('public.kegiatan.index', compact('kegiatans', 'search'));
     }
@@ -37,7 +37,7 @@ class KegiatanPublicController extends Controller
                             ->get();
 
         // Ambil donasi yang valid (diterima)
-        $donaturs = \App\Models\Donasi::where('status', 'diterima')
+        $donaturs = Donasi::where('status', 'diterima')
                             ->orderBy('tanggal', 'desc')
                             ->limit(50)
                             ->get();
@@ -45,3 +45,4 @@ class KegiatanPublicController extends Controller
         return view('public.kegiatan.show', compact('kegiatan', 'recent_kegiatans', 'donaturs'));
     }
 }
+

@@ -4,19 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AnakAsuh;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\ImageService;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
 
 class AnakAsuhController extends Controller
 {
-    protected $imageService;
+    public function __construct(protected ImageService $imageService) {}
 
-    public function __construct(ImageService $imageService)
-    {
-        $this->imageService = $imageService;
-    }
     public function index(Request $request)
     {
         $query = AnakAsuh::latest();
@@ -71,7 +66,7 @@ class AnakAsuhController extends Controller
             $validated['foto'] = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'anak_asuh');
         }
 
-        \App\Models\AnakAsuh::create($validated);
+        AnakAsuh::create($validated);
 
         return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil ditambahkan');
     }
@@ -113,11 +108,10 @@ class AnakAsuhController extends Controller
         return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil diupdate');
     }
 
-    public function destroy($id)
+    public function destroy(AnakAsuh $anakAsuh)
     {
-        $anak = AnakAsuh::findOrFail($id);
-        $this->imageService->deleteImage($anak->foto);
-        $anak->delete();
+        $this->imageService->deleteImage($anakAsuh->foto);
+        $anakAsuh->delete();
         return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil dihapus');
     }
 

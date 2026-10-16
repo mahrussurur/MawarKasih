@@ -66,8 +66,5 @@ Route::prefix('admin')
 
         });
 
-        // ── ROUTE PUBLIK (di luar middleware auth) ──
-        // Cek status donasi untuk donatur via kode_donasi
-        Route::get('cek-donasi', [DonasiController::class, 'cekStatus'])->name('donasi.cek');
-
     });
+

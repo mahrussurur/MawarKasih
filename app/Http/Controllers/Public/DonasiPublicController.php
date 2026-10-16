@@ -10,12 +10,7 @@ use Illuminate\Http\Request;
 
 class DonasiPublicController extends Controller
 {
-    protected $imageService;
-
-    public function __construct(ImageService $imageService)
-    {
-        $this->imageService = $imageService;
-    }
+    public function __construct(protected ImageService $imageService) {}
 
     public function form(Request $request)
     {

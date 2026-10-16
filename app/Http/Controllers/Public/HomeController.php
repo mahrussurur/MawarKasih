@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
 use App\Models\AnakAsuh;
-use App\Models\User;
-use App\Models\Kegiatan;
-use App\Models\Galeri;
 use App\Models\Donasi;
+use App\Models\Galeri;
+use App\Models\Kegiatan;
+use App\Models\User;
 
 class HomeController extends Controller
 {

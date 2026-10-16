@@ -4,18 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kegiatan;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Services\ImageService;
+use Illuminate\Http\Request;
 
 class KegiatanController extends Controller
 {
-    protected $imageService;
+    public function __construct(protected ImageService $imageService) {}
 
-    public function __construct(ImageService $imageService)
-    {
-        $this->imageService = $imageService;
-    }
     public function index(Request $request)
     {
         $search = $request->input('search');
@@ -26,7 +21,7 @@ class KegiatanController extends Controller
             $query->where('nama_kegiatan', 'like', '%' . $search . '%');
         }
 
-        $kegiatans = $query->latest()->paginate(10);
+        $kegiatans = $query->paginate(10)->withQueryString();
 
         return view('admin.kegiatan.index', compact('kegiatans'));
     }
@@ -63,21 +58,17 @@ class KegiatanController extends Controller
         return redirect()->route('kegiatan.index')->with('success', 'Kegiatan berhasil ditambahkan!');
     }
 
-    public function show($id)
+    public function show(Kegiatan $kegiatan)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
-
         return view('admin.kegiatan.show', compact('kegiatan'));
     }
 
-    public function edit($id)
+    public function edit(Kegiatan $kegiatan)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
-
         return view('admin.kegiatan.edit', compact('kegiatan'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Kegiatan $kegiatan)
     {
         $request->validate([
             'nama_kegiatan' => 'required|string|max:255',
@@ -86,8 +77,6 @@ class KegiatanController extends Controller
             'foto_dokumentasi' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $kegiatan = Kegiatan::findOrFail($id);
-        
         $fotoPath = $kegiatan->foto_dokumentasi;
 
         if ($request->hasFile('foto_dokumentasi')) {
@@ -105,12 +94,9 @@ class KegiatanController extends Controller
         return redirect()->route('kegiatan.index')->with('success', 'Data kegiatan berhasil diperbarui!');
     }
 
-    public function destroy($id)
+    public function destroy(Kegiatan $kegiatan)
     {
-        $kegiatan = Kegiatan::findOrFail($id);
-
         $this->imageService->deleteImage($kegiatan->foto_dokumentasi);
-
         $kegiatan->delete();
 
         return redirect()->route('kegiatan.index')->with('success', 'Data kegiatan berhasil dihapus!');
@@ -118,8 +104,10 @@ class KegiatanController extends Controller
 
     private function sanitizeHtml($html)
     {
-        if (empty($html)) return null;
-        
+        if (empty($html)) {
+            return null;
+        }
+
         $allowedTags = '<p><br><strong><em><u><h1><h2><ul><ol><li><a>';
         $html = strip_tags($html, $allowedTags);
 

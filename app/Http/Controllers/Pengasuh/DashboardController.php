@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Pengasuh;
 use App\Http\Controllers\Controller;
 use App\Models\Alumni;
 use App\Models\AnakAsuh;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {

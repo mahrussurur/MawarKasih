@@ -11,12 +11,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class DonasiController extends Controller
 {
-    protected $imageService;
-
-    public function __construct(ImageService $imageService)
-    {
-        $this->imageService = $imageService;
-    }
+    public function __construct(protected ImageService $imageService) {}
 
     public function index(Request $request)
     {

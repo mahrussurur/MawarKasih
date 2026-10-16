@@ -4,18 +4,12 @@ namespace App\Http\Controllers\Pengasuh;
 
 use App\Http\Controllers\Controller;
 use App\Models\AnakAsuh;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Services\ImageService;
+use Illuminate\Http\Request;
 
 class AnakAsuhController extends Controller
 {
-    protected $imageService;
-
-    public function __construct(ImageService $imageService)
-    {
-        $this->imageService = $imageService;
-    }
+    public function __construct(protected ImageService $imageService) {}
 
     public function index(Request $request)
     {

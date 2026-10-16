@@ -210,11 +210,6 @@ class PengelolaController extends Controller
             ->with('success', $this->roleLabel($roleFilter).' berhasil dihapus.');
     }
 
-    public function toggleStatus(string $roleFilter, User $user)
-    {
-        abort(404);
-    }
-
     private function validatedPengelolaData(Request $request, ?User $user = null): array
     {
         $rules = [

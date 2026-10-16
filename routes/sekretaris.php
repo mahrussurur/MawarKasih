@@ -7,7 +7,6 @@ Route::middleware(['auth', 'role:sekretaris'])->prefix('sekretaris')->name('sekr
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // Data Kegiatan (read-only)
-    Route::get('/kegiatan/cetak', [\App\Http\Controllers\Sekretaris\KegiatanController::class, 'cetak'])->name('kegiatan.cetak');
     Route::get('/kegiatan', [\App\Http\Controllers\Sekretaris\KegiatanController::class, 'index'])->name('kegiatan.index');
     Route::get('/kegiatan/{kegiatan}', [\App\Http\Controllers\Sekretaris\KegiatanController::class, 'show'])->name('kegiatan.show');
 

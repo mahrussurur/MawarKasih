@@ -13,15 +13,10 @@ use Illuminate\Support\Facades\DB;
 
 class DonasiController extends Controller
 {
-    protected $imageService;
-
-    protected $donasiKeuanganService;
-
-    public function __construct(ImageService $imageService, DonasiKeuanganService $donasiKeuanganService)
-    {
-        $this->imageService = $imageService;
-        $this->donasiKeuanganService = $donasiKeuanganService;
-    }
+    public function __construct(
+        protected ImageService $imageService,
+        protected DonasiKeuanganService $donasiKeuanganService,
+    ) {}
 
     public function index(Request $request)
     {
@@ -212,18 +207,5 @@ class DonasiController extends Controller
             ->setPaper('a4', 'portrait');
 
         return $pdf->stream('Laporan_Data_Donasi_Mawar_Kasih.pdf');
-    }
-
-    // CEK STATUS DONASI — untuk donatur di web publik.
-    // Cek berdasarkan kode_donasi.
-    public function cekStatus(Request $request)
-    {
-        $request->validate([
-            'kode_donasi' => 'required|string',
-        ]);
-
-        $donasi = Donasi::where('kode_donasi', strtoupper($request->kode_donasi))->first();
-
-        return view('public.cek-donasi', compact('donasi'));
     }
 }

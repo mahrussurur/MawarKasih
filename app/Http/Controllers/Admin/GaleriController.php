@@ -4,18 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Galeri;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Services\ImageService;
+use Illuminate\Http\Request;
 
 class GaleriController extends Controller
 {
-    protected $imageService;
+    public function __construct(protected ImageService $imageService) {}
 
-    public function __construct(ImageService $imageService)
-    {
-        $this->imageService = $imageService;
-    }
     public function index(Request $request)
     {
         $kategori = $request->input('kategori', 'Semua');
@@ -65,21 +60,17 @@ class GaleriController extends Controller
         return redirect()->route('galeri.index')->with('success', 'Foto galeri berhasil ditambahkan!');
     }
 
-    public function show(string $id)
+    public function show(Galeri $galeri)
     {
-        $galeri = Galeri::findOrFail($id);
-
         return view('admin.galeri.show', compact('galeri'));
     }
 
-    public function edit(string $id)
+    public function edit(Galeri $galeri)
     {
-        $galeri = Galeri::findOrFail($id);
-
         return view('admin.galeri.edit', compact('galeri'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, Galeri $galeri)
     {
         $request->validate([
             'judul' => 'required|string|max:255',
@@ -88,7 +79,6 @@ class GaleriController extends Controller
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $galeri = Galeri::findOrFail($id);
         $fotoPath = $galeri->foto;
 
         if ($request->hasFile('foto')) {
@@ -106,14 +96,12 @@ class GaleriController extends Controller
         return redirect()->route('galeri.index')->with('success', 'Data galeri berhasil diperbarui!');
     }
 
-    public function destroy(string $id)
+    public function destroy(Galeri $galeri)
     {
-        $galeri = Galeri::findOrFail($id);
-
         $this->imageService->deleteImage($galeri->foto);
-
         $galeri->delete();
 
         return redirect()->route('galeri.index')->with('success', 'Data galeri berhasil dihapus!');
     }
 }
+

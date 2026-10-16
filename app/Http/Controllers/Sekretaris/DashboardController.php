@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Sekretaris;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kegiatan;
 use App\Models\Galeri;
-use Illuminate\Http\Request;
+use App\Models\Kegiatan;
 
 class DashboardController extends Controller
 {
