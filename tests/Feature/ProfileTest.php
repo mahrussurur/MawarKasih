@@ -1,34 +1,34 @@
 <?php
 
 use App\Models\ProfilDonatur;
-use App\Models\ProfilPengelola;
+use App\Models\ProfilPegawai;
 use App\Models\User;
 
-it('updates an internal user profile in profil_pengelola while keeping account data in users', function () {
+it('updates an internal user profile in profil_pegawai while keeping account data in users', function () {
     $user = User::factory()->create([
-        'role' => 'pengasuh',
+        'role' => 'ketua',
         'status' => 'aktif',
     ]);
-    ProfilPengelola::create([
+    ProfilPegawai::create([
         'user_id' => $user->id,
-        'nama' => 'Nama Lama Pengasuh',
-        'jabatan' => 'Pengasuh',
+        'nama' => 'Nama Lama Ketua',
+        'jabatan' => 'Ketua Yayasan',
     ]);
 
     $this->actingAs($user)
         ->get(route('profile.edit'))
         ->assertOk()
-        ->assertSee('Nama Lama Pengasuh')
+        ->assertSee('Nama Lama Ketua')
         ->assertSee('Akun Login');
 
     $response = $this->actingAs($user)->patch(route('profile.update'), [
-        'nama' => 'Siti Pengasuh',
-        'username' => 'siti.pengasuh',
-        'email' => 'siti.pengasuh@example.test',
-        'jabatan' => 'Kepala Pengasuh',
-        'jenis_kelamin' => 'P',
+        'nama' => 'Ahmad Ketua',
+        'username' => 'ahmad.ketua',
+        'email' => 'ahmad.ketua@example.test',
+        'jabatan' => 'Ketua Pengurus',
+        'jenis_kelamin' => 'L',
         'tempat_lahir' => 'Bandung',
-        'tanggal_lahir' => '1990-01-20',
+        'tanggal_lahir' => '1985-01-20',
         'no_hp' => '081234567890',
         'alamat' => 'Jl. Mawar 1',
         'role' => 'admin',
@@ -39,22 +39,22 @@ it('updates an internal user profile in profil_pengelola while keeping account d
     $response->assertSessionHas('status', 'profile-updated');
     $this->assertDatabaseHas('users', [
         'id' => $user->id,
-        'username' => 'siti.pengasuh',
-        'email' => 'siti.pengasuh@example.test',
-        'role' => 'pengasuh',
+        'username' => 'ahmad.ketua',
+        'email' => 'ahmad.ketua@example.test',
+        'role' => 'ketua',
         'status' => 'aktif',
     ]);
-    $this->assertDatabaseHas('profil_pengelola', [
+    $this->assertDatabaseHas('profil_pegawai', [
         'user_id' => $user->id,
-        'nama' => 'Siti Pengasuh',
-        'jabatan' => 'Kepala Pengasuh',
-        'jenis_kelamin' => 'P',
+        'nama' => 'Ahmad Ketua',
+        'jabatan' => 'Ketua Pengurus',
+        'jenis_kelamin' => 'L',
         'tempat_lahir' => 'Bandung',
         'no_hp' => '081234567890',
         'alamat' => 'Jl. Mawar 1',
     ]);
-    expect(ProfilPengelola::where('user_id', $user->id)->firstOrFail()->tanggal_lahir->toDateString())
-        ->toBe('1990-01-20');
+    expect(ProfilPegawai::where('user_id', $user->id)->firstOrFail()->tanggal_lahir->toDateString())
+        ->toBe('1985-01-20');
 });
 
 it('updates a donor profile in profil_donatur without allowing role or status changes', function () {

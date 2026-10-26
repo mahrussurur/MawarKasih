@@ -2,24 +2,30 @@
 @section('page-title', 'Data Alumni')
 
 @section('content')
-<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-
-    <!-- Header -->
-    <div class="border-b border-gray-200 bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4 flex justify-between items-center gap-4">
-        <div class="min-w-0">
-            <h2 class="text-lg font-bold text-white truncate">Edit Data Alumni</h2>
-            <p class="text-xs md:text-sm text-amber-100">Perbarui informasi pasca LKSA untuk alumni ini.</p>
+<div class="max-w-4xl mx-auto">
+    <!-- Main Content Card -->
+    <div class="overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-200">
+        
+        <!-- Header / Banner Cover -->
+        <div class="relative bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-6 sm:px-8 sm:py-7">
+            <div class="flex flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white sm:text-2xl">Edit Profil Alumni</h2>
+                    <p class="text-sm text-amber-100 mt-0.5">Perbarui informasi profil alumni.</p>
+                </div>
+                <!-- Tombol Kembali -->
+                <a href="{{ route('alumni.index') }}" 
+                   class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition flex-shrink-0" 
+                   title="Kembali">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="hidden sm:inline">Kembali</span>
+                </a>
+            </div>
         </div>
-        <a href="{{ route('alumni.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-amber-100 flex items-center transition-colors whitespace-nowrap">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            <span class="hidden sm:inline">Kembali</span>
-        </a>
-    </div>
 
-    <div class="p-4 md:p-6">
-        <form action="{{ route('alumni.update', $alumni->id) }}" method="POST">
+        <form action="{{ route('alumni.update', $alumni->id) }}" method="POST" enctype="multipart/form-data" class="p-4 md:p-6">
             @csrf
             @method('PUT')
 
@@ -36,39 +42,39 @@
             <h3 class="text-sm font-bold text-gray-800 mb-4 border-b border-gray-200 pb-2">Informasi Pasca LKSA</h3>
 
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Tanggal Keluar <span class="text-red-500">*</span></label>
-                <input type="date" name="tanggal_keluar" value="{{ old('tanggal_keluar', $alumni->tanggal_keluar) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm" required>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Tanggal Keluar <span class="text-red-500">*</span></label>
+                <input type="date" name="tanggal_keluar" value="{{ old('tanggal_keluar', $alumni->tanggal_keluar) }}" required class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500" />
             </div>
 
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Pendidikan Terakhir</label>
-                    <input type="text" name="pendidikan_terakhir" value="{{ old('pendidikan_terakhir', $alumni->pendidikan_terakhir) }}" placeholder="Cth: SMA / S1" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Pendidikan Terakhir</label>
+                    <input type="text" name="pendidikan_terakhir" value="{{ old('pendidikan_terakhir', $alumni->pendidikan_terakhir) }}" placeholder="Cth: SMA / S1" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Sekolah Terakhir</label>
-                    <input type="text" name="nama_sekolah_terakhir" value="{{ old('nama_sekolah_terakhir', $alumni->nama_sekolah_terakhir) }}" placeholder="Sekolah Terakhir..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Nama Sekolah Terakhir</label>
+                    <input type="text" name="nama_sekolah_terakhir" value="{{ old('nama_sekolah_terakhir', $alumni->nama_sekolah_terakhir) }}" placeholder="Sekolah Terakhir..." class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
             </div>
 
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Pekerjaan</label>
-                    <input type="text" name="pekerjaan" value="{{ old('pekerjaan', $alumni->pekerjaan) }}" placeholder="Pekerjaan saat ini..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Pekerjaan</label>
+                    <input type="text" name="pekerjaan" value="{{ old('pekerjaan', $alumni->pekerjaan) }}" placeholder="Pekerjaan saat ini..." class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">No. HP</label>
-                    <input type="tel" name="no_hp" value="{{ old('no_hp', $alumni->no_hp) }}" placeholder="cth. 081234567890" minlength="10" maxlength="15" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">No. HP</label>
+                    <input type="tel" name="no_hp" value="{{ old('no_hp', $alumni->no_hp) }}" placeholder="cth. 081234567890" minlength="10" maxlength="15" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 </div>
             </div>
 
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Alamat Lengkap</label>
-                <textarea name="alamat" rows="3" placeholder="Alamat Lengkap..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('alamat', $alumni->alamat) }}</textarea>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Alamat Lengkap</label>
+                <textarea name="alamat" rows="3" placeholder="Alamat Lengkap..." class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('alamat', $alumni->alamat) }}</textarea>
             </div>
 
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Catatan</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Catatan</label>
                 <textarea name="catatan" rows="3" placeholder="Catatan Khusus..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('catatan', $alumni->catatan) }}</textarea>
             </div>
 

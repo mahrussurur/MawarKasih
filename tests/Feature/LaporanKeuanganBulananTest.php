@@ -81,27 +81,27 @@ it('setelah diajukan, create/update/delete transaksi periode ditolak (Test 14)',
     $this->assertDatabaseCount('transaksi_keuangans', 0);
 });
 
-it('admin approve mengubah status diajukan ke disetujui (Test 15)', function () {
-    $admin = User::factory()->create(['role' => 'admin']);
+it('ketua approve mengubah status diajukan ke disetujui (Test 15)', function () {
+    $ketua = User::factory()->create(['role' => 'ketua', 'status' => 'aktif']);
     $laporan = LaporanKeuanganBulanan::factory()->create([
         'tahun' => 2026,
         'bulan' => 10,
         'status' => 'diajukan',
     ]);
 
-    $this->actingAs($admin)
-        ->post(route('admin.laporan-bulanan.approve', $laporan))
+    $this->actingAs($ketua)
+        ->post(route('ketua.laporan-bulanan.approve', $laporan))
         ->assertRedirect();
 
     $this->assertDatabaseHas('laporan_keuangan_bulanans', [
         'id' => $laporan->id,
         'status' => 'disetujui',
-        'approved_by' => $admin->id,
+        'approved_by' => $ketua->id,
     ]);
 });
 
-it('admin return mengubah status diajukan ke dikembalikan (Test 17)', function () {
-    $admin = User::factory()->create(['role' => 'admin']);
+it('admin ditolak menyetujui laporan bulanan karena dipindahkan ke ketua', function () {
+    $admin = User::factory()->create(['role' => 'admin', 'status' => 'aktif']);
     $laporan = LaporanKeuanganBulanan::factory()->create([
         'tahun' => 2026,
         'bulan' => 10,
@@ -109,7 +109,25 @@ it('admin return mengubah status diajukan ke dikembalikan (Test 17)', function (
     ]);
 
     $this->actingAs($admin)
-        ->post(route('admin.laporan-bulanan.return', $laporan), [
+        ->post(route('ketua.laporan-bulanan.approve', $laporan))
+        ->assertForbidden();
+
+    $this->assertDatabaseHas('laporan_keuangan_bulanans', [
+        'id' => $laporan->id,
+        'status' => 'diajukan',
+    ]);
+});
+
+it('ketua return mengubah status diajukan ke dikembalikan (Test 17)', function () {
+    $ketua = User::factory()->create(['role' => 'ketua', 'status' => 'aktif']);
+    $laporan = LaporanKeuanganBulanan::factory()->create([
+        'tahun' => 2026,
+        'bulan' => 10,
+        'status' => 'diajukan',
+    ]);
+
+    $this->actingAs($ketua)
+        ->post(route('ketua.laporan-bulanan.return', $laporan), [
             'catatan_return' => 'Tolong perbaiki mutasi bank',
         ])
         ->assertRedirect();
@@ -118,7 +136,7 @@ it('admin return mengubah status diajukan ke dikembalikan (Test 17)', function (
         'id' => $laporan->id,
         'status' => 'dikembalikan',
         'catatan_return' => 'Tolong perbaiki mutasi bank',
-        'returned_by' => $admin->id,
+        'returned_by' => $ketua->id,
     ]);
 });
 
@@ -208,4 +226,3 @@ it('status database langsung bernilai draft, diajukan, dikembalikan, dan disetuj
     $lapDisetujui = new LaporanKeuanganBulanan(['status' => 'disetujui']);
     expect($lapDisetujui->status)->toBe('disetujui');
 });
-

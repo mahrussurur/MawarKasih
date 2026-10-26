@@ -2,7 +2,7 @@
 
 use App\Models\User;
 
-it('shows the complete administration menu only to admins', function () {
+it('shows the complete administration menu with ketua to admins', function () {
     $admin = User::factory()->create(['role' => 'admin', 'status' => 'aktif']);
 
     $this->actingAs($admin)
@@ -10,22 +10,24 @@ it('shows the complete administration menu only to admins', function () {
         ->assertOk()
         ->assertSee([
             'Manajemen Akun',
-            'Data User',
+            'Akun User',
             'Data Lembaga',
-            'Data Pengasuh',
-            'Data Bendahara',
-            'Data Sekretaris',
-            'Data Donatur',
-            'Data Anak Asuh',
-            'Data Alumni',
-            'Data Kegiatan',
+            'Pegawai',
+            'Donatur',
+            'Anak Asuh',
+            'Alumni',
+            'Kegiatan',
             'Galeri',
+            'Arsip Dokumen Administrasi',
             'Donasi & keuangan',
             'Donasi',
             'Keuangan',
             'Laporan Bulanan',
         ])
-        ->assertDontSee('Dokumen Administrasi');
+        ->assertDontSee('Data Ketua')
+        ->assertDontSee('Data Bendahara')
+        ->assertDontSee('Data Pengasuh')
+        ->assertDontSee('Data Sekretaris');
 });
 
 it('shows finance, donation, report, and profile menus to treasurers only', function () {
@@ -35,37 +37,29 @@ it('shows finance, donation, report, and profile menus to treasurers only', func
         ->get(route('bendahara.dashboard'))
         ->assertOk()
         ->assertSee(['Data Donasi', 'Keuangan', 'Laporan Bulanan'])
-        ->assertDontSee(['Data Anak Asuh', 'Data Kegiatan', 'Dokumen Administrasi']);
+        ->assertDontSee(['Data Anak Asuh', 'Data Kegiatan', 'Arsip Dokumen Administrasi']);
 });
 
-it('shows only foundation content and profile menus to secretaries', function () {
-    $sekretaris = User::factory()->create(['role' => 'sekretaris', 'status' => 'aktif']);
+it('shows read-only data, archive, and monthly report menus to ketua', function () {
+    $ketua = User::factory()->create(['role' => 'ketua', 'status' => 'aktif']);
 
-    $this->actingAs($sekretaris)
-        ->get(route('sekretaris.dashboard'))
+    $this->actingAs($ketua)
+        ->get(route('ketua.dashboard'))
         ->assertOk()
         ->assertSee([
-            'Data Pengasuh',
-            'Data Bendahara',
-            'Data Sekretaris',
             'Data Donatur',
             'Data Anak Asuh',
             'Data Alumni',
-            'Data Kegiatan',
-            'Galeri',
+            'Arsip Dokumen Administrasi',
             'Laporan Bulanan',
         ])
-        ->assertDontSee(['Data Donasi', 'Transaksi Keuangan', 'Dokumen Administrasi']);
-});
-
-it('shows child-care and profile menus to caregivers only', function () {
-    $pengasuh = User::factory()->create(['role' => 'pengasuh', 'status' => 'aktif']);
-
-    $this->actingAs($pengasuh)
-        ->get(route('pengasuh.dashboard'))
-        ->assertOk()
-        ->assertSee(['Data Anak Asuh', 'Data Alumni'])
-        ->assertDontSee(['Data Donasi', 'Data Kegiatan', 'Catatan Perkembangan']);
+        ->assertDontSee([
+            'Data Kegiatan',
+            'Galeri',
+            'Data User',
+            'Data Pengasuh',
+            'Data Sekretaris',
+        ]);
 });
 
 it('shows new donation, donation history, and profile menus to donors only', function () {
@@ -75,5 +69,5 @@ it('shows new donation, donation history, and profile menus to donors only', fun
         ->get(route('donatur.dashboard'))
         ->assertOk()
         ->assertSee(['Donasi Baru', 'Riwayat Donasi'])
-        ->assertDontSee(['Data User', 'Data Anak Asuh', 'Data Kegiatan']);
+        ->assertDontSee(['Data User', 'Data Anak Asuh', 'Data Kegiatan', 'Arsip Dokumen Administrasi']);
 });

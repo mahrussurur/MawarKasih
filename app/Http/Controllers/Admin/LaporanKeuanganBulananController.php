@@ -35,34 +35,6 @@ class LaporanKeuanganBulananController extends Controller
         return view('admin.laporan-bulanan.show', compact('laporan', 'transaksis', 'ringkasan'));
     }
 
-    public function approve(LaporanKeuanganBulanan $laporan)
-    {
-        if ($laporan->status !== 'diajukan') {
-            return redirect()->back()->with('error', 'Hanya laporan dengan status Diajukan yang dapat disetujui.');
-        }
-
-        $this->laporanService->approve($laporan, Auth::user());
-
-        return redirect()->route('admin.laporan-bulanan.index')->with('success', 'Laporan berhasil disetujui.');
-    }
-
-    public function return(Request $request, LaporanKeuanganBulanan $laporan)
-    {
-        if ($laporan->status !== 'diajukan') {
-            return redirect()->back()->with('error', 'Hanya laporan dengan status Diajukan yang dapat dikembalikan.');
-        }
-
-        $request->validate([
-            'catatan_return' => 'required|string|min:5',
-        ], [
-            'catatan_return.required' => 'Catatan pengembalian wajib diisi.',
-        ]);
-
-        $this->laporanService->return($laporan, Auth::user(), $request->catatan_return);
-
-        return redirect()->route('admin.laporan-bulanan.index')->with('success', 'Laporan berhasil dikembalikan ke Bendahara.');
-    }
-
     public function cetak(LaporanKeuanganBulanan $laporan)
     {
         [$transaksis, $ringkasan] = $this->getLaporanDetailData($laporan);

@@ -17,23 +17,25 @@
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
         
         <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap items-center gap-2">
                 @php $activeKategori = $kategori ?? request('kategori', 'Semua'); @endphp
 
                 <a href="{{ route('galeri.index', array_merge(request()->except(['kategori','page']), ['kategori' => 'Semua'])) }}"
-                   class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'Semua' ? 'bg-gray-900 text-white border-gray-900' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
+                class="inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-semibold transition {{ $activeKategori === 'Semua' ? 'bg-gray-900 text-white border-gray-900' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
                     Semua
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalGaleri }}</span>
+                    <span class="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalGaleri }}</span>
                 </a>
+
                 <a href="{{ route('galeri.index', array_merge(request()->except(['kategori','page']), ['kategori' => 'Fasilitas'])) }}"
-                    class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'Fasilitas' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
+                class="inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-semibold transition {{ $activeKategori === 'Fasilitas' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
                     Fasilitas
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalFasilitas }}</span>
+                    <span class="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalFasilitas }}</span>
                 </a>
+
                 <a href="{{ route('galeri.index', array_merge(request()->except(['kategori','page']), ['kategori' => 'Umum'])) }}"
-                    class="inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeKategori === 'Umum' ? 'bg-gray-600 text-white border-gray-600' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
+                class="inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-semibold transition {{ $activeKategori === 'Umum' ? 'bg-sky-600 text-white border-sky-600' : 'bg-sky-100 text-sky-800 border-sky-100 hover:bg-sky-200' }}">
                     Umum
-                    <span class="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalUmum }}</span>
+                    <span class="rounded-md bg-white px-1.5 py-0.5 text-[10px] font-bold text-gray-600 shadow-sm">{{ $totalUmum }}</span>
                 </a>
             </div>
 
@@ -64,7 +66,7 @@
                     @else
                     <span class="text-gray-400 text-sm">Kosong</span>
                     @endif
-                    <div class="absolute right-3 top-3 rounded-full {{ $galeri->kategori === 'Fasilitas' ? 'bg-emerald-100 text-emerald-700' : 'bg-white/90 text-gray-700' }} px-2.5 py-1 text-xs font-semibold shadow-sm backdrop-blur-sm">
+                    <div class="absolute right-3 top-3 rounded-lg {{ $galeri->kategori === 'Fasilitas' ? 'bg-emerald-100 text-emerald-700' : 'bg-sky-100 text-sky-700' }} px-2.5 py-1 text-xs font-semibold shadow-sm backdrop-blur-sm">
                         {{ ucfirst($galeri->kategori) }}
                     </div>
                 </div>

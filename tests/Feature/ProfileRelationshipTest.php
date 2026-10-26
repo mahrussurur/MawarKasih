@@ -1,20 +1,20 @@
 <?php
 
 use App\Models\ProfilDonatur;
-use App\Models\ProfilPengelola;
+use App\Models\ProfilPegawai;
 use App\Models\User;
 
-it('relates an internal account to its shared manager profile', function () {
-    $user = User::factory()->create(['role' => 'pengasuh']);
+it('relates an internal account to its shared pegawai profile', function () {
+    $user = User::factory()->create(['role' => 'ketua']);
 
-    $profile = ProfilPengelola::create([
+    $profile = ProfilPegawai::create([
         'user_id' => $user->id,
-        'nama' => 'Pengasuh Uji',
-        'jabatan' => 'Pengasuh',
+        'nama' => 'Ketua Uji',
+        'jabatan' => 'Ketua Yayasan',
         'no_hp' => '081234567890',
     ]);
 
-    expect($user->profilPengelola->is($profile))->toBeTrue();
+    expect($user->profilPegawai->is($profile))->toBeTrue();
     expect($profile->user->is($user))->toBeTrue();
 });
 

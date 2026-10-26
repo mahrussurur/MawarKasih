@@ -4,15 +4,21 @@ use App\Models\AnakAsuh;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-it('does not register administrative-document routes', function () {
-    expect(Route::has('admin.dokumen.index'))->toBeFalse()
-        ->and(Route::has('sekretaris.dokumen.index'))->toBeFalse();
+it('ensures legacy roles sekretaris and pengasuh routes are completely removed', function () {
+    expect(Route::has('sekretaris.dashboard'))->toBeFalse()
+        ->and(Route::has('sekretaris.kegiatan.index'))->toBeFalse()
+        ->and(Route::has('sekretaris.galeri.index'))->toBeFalse()
+        ->and(Route::has('pengasuh.dashboard'))->toBeFalse()
+        ->and(Route::has('pengasuh.anak-asuh.index'))->toBeFalse()
+        ->and(Route::has('pengasuh.alumni.index'))->toBeFalse();
 
     $admin = User::factory()->create(['role' => 'admin', 'status' => 'aktif']);
-    $sekretaris = User::factory()->create(['role' => 'sekretaris', 'status' => 'aktif']);
+    $ketua = User::factory()->create(['role' => 'ketua', 'status' => 'aktif']);
 
-    $this->actingAs($admin)->get('/admin/dokumen')->assertNotFound();
-    $this->actingAs($sekretaris)->get('/sekretaris/dokumen')->assertNotFound();
+    $this->actingAs($admin)->get('/sekretaris/dashboard')->assertNotFound();
+    $this->actingAs($admin)->get('/pengasuh/dashboard')->assertNotFound();
+    $this->actingAs($ketua)->get('/sekretaris/dashboard')->assertNotFound();
+    $this->actingAs($ketua)->get('/pengasuh/dashboard')->assertNotFound();
 });
 
 it('keeps child-care data independent of legacy progress notes', function () {

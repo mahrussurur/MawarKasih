@@ -68,7 +68,7 @@
                 @php
                     $statItems = [
                         ['icon' => 'users-round', 'value' => $stats['totalAnakAsuh'] ?? '44', 'label' => 'Anak Asuh', 'desc' => 'sedang kami bina dengan kasih'],
-                        ['icon' => 'users', 'value' => $stats['totalPengasuh'] ?? '6', 'label' => 'Pengurus', 'desc' => 'berdedikasi melayani'],
+                        ['icon' => 'users', 'value' => $stats['totalPengurus'] ?? '3', 'label' => 'Pengurus', 'desc' => 'berdedikasi melayani'],
                         ['icon' => 'user-check', 'value' => $stats['totalDonatur'] ?? '0', 'label' => 'Donatur', 'desc' => 'berbagi kebaikan'],
                         ['icon' => 'heart-handshake', 'value' => $stats['totalDonasi'] ?? '0', 'label' => 'Donasi', 'desc' => 'sepanjang tahun'],
                     ];

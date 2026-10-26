@@ -4,17 +4,17 @@ use App\Models\User;
 use App\Models\TransaksiKeuangan;
 use App\Models\LaporanKeuanganBulanan;
 
-it('sekretaris ditolak akses menu keuangan (Test 6)', function () {
-    $sekretaris = User::factory()->create(['role' => 'sekretaris']);
+it('ketua ditolak akses menu keuangan langsung bendahara (Test 6)', function () {
+    $ketua = User::factory()->create(['role' => 'ketua', 'status' => 'aktif']);
 
-    // Sekretaris mencoba mengakses index keuangan admin/bendahara
-    $this->actingAs($sekretaris)
+    // Ketua mencoba mengakses index transaksi keuangan bendahara
+    $this->actingAs($ketua)
         ->get(route('bendahara.keuangan.index'))
-        ->assertForbidden(); // atau redirect, tergantung middleware. Kita gunakan assertForbidden karena role:bendahara.
+        ->assertForbidden();
 });
 
 it('admin dapat view keuangan tapi ditolak create (Test 7)', function () {
-    $admin = User::factory()->create(['role' => 'admin']);
+    $admin = User::factory()->create(['role' => 'admin', 'status' => 'aktif']);
 
     // View index
     $this->actingAs($admin)
@@ -30,22 +30,22 @@ it('admin dapat view keuangan tapi ditolak create (Test 7)', function () {
             'keterangan' => 'Test',
             'kategori' => 'DONASI'
         ])
-        ->assertStatus(405); // Karena route-nya memang tidak didefinisikan untuk POST (hanya `index` pada resource).
+        ->assertStatus(405); // Route tidak didefinisikan untuk POST di admin
 });
 
 it('admin tidak dapat delete transaksi (Test 8)', function () {
-    $admin = User::factory()->create(['role' => 'admin']);
+    $admin = User::factory()->create(['role' => 'admin', 'status' => 'aktif']);
     $transaksi = TransaksiKeuangan::factory()->create();
 
     $this->actingAs($admin)
         ->delete("admin/keuangan/{$transaksi->id}")
-        ->assertNotFound(); // Route tidak ada.
+        ->assertNotFound();
         
     $this->assertDatabaseHas('transaksi_keuangans', ['id' => $transaksi->id]);
 });
 
 it('bendahara dapat create transaksi (Test 9)', function () {
-    $bendahara = User::factory()->create(['role' => 'bendahara']);
+    $bendahara = User::factory()->create(['role' => 'bendahara', 'status' => 'aktif']);
 
     $this->actingAs($bendahara)
         ->post(route('bendahara.keuangan.store'), [
@@ -66,17 +66,39 @@ it('bendahara dapat create transaksi (Test 9)', function () {
 });
 
 it('bendahara tidak dapat approve laporan (Test 10)', function () {
-    $bendahara = User::factory()->create(['role' => 'bendahara']);
+    $bendahara = User::factory()->create(['role' => 'bendahara', 'status' => 'aktif']);
     $laporan = LaporanKeuanganBulanan::factory()->create([
         'status' => 'diajukan'
     ]);
 
     $this->actingAs($bendahara)
-        ->post("admin/laporan-bulanan/{$laporan->id}/approve")
-        ->assertForbidden(); // Middleware role:admin akan menolak
+        ->post(route('ketua.laporan-bulanan.approve', $laporan))
+        ->assertForbidden();
 
     $this->assertDatabaseHas('laporan_keuangan_bulanans', [
         'id' => $laporan->id,
-        'status' => 'diajukan', // Tidak berubah
+        'status' => 'diajukan',
+    ]);
+});
+
+it('admin tidak dapat approve atau return laporan (Test 10b - eksklusif ketua)', function () {
+    $admin = User::factory()->create(['role' => 'admin', 'status' => 'aktif']);
+    $laporan = LaporanKeuanganBulanan::factory()->create([
+        'status' => 'diajukan'
+    ]);
+
+    // Admin mencoba approve via rute ketua -> forbidden
+    $this->actingAs($admin)
+        ->post(route('ketua.laporan-bulanan.approve', $laporan))
+        ->assertForbidden();
+
+    // Rute approve di admin sudah dicabut -> 404 / 405
+    $this->actingAs($admin)
+        ->post("admin/laporan-bulanan/{$laporan->id}/approve")
+        ->assertNotFound();
+
+    $this->assertDatabaseHas('laporan_keuangan_bulanans', [
+        'id' => $laporan->id,
+        'status' => 'diajukan',
     ]);
 });

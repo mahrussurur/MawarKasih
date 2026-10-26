@@ -47,17 +47,17 @@ class User extends Authenticatable
     {
         $profile = $this->role === 'donatur'
             ? $this->profilDonatur
-            : $this->profilPengelola;
+            : $this->profilPegawai;
 
         return $profile?->nama ?? $this->username;
     }
 
     /**
-     * Donasi yang dimiliki oleh user ini (sebagai donatur).
+     * Profil pegawai untuk admin, ketua, bendahara.
      */
-    public function profilPengelola(): HasOne
+    public function profilPegawai(): HasOne
     {
-        return $this->hasOne(ProfilPengelola::class);
+        return $this->hasOne(ProfilPegawai::class);
     }
 
     public function profilDonatur(): HasOne

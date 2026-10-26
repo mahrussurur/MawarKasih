@@ -31,24 +31,24 @@ it('keeps only account fields in users after profile cleanup', function () {
 
 it('updates account credentials, status, and role', function () {
     $admin = User::factory()->create(['role' => 'admin', 'status' => 'aktif']);
-    $pengasuh = User::factory()->create(['role' => 'pengasuh', 'status' => 'aktif']);
+    $user = User::factory()->create(['role' => 'donatur', 'status' => 'aktif']);
 
-    $response = $this->actingAs($admin)->patch(route('users.update', $pengasuh), [
-        'username' => 'pengasuh.diperbarui',
-        'email' => 'pengasuh.diperbarui@example.test',
+    $response = $this->actingAs($admin)->patch(route('users.update', $user), [
+        'username' => 'user.diperbarui',
+        'email' => 'user.diperbarui@example.test',
         'password' => 'kata-sandi-baru',
         'password_confirmation' => 'kata-sandi-baru',
         'status' => 'tidak_aktif',
-        'role' => 'admin',
+        'role' => 'bendahara',
     ]);
 
     $response->assertRedirect(route('users.index'));
     $this->assertDatabaseHas('users', [
-        'id' => $pengasuh->id,
-        'username' => 'pengasuh.diperbarui',
-        'email' => 'pengasuh.diperbarui@example.test',
-        'role' => 'admin',
+        'id' => $user->id,
+        'username' => 'user.diperbarui',
+        'email' => 'user.diperbarui@example.test',
+        'role' => 'bendahara',
         'status' => 'tidak_aktif',
     ]);
-    expect(Hash::check('kata-sandi-baru', $pengasuh->fresh()->password))->toBeTrue();
+    expect(Hash::check('kata-sandi-baru', $user->fresh()->password))->toBeTrue();
 });

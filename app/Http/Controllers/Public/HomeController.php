@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $stats = [
             'totalAnakAsuh'  => AnakAsuh::count(),
-            'totalPengasuh'  => User::where('role', 'pengasuh')->count(),
+            'totalPengurus'  => User::whereIn('role', ['admin', 'bendahara', 'ketua'])->count(),
             'totalKegiatan'  => Kegiatan::count(),
             'totalDonatur'   => User::where('role', 'donatur')->count(),
             'totalDonasi'    => Donasi::count(),

@@ -108,13 +108,6 @@ class AnakAsuhController extends Controller
         return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil diupdate');
     }
 
-    public function destroy(AnakAsuh $anakAsuh)
-    {
-        $this->imageService->deleteImage($anakAsuh->foto);
-        $anakAsuh->delete();
-        return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil dihapus');
-    }
-
     public function cetak()
     {
         $data = AnakAsuh::all();

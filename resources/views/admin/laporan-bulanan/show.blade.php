@@ -19,20 +19,8 @@
                     <p class="mt-0.5 text-sm text-blue-700">
                         Diajukan oleh <span class="font-semibold text-blue-900">{{ $laporan->submitter->name ?? 'Bendahara' }}</span> pada {{ $laporan->submitted_at ? $laporan->submitted_at->format('d/m/Y H:i') : '-' }}
                     </p>
+                    <p class="mt-0.5 text-xs text-blue-600">Menunggu peninjauan dan persetujuan dari Ketua.</p>
                 </div>
-            </div>
-            <div class="flex items-center gap-2 self-end md:self-auto">
-                <button type="button" onclick="document.getElementById('modalReturn').classList.remove('hidden')" class="inline-flex items-center gap-1.5 rounded-xl border border-red-300 bg-white px-4 py-2 text-sm font-semibold text-red-600 shadow-sm transition hover:bg-red-50">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
-                    <span>Kembalikan</span>
-                </button>
-                <form method="POST" action="{{ route('admin.laporan-bulanan.approve', $laporan) }}" onsubmit="return confirm('Yakin ingin menyetujui laporan ini? Aksi ini akan mengunci laporan secara permanen.');">
-                    @csrf
-                    <button type="submit" class="inline-flex items-center gap-1.5 rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-green-700">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        <span>Setujui Laporan</span>
-                    </button>
-                </form>
             </div>
         </div>
     @elseif($laporan->status === 'dikembalikan')
@@ -199,33 +187,6 @@
                     <span class="text-sm">Belum ada transaksi yang tercatat pada periode ini.</span>
                 </div>
             @endif
-        </div>
-    </div>
-
-    <!-- Modal Return -->
-    <div id="modalReturn" class="fixed inset-0 z-[100] hidden">
-        <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="document.getElementById('modalReturn').classList.add('hidden')"></div>
-        <div class="absolute top-1/2 left-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-6 shadow-xl sm:p-8">
-            <div class="mb-4 flex items-center justify-between border-b border-gray-100 pb-3">
-                <h3 class="text-lg font-bold text-gray-900">Kembalikan Laporan ke Bendahara</h3>
-                <button type="button" onclick="document.getElementById('modalReturn').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
-            
-            <form method="POST" action="{{ route('admin.laporan-bulanan.return', $laporan) }}">
-                @csrf
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Catatan Perbaikan <span class="text-red-500">*</span></label>
-                    <textarea name="catatan_return" rows="4" required placeholder="Tuliskan alasan laporan dikembalikan..."
-                              class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-red-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-red-500/20"></textarea>
-                    <p class="mt-1 text-xs text-gray-500">Berikan catatan yang jelas agar Bendahara tahu apa yang harus diperbaiki.</p>
-                </div>
-                <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
-                    <button type="button" onclick="document.getElementById('modalReturn').classList.add('hidden')" class="rounded-xl px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 transition">Batal</button>
-                    <button type="submit" class="rounded-xl bg-red-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 transition">Kirim Kembali</button>
-                </div>
-            </form>
         </div>
     </div>
 

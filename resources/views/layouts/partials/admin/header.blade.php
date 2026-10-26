@@ -2,7 +2,7 @@
     $currentUser = Auth::user();
     $currentProfile = $currentUser?->role === 'donatur'
         ? $currentUser?->profilDonatur
-        : $currentUser?->profilPengelola;
+        : $currentUser?->profilPegawai;
     $displayName = $currentProfile?->nama ?? $currentUser?->username ?? 'User';
     $displayFoto = $currentUser?->role === 'donatur' ? null : $currentProfile?->foto;
 @endphp

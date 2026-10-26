@@ -7,7 +7,7 @@ use App\Models\Alumni;
 use App\Models\AnakAsuh;
 use App\Models\Donasi;
 use App\Models\Kegiatan;
-use App\Models\LaporanKeuanganBulanan;
+use App\Models\ProfilPegawai;
 use App\Models\TransaksiKeuangan;
 use App\Models\User;
 use Illuminate\Support\Carbon;
@@ -18,7 +18,7 @@ class DashboardController extends Controller
     {
         $totalAnak = AnakAsuh::count();
         $totalAlumni = Alumni::count();
-        $totalPengelola = User::whereIn('role', ['pengasuh', 'bendahara', 'sekretaris'])->count();
+        $totalPegawai = ProfilPegawai::count();
         $totalDonatur = User::where('role', 'donatur')->count();
 
         $donasiTerbaru  = Donasi::where('status', 'pending')->latest()->take(5)->get();
@@ -55,18 +55,10 @@ class DashboardController extends Controller
         $totalPengeluaran = TransaksiKeuangan::where('jenis', 'pengeluaran')->sum('nominal');
         $saldoSaatIni = $totalPemasukan - $totalPengeluaran;
 
-        $laporanMenungguApproval = LaporanKeuanganBulanan::where('status', 'diajukan')->count();
-        $laporanTerbaru = LaporanKeuanganBulanan::with(['submitter.profilPengelola'])
-            ->where('status', 'diajukan')
-            ->orderByDesc('tahun')
-            ->orderByDesc('bulan')
-            ->take(5)
-            ->get();
-
         return view('admin.dashboard', compact(
             'totalAnak',
             'totalAlumni',
-            'totalPengelola',
+            'totalPegawai',
             'totalDonatur',
             'donasiTerbaru',
             'totalDonasiPending',
@@ -75,9 +67,7 @@ class DashboardController extends Controller
             'pemasukanBulanIni',
             'pengeluaranBulanIni',
             'saldoBulanIni',
-            'saldoSaatIni',
-            'laporanMenungguApproval',
-            'laporanTerbaru'
+            'saldoSaatIni'
         ));
     }
 }

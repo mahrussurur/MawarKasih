@@ -18,32 +18,26 @@
         </div>
     </div>
 
-    <!-- Toolbar -->
-    <div class="flex justify-end mb-4">
-
-        <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ route('admin.keuangan.cetak', request()->only(['jenis', 'search'])) }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-sm transition hover:border-gray-300 hover:bg-gray-100">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                Cetak Laporan
-            </a>
-        </div>
-    </div>
 
     <!-- Konten Tabel -->
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
         <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
             @php $activeJenis = request('jenis', 'semua'); @endphp
-            <div class="flex gap-2">
-                <a href="{{ route('admin.keuangan.index', ['jenis' => 'semua']) }}" class="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeJenis === 'semua' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-600 hover:bg-gray-100' }}">
-                    Semua
-                </a>
-                <a href="{{ route('admin.keuangan.index', ['jenis' => 'pemasukan']) }}" class="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeJenis === 'pemasukan' ? 'bg-emerald-600 text-white' : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100' }}">
-                    Pemasukan
-                </a>
-                <a href="{{ route('admin.keuangan.index', ['jenis' => 'pengeluaran']) }}" class="inline-flex rounded-full border px-4 py-2 text-[11px] font-semibold transition {{ $activeJenis === 'pengeluaran' ? 'bg-red-600 text-white' : 'bg-red-50 text-red-800 hover:bg-red-100' }}">
-                    Pengeluaran
-                </a>
-            </div>
+
+<div class="flex flex-wrap items-center gap-2">
+    <a href="{{ route('admin.keuangan.index', array_merge(request()->except('jenis','page'), ['jenis' => 'semua'])) }}"
+       class="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold transition {{ $activeJenis === 'semua' ? 'bg-gray-900 text-white border-gray-900' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
+        Semua
+    </a>
+    <a href="{{ route('admin.keuangan.index', array_merge(request()->except('jenis','page'), ['jenis' => 'pemasukan'])) }}"
+       class="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold transition {{ $activeJenis === 'pemasukan' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
+        Pemasukan
+    </a>
+    <a href="{{ route('admin.keuangan.index', array_merge(request()->except('jenis','page'), ['jenis' => 'pengeluaran'])) }}"
+       class="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold transition {{ $activeJenis === 'pengeluaran' ? 'bg-red-600 text-white border-red-600' : 'bg-red-100 text-red-800 border-red-100 hover:bg-red-200' }}">
+        Pengeluaran
+    </a>
+</div>
 
             <!-- Search -->
             <form method="GET" action="{{ route('admin.keuangan.index') }}" class="flex items-center gap-2">

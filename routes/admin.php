@@ -9,8 +9,8 @@ use App\Http\Controllers\Admin\DonasiController;
 use App\Http\Controllers\Admin\GaleriController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\PengelolaController;
 use App\Http\Controllers\Admin\KeuanganController;
+use App\Http\Controllers\Admin\ArsipDokumenController;
 
 Route::prefix('admin')
     ->middleware(['auth', 'role:admin', \App\Http\Middleware\AdminSessionTimeout::class])
@@ -22,7 +22,7 @@ Route::prefix('admin')
         // Anak Asuh - tambahkan route cetak sebelum resource
         // agar tidak tertimpa oleh route resource {anak_asuh}
         Route::get('/anak-asuh/cetak', [AnakAsuhController::class, 'cetak'])->name('anak-asuh.cetak');
-        Route::resource('anak-asuh', AnakAsuhController::class);
+        Route::resource('anak-asuh', AnakAsuhController::class)->except(['destroy']);
 
         // Alumni
         Route::get('/anak-asuh/{anak_asuh_id}/jadikan-alumni', [AlumniController::class, 'create'])->name('alumni.create');
@@ -37,34 +37,30 @@ Route::prefix('admin')
         Route::patch('donasi/{donasi}/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
         Route::patch('donasi/{donasi}/tolak', [DonasiController::class, 'tolak'])->name('donasi.tolak');
         Route::resource('donasi', DonasiController::class);
-        Route::get('keuangan/cetak', [KeuanganController::class, 'cetak'])->name('admin.keuangan.cetak');
         Route::resource('keuangan', KeuanganController::class)->parameters([
             'keuangan' => 'transaksi',
         ])->only(['index'])->names([
             'index'   => 'admin.keuangan.index',
         ]);
 
-        // Laporan Bulanan (Review dan Approval)
+        // Laporan Bulanan (Review)
         Route::get('laporan-bulanan', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'index'])->name('admin.laporan-bulanan.index');
         Route::get('laporan-bulanan/{laporan}/cetak', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'cetak'])->name('admin.laporan-bulanan.cetak');
         Route::get('laporan-bulanan/{laporan}', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'show'])->name('admin.laporan-bulanan.show');
-        Route::post('laporan-bulanan/{laporan}/approve', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'approve'])->name('admin.laporan-bulanan.approve');
-        Route::post('laporan-bulanan/{laporan}/return', [\App\Http\Controllers\Admin\LaporanKeuanganBulananController::class, 'return'])->name('admin.laporan-bulanan.return');
 
         Route::resource('kegiatan', KegiatanController::class);
         Route::resource('galeri',  GaleriController::class);
 
-        // Data Pengelola (filter role; sumber data users + profil_pengelola)
-        Route::prefix('data/{roleFilter}')->name('admin.pengelola.')->group(function () {
-            Route::get('/', [PengelolaController::class, 'index'])->name('index');
-            Route::get('/create', [PengelolaController::class, 'create'])->name('create');
-            Route::post('/', [PengelolaController::class, 'store'])->name('store');
-            Route::get('/{user}', [PengelolaController::class, 'show'])->name('show');
-            Route::get('/{user}/edit', [PengelolaController::class, 'edit'])->name('edit');
-            Route::patch('/{user}', [PengelolaController::class, 'update'])->name('update');
-            Route::delete('/{user}', [PengelolaController::class, 'destroy'])->name('destroy');
+        // Data Pegawai (Admin, Ketua, Bendahara, Pengasuh)
+        Route::resource('pegawai', \App\Http\Controllers\Admin\PegawaiController::class)->names('admin.pegawai');
 
-        });
+        // Data Donatur
+        Route::resource('donatur', \App\Http\Controllers\Admin\DonaturController::class)->names('admin.donatur');
 
+        // Arsip Dokumen Administrasi
+        Route::get('arsip-dokumen/{arsip}/download', [ArsipDokumenController::class, 'download'])->name('admin.arsip-dokumen.download');
+        Route::resource('arsip-dokumen', ArsipDokumenController::class)->parameters([
+            'arsip-dokumen' => 'arsip',
+        ])->names('admin.arsip-dokumen');
     });
 

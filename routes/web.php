@@ -11,9 +11,8 @@ Route::get('/dashboard', function () {
     $role = auth()->user()->role;
     return match ($role) {
         'admin' => redirect()->route('admin.dashboard'),
-        'sekretaris' => redirect()->route('sekretaris.dashboard'),
+        'ketua' => redirect()->route('ketua.dashboard'),
         'bendahara' => redirect()->route('bendahara.dashboard'),
-        'pengasuh' => redirect()->route('pengasuh.dashboard'),
         'donatur' => redirect()->route('donatur.dashboard'),
         default => redirect('/'),
     };
@@ -28,8 +27,7 @@ Route::middleware('auth')->group(function () {
 
 // Load role-specific routes
 require __DIR__ . '/bendahara.php';
-require __DIR__ . '/sekretaris.php';
-require __DIR__ . '/pengasuh.php';
+require __DIR__ . '/ketua.php';
 require __DIR__ . '/donatur.php';
 
 // Load route admin (panel pengelolaan data)

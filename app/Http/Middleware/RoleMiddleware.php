@@ -21,9 +21,13 @@ class RoleMiddleware
 
         $user = $request->user();
 
-        // Admin is the internal superuser, while every non-admin role remains
-        // limited to the route groups explicitly assigned to it.
-        if ($user->role === 'admin' || in_array($user->role, $roles, true)) {
+        // Exact role match always succeeds
+        if (in_array($user->role, $roles, true)) {
+            return $next($request);
+        }
+
+        // Admin retains access to existing internal areas, but MUST NOT access ketua-only routes
+        if ($user->role === 'admin' && !in_array('ketua', $roles, true)) {
             return $next($request);
         }
 

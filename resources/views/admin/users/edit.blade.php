@@ -3,53 +3,56 @@
 @section('page-title', 'Data User')
 
 @section('content')
-<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-    <!-- Header -->
-    <div class="border-b border-gray-200 bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4 flex justify-between items-center gap-4">
-        <div>
-            <h2 class="text-lg font-bold text-white">Edit Data User</h2>
-            <p class="text-xs text-gray-200">Profil User dikelola dari menu data sesuai role.</p>
+<div class="max-w-4xl mx-auto">
+    <!-- Main Content Card -->
+    <div class="overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-200">
+        
+        <!-- Header / Banner Cover -->
+        <div class="relative bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-6 sm:px-8 sm:py-7">
+            <div class="flex flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white sm:text-2xl">Edit Data User</h2>
+                    <p class="text-sm text-amber-100 mt-0.5">Pengaturan akun login, hak akses role, dan kata sandi pengguna.</p>
+                </div>
+                <!-- Tombol Kembali -->
+                <a href="{{ route('users.index') }}" 
+                   class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition flex-shrink-0" 
+                   title="Kembali">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="hidden sm:inline">Kembali</span>
+                </a>
+            </div>
         </div>
-        <a href="{{ route('users.index') }}" class="text-xs font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            <span class="hidden sm:inline">Kembali</span>
-        </a>
-    </div>
-
-    <div class="p-4 md:p-6">   
-        <form action="{{ route('users.update', $user) }}" method="POST">
+  
+        <form action="{{ route('users.update', $user) }}" method="POST" class="p-4 md:p-6">
             @csrf
             @method('PATCH')
 
             <div class="mb-5">
-                <label for="role" class="mb-2 block text-sm font-bold text-gray-800">Role <span class="text-red-500">*</span></label>
+                <label for="role" class="mb-1.5 block text-sm font-semibold text-gray-800">Role <span class="text-red-500">*</span></label>
                 <select id="role" name="role" required class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('role') border-red-400 @enderror">
                     <option value="admin" @selected(old('role', $user->role) === 'admin')>Admin</option>
                     <option value="bendahara" @selected(old('role', $user->role) === 'bendahara')>Bendahara</option>
-                    <option value="sekretaris" @selected(old('role', $user->role) === 'sekretaris')>Sekretaris</option>
-                    <option value="pengasuh" @selected(old('role', $user->role) === 'pengasuh')>Pengasuh</option>
+                    <option value="ketua" @selected(old('role', $user->role) === 'ketua')>Ketua</option>
                     <option value="donatur" @selected(old('role', $user->role) === 'donatur')>Donatur</option>
                 </select>
                 @error('role')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
             </div>
-
             <div class="mb-5">
-                <label for="username" class="mb-2 block text-sm font-bold text-gray-800">Username <span class="text-red-500">*</span></label>
+                <label for="username" class="mb-1.5 block text-sm font-semibold text-gray-800">Username <span class="text-red-500">*</span></label>
                 <input id="username" type="text" name="username" value="{{ old('username', $user->username) }}" required autocomplete="username" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('username') border-red-400 @enderror">
                 @error('username')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
             </div>
-
             <div class="mb-5">
-                <label for="email" class="mb-2 block text-sm font-bold text-gray-800">Email <span class="text-red-500">*</span></label>
+                <label for="email" class="mb-1.5 block text-sm font-semibold text-gray-800">Email <span class="text-red-500">*</span></label>
                 <input id="email" type="email" name="email" value="{{ old('email', $user->email) }}" required autocomplete="email" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-400 @enderror">
                 @error('email')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
                 <div>
-                    <label for="password" class="mb-2 block text-sm font-bold text-gray-800">Password Baru</label>
+                    <label for="password" class="mb-1.5 block text-sm font-semibold text-gray-800">Password Baru</label>
                     <div class="relative">
                         <input id="password" type="password" name="password" autocomplete="new-password" placeholder="masukkan sandi baru" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-12 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('password') border-red-400 ring-1 ring-red-400 @enderror">
                         <button type="button" onclick="togglePassword('password', 'icon-eye-pw', 'icon-eye-off-pw')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors" aria-label="Tampilkan password">
@@ -64,9 +67,8 @@
                     </div>
                     <p class="text-xs text-gray-500 mt-1">kosongkan jika tidak ingin mengubah password.</p>
                 </div>
-
                 <div>
-                    <label for="password_confirmation" class="mb-2 block text-sm font-bold text-gray-800">Konfirmasi Password Baru</label>
+                    <label for="password_confirmation" class="mb-1.5 block text-sm font-semibold text-gray-800">Konfirmasi Password Baru</label>
                     <div class="relative">
                         <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password" placeholder="Ulangi password baru" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 pr-12 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <button type="button" onclick="togglePassword('password_confirmation', 'icon-eye-conf', 'icon-eye-off-conf')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors" aria-label="Tampilkan konfirmasi password">
@@ -81,24 +83,14 @@
                     </div>
                 </div>
             </div>
-
-            <fieldset>
-                <legend class="mb-2 block text-sm font-bold text-gray-800">Status Akun</legend>
-                <div class="flex gap-6">
-                    <label class="flex items-center gap-2 text-sm text-gray-700"><input type="radio" name="status" value="aktif" @checked(old('status', $user->status) === 'aktif') required> Aktif</label>
-                    <label class="flex items-center gap-2 text-sm text-gray-700"><input type="radio" name="status" value="tidak_aktif" @checked(old('status', $user->status) === 'tidak_aktif')> Tidak Aktif</label>
-                </div>
-                @error('status')<p class="mt-1 text-xs text-red-500">{{ $message }}</p>@enderror
-            </fieldset>
-
             <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
-                    <a href="{{ route('users.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
-                        Batal
-                    </a>
-                    <button type="submit" class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
-                        Simpan
-                    </button>
-                </div>
+                <a href="{{ route('users.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
+                    Batal
+                </a>
+                <button type="submit" class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
+                    Simpan
+                </button>
+            </div>
         </form>
     </div>
 </div>

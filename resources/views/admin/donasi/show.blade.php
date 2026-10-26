@@ -1,162 +1,198 @@
 @extends('layouts.app')
-@section('page-title', 'Detail Donasi')
+@section('page-title', 'Data Donasi')
 
 @section('content')
-<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+<div class="max-w-4xl mx-auto">
+    <!-- Main Content Card -->
+    <div class="overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-200">
         
-        <!-- Header -->
-        <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
-            <div class="min-w-0">
-                <h2 class="text-lg font-bold text-white truncate">Detail Donasi</h2>
-                <p class="text-xs md:text-sm text-gray-200">Informasi lengkap donasi.</p>
+        <!-- Header / Banner Cover -->
+        <div class="relative bg-gradient-to-r from-blue-600 to-indigo-700 px-6 py-6 sm:px-8 sm:py-7">
+            <div class="flex flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white sm:text-2xl">Detail Donasi</h2>
+                    <p class="text-sm text-blue-100 mt-0.5">Informasi lengkap transaksi donasi dan verifikasi bukti transfer.</p>
+                </div>
+                <!-- Tombol Kembali -->
+                <a href="{{ route('donasi.index') }}" 
+                   class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition flex-shrink-0" 
+                   title="Kembali">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="hidden sm:inline">Kembali</span>
+                </a>
             </div>
-            <a href="{{ route('donasi.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-200 flex items-center transition-colors whitespace-nowrap">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                <span class="hidden sm:inline">Kembali</span>
-            </a>
         </div>
 
-        <div class="p-4 md:p-6">
-            <!-- Layout: Foto di atas -->
-            <div class="flex flex-col gap-6 items-center">
+        <!-- Layout Grid Content -->
+        <div class="grid grid-cols-1 divide-y divide-gray-100 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+            
+            <!-- Left Column: Detail Transaksi & Bukti -->
+            <div class="p-6 sm:p-8 lg:col-span-2 space-y-8">
                 
-                <!-- Section -->
-                <div class="flex flex-col items-center gap-3 flex-shrink-0">
-                    <div class="text-center">
-                        <span class="text-base md:text-lg font-bold text-gray-900 block text-center whitespace-normal break-words max-w-full md:max-w-none px-2">
-                            {{ $donasi->kode_donasi }}
-                        </span><br>
-                        <span class="inline-block mt-1 px-3 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 
-                        {{ $donasi->donatur_id ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-700' }}">
-                            {{ $donasi->donatur_id ? 'Donatur Tetap' : 'Donatur Umum' }}
-                        </span>
-                    </div>
-                </div>
-
-                <div class="border-t border-gray-200 my-1 w-full"></div>
-
-                <!-- Detail Section -->
-                <div class="w-full space-y-2.5">
-
-                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Nama Donatur</span>
-                            <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $donasi->nama_donatur }}</span>
+                <!-- Rincian Donasi -->
+                <section>
+                    <h3 class="flex items-center text-base font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                        Rincian Transaksi
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Donatur</p>
+                            <p class="mt-1 text-sm font-bold text-gray-900">{{ $donasi->nama_donatur }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Nomor HP / WhatsApp</p>
+                            <p class="mt-1 text-sm font-semibold text-gray-800">{{ $donasi->no_hp ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Nominal Donasi</p>
+                            <p class="mt-1 text-base font-extrabold text-emerald-600">{{ $donasi->nominal_rupiah }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Metode Pembayaran</p>
+                            <p class="mt-1 text-sm font-semibold text-gray-800">{{ ucfirst($donasi->metode_pembayaran) ?? '-' }}</p>
                         </div>
                     </div>
+                </section>
 
-                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Nomor HP</span>
-                            <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $donasi->no_hp ?? '-' }}</span>
+                <!-- Keterangan & Catatan -->
+                <section>
+                    <h3 class="flex items-center text-base font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+                        </svg>
+                        Keterangan & Catatan
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Keterangan Donatur</p>
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-sm text-gray-800 leading-relaxed break-words">
+                                {{ $donasi->keterangan ?? 'Tidak ada keterangan dari donatur.' }}
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Catatan Admin</p>
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 text-sm text-gray-800 leading-relaxed break-words">
+                                {{ $donasi->catatan_admin ?? 'Belum ada catatan dari admin.' }}
+                            </div>
                         </div>
                     </div>
+                </section>
+
+                <!-- Bukti Transfer -->
+                <section>
+                    <h3 class="flex items-center text-base font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                        Bukti Transfer
+                    </h3>
+                    @if($donasi->bukti_transfer)
+                        <div class="relative group w-full aspect-video overflow-hidden rounded-xl border border-gray-200 bg-gray-100 shadow-sm flex items-center justify-center p-2">
+                            <img src="{{ Storage::url($donasi->bukti_transfer) }}" 
+                                 alt="Bukti transfer {{ $donasi->kode_donasi }}"
+                                 class="h-full w-full object-contain cursor-pointer"
+                                 onclick="openImagePreview('{{ Storage::url($donasi->bukti_transfer) }}')"
+                                 title="Klik untuk memperbesar">
+                        </div>
+                    @else
+                        <div class="rounded-xl border border-dashed border-gray-200 bg-gray-50 p-6 text-center text-sm text-gray-400">
+                            Tidak ada bukti transfer yang diunggah.
+                        </div>
+                    @endif
+                </section>
+
+            </div>
+
+            <!-- Right Column: Info Status & Tombol Aksi -->
+            <div class="bg-gray-50/50 p-6 sm:p-8 space-y-8">
+                
+                <section>
+                    <h3 class="flex items-center text-base font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Informasi Status
+                    </h3>
                     
-                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Nominal</span>
-                            <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $donasi->nominal_rupiah }}</span>
+                    <div class="space-y-5">
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Kode Donasi</p>
+                            <p class="mt-1 text-sm font-mono font-bold text-gray-900 leading-snug">{{ $donasi->kode_donasi }}</p>
                         </div>
-                    </div>
-                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Tanggal</span>
-                            <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ \Carbon\Carbon::parse($donasi->tanggal)->format('d - m - Y') }}</span>
+
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Tipe Donatur</p>
+                            <p class="mt-1.5">
+                                <span class="inline-flex items-center rounded-lg border px-2.5 py-1 text-xs font-semibold {{ $donasi->donatur_id ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-slate-100 text-slate-700 border-slate-200' }}">
+                                    {{ $donasi->donatur_id ? 'Donatur Tetap' : 'Donatur Umum' }}
+                                </span>
+                            </p>
                         </div>
-                    </div>
-                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Keterangan</span>
-                            <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $donasi->keterangan ?? '-' }}</span>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Metode Pembayaran</span>
-                            <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ ucfirst($donasi->metode_pembayaran) ?? '-' }}</span>
-                        </div>
-                    </div>
-                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Status</span>
-                            <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">
-                                <span class="inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold {{ $donasi->status === 'pending' ? 'bg-amber-100 text-amber-800' : ($donasi->status === 'diterima' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800') }}">
+
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Status Transaksi</p>
+                            <p class="mt-1.5">
+                                <span class="inline-flex items-center rounded-lg border px-2.5 py-1 text-xs font-semibold {{ $donasi->status === 'pending' ? 'bg-amber-50 text-amber-800 border-amber-200' : ($donasi->status === 'diterima' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-red-50 text-red-800 border-red-200') }}">
                                     {{ ucfirst($donasi->status) }}
                                 </span>
-                            </span>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Donasi</p>
+                            <p class="mt-1.5">
+                                <span class="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 border border-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    {{ \Carbon\Carbon::parse($donasi->tanggal)->format('d - m - Y') }}
+                                </span>
+                            </p>
                         </div>
                     </div>
-                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Catatan Admin</span>
-                            <span class="text-gray-400">:</span>
-                            <span class="text-sm text-gray-900 font-medium break-words whitespace-normal overflow-hidden">{{ $donasi->catatan_admin ?? '-' }}</span>
-                        </div>
+
+                    <!-- Tombol Aksi -->
+                    <div class="pt-8 mt-8 border-t border-gray-200 space-y-3">
+                        @if($donasi->status === 'pending')
+                            <button type="button" 
+                                    class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm font-semibold text-emerald-600 shadow-sm transition hover:bg-emerald-600 hover:text-white"
+                                    data-validasi-route="{{ route('donasi.validasi', $donasi->id) }}"
+                                    data-kode-donasi="{{ $donasi->kode_donasi }}"
+                                    onclick="openValidasiModal(this)">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                Terima Donasi
+                            </button>
+                            <button type="button" 
+                                    class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 shadow-sm transition hover:bg-red-600 hover:text-white"
+                                    data-tolak-route="{{ route('donasi.tolak', $donasi->id) }}"
+                                    data-kode-donasi="{{ $donasi->kode_donasi }}"
+                                    onclick="openTolakModal(this)">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                Tolak Donasi
+                            </button>
+                        @else
+                            <a href="{{ route('donasi.edit', $donasi->id) }}" 
+                               class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm font-semibold text-amber-600 shadow-sm transition hover:bg-amber-500 hover:text-white">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                Edit Donasi
+                            </a>
+                            <button type="button"
+                                    class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 shadow-sm transition hover:bg-red-600 hover:text-white"
+                                    data-delete-route="{{ route('donasi.destroy', $donasi->id) }}"
+                                    data-name="{{ $donasi->kode_donasi }}"
+                                    onclick="openDeleteModal(this)">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                Hapus Donasi
+                            </button>
+                        @endif
                     </div>
-                    
-                    
-                    <div class="bg-gray-50 rounded-lg px-4 py-3 border border-gray-200">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold text-gray-600 w-28 flex-shrink-0">Bukti Transfer</span>
-                            <span class="text-gray-400">:</span>
-                            @if($donasi->bukti_transfer)
-                                <div class="mt-1">
-                                    <button type="button"
-                                        class="inline-flex"
-                                        onclick="openImagePreview('{{ Storage::url($donasi->bukti_transfer) }}')"
-                                        aria-label="Perbesar bukti transfer {{ $donasi->kode_donasi }}">
-                                        <img src="{{ Storage::url($donasi->bukti_transfer) }}"
-                                            alt="Bukti transfer {{ $donasi->kode_donasi }}"
-                                            class="h-32 w-32 rounded-lg border-2 border-gray-200 object-cover cursor-pointer transition duration-200 hover:scale-105">
-                                    </button>
-                                </div>
-                            @else
-                                <span class="text-sm text-gray-500 font-medium">-</span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Tombol Aksi -->
-            <div class="mt-6 pt-4 border-t border-gray-200 flex flex-wrap gap-3 justify-center">
-                @if($donasi->status === 'pending')
-                    <button type="button" 
-                            class="rounded-2xl bg-emerald-600 px-5 py-2 text-sm font-semibold text-white border border-emerald-700 transition hover:bg-emerald-700"
-                            data-validasi-route="{{ route('donasi.validasi', $donasi->id) }}"
-                            data-kode-donasi="{{ $donasi->kode_donasi }}"
-                            onclick="openValidasiModal(this)">
-                        terima
-                    </button>
-                    <button type="button" 
-                            class="rounded-2xl bg-red-600 px-5 py-2 text-sm font-semibold text-white border border-red-700 transition hover:bg-red-700"
-                            data-tolak-route="{{ route('donasi.tolak', $donasi->id) }}"
-                            data-kode-donasi="{{ $donasi->kode_donasi }}"
-                            onclick="openTolakModal(this)">
-                        tolak
-                    </button>
-                @else
-                    <a href="{{ route('donasi.edit', $donasi->id) }}" 
-                    class="rounded-xl px-5 py-2 text-sm font-semibold text-amber-600 border border-amber-500 bg-yellow-100 transition hover:bg-amber-500 hover:text-white">
-                        Edit
-                    </a>
-                    <button type="button"
-                            class="rounded-xl px-5 py-2 text-sm font-semibold text-red-500 border border-red-500 bg-red-100 transition hover:bg-red-500 hover:text-white"
-                            data-delete-route="{{ route('donasi.destroy', $donasi->id) }}"
-                            data-name="{{ $donasi->kode_donasi }}"
-                            onclick="openDeleteModal(this)">
-                        Hapus
-                    </button>
-                @endif
+                </section>
+
             </div>
 
         </div>
@@ -164,8 +200,7 @@
 </div>
 
 @push('modals')
-
-<div id="validasiModal" class="pointer-events-auto absolute inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 opacity-0 invisible transition-all duration-300">
+<div id="validasiModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 opacity-0 invisible transition-all duration-300">
     <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
         <div class="flex items-start justify-between gap-4">
             <div>
@@ -196,7 +231,7 @@
     </div>
 </div>
 
-<div id="tolakModal" class="pointer-events-auto absolute inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 opacity-0 invisible transition-all duration-300">
+<div id="tolakModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4 opacity-0 invisible transition-all duration-300">
     <div class="w-full max-w-lg rounded-3xl bg-white p-6 shadow-xl" onclick="event.stopPropagation()">
         <div class="flex items-start justify-between gap-4">
             <div>
@@ -276,4 +311,4 @@
     });
 </script>
 @endpush
-@endsection
+@endsection 

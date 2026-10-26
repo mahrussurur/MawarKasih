@@ -2,61 +2,68 @@
 @section('page-title', 'Data Anak Asuh')
 
 @section('content')
-<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">      
-    <!-- Header -->
-    <div class="border-b border-gray-200 bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4 flex justify-between items-center gap-4">
-        <div class="min-w-0">
-            <h2 class="text-lg font-bold text-white truncate">Edit Data Anak Asuh</h2>
-            <p class="text-xs text-gray-300">Ubah detail data anak asuh di bawah ini.</p>
+<div class="max-w-4xl mx-auto">
+    <!-- Main Content Card -->
+    <div class="overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-200">
+        
+        <!-- Header / Banner Cover -->
+        <div class="relative bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-6 sm:px-8 sm:py-7">
+            <div class="flex flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white sm:text-2xl">Edit Profil Anak Asuh</h2>
+                    <p class="text-sm text-amber-100 mt-0.5">Perbarui informasi profil anak asuh.</p>
+                </div>
+                <!-- Tombol Kembali -->
+                <a href="{{ route('anak-asuh.index') }}" 
+                   class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition flex-shrink-0" 
+                   title="Kembali">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="hidden sm:inline">Kembali</span>
+                </a>
+            </div>
         </div>
-        <a href="{{ route('anak-asuh.index') }}" class="text-xs font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            <span class="hidden sm:inline">Kembali</span>
-        </a>
-    </div>
-    
-    <div class="p-4 md:p-6">   
-        <form action="{{ route('anak-asuh.update', $anakAsuh->id) }}" method="POST" enctype="multipart/form-data">
+
+        <form action="{{ route('anak-asuh.update', $anakAsuh->id) }}" method="POST" enctype="multipart/form-data" class="p-4 md:p-6">
             @csrf
             @method('PATCH')
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Nama Lengkap<span class="text-red-500">*</span></label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Nama Lengkap<span class="text-red-500">*</span></label>
                 <input type="text" name="nama" value="{{ old('nama', $anakAsuh->nama) }}" placeholder="Nama Lengkap..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
             </div>
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Nama Panggilan<span class="text-red-500">*</span></label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Nama Panggilan<span class="text-red-500">*</span></label>
                 <input type="text" name="nama_panggilan" value="{{ old('nama_panggilan', $anakAsuh->nama_panggilan) }}" placeholder="Nama Panggilan..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
             </div>
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Tempat Lahir<span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Tempat Lahir<span class="text-red-500">*</span></label>
                     <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir', $anakAsuh->tempat_lahir) }}" placeholder="Tempat Lahir..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Tanggal Lahir<span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Tanggal Lahir<span class="text-red-500">*</span></label>
                     <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $anakAsuh->tanggal_lahir) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-500" required>
                 </div>
             </div>
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Tinggal di LKSA sejak<span class="text-red-500">*</span></label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Tinggal di LKSA sejak<span class="text-red-500">*</span></label>
                 <input type="text" name="tinggal_di_lksa_sejak" value="{{ old('tinggal_di_lksa_sejak', $anakAsuh->tinggal_di_lksa_sejak) }}" placeholder="Cth: Dari kandungan ibu tahun 2023 atau Tahun 2024" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 <p class="text-xs text-gray-500 mt-1">Isikan apakah sejak dalam kandungan atau tahun masuk LKSA.</p>
             </div>
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Sekolah<span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Sekolah<span class="text-red-500">*</span></label>
                     <input type="text" name="sekolah" value="{{ old('sekolah', $anakAsuh->sekolah) }}" placeholder="Nama Sekolah..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Kelas<span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Kelas<span class="text-red-500">*</span></label>
                     <input type="text" name="kelas" value="{{ old('kelas', $anakAsuh->kelas) }}" placeholder="Kelas..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
                 </div>
             </div>
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Jenis Kelamin<span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Jenis Kelamin<span class="text-red-500">*</span></label>
                     <select name="jenis_kelamin" id="jenis_kelamin"
                         class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-900 appearance-none"
                         required>
@@ -66,7 +73,7 @@
                     </select>
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Status Sosial Anak<span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Status Sosial Anak<span class="text-red-500">*</span></label>
                     <select name="status_social_anak" id="status-social-anak" 
                         class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-900 appearance-none" 
                         required>
@@ -80,20 +87,20 @@
             </div>
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div id="field-nama-ayah">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Ayah<span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Nama Ayah<span class="text-red-500">*</span></label>
                     <input type="text" name="nama_ayah" value="{{ old('nama_ayah', $anakAsuh->nama_ayah) }}" placeholder="Nama Ayah..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
                 <div id="field-nama-ibu">
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama Ibu<span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Nama Ibu<span class="text-red-500">*</span></label>
                     <input type="text" name="nama_ibu" value="{{ old('nama_ibu', $anakAsuh->nama_ibu) }}" placeholder="Nama Ibu..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
                 </div>
             </div>
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Foto Anak</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Foto Anak</label>
             
                 @if($anakAsuh->foto)
                     <div class="mb-3">
-                        <p class="text-sm text-gray-500 mb-1">Foto saat ini:</p>
+                        <p class="text-xs text-gray-500 mb-1">Foto saat ini:</p>
                         <img src="{{ asset('storage/' . $anakAsuh->foto) }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
                     </div>
                 @endif

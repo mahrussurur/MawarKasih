@@ -3,7 +3,7 @@
 
 @section('content')
 @php
-    $roles = ['semua' => 'Semua', 'admin' => 'Admin', 'bendahara' => 'Bendahara', 'sekretaris' => 'Sekretaris', 'pengasuh' => 'Pengasuh', 'donatur' => 'Donatur'];
+    $roles = ['semua' => 'Semua', 'admin' => 'Admin', 'bendahara' => 'Bendahara', 'ketua' => 'Ketua', 'donatur' => 'Donatur'];
     $currentRole = $activeRole ?? null;
 @endphp
 <!-- Kotak Utama Konten -->

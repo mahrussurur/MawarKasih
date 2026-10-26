@@ -41,7 +41,7 @@ class UserController extends Controller
     public function update(Request $request, User $user): RedirectResponse
     {
         $validated = $request->validate([
-            'role' => ['required', 'in:admin,bendahara,sekretaris,pengasuh,donatur'],
+            'role' => ['required', 'in:admin,bendahara,ketua,donatur'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username,'.$user->id],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$user->id],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],

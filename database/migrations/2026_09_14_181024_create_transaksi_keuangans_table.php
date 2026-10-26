@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('transaksi_keuangans', function (Blueprint $table) {
             $table->id();
             $table->enum('jenis', ['pemasukan', 'pengeluaran']);
+            $table->string('kategori')->default('LAINNYA');
             $table->decimal('nominal', 15, 2);
             $table->string('keterangan');
+            $table->string('bukti_transaksi')->nullable();
             $table->date('tanggal');
             
             // Relasi ke donasi opsional jika pemasukan bersumber dari donasi
-            $table->foreignId('donasi_id')->nullable()->constrained('donasi')->nullOnDelete();
+            $table->foreignId('donasi_id')->nullable()->constrained('donasi')->cascadeOnDelete();
             
             // Siapa yang mencatat
             $table->foreignId('dicatat_oleh')->nullable()->constrained('users')->nullOnDelete();

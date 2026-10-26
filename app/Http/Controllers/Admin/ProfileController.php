@@ -20,7 +20,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         $isDonatur = $user->role === 'donatur';
-        $profileRelation = $isDonatur ? 'profilDonatur' : 'profilPengelola';
+        $profileRelation = $isDonatur ? 'profilDonatur' : 'profilPegawai';
 
         $user->load($profileRelation);
 
@@ -38,14 +38,14 @@ class ProfileController extends Controller
         $isDonatur = $user->role === 'donatur';
         $profile = $isDonatur
             ? $user->profilDonatur()->firstOrNew(['user_id' => $user->id])
-            : $user->profilPengelola()->firstOrNew(['user_id' => $user->id]);
+            : $user->profilPegawai()->firstOrNew(['user_id' => $user->id]);
         $oldFoto = $isDonatur ? null : $profile->foto;
         $storedFoto = null;
 
         try {
             DB::transaction(function () use ($request, $validated, $user, $profile, $isDonatur, &$storedFoto): void {
                 if (! $isDonatur && $request->hasFile('foto')) {
-                    $storedFoto = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'pengelola');
+                    $storedFoto = $this->imageService->uploadAndGenerateWebp($request->file('foto'), 'pegawai');
                 }
 
                 $accountData = [
@@ -78,7 +78,7 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
-        $foto = $user->role === 'donatur' ? null : $user->profilPengelola?->foto;
+        $foto = $user->role === 'donatur' ? null : $user->profilPegawai?->foto;
 
         Auth::logout();
 

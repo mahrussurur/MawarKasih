@@ -88,7 +88,7 @@
             <a href="{{ route('alumni.index') }}" class="mt-5 block w-full rounded-xl bg-violet-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-violet-700">Lihat Data</a>
         </div>
 
-        <!-- total pengelola -->
+        <!-- total pegawai -->
         <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
             <div class="flex items-center gap-4">
                 <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
@@ -100,11 +100,11 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Pengelola</p>
-                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalPengelola ?? 0 }}</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Pegawai</p>
+                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalPegawai ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('users.index') }}" class="mt-5 block w-full rounded-xl bg-emerald-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-emerald-700">Lihat Data</a>
+            <a href="{{ route('admin.pegawai.index') }}" class="mt-5 block w-full rounded-xl bg-emerald-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-emerald-700">Lihat Data</a>
         </div>
 
         <!-- total donatur -->
@@ -120,79 +120,11 @@
                     <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalDonatur ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('users.index', ['role' => 'donatur']) }}" class="mt-5 block w-full rounded-xl bg-amber-500 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-amber-600">Lihat Data</a>
+            <a href="{{ route('admin.donatur.index') }}" class="mt-5 block w-full rounded-xl bg-amber-500 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-amber-600">Lihat Data</a>
         </div>
     </div>
 
     <div class="grid gap-5">
-        <!-- Section Laporan Keuangan Terbaru -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
-            <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
-                <div class="flex items-center gap-3">
-                    <h3 class="text-base font-extrabold text-gray-900">Laporan Bulanan Terbaru</h3>
-                    @if(isset($laporanMenungguApproval) && $laporanMenungguApproval > 0)
-                        <span class="inline-flex items-center justify-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-bold text-blue-800">
-                            {{ $laporanMenungguApproval }} Diajukan
-                        </span>
-                    @endif
-                </div>
-                <a href="{{ route('admin.laporan-bulanan.index') }}" class="text-sm font-bold text-blue-600 hover:text-blue-700">Manajemen Laporan →</a>
-            </div>
-
-            @if(isset($laporanTerbaru) && $laporanTerbaru->count() > 0)
-            <div class="overflow-x-auto custom-scrollbar">
-                <table class="w-full text-left text-sm whitespace-nowrap">
-                    <thead class="border-b border-gray-200 bg-gray-50">
-                        <tr>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">Periode</th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">Pemasukan</th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">Pengeluaran</th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">Saldo Akhir</th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700 text-center">Status</th>
-                            <th class="sticky right-0 z-10 bg-gray-50 px-4 py-2.5 text-center font-semibold text-gray-700 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        @foreach($laporanTerbaru as $lap)
-                        <tr class="group transition-colors hover:bg-gray-50">
-                            <td class="px-4 py-2.5 font-medium text-gray-900">
-                                <div>{{ \Carbon\Carbon::create()->month($lap->bulan)->translatedFormat('F') }} {{ $lap->tahun }}</div>
-                                <div class="text-xs font-normal text-gray-500 mt-0.5">
-                                    Diajukan oleh: <span class="font-medium text-gray-700">{{ $lap->submitter?->nama ?? 'Bendahara' }}</span>
-                                    @if($lap->submitted_at)
-                                        • {{ $lap->submitted_at->translatedFormat('d M Y') }}
-                                    @endif
-                                </div>
-                            </td>
-                            <td class="px-4 py-2.5 text-green-600 font-medium">+Rp {{ number_format($lap->total_pemasukan, 0, ',', '.') }}</td>
-                            <td class="px-4 py-2.5 text-red-600 font-medium">-Rp {{ number_format($lap->total_pengeluaran, 0, ',', '.') }}</td>
-                            <td class="px-4 py-2.5 font-bold text-gray-900">Rp {{ number_format($lap->saldo_akhir, 0, ',', '.') }}</td>
-                            <td class="px-4 py-2.5 text-center">
-                                @if($lap->status === 'draft')
-                                    <span class="inline-flex rounded-md bg-gray-100 px-2 py-1 text-xs font-semibold text-gray-700">Draft</span>
-                                @elseif($lap->status === 'diajukan')
-                                    <span class="inline-flex rounded-md bg-blue-100 px-2 py-1 text-xs font-semibold text-blue-700 animate-pulse">Diajukan</span>
-                                @elseif($lap->status === 'dikembalikan')
-                                    <span class="inline-flex rounded-md bg-red-100 px-2 py-1 text-xs font-semibold text-red-700">Dikembalikan</span>
-                                @elseif($lap->status === 'disetujui')
-                                    <span class="inline-flex rounded-md bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">Disetujui</span>
-                                @endif
-                            </td>
-                            <td class="sticky right-0 z-10 bg-white px-4 py-2.5 text-center shadow-[inset_1px_0_0_#e5e7eb] transition-colors group-hover:bg-gray-50">
-                                <a href="{{ route('admin.laporan-bulanan.show', $lap) }}" class="inline-flex rounded-md bg-white px-3 py-1 text-xs font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Lihat</a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            @else
-            <div class="flex min-h-[150px] flex-col items-center justify-center text-center text-gray-500 p-6">
-                <p class="text-sm font-semibold text-gray-700">Belum ada laporan bulanan yang diajukan.</p>
-                <p class="text-xs text-gray-400 mt-1">Laporan yang diajukan oleh Bendahara akan muncul di sini.</p>
-            </div>
-            @endif
-        </div>
 
         <!-- Section Donasi Terbaru -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
@@ -343,14 +275,14 @@
                 @php
                     $tAnak = $totalAnak ?? 0;
                     $tAlumni = $totalAlumni ?? 0;
-                    $tPengelola = $totalPengelola ?? 0;
+                    $tPegawai = $totalPegawai ?? 0;
                     $tDonatur = $totalDonatur ?? 0;
-                    $grandTotal = $tAnak + $tAlumni + $tPengelola + $tDonatur;
+                    $grandTotal = $tAnak + $tAlumni + $tPegawai + $tDonatur;
 
                     $items = [
                         ['label' => 'Anak Asuh', 'value' => $tAnak, 'bg' => 'bg-blue-500', 'lightBg' => 'bg-blue-50', 'textColor' => 'text-blue-600'],
                         ['label' => 'Alumni', 'value' => $tAlumni, 'bg' => 'bg-violet-500', 'lightBg' => 'bg-violet-50', 'textColor' => 'text-violet-600'],
-                        ['label' => 'Pengelola', 'value' => $tPengelola, 'bg' => 'bg-emerald-500', 'lightBg' => 'bg-emerald-50', 'textColor' => 'text-emerald-600'],
+                        ['label' => 'Pegawai', 'value' => $tPegawai, 'bg' => 'bg-emerald-500', 'lightBg' => 'bg-emerald-50', 'textColor' => 'text-emerald-600'],
                         ['label' => 'Donatur', 'value' => $tDonatur, 'bg' => 'bg-amber-500', 'lightBg' => 'bg-amber-50', 'textColor' => 'text-amber-600'],
                     ];
                 @endphp
@@ -428,12 +360,12 @@
         const dataDistributionChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: ['Anak Asuh', 'Alumni', 'Pengelola', 'Donatur'],
+                labels: ['Anak Asuh', 'Alumni', 'Pegawai', 'Donatur'],
                 datasets: [{
                     data: [
                         {{ $totalAnak ?? 0 }},
                         {{ $totalAlumni ?? 0 }},
-                        {{ $totalPengelola ?? 0 }},
+                        {{ $totalPegawai ?? 0 }},
                         {{ $totalDonatur ?? 0 }}
                     ],
                     backgroundColor: [

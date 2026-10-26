@@ -14,11 +14,6 @@
                     <p class="text-sm text-purple-200">Informasi lengkap data diri alumni Mawar Kasih.</p>
                 </div>
                 <div class="flex items-center gap-2 flex-shrink-0">
-                    <!-- Tombol Edit Data -->
-                    <a href="{{ route('alumni.edit', $alumni->id) }}" class="inline-flex items-center gap-2 rounded-xl bg-amber-400 p-2.5 text-sm font-semibold text-white shadow-sm hover:bg-amber-500 transition sm:px-3 sm:py-2" title="Edit Data">
-                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                        <span class="hidden sm:inline">Edit Data</span>
-                    </a>
                     <!-- Tombol Kembali -->
                     <a href="{{ route('alumni.index') }}" class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 p-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition sm:px-3 sm:py-2" title="Kembali">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
@@ -159,6 +154,13 @@
                             <p class="mt-1 text-sm text-gray-900 leading-relaxed italic bg-yellow-50 p-3 rounded-lg border border-yellow-100">"{{ $alumni->catatan }}"</p>
                         </div>
                         @endif
+
+                        <div class="pt-6 border-t border-gray-200 space-y-3">
+                            <a href="{{ route('alumni.edit', $alumni->id) }}" class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm font-semibold text-amber-500 shadow-sm transition hover:bg-amber-400 hover:text-white">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                Edit Alumni
+                            </a>
+                        </div>
                     </div>
                 </section>
             </div>

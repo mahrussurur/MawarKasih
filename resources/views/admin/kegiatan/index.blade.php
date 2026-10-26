@@ -40,7 +40,7 @@
                     <button type="button" class="h-full w-full outline-none" onclick="openImagePreview('{{ asset('storage/'. $item->foto_dokumentasi) }}')" aria-label="Perbesar foto kegiatan {{ $item->nama_kegiatan }}">
                         <img src="{{ asset('storage/'. $item->foto_dokumentasi) }}" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" alt="Foto {{ $item->nama_kegiatan }}">
                     </button>
-                    <div class="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-gray-700 shadow-sm backdrop-blur-sm">
+                    <div class="absolute right-3 top-3 rounded-lg bg-white/90 px-2.5 py-1 text-xs font-semibold text-gray-700 shadow-sm backdrop-blur-sm">
                         {{ \Carbon\Carbon::parse($item->tanggal_pelaksanaan)->format('d M Y') }}
                     </div>
                 </div>

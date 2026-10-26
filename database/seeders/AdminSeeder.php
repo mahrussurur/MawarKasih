@@ -23,7 +23,7 @@ class AdminSeeder extends Seeder
             'status' => 'aktif',
         ]);
 
-        $admin->profilPengelola()->updateOrCreate([], [
+        $admin->profilPegawai()->updateOrCreate([], [
             'nama' => 'Mawar Kasih',
             'jabatan' => 'Admin',
         ]);
