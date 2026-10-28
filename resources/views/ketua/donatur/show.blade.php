@@ -1,113 +1,166 @@
 @extends('layouts.app')
-
-@section('title', 'Detail Donatur')
-@section('page-title', 'Detail Donatur')
+@section('page-title', 'Data Donatur')
 
 @section('content')
 @php
-    $nama = $user->profilDonatur?->nama ?? $user->username;
-    $noHp = $user->profilDonatur?->no_hp ?? '-';
-    $alamat = $user->profilDonatur?->alamat ?? '-';
+    $donatur = $user ?? $donatur;
+    $profile = $donatur->profilDonatur;
+    $nama = $profile?->nama ?? $donatur->username;
 @endphp
-<div class="max-w-4xl mx-auto space-y-6">
 
-    <!-- Card Info Donatur -->
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-        <!-- Header -->
-        <div class="border-b border-gray-200 bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4 flex justify-between items-center gap-4">
-            <div>
-                <h2 class="text-lg font-bold text-white">Profil Donatur</h2>
-                <p class="text-xs text-amber-100">Informasi identitas dan kontak donatur panti.</p>
-            </div>
-            <a href="{{ route('ketua.donatur.index') }}" class="text-xs font-semibold text-white hover:text-amber-200 flex items-center transition-colors">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                Kembali
-            </a>
-        </div>
-
-        <div class="p-6">
-            <div class="flex flex-col sm:flex-row gap-6 items-start">
-                <div class="flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-100 text-3xl font-extrabold text-amber-600 shrink-0">
-                    {{ strtoupper(substr($nama, 0, 1)) }}
+<div class="max-w-4xl mx-auto">
+    <!-- Main Content -->
+    <div class="overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-200">
+        <!-- Cover & Profile Image -->
+        <div class="relative h-44 bg-gradient-to-r from-amber-500 to-orange-500">
+            <!-- Header: Judul + Tombol di dalam cover -->
+            <div class="absolute inset-x-0 top-0 flex flex-row items-start justify-between gap-3 px-6 pt-5">
+                <div>
+                    <h2 class="text-xl font-bold text-white sm:text-2xl">Detail Profil Donatur</h2>
+                    <p class="text-sm text-amber-100">Informasi lengkap data diri, akun, dan riwayat donasi.</p>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1 w-full text-sm">
-                    <div>
-                        <p class="text-xs font-semibold text-gray-500">Nama Lengkap</p>
-                        <p class="font-bold text-gray-900 mt-0.5">{{ $nama }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs font-semibold text-gray-500">Username</p>
-                        <p class="font-bold text-gray-900 mt-0.5">{{ $user->username }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs font-semibold text-gray-500">Email</p>
-                        <p class="font-bold text-gray-900 mt-0.5">{{ $user->email }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs font-semibold text-gray-500">No. WhatsApp / HP</p>
-                        <p class="font-bold text-gray-900 mt-0.5">{{ $noHp }}</p>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <p class="text-xs font-semibold text-gray-500">Alamat</p>
-                        <p class="font-medium text-gray-700 mt-0.5">{{ $alamat }}</p>
-                    </div>
-                    <div>
-                        <p class="text-xs font-semibold text-gray-500">Status Akun</p>
-                        <span class="inline-flex mt-1 rounded-md px-2 py-0.5 text-xs font-semibold {{ $user->status === 'aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                            {{ $user->status === 'aktif' ? 'Aktif' : 'Tidak Aktif' }}
-                        </span>
-                    </div>
-                    <div>
-                        <p class="text-xs font-semibold text-gray-500">Terdaftar Sejak</p>
-                        <p class="font-medium text-gray-700 mt-0.5">{{ $user->created_at ? $user->created_at->format('d M Y') : '-' }}</p>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <!-- Tombol Kembali -->
+                    <a href="{{ route('ketua.donatur.index') }}" class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 p-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition sm:px-3 sm:py-2" title="Kembali">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                        <span class="hidden sm:inline">Kembali</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Foto profil di bawah cover -->
+            <div class="absolute -bottom-12 left-6 sm:-bottom-16 sm:left-8">
+                <div class="rounded-full bg-white p-1.5 sm:p-2 shadow-lg">
+                    <div class="flex h-24 w-24 sm:h-32 sm:w-32 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-500 text-3xl sm:text-4xl font-bold text-white border-4 border-white shadow-inner">
+                        {{ strtoupper(substr($nama, 0, 1)) }}
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Riwayat Donasi Donatur -->
-    <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h3 class="text-base font-bold text-gray-900 mb-4 pb-3 border-b border-gray-100">
-            Riwayat Donasi Terbaru
-        </h3>
-
-        @if($donasi && $donasi->isNotEmpty())
-            <div class="overflow-x-auto">
-                <table class="w-full text-left text-sm whitespace-nowrap">
-                    <thead class="bg-gray-50 border-b border-gray-200">
-                        <tr>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">Kode Donasi</th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">Tanggal</th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">Nominal</th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700">Metode</th>
-                            <th class="px-4 py-2.5 font-semibold text-gray-700 text-center">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        @foreach($donasi as $d)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-3 font-mono font-bold text-gray-900">{{ $d->kode_donasi }}</td>
-                                <td class="px-4 py-3 text-gray-600">{{ $d->tanggal ? \Carbon\Carbon::parse($d->tanggal)->format('d M Y') : '-' }}</td>
-                                <td class="px-4 py-3 font-bold text-emerald-600">Rp {{ number_format($d->nominal, 0, ',', '.') }}</td>
-                                <td class="px-4 py-3 text-gray-600 uppercase text-xs">{{ $d->metode_pembayaran }}</td>
-                                <td class="px-4 py-3 text-center">
-                                    <span class="inline-flex rounded-md px-2 py-0.5 text-xs font-semibold
-                                        @if($d->status === 'diterima') bg-green-100 text-green-700
-                                        @elseif($d->status === 'pending') bg-amber-100 text-amber-700
-                                        @else bg-red-100 text-red-700 @endif">
-                                        {{ ucfirst($d->status) }}
-                                    </span>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        <!-- Basic Info Header -->
+        <div class="px-6 pb-6 pt-16 sm:px-8 sm:pt-20">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">{{ $nama }}</h1>
+                    <p class="text-sm font-medium text-gray-500 mt-1">Username: <span class="font-mono text-gray-700 font-semibold">{{ $donatur->username }}</span></p>
+                </div>
             </div>
-        @else
-            <p class="text-sm text-gray-500 py-4 text-center">Belum ada riwayat donasi yang tercatat untuk donatur ini.</p>
-        @endif
-    </div>
+        </div>
 
+        <div class="grid grid-cols-1 divide-y divide-gray-100 lg:grid-cols-3 lg:divide-x lg:divide-y-0 border-t border-gray-100">
+            
+            <!-- Left Column: Identitas & Riwayat Donasi -->
+            <div class="p-6 sm:p-8 lg:col-span-2 space-y-8">
+                <!-- Data Pribadi -->
+                <section>
+                    <h3 class="flex items-center text-base font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">
+                        <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        Informasi Pribadi &amp; Kontak
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Nama Lengkap</p>
+                            <p class="mt-1 text-sm text-gray-900 font-semibold">{{ $nama }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Email</p>
+                            <p class="mt-1 text-sm text-gray-900 font-semibold break-all">{{ $donatur->email }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Nomor Telepon / WhatsApp</p>
+                            <p class="mt-1 text-sm text-gray-900 font-semibold">{{ $profile?->no_hp ?? '-' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Alamat</p>
+                            <p class="mt-1 text-sm text-gray-900 leading-relaxed">{{ $profile?->alamat ?? '-' }}</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Riwayat Donasi Terbaru -->
+                <section>
+                    <h3 class="flex items-center text-base font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">
+                        <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Riwayat Donasi Terbaru
+                    </h3>
+                    
+                    @if($donasi && $donasi->isNotEmpty())
+                        <div class="overflow-x-auto rounded-xl border border-gray-200 custom-scrollbar">
+                            <table class="w-full text-left text-sm whitespace-nowrap">
+                                <thead class="bg-gray-50 border-b border-gray-200">
+                                    <tr>
+                                        <th class="px-4 py-3 font-semibold text-gray-700">Kode</th>
+                                        <th class="px-4 py-3 font-semibold text-gray-700">Nominal</th>
+                                        <th class="px-4 py-3 font-semibold text-gray-700">Metode</th>
+                                        <th class="px-4 py-3 font-semibold text-gray-700">Status</th>
+                                        <th class="px-4 py-3 font-semibold text-gray-700">Tanggal</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    @foreach($donasi as $item)
+                                        <tr class="hover:bg-gray-50 transition-colors">
+                                            <td class="px-4 py-3 font-mono text-xs font-semibold text-gray-800">{{ $item->kode_donasi }}</td>
+                                            <td class="px-4 py-3 font-bold text-gray-900">Rp {{ number_format($item->nominal, 0, ',', '.') }}</td>
+                                            <td class="px-4 py-3 text-xs text-gray-600 uppercase">{{ $item->metode_pembayaran ?? '-' }}</td>
+                                            <td class="px-4 py-3">
+                                                <span class="inline-flex rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset {{ ['diterima' => 'bg-green-50 text-green-700 ring-green-600/20', 'pending' => 'bg-amber-50 text-amber-700 ring-amber-600/20', 'ditolak' => 'bg-red-50 text-red-700 ring-red-600/10'][$item->status] ?? 'bg-gray-50 text-gray-700 ring-gray-600/10' }}">
+                                                    {{ $item->status_label ?? ucfirst($item->status) }}
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-3 text-xs text-gray-600">{{ $item->tanggal ? \Carbon\Carbon::parse($item->tanggal)->format('d M Y') : '-' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="rounded-xl bg-gray-50 p-4 border border-gray-200 text-center text-sm text-gray-500">
+                            Belum ada riwayat transaksi donasi dari donatur ini.
+                        </div>
+                    @endif
+                </section>
+            </div>
+
+            <!-- Right Column: Ringkasan Akun -->
+            <div class="bg-gray-50/50 p-6 sm:p-8 space-y-8">
+                <section>
+                    <h3 class="flex items-center text-base font-bold text-gray-900 mb-4 border-b border-gray-200 pb-2">
+                        <svg class="w-5 h-5 mr-2 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        Ringkasan Akun
+                    </h3>
+                    
+                    <div class="space-y-5">
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Status Akun</p>
+                            <p class="mt-1">
+                                <span class="inline-flex items-center rounded-md px-2.5 py-0.5 text-xs font-semibold {{ $donatur->status === 'aktif' ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800' }}">
+                                    {{ ucfirst(str_replace('_', ' ', $donatur->status)) }}
+                                </span>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Username</p>
+                            <p class="mt-1 text-sm font-semibold text-gray-900 font-mono">{{ $donatur->username }}</p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Terdaftar Sejak</p>
+                            <p class="mt-1 text-sm font-semibold text-gray-900">{{ $donatur->created_at ? $donatur->created_at->format('d F Y') : '-' }}</p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Total Donasi Diterima</p>
+                            <p class="mt-1 text-base font-bold text-emerald-600">
+                                Rp {{ number_format($donasi->where('status', 'diterima')->sum('nominal'), 0, ',', '.') }}
+                            </p>
+                            <p class="text-xs text-gray-500 mt-0.5">{{ $donasi->where('status', 'diterima')->count() }} transaksi berhasil</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
 </div>
 @endsection

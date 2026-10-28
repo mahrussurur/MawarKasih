@@ -1,40 +1,45 @@
 @extends('layouts.app')
-
 @section('page-title', 'Data Pegawai')
 
 @section('content')
-<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-
-    <!-- Header -->
-    <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
-        <div class="min-w-0">
-            <h2 class="text-lg font-bold text-white truncate">Tambah Data Pegawai</h2>
-            <p class="text-xs md:text-sm text-gray-300">Formulir Penambahan Data Pegawai.</p>
+<div class="max-w-4xl mx-auto">
+    <!-- Main Content Card -->
+    <div class="overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-200">
+        
+        <!-- Header / Banner Cover -->
+        <div class="relative bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-6 sm:px-8 sm:py-7">
+            <div class="flex flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white sm:text-2xl">Tambah Data Pegawai</h2>
+                    <p class="text-sm text-blue-100 mt-0.5">Formulir Penambahan Data Pegawai.</p>
+                </div>
+                <!-- Tombol Kembali -->
+                <a href="{{ route('admin.pegawai.index') }}" 
+                   class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition flex-shrink-0" 
+                   title="Kembali">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="hidden sm:inline">Kembali</span>
+                </a>
+            </div>
         </div>
-        <a href="{{ route('admin.pegawai.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            <span class="hidden sm:inline">Kembali</span>
-        </a>
-    </div>
 
-    <div class="p-4 md:p-6">
-        <form method="POST" action="{{ route('admin.pegawai.store') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.pegawai.store') }}" enctype="multipart/form-data" class="p-4 md:p-6">
             @csrf
 
             <!-- Nama & Jabatan -->
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Nama <span class="text-red-500">*</span></label>
                     <input type="text" name="nama" value="{{ old('nama') }}" placeholder="Masukkan Nama Lengkap..."
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Jabatan <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Jabatan <span class="text-red-500">*</span></label>
                     <select id="jabatan_select" name="jabatan" required
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
-                        <option value="">Pilih Jabatan</option>
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 invalid:text-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="" disabled {{ old('jabatan') ? '' : 'selected' }}>Pilih Jabatan</option>
                         <option value="Admin" @selected(old('jabatan') === 'Admin')>Admin</option>
                         <option value="Ketua" @selected(old('jabatan') === 'Ketua')>Ketua</option>
                         <option value="Bendahara" @selected(old('jabatan') === 'Bendahara')>Bendahara</option>
@@ -46,47 +51,46 @@
             <!-- Tempat & Tanggal Lahir -->
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Tempat Lahir</label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Tempat Lahir</label>
                     <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir') }}" placeholder="Masukkan Tempat Lahir..."
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Tanggal Lahir</label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Tanggal Lahir</label>
                     <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-500">
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
 
             <!-- Jenis Kelamin & No. HP -->
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Jenis Kelamin<span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Jenis Kelamin<span class="text-red-500">*</span></label>
                     <select name="jenis_kelamin" id="jenis_kelamin"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm {{ old('jenis_kelamin') ? 'text-gray-900' : 'text-gray-500' }} appearance-none"
-                        required
-                        onchange="this.classList.remove('text-gray-400','text-sm','text-gray-500'); this.classList.add('text-gray-900')">
-                        <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }}>Pilih Jenis Kelamin...</option>
-                        <option class="text-gray-900" value="L" @selected(old('jenis_kelamin') === 'L')>Laki-laki</option>
-                        <option class="text-gray-900" value="P" @selected(old('jenis_kelamin') === 'P')>Perempuan</option>
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-gray-800 invalid:text-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+                        required>
+                        <option value="" disabled {{ old('jenis_kelamin') ? '' : 'selected' }}>Pilih Jenis Kelamin</option>
+                        <option value="L" @selected(old('jenis_kelamin') === 'L')>Laki-laki</option>
+                        <option value="P" @selected(old('jenis_kelamin') === 'P')>Perempuan</option>
                     </select>
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">No. HP</label>
-                    <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Contoh: 08123456789"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">No. HP</label>
+                    <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Cth: 08123456789"
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
 
             <!-- Alamat -->
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Alamat</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Alamat</label>
                 <textarea name="alamat" rows="3" placeholder="Masukkan Alamat Lengkap..."
-                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('alamat') }}</textarea>
+                    class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('alamat') }}</textarea>
             </div>
 
             <!-- Foto -->
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Upload Foto</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Upload Foto</label>
                 <input type="file" id="foto_input" name="foto" accept="image/jpeg,image/png,image/jpg"
                     class="w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-gray-200 rounded-xl bg-gray-50">
                 <div id="preview_container" class="mt-3 hidden">
@@ -115,22 +119,22 @@
                     <!-- Username & Email -->
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                         <div>
-                            <label class="text-sm font-bold text-gray-800 block mb-2">Username <span class="text-red-500">*</span></label>
+                            <label class="mb-1.5 block text-sm font-semibold text-gray-800">Username <span class="text-red-500">*</span></label>
                             <input type="text" id="username" name="username" value="{{ old('username') }}" placeholder="Masukkan Username..." autocomplete="username"
-                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                         <div>
-                            <label class="text-sm font-bold text-gray-800 block mb-2">Email <span class="text-red-500">*</span></label>
+                            <label class="mb-1.5 block text-sm font-semibold text-gray-800">Email <span class="text-red-500">*</span></label>
                             <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan Email..." autocomplete="email"
-                                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                                class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
 
                     <!-- Role -->
                     <div class="mb-5">
-                        <label class="text-sm font-bold text-gray-800 block mb-2">Role Akses <span class="text-red-500">*</span></label>
+                        <label class="mb-1.5 block text-sm font-semibold text-gray-800">Role Akses <span class="text-red-500">*</span></label>
                         <select id="role_select" name="role"
-                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm">
+                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="admin" @selected(old('role') === 'admin')>Admin</option>
                             <option value="ketua" @selected(old('role') === 'ketua')>Ketua</option>
                             <option value="bendahara" @selected(old('role') === 'bendahara')>Bendahara</option>
@@ -140,10 +144,10 @@
                     <!-- Password & Konfirmasi Password -->
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                         <div>
-                            <label for="password" class="text-sm font-bold text-gray-800 block mb-2">Password <span class="text-red-500">*</span></label>
+                            <label for="password" class="mb-1.5 block text-sm font-semibold text-gray-800">Password <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <input id="password" type="password" name="password" placeholder="Masukkan Password..." autocomplete="new-password"
-                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400 pr-12 @error('password') border-red-400 ring-1 ring-red-400 @enderror">
+                                    class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400 pr-12 @error('password') border-red-400 ring-1 ring-red-400 @enderror">
                                 <button type="button" onclick="togglePassword('password', 'icon-eye-pw', 'icon-eye-off-pw')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors" aria-label="Tampilkan password">
                                     <svg id="icon-eye-pw" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <circle cx="12" cy="12" r="3" stroke-width="2.5"/>
@@ -158,10 +162,10 @@
                         </div>
 
                         <div>
-                            <label for="password_confirmation" class="text-sm font-bold text-gray-800 block mb-2">Konfirmasi Password <span class="text-red-500">*</span></label>
+                            <label for="password_confirmation" class="mb-1.5 block text-sm font-semibold text-gray-800">Konfirmasi Password <span class="text-red-500">*</span></label>
                             <div class="relative">
                                 <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Ulangi Password..." autocomplete="new-password"
-                                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400 pr-12">
+                                    class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-gray-400 pr-12">
                                 <button type="button" onclick="togglePassword('password_confirmation', 'icon-eye-conf', 'icon-eye-off-conf')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors" aria-label="Tampilkan konfirmasi password">
                                     <svg id="icon-eye-conf" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <circle cx="12" cy="12" r="3" stroke-width="2.5"/>

@@ -43,7 +43,7 @@
                         <th class="px-6 py-4 font-semibold text-gray-700">Pendidikan Terakhir</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Pekerjaan</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">No. HP</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 text-center sticky right-0 bg-gray-50 z-10 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -64,7 +64,7 @@
                         <td class="px-6 py-4 text-gray-700">{{ $item->pendidikan_terakhir ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->pekerjaan ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->no_hp ?? '-' }}</td>
-                        <td class="px-6 py-4 text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
+                        <td class="px-6 py-4 text-center">
                             <div class="flex justify-center gap-1">
                                 <!-- Tombol Lihat Detail -->
                                 <a href="{{ route('alumni.show', $item->id) }}"

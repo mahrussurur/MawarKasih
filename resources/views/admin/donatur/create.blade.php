@@ -1,47 +1,52 @@
 @extends('layouts.app')
-
 @section('page-title', 'Data Donatur')
 
 @section('content')
-<div class="max-w-3xl mx-auto overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-
-    <!-- Header -->
-    <div class="border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-4 flex justify-between items-center gap-4">
-        <div class="min-w-0">
-            <h2 class="text-lg font-bold text-white truncate">Tambah Data Donatur</h2>
-            <p class="text-xs md:text-sm text-gray-300">Formulir Penambahan Data Donatur.</p>
+<div class="max-w-4xl mx-auto">
+    <!-- Main Content Card -->
+    <div class="overflow-hidden rounded-2xl bg-white shadow-sm border border-gray-200">
+        
+        <!-- Header / Banner Cover -->
+        <div class="relative bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-6 sm:px-8 sm:py-7">
+            <div class="flex flex-row items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white sm:text-2xl">Tambah Data Donatur</h2>
+                    <p class="text-sm text-blue-100 mt-0.5">Formulir Penambahan Data Donatur.</p>
+                </div>
+                <!-- Tombol Kembali -->
+                <a href="{{ route('admin.donatur.index') }}" 
+                   class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition flex-shrink-0" 
+                   title="Kembali">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span class="hidden sm:inline">Kembali</span>
+                </a>
+            </div>
         </div>
-        <a href="{{ route('admin.donatur.index') }}" class="text-xs md:text-sm font-semibold text-white hover:text-gray-400 flex items-center transition-colors whitespace-nowrap">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            <span class="hidden sm:inline">Kembali</span>
-        </a>
-    </div>
 
-    <div class="p-4 md:p-6">
-        <form method="POST" action="{{ route('admin.donatur.store') }}">
+        <form method="POST" action="{{ route('admin.donatur.store') }}" class="p-4 md:p-6">
             @csrf
 
             <!-- Nama & No. HP -->
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Nama <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Nama <span class="text-red-500">*</span></label>
                     <input type="text" name="nama" value="{{ old('nama') }}" placeholder="Masukkan Nama Lengkap..."
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">No. HP</label>
-                    <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Contoh: 08123456789"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">No. HP</label>
+                    <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Cth: 08123456789"
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
 
             <!-- Alamat -->
             <div class="mb-5">
-                <label class="text-sm font-bold text-gray-800 block mb-2">Alamat</label>
+                <label class="mb-1.5 block text-sm font-semibold text-gray-800">Alamat</label>
                 <textarea name="alamat" rows="3" placeholder="Masukkan Alamat Lengkap..."
-                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">{{ old('alamat') }}</textarea>
+                    class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('alamat') }}</textarea>
             </div>
 
             <!-- Akun Login -->
@@ -50,24 +55,24 @@
             <!-- Username & Email -->
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Username <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Username <span class="text-red-500">*</span></label>
                     <input type="text" name="username" value="{{ old('username') }}" placeholder="Masukkan Username..." required autocomplete="username"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
-                    <label class="text-sm font-bold text-gray-800 block mb-2">Email <span class="text-red-500">*</span></label>
+                    <label class="mb-1.5 block text-sm font-semibold text-gray-800">Email <span class="text-red-500">*</span></label>
                     <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan Email..." required autocomplete="email"
-                        class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400">
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
 
             <!-- Password & Konfirmasi Password -->
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 mb-5">
                 <div>
-                    <label for="password" class="text-sm font-bold text-gray-800 block mb-2">Password <span class="text-red-500">*</span></label>
+                    <label for="password" class="mb-1.5 block text-sm font-semibold text-gray-800">Password <span class="text-red-500">*</span></label>
                     <div class="relative">
                         <input id="password" type="password" name="password" placeholder="Masukkan Password..." required autocomplete="new-password"
-                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400 pr-12 @error('password') border-red-400 ring-1 ring-red-400 @enderror">
+                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12 @error('password') border-red-400 ring-1 ring-red-400 @enderror">
                         <button type="button" onclick="togglePassword('password', 'icon-eye-pw', 'icon-eye-off-pw')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors" aria-label="Tampilkan password">
                             <svg id="icon-eye-pw" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <circle cx="12" cy="12" r="3" stroke-width="2.5"/>
@@ -82,10 +87,10 @@
                 </div>
 
                 <div>
-                    <label for="password_confirmation" class="text-sm font-bold text-gray-800 block mb-2">Konfirmasi Password <span class="text-red-500">*</span></label>
+                    <label for="password_confirmation" class="mb-1.5 block text-sm font-semibold text-gray-800">Konfirmasi Password <span class="text-red-500">*</span></label>
                     <div class="relative">
                         <input id="password_confirmation" type="password" name="password_confirmation" placeholder="Ulangi Password..." required autocomplete="new-password"
-                            class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400 pr-12">
+                            class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12">
                         <button type="button" onclick="togglePassword('password_confirmation', 'icon-eye-conf', 'icon-eye-off-conf')" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors" aria-label="Tampilkan konfirmasi password">
                             <svg id="icon-eye-conf" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <circle cx="12" cy="12" r="3" stroke-width="2.5"/>
@@ -106,7 +111,7 @@
                     Batal
                 </a>
                 <button type="submit"
-                    class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+                    class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">
                     Simpan
                 </button>
             </div>

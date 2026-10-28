@@ -150,7 +150,7 @@
                             <th class="px-4 py-2.5 font-semibold text-gray-700">Jumlah</th>
                             <th class="px-4 py-2.5 font-semibold text-gray-700">Metode</th>
                             <th class="px-4 py-2.5 text-center font-semibold text-gray-700">Bukti</th>
-                            <th class="sticky right-0 z-10 bg-gray-50 px-4 py-2.5 text-center font-semibold text-gray-700 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
+                            <th class="px-4 py-2.5 text-center font-semibold text-gray-700">Aksi</th>
                         </tr>
                     </thead>
 
@@ -197,7 +197,7 @@
                                 </td>
 
                                 <!-- Aksi -->
-                                <td class="sticky right-0 z-10 bg-white px-4 py-2.5 text-center shadow-[inset_1px_0_0_#e5e7eb] transition-colors group-hover:bg-gray-50">
+                                <td class="px-4 py-2.5 text-center">
                                     <div class="flex justify-center gap-1">
 
                                         <!-- Terima -->

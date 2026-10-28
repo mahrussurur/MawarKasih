@@ -30,12 +30,6 @@
                 Tambah Donasi
             </a>
         </div>
-        <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ route('donasi.cetak') }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold shadow-sm transition hover:border-gray-300 hover:bg-gray-100">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-                Cetak Laporan
-            </a>
-        </div>
     </div>
 
     <!-- Kotak Utama Konten -->
@@ -86,23 +80,17 @@
 
         <!-- Table data -->
         @if($donasi->count() > 0)
-        <div class="overflow-x-auto custom-scrollbar">
-            <table class="w-full text-left text-sm whitespace-nowrap">
+        <div class="overflow-hidden">
+            <table class="w-full text-left text-sm">
                 <thead class="bg-gray-50 border-b border-gray-200">
                     <tr>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center w-12">No</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Kode Donasi</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Nama Donatur</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Sumber Donatur</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Email</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">No. HP</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Tanggal</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Keterangan</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Nominal</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Metode Pembayaran</th>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center">Bukti</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 text-center">Status</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 text-center sticky right-0 bg-gray-50 z-10 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -114,14 +102,7 @@
                         <td class="px-6 py-4 text-gray-700">
                             <span class="inline-flex rounded-md px-2 py-1 text-xs font-semibold ring-1 ring-inset {{ $item->donatur_id ? 'bg-green-50 text-green-700 ring-green-600/20' : 'bg-gray-50 text-gray-700 ring-gray-600/10' }}">{{ $item->donatur_id ? 'Tetap' : 'Umum' }}</span>
                         </td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->email ?? '-' }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->no_hp ?? '-' }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ \Carbon\Carbon::parse($item->tanggal)->format('d - m - Y') }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->keterangan ? \Illuminate\Support\Str::limit($item->keterangan, 35) : '-' }}</td>
                         <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->nominal_rupiah }}</td>
-                        <td class="px-6 py-4 text-gray-700">
-                            {{ ucfirst($item->metode_pembayaran) ?? '-' }}
-                        </td>
                         <td class="px-6 py-4 text-center">
                             @if($item->bukti_transfer)
                                 <button type="button"
@@ -129,7 +110,7 @@
                                         onclick="openImagePreview('{{ Storage::url($item->bukti_transfer) }}')"
                                         aria-label="Perbesar bukti transfer {{ $item->kode_donasi }}">
                                     <img src="{{ Storage::url($item->bukti_transfer) }}"
-                                         class="h-12 w-12 rounded border border-gray-200 object-cover transition duration-200 hover:scale-105 cursor-pointer"
+                                         class="h-12 w-8 rounded border border-gray-200 object-cover transition duration-200 hover:scale-105 cursor-pointer"
                                          alt="Bukti transfer {{ $item->kode_donasi }}"
                                          title="Klik untuk perbesar">
                                 </button>
@@ -138,18 +119,6 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 text-center">
-                            @php
-                                $statusClasses = [
-                                    'pending' => 'bg-amber-50 text-amber-700 ring-amber-600/20',
-                                    'diterima' => 'bg-green-50 text-green-700 ring-green-600/20',
-                                    'ditolak' => 'bg-red-50 text-red-700 ring-red-600/10',
-                                ];
-                            @endphp
-                            <span class="inline-flex rounded-md px-2 py-1 text-xs font-semibold ring-1 ring-inset {{ $statusClasses[$item->status] ?? 'bg-gray-50 text-gray-700 ring-gray-600/10' }}">
-                                {{ ucfirst($item->status) }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
                             <div class="flex justify-center gap-1">
                                  <!-- Tombol Lihat Detail -->
                                  <a href="{{ route('donasi.show', $item->id) }}"

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Donasi;
 use App\Services\DonasiKeuanganService;
 use App\Services\ImageService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -185,23 +184,5 @@ class DonasiController extends Controller
         ]);
 
         return back()->with('success', "Donasi {$donasi->kode_donasi} telah ditolak.");
-    }
-
-    public function cetak(Request $request)
-    {
-        $query = Donasi::where('status', 'diterima')->orderBy('tanggal', 'desc');
-
-        if ($request->filled('tahun')) {
-            $query->whereYear('tanggal', $request->tahun);
-        }
-
-        $donasi = $query->get();
-        $totalNominal = $donasi->sum('nominal');
-        $tahun = $request->tahun ?? 'Semua Tahun';
-
-        $pdf = Pdf::loadView('bendahara.donasi.cetak', compact('donasi', 'totalNominal', 'tahun'))
-            ->setPaper('a4', 'portrait');
-
-        return $pdf->stream('Laporan_Data_Donasi_Mawar_Kasih.pdf');
     }
 }

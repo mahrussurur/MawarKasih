@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
-@section('title', 'Dashboard Ketua')
-@section('page-title', 'Dashboard Ketua')
+@section('page-title', 'Dashboard')
 
 @section('content')
 <div class="space-y-6">
@@ -12,64 +10,75 @@
     </div>
 
     <!-- Ringkasan Statistik Utama -->
-    <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-        <!-- Donatur -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+    <h3 class="text-lg font-bold text-gray-900 mb-3">Distribusi Data Utama</h3>
+    <div class="mb-6 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+
+        <!-- Anak Asuh -->
+        <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
             <div class="flex items-center gap-4">
-                <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
-                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Anak Asuh</p>
+                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalAnak ?? 0 }}</p>
+                </div>
+            </div>
+            <a href="{{ route('ketua.anak-asuh.index') }}" class="mt-5 block w-full rounded-xl bg-blue-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-blue-700">Lihat Data</a>
+        </div>
+
+        <!-- Alumni -->
+        <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+            <div class="flex items-center gap-4">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-100 text-violet-600">
+                    <svg class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6" />
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Alumni</p>
+                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalAlumni ?? 0 }}</p>
+                </div>
+            </div>
+            <a href="{{ route('ketua.alumni.index') }}" class="mt-5 block w-full rounded-xl bg-violet-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-violet-700">Lihat Data</a>
+        </div>
+
+        <!-- Donatur -->
+        <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+            <div class="flex items-center gap-4">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
+                    <svg class="h-7 w-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/>
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Data Donatur</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $totalDonatur }}</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Donatur</p>
+                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalDonatur ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('ketua.donatur.index') }}" class="mt-4 block w-full rounded-xl bg-amber-500 px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-amber-600">Lihat Donatur</a>
-        </div>
-
-        <!-- Anak Asuh -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
-            <div class="flex items-center gap-4">
-                <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-600">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Anak Asuh</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $totalAnak }}</p>
-                </div>
-            </div>
-            <a href="{{ route('ketua.anak-asuh.index') }}" class="mt-4 block w-full rounded-xl bg-blue-600 px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-blue-700">Lihat Anak Asuh</a>
-        </div>
-
-        <!-- Alumni -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
-            <div class="flex items-center gap-4">
-                <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-violet-100 text-violet-600">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6"/></svg>
-                </div>
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Data Alumni</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $totalAlumni }}</p>
-                </div>
-            </div>
-            <a href="{{ route('ketua.alumni.index') }}" class="mt-4 block w-full rounded-xl bg-violet-600 px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-violet-700">Lihat Alumni</a>
+            <a href="{{ route('ketua.donatur.index') }}" class="mt-5 block w-full rounded-xl bg-amber-500 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-amber-600">Lihat Data</a>
         </div>
 
         <!-- Arsip Dokumen -->
-        <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+        <div class="group rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
             <div class="flex items-center gap-4">
-                <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-teal-100 text-teal-600">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-100 text-teal-600">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Arsip Dokumen</p>
-                    <p class="text-2xl font-bold text-gray-900">{{ $totalArsip }}</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Total Arsip Dokumen</p>
+                    <p class="mt-1 text-3xl font-extrabold text-gray-900">{{ $totalArsip ?? 0 }}</p>
                 </div>
             </div>
-            <a href="{{ route('ketua.arsip-dokumen.index') }}" class="mt-4 block w-full rounded-xl bg-teal-600 px-3 py-2 text-center text-xs font-bold text-white transition hover:bg-teal-700">Lihat Arsip</a>
+            <a href="{{ route('ketua.arsip-dokumen.index') }}" class="mt-5 block w-full rounded-xl bg-teal-600 px-3 py-2.5 text-center text-sm font-bold text-white transition hover:bg-teal-700">Lihat Data</a>
         </div>
+
     </div>
 
     <!-- Section Laporan Bulanan Menunggu Review -->
@@ -127,7 +136,6 @@
             </div>
         @else
             <div class="flex flex-col items-center justify-center py-8 text-center text-gray-500">
-                <svg class="h-10 w-10 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <p class="text-sm font-semibold text-gray-700">Tidak ada laporan yang menunggu review saat ini.</p>
                 <p class="text-xs text-gray-400 mt-0.5">Semua laporan yang diajukan Bendahara telah ditinjau.</p>
             </div>
@@ -193,7 +201,6 @@
             </div>
         @else
             <div class="flex flex-col items-center justify-center py-8 text-center text-gray-500">
-                <svg class="h-10 w-10 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                 <p class="text-sm font-semibold text-gray-700">Belum ada dokumen administrasi yang diarsipkan.</p>
                 <p class="text-xs text-gray-400 mt-0.5">Dokumen administrasi yayasan LKSA Mawar Kasih dikelola oleh Admin.</p>
             </div>

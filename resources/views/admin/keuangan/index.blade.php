@@ -24,20 +24,20 @@
         <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
             @php $activeJenis = request('jenis', 'semua'); @endphp
 
-<div class="flex flex-wrap items-center gap-2">
-    <a href="{{ route('admin.keuangan.index', array_merge(request()->except('jenis','page'), ['jenis' => 'semua'])) }}"
-       class="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold transition {{ $activeJenis === 'semua' ? 'bg-gray-900 text-white border-gray-900' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
-        Semua
-    </a>
-    <a href="{{ route('admin.keuangan.index', array_merge(request()->except('jenis','page'), ['jenis' => 'pemasukan'])) }}"
-       class="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold transition {{ $activeJenis === 'pemasukan' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
-        Pemasukan
-    </a>
-    <a href="{{ route('admin.keuangan.index', array_merge(request()->except('jenis','page'), ['jenis' => 'pengeluaran'])) }}"
-       class="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold transition {{ $activeJenis === 'pengeluaran' ? 'bg-red-600 text-white border-red-600' : 'bg-red-100 text-red-800 border-red-100 hover:bg-red-200' }}">
-        Pengeluaran
-    </a>
-</div>
+            <div class="flex flex-wrap items-center gap-2">
+                <a href="{{ route('admin.keuangan.index', array_merge(request()->except('jenis','page'), ['jenis' => 'semua'])) }}"
+                class="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold transition {{ $activeJenis === 'semua' ? 'bg-gray-900 text-white border-gray-900' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
+                    Semua
+                </a>
+                <a href="{{ route('admin.keuangan.index', array_merge(request()->except('jenis','page'), ['jenis' => 'pemasukan'])) }}"
+                class="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold transition {{ $activeJenis === 'pemasukan' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-emerald-100 text-emerald-800 border-emerald-100 hover:bg-emerald-200' }}">
+                    Pemasukan
+                </a>
+                <a href="{{ route('admin.keuangan.index', array_merge(request()->except('jenis','page'), ['jenis' => 'pengeluaran'])) }}"
+                class="inline-flex items-center rounded-xl border px-3 py-2 text-xs font-semibold transition {{ $activeJenis === 'pengeluaran' ? 'bg-red-600 text-white border-red-600' : 'bg-red-100 text-red-800 border-red-100 hover:bg-red-200' }}">
+                    Pengeluaran
+                </a>
+            </div>
 
             <!-- Search -->
             <form method="GET" action="{{ route('admin.keuangan.index') }}" class="flex items-center gap-2">

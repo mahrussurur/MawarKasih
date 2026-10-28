@@ -1,6 +1,4 @@
 @extends('layouts.app')
-
-@section('title', 'Arsip Dokumen Administrasi')
 @section('page-title', 'Arsip Dokumen Administrasi')
 
 @section('content')
@@ -32,10 +30,10 @@
     <!-- Toolbar -->
     <div class="flex justify-between mb-4">
         <div class="flex flex-wrap items-center gap-3">
-            <button type="button" onclick="document.getElementById('modalUpload').classList.remove('hidden')" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
+            <a href="{{ route('admin.arsip-dokumen.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                 Dokumen Baru
-            </button>
+            </a>
         </div>
     </div>
 
@@ -93,7 +91,7 @@
                         <th class="px-6 py-4 font-semibold text-gray-700">Nama File Asli</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Ukuran</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Pengunggah</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 text-center sticky right-0 bg-gray-50 z-10 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -121,7 +119,7 @@
                         <td class="px-6 py-4 text-gray-700">
                             {{ $item->uploader?->nama ?? 'Admin' }}
                         </td>
-                        <td class="px-6 py-4 text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
+                        <td class="px-6 py-4 text-center">
                             <div class="flex justify-center gap-1">
                                 <!-- Tombol Unduh -->
                                 <a href="{{ route('admin.arsip-dokumen.download', $item) }}"
@@ -150,7 +148,9 @@
                                 <button type="button"
                                         class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-red-400 bg-red-50 text-red-600 transition hover:bg-red-600 hover:text-white"
                                         title="Hapus"
-                                        onclick="confirmDelete('{{ route('admin.arsip-dokumen.destroy', $item) }}', '{{ addslashes($item->judul) }}')">
+                                        data-delete-route="{{ route('admin.arsip-dokumen.destroy', $item->id) }}"
+                                        data-name="Arsip {{ $item->judul }}"
+                                        onclick="openDeleteModal(this)">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                     </svg>
@@ -175,94 +175,8 @@
 
     </div>
 </div>
-
-    <!-- Modal Upload -->
-    <div id="modalUpload" class="fixed inset-0 z-[100] hidden">
-        <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="document.getElementById('modalUpload').classList.add('hidden')"></div>
-        <div class="absolute top-1/2 left-1/2 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-6 shadow-xl sm:p-8 max-h-[90vh] overflow-y-auto">
-            <div class="mb-4 flex items-center justify-between border-b border-gray-100 pb-3">
-                <h3 class="text-lg font-bold text-gray-900">Unggah Arsip Dokumen Administrasi</h3>
-                <button type="button" onclick="document.getElementById('modalUpload').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
-
-            <form method="POST" action="{{ route('admin.arsip-dokumen.store') }}" enctype="multipart/form-data" class="space-y-4">
-                @csrf
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">Judul / Nama Dokumen <span class="text-red-500">*</span></label>
-                    <input type="text" name="judul" required placeholder="Contoh: Akta Notaris Pendirian Yayasan" value="{{ old('judul') }}"
-                           class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">Nomor Dokumen / Surat</label>
-                        <input type="text" name="nomor_dokumen" placeholder="Contoh: 01/SK/MK/2026" value="{{ old('nomor_dokumen') }}"
-                               class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 mb-1">Kategori Dokumen <span class="text-red-500">*</span></label>
-                        <select name="kategori" required class="w-full rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-sm focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                            <option value="">Pilih Kategori...</option>
-                            @foreach($kategoriList as $kat)
-                                <option value="{{ $kat }}" @selected(old('kategori') === $kat)>{{ $kat }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">Tanggal Dokumen</label>
-                    <input type="date" name="tanggal_dokumen" value="{{ old('tanggal_dokumen') }}"
-                           class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">Keterangan / Deskripsi Singkat</label>
-                    <textarea name="deskripsi" rows="3" placeholder="Catatan atau keterangan mengenai dokumen..."
-                              class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2 text-sm focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20">{{ old('deskripsi') }}</textarea>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1">Berkas Dokumen <span class="text-red-500">*</span></label>
-                    <input type="file" name="file" required accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg"
-                           class="w-full rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 focus:outline-none">
-                    <p class="text-[11px] text-gray-400 mt-1">Format: PDF, DOC, DOCX, XLS, XLSX, PNG, JPG (Maks. 10 MB). Berkas disimpan secara aman dan privat.</p>
-                </div>
-
-                <div class="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
-                    <button type="button" onclick="document.getElementById('modalUpload').classList.add('hidden')" class="rounded-xl px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100 transition">Batal</button>
-                    <button type="submit" class="rounded-xl bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition">Simpan Dokumen</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal Konfirmasi Hapus -->
-    <div id="modalDelete" class="fixed inset-0 z-[100] hidden">
-        <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="document.getElementById('modalDelete').classList.add('hidden')"></div>
-        <div class="absolute top-1/2 left-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-6 shadow-xl">
-            <h3 class="text-base font-bold text-gray-900 mb-2">Konfirmasi Hapus Arsip</h3>
-            <p class="text-sm text-gray-600 mb-4">Apakah Anda yakin ingin menghapus arsip dokumen <span id="deleteDocTitle" class="font-bold text-gray-900"></span>? Berkas fisik dan data dokumen akan dihapus permanen.</p>
-            <form id="formDelete" method="POST" action="">
-                @csrf
-                @method('DELETE')
-                <div class="flex justify-end gap-3">
-                    <button type="button" onclick="document.getElementById('modalDelete').classList.add('hidden')" class="rounded-xl px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100">Batal</button>
-                    <button type="submit" class="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">Ya, Hapus</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-@push('scripts')
-<script>
-    function confirmDelete(url, title) {
-        document.getElementById('formDelete').action = url;
-        document.getElementById('deleteDocTitle').textContent = `"${title}"`;
-        document.getElementById('modalDelete').classList.remove('hidden');
-    }
-</script>
-@endpush
 @endsection
+
+@push('modals')
+    @include('layouts.partials.admin.modals')
+@endpush

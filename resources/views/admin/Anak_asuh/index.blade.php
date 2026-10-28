@@ -31,23 +31,16 @@
 
         <!-- Table Data -->
         @if($data->count() > 0)
-        <div class="overflow-x-auto custom-scrollbar">
+        <div class="overflow-x-auto">
             <table class="w-full text-left text-sm whitespace-nowrap">
                 <thead class="bg-gray-50 border-b border-gray-200">
                     <tr>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center w-12">No</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Foto</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Nama Lengkap</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Nama Panggilan</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Tempat, Tanggal Lahir</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Jenis Kelamin</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Status Sosial Anak</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Nama Ayah</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Nama Ibu</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Tinggal di LKSA Sejak</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Sekolah</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700">Kelas</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 text-center sticky right-0 bg-gray-50 z-10 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center w-28">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -69,21 +62,11 @@
                             @endif
                         </td>
                         <td class="px-6 py-4 font-semibold text-gray-900">{{ $item->nama }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->nama_panggilan ?? '-' }}</td>
-                        <td class="px-6 py-4 text-gray-700">
-                            {{ $item->tempat_lahir }}, <br>
-                            <span class="text-gray-500">{{ \Carbon\Carbon::parse($item->tanggal_lahir)->format('d - m - Y') }}</span>
-                        </td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->jenis_kelamin ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">
                             <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-semibold ring-1 ring-inset ring-gray-200">{{ $item->status_social_anak ?? '-' }}</span>
                         </td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->nama_ayah ?? '-' }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->nama_ibu ?? '-' }}</td>
                         <td class="px-6 py-4 text-gray-700">{{ $item->tinggal_di_lksa_sejak ?? '-' }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->sekolah ?? '-' }}</td>
-                        <td class="px-6 py-4 text-gray-700">{{ $item->kelas ?? '-' }}</td>
-                        <td class="px-6 py-4 text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
+                        <td class="px-6 py-4 text-center">
                             <div class="flex justify-center gap-1">
                                 <!-- Tombol Lihat Detail -->
                                 <a href="{{ route('anak-asuh.show', $item->id) }}"

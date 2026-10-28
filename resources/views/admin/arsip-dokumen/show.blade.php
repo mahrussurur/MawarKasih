@@ -158,7 +158,9 @@
                         </a>
 
                         <button type="button"
-                                onclick="document.getElementById('modalDelete').classList.remove('hidden')"
+                                onclick="openDeleteModal(this)"
+                                data-delete-route="{{ route('admin.arsip-dokumen.destroy', $arsip->id) }}"
+                                data-name="Arsip {{ $arsip->judul }}"
                                 class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 shadow-sm transition hover:bg-red-600 hover:text-white">
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -173,21 +175,8 @@
         </div>
     </div>
 </div>
-
-<!-- Modal Konfirmasi Hapus -->
-<div id="modalDelete" class="fixed inset-0 z-[100] hidden">
-    <div class="absolute inset-0 bg-gray-900/50 backdrop-blur-sm" onclick="document.getElementById('modalDelete').classList.add('hidden')"></div>
-    <div class="absolute top-1/2 left-1/2 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl bg-white p-6 shadow-xl">
-        <h3 class="text-base font-bold text-gray-900 mb-2">Konfirmasi Hapus Arsip</h3>
-        <p class="text-sm text-gray-600 mb-4">Apakah Anda yakin ingin menghapus dokumen <strong class="text-gray-900">"{{ $arsip->judul }}"</strong>? Tindakan ini akan menghapus berkas privat dan metadata secara permanen.</p>
-        <form method="POST" action="{{ route('admin.arsip-dokumen.destroy', $arsip) }}">
-            @csrf
-            @method('DELETE')
-            <div class="flex justify-end gap-3">
-                <button type="button" onclick="document.getElementById('modalDelete').classList.add('hidden')" class="rounded-xl px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100">Batal</button>
-                <button type="submit" class="rounded-xl bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700">Ya, Hapus Dokumen</button>
-            </div>
-        </form>
-    </div>
-</div>
 @endsection
+
+@push('modals')
+    @include('layouts.partials.admin.modals')
+@endpush

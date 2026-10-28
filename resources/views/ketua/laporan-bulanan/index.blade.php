@@ -1,17 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Laporan Keuangan Bulanan')
 @section('page-title', 'Laporan Keuangan Bulanan')
 
 @section('content')
 <div class="space-y-6">
-
-    <!-- Header & Deskripsi -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-            <h2 class="text-xl font-extrabold text-gray-900">Persetujuan & Riwayat Laporan Keuangan</h2>
-            <p class="text-xs text-gray-500 mt-0.5">Peninjauan, pengesahan, dan evaluasi laporan pertanggungjawaban keuangan dari Bendahara.</p>
-        </div>
-    </div>
 
     <!-- Alert Notifikasi -->
     @if(session('success'))

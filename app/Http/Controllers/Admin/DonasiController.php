@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Donasi;
 use App\Services\DonasiKeuanganService;
 use App\Services\ImageService;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -187,25 +186,5 @@ class DonasiController extends Controller
         $this->donasiKeuanganService->syncPemasukan($donasi);
 
         return redirect()->route('donasi.index')->with('success', 'Data donasi berhasil diperbarui.');
-    }
-
-    // Cetak laporan donasi valid (PDF via DomPDF).
-    public function cetak(Request $request)
-    {
-        $query = Donasi::where('status', 'diterima')->orderBy('tanggal', 'desc');
-
-        // Filter tahun jika ada
-        if ($request->filled('tahun')) {
-            $query->whereYear('tanggal', $request->tahun);
-        }
-
-        $donasi = $query->get();
-        $totalNominal = $donasi->sum('nominal');
-        $tahun = $request->tahun ?? 'Semua Tahun';
-
-        $pdf = Pdf::loadView('admin.donasi.cetak', compact('donasi', 'totalNominal', 'tahun'))
-            ->setPaper('a4', 'portrait');
-
-        return $pdf->stream('Laporan_Data_Donasi_Mawar_Kasih.pdf');
     }
 }

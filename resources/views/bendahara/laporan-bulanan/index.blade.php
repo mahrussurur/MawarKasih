@@ -1,9 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Draft & Preview Laporan Bulanan')
 @section('page-title', 'Laporan Keuangan Bulanan')
 
 @section('content')
-<div class="max-w-4xl mx-auto">
+<div class="max-w-7xl mx-auto">
     <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8 mb-6">
         <form method="GET" action="{{ route('bendahara.laporan-bulanan.index') }}" class="flex flex-col sm:flex-row gap-4 items-end">
             <div>

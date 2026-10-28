@@ -7,7 +7,6 @@ use App\Models\Donasi;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class DonasiController extends Controller
 {
@@ -77,19 +76,5 @@ class DonasiController extends Controller
         return back()->with('success', 'Bukti pembayaran berhasil diunggah!');
     }
 
-    public function cetak()
-    {
-        $donasi = Donasi::where('donatur_id', Auth::id())
-                    ->where('status', 'diterima')
-                    ->orderBy('tanggal', 'desc')
-                    ->get();
-        $totalNominal = $donasi->sum('nominal');
-        $tahun        = 'Semua Tahun';
-
-        $pdf = Pdf::loadView('bendahara.donasi.cetak', compact('donasi', 'totalNominal', 'tahun'))
-                  ->setPaper('a4', 'portrait');
-
-        return $pdf->stream('Laporan_Riwayat_Donasi.pdf');
-    }
 }
 

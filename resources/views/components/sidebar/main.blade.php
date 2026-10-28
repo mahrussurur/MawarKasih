@@ -189,6 +189,14 @@
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span class="nav-text">Riwayat Donasi</span>
             </a>
+            <div class="nav-label mt-3 overflow-hidden whitespace-nowrap px-2.5 pt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white/40 transition-all duration-200">
+                Transparansi
+            </div>
+            <a href="{{ route('donatur.laporan-bulanan.index') }}" data-tooltip="Laporan Keuangan" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('donatur.laporan-bulanan.*') ? 'bg-white/15 text-white font-bold' : '' }}">
+                <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('donatur.laporan-bulanan.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
+                <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <span class="nav-text">Laporan Keuangan</span>
+            </a>
         @endif
     </nav>
 </aside>

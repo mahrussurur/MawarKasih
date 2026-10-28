@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@section('title', 'Data Donatur')
 @section('page-title', 'Data Donatur')
 
 @section('content')
@@ -36,7 +35,7 @@
                         <th class="px-6 py-4 font-semibold text-gray-700">Email</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">No. HP</th>
                         <th class="px-6 py-4 font-semibold text-gray-700">Status</th>
-                        <th class="px-6 py-4 font-semibold text-gray-700 text-center sticky right-0 bg-gray-50 z-10 shadow-[inset_1px_0_0_#e5e7eb]">Aksi</th>
+                        <th class="px-6 py-4 font-semibold text-gray-700 text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -58,7 +57,7 @@
                                 {{ ucfirst(str_replace('_', ' ', $donatur->status)) }}
                             </span>
                         </td>
-                        <td class="text-center sticky right-0 bg-white group-hover:bg-gray-50 z-10 transition-colors shadow-[inset_1px_0_0_#e5e7eb]">
+                        <td class="px-6 py-4 text-center">
                             <div class="flex justify-center gap-1">
                                 <a href="{{ route('admin.donatur.show', $donatur->id) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600 border border-blue-400 hover:bg-blue-600 hover:text-white transition" title="Detail">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>

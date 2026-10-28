@@ -32,8 +32,7 @@ Route::prefix('admin')
         // Manajemen akun login; profil dikelola dari menu Data Yayasan.
         Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
         Route::patch('users/{user}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggle-status');
-        // Donasi - route cetak & aksi khusus didahulukan agar tidak tertimpa wildcard {donasi}
-        Route::get('donasi/cetak', [DonasiController::class, 'cetak'])->name('donasi.cetak');
+        // Donasi - route aksi khusus didahulukan agar tidak tertimpa wildcard {donasi}
         Route::patch('donasi/{donasi}/validasi', [DonasiController::class, 'validasi'])->name('donasi.validasi');
         Route::patch('donasi/{donasi}/tolak', [DonasiController::class, 'tolak'])->name('donasi.tolak');
         Route::resource('donasi', DonasiController::class);

@@ -16,12 +16,10 @@ Route::middleware(['auth', 'role:ketua'])->prefix('ketua')->name('ketua.')->grou
     Route::get('/donatur/{user}', [DonaturController::class, 'show'])->name('donatur.show');
 
     // Data Anak Asuh (read-only)
-    Route::get('/anak-asuh/cetak', [AnakAsuhController::class, 'cetak'])->name('anak-asuh.cetak');
     Route::get('/anak-asuh', [AnakAsuhController::class, 'index'])->name('anak-asuh.index');
     Route::get('/anak-asuh/{anakAsuh}', [AnakAsuhController::class, 'show'])->name('anak-asuh.show');
 
     // Data Alumni (read-only)
-    Route::get('/alumni/cetak', [AlumniController::class, 'cetak'])->name('alumni.cetak');
     Route::get('/alumni', [AlumniController::class, 'index'])->name('alumni.index');
     Route::get('/alumni/{alumni}', [AlumniController::class, 'show'])->name('alumni.show');
 
