@@ -32,16 +32,14 @@ class DashboardController extends Controller
                             ->get();
 
         // Grafik donasi per bulan (nominal diterima)
-        $donasiPerBulan = array_fill(0, 12, 0);
-        $grafikData = Donasi::where('donatur_id', $userId)
-                        ->where('status', 'diterima')
-                        ->whereYear('tanggal', $tahunIni)
-                        ->selectRaw('MONTH(tanggal) as bulan, SUM(nominal) as total')
-                        ->groupBy('bulan')
-                        ->get();
-        foreach ($grafikData as $d) {
-            $donasiPerBulan[$d->bulan - 1] = (float) $d->total;
-        }
+        $monthlyTotals = Donasi::where('donatur_id', $userId)
+            ->where('status', 'diterima')
+            ->whereYear('tanggal', $tahunIni)
+            ->selectRaw('MONTH(tanggal) as bulan, SUM(nominal) as total')
+            ->groupBy('bulan')
+            ->pluck('total', 'bulan');
+
+        $donasiPerBulan = array_map(fn ($m) => (float) ($monthlyTotals[$m] ?? 0), range(1, 12));
 
         return view('donatur.dashboard', compact(
             'totalDonasi',

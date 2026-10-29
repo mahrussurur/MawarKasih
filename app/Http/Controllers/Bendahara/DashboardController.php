@@ -12,6 +12,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $now = Carbon::now();
+
         $totalPending  = Donasi::where('status', 'pending')->count();
         $totalDiterima = Donasi::where('status', 'diterima')->count();
         $totalDitolak  = Donasi::where('status', 'ditolak')->count();
@@ -19,24 +21,18 @@ class DashboardController extends Controller
         $donasiTerbaru = Donasi::where('status', 'pending')->latest()->take(5)->get();
 
         // Nominal per bulan untuk chart (tahun ini)
-        $donations = Donasi::where('status', 'diterima')
-                           ->whereYear('tanggal', date('Y'))
-                           ->get();
+        $monthlyDonations = Donasi::where('status', 'diterima')
+            ->whereYear('tanggal', $now->year)
+            ->selectRaw('MONTH(tanggal) as bulan, SUM(nominal) as total')
+            ->groupBy('bulan')
+            ->pluck('total', 'bulan');
 
-        $nominalData = array_fill(1, 12, 0);
-        foreach ($donations as $d) {
-            if ($d->tanggal) {
-                $month = $d->tanggal->format('n');
-                $nominalData[$month] += $d->nominal;
-            }
-        }
-        $nominalPerBulan = array_values($nominalData);
+        $nominalPerBulan = array_map(fn ($m) => (float) ($monthlyDonations[$m] ?? 0), range(1, 12));
 
         $totalPemasukan = TransaksiKeuangan::where('jenis', 'pemasukan')->sum('nominal');
         $totalPengeluaran = TransaksiKeuangan::where('jenis', 'pengeluaran')->sum('nominal');
         $saldo = $totalPemasukan - $totalPengeluaran;
 
-        $now = Carbon::now();
         $pemasukanBulanIni = TransaksiKeuangan::where('jenis', 'pemasukan')
             ->whereMonth('tanggal', $now->month)
             ->whereYear('tanggal', $now->year)

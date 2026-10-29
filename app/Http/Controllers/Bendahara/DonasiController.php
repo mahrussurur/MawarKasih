@@ -7,7 +7,6 @@ use App\Models\Donasi;
 use App\Services\DonasiKeuanganService;
 use App\Services\ImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -41,22 +40,13 @@ class DonasiController extends Controller
         $totalDitolak = Donasi::where('status', 'ditolak')->count();
         $totalNominal = Donasi::where('status', 'diterima')->sum('nominal');
 
-        // Hitung total donatur (Umum dan Tetap) berdasarkan donasi yang diterima
-        $jumlahDonaturUmum = Donasi::where('status', 'diterima')->whereNull('donatur_id')->distinct('nama_donatur')->count('nama_donatur');
-        $jumlahDonaturTetap = Donasi::where('status', 'diterima')->whereNotNull('donatur_id')->distinct('donatur_id')->count('donatur_id');
-
-        // Daftar tahun tersedia untuk filter cetak
-        $tahunList = Donasi::query()
-            ->whereNotNull('tanggal')
-            ->orderByDesc('tanggal')
-            ->pluck('tanggal')
-            ->map(fn ($tanggal) => Carbon::parse($tanggal)->year)
-            ->unique()
-            ->values();
+        // Hitung total nominal donasi per tipe donatur (berdasarkan donasi yang diterima)
+        $nominalDonaturTetap = Donasi::where('status', 'diterima')->whereNotNull('donatur_id')->sum('nominal');
+        $nominalDonaturUmum = Donasi::where('status', 'diterima')->whereNull('donatur_id')->sum('nominal');
 
         return view('bendahara.donasi.index', compact(
-            'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal', 'tahunList',
-            'jumlahDonaturTetap', 'jumlahDonaturUmum'
+            'donasi', 'totalDonasi', 'totalPending', 'totalValid', 'totalDitolak', 'totalNominal',
+            'nominalDonaturTetap', 'nominalDonaturUmum'
         ));
     }
 

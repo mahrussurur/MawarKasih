@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Alumni;
 use App\Models\AnakAsuh;
 use App\Models\Donasi;
-use App\Models\Kegiatan;
 use App\Models\ProfilPegawai;
 use App\Models\TransaksiKeuangan;
 use App\Models\User;
@@ -16,29 +15,24 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $now = Carbon::now();
+
         $totalAnak = AnakAsuh::count();
         $totalAlumni = Alumni::count();
         $totalPegawai = ProfilPegawai::count();
         $totalDonatur = User::where('role', 'donatur')->count();
 
-        $donasiTerbaru  = Donasi::where('status', 'pending')->latest()->take(5)->get();
+        $donasiTerbaru = Donasi::where('status', 'pending')->latest()->take(5)->get();
         $totalDonasiPending = Donasi::where('status', 'pending')->count();
-        $kegiatanTerbaru = Kegiatan::latest()->take(5)->get();
 
-        $donations = Donasi::where('status', 'diterima')
-            ->whereYear('tanggal', date('Y'))
-            ->get();
-            
-        $donasiPerBulanData = array_fill(1, 12, 0);
-        foreach ($donations as $donasi) {
-            if ($donasi->tanggal) {
-                $month = $donasi->tanggal->format('n');
-                $donasiPerBulanData[$month] += $donasi->nominal;
-            }
-        }
-        $donasiPerBulan = array_values($donasiPerBulanData);
+        $monthlyDonations = Donasi::where('status', 'diterima')
+            ->whereYear('tanggal', $now->year)
+            ->selectRaw('MONTH(tanggal) as bulan, SUM(nominal) as total')
+            ->groupBy('bulan')
+            ->pluck('total', 'bulan');
 
-        $now = Carbon::now();
+        $donasiPerBulan = array_map(fn ($m) => (float) ($monthlyDonations[$m] ?? 0), range(1, 12));
+
         $pemasukanBulanIni = TransaksiKeuangan::where('jenis', 'pemasukan')
             ->whereMonth('tanggal', $now->month)
             ->whereYear('tanggal', $now->year)
@@ -62,7 +56,6 @@ class DashboardController extends Controller
             'totalDonatur',
             'donasiTerbaru',
             'totalDonasiPending',
-            'kegiatanTerbaru',
             'donasiPerBulan',
             'pemasukanBulanIni',
             'pengeluaranBulanIni',

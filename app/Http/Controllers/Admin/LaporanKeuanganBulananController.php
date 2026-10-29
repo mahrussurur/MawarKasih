@@ -5,16 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\LaporanKeuanganBulanan;
 use App\Models\TransaksiKeuangan;
-use App\Services\LaporanKeuanganService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 class LaporanKeuanganBulananController extends Controller
 {
-    public function __construct(protected LaporanKeuanganService $laporanService) {}
-
     public function index(Request $request)
     {
         $laporanQuery = LaporanKeuanganBulanan::query()->orderBy('tahun', 'desc')->orderBy('bulan', 'desc');

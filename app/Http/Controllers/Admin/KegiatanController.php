@@ -40,12 +40,7 @@ class KegiatanController extends Controller
             'foto_dokumentasi' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $fotoPath = null;
-
-        if ($request->hasFile('foto_dokumentasi')) {
-            $fotoPath = $this->imageService->uploadAndGenerateWebp($request->file('foto_dokumentasi'), 'kegiatan');
-        }
-
+        $fotoPath = $this->imageService->uploadAndGenerateWebp($request->file('foto_dokumentasi'), 'kegiatan');
         $deskripsiHtml = $this->sanitizeHtml($request->deskripsi);
 
         Kegiatan::create([
@@ -87,7 +82,7 @@ class KegiatanController extends Controller
         $kegiatan->update([
             'nama_kegiatan' => $request->nama_kegiatan,
             'tanggal_pelaksanaan' => $request->tanggal_pelaksanaan,
-            'deskripsi' => $request->deskripsi,
+            'deskripsi' => $this->sanitizeHtml($request->deskripsi),
             'foto_dokumentasi' => $fotoPath,
         ]);
 

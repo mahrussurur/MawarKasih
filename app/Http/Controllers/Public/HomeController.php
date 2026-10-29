@@ -16,13 +16,11 @@ class HomeController extends Controller
         $stats = [
             'totalAnakAsuh'  => AnakAsuh::count(),
             'totalPengurus'  => User::whereIn('role', ['admin', 'bendahara', 'ketua'])->count(),
-            'totalKegiatan'  => Kegiatan::count(),
             'totalDonatur'   => User::where('role', 'donatur')->count(),
             'totalDonasi'    => Donasi::count(),
         ];
 
-        $kegiatans = Kegiatan::latest('tanggal_pelaksanaan')
-            ->get();
+        $kegiatans = Kegiatan::latest('tanggal_pelaksanaan')->get();
 
         $fasilitas = Galeri::where('kategori', 'Fasilitas')->latest()->get();
 
