@@ -11,6 +11,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        $this->withoutVite();
+
         if (config('database.default') === 'sqlite' || DB::connection()->getDriverName() === 'sqlite') {
             $pdo = DB::connection()->getPdo();
             if ($pdo instanceof \PDO && method_exists($pdo, 'sqliteCreateFunction')) {
@@ -24,4 +26,3 @@ abstract class TestCase extends BaseTestCase
         }
     }
 }
-
