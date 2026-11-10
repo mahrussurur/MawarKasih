@@ -30,6 +30,7 @@ Route::prefix('')->name('public.')->group(function () {
     Route::get('/donasi/validasi/{kode_donasi?}', [DonasiPublicController::class, 'validasi'])->name('donasi.validasi');
     Route::post('/donasi/validasi/{kode_donasi}/upload', [DonasiPublicController::class, 'uploadBukti'])->name('donasi.validasi.upload');
     Route::post('/donasi/kirim', [DonasiPublicController::class, 'kirim'])->name('donasi.kirim');
+    Route::get('/donasi/reset-password/{token}', [\App\Http\Controllers\Auth\NewPasswordController::class, 'create'])->name('donasi.password.reset');
 
     // ── Tentang Kami ─────────────────────────────────────────
     Route::get('/tentang/profil', [TentangController::class, 'profil'])->name('tentang.profil');
