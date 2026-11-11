@@ -1,5 +1,5 @@
 @php
-    $isHome = request()->routeIs('public.home');
+    $isHome = request()->routeIs('public.beranda') || request()->routeIs('public.home');
 @endphp
 <nav id="mainNav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 {{ $isHome ? 'nav-transparent bg-transparent backdrop-blur-md border-b border-white/20' : 'bg-white shadow-sm' }}">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -19,8 +19,8 @@
 
                 <!-- Beranda -->
                 <li>
-                    <a href="{{ route('public.home') }}"
-                        class="nav-link px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ request()->routeIs('public.home') ? 'active text-brand-600 font-semibold' : '' }}">
+                    <a href="{{ route('public.beranda') }}"
+                        class="nav-link px-3 py-2 rounded-lg transition hover:text-brand-600 hover:bg-brand-50 {{ (request()->routeIs('public.beranda') || request()->routeIs('public.home')) ? 'active text-brand-600 font-semibold' : '' }}">
                         Beranda
                     </a>
                 </li>
@@ -103,7 +103,7 @@
     <!-- MOBILE MENU -->
     <div id="mobileMenu" class="lg:hidden absolute w-full top-full left-0 bg-white/80 backdrop-blur-xl border-t border-white/50 shadow-lg transition-all duration-300 ease-out opacity-0 -translate-y-4 invisible">
         <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
-            <a href="{{ route('public.home') }}" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 {{ request()->routeIs('public.home') ? 'bg-brand-50 text-brand-600' : '' }}">
+            <a href="{{ route('public.beranda') }}" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 {{ (request()->routeIs('public.beranda') || request()->routeIs('public.home')) ? 'bg-brand-50 text-brand-600' : '' }}">
                 Beranda
             </a>
 

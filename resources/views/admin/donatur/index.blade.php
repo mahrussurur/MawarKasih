@@ -84,9 +84,9 @@
         <!-- Pagination -->
         @include('layouts.partials.admin._pagination', ['paginator' => $donaturs])
         @else
-        <div class="flex min-h-[250px] flex-col items-center justify-center gap-2 text-center text-gray-500">
-            <p class="font-semibold text-gray-900">Belum ada data Donatur</p>
-            <p class="text-sm">Tambahkan akun donatur melalui formulir yang tersedia.</p>
+        <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
+            <p class="text-base font-semibold text-gray-900">Belum ada data donatur</p>
+            <span class="text-sm text-gray-500">{{ request('search') ? 'Data "'. request('search') . '" tidak ditemukan' : 'Tambahkan data donatur' }}</span>
         </div>
         @endif
     </div>

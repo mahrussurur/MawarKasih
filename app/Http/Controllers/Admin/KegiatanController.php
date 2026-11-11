@@ -103,13 +103,32 @@ class KegiatanController extends Controller
             return null;
         }
 
-        $allowedTags = '<p><br><strong><em><u><h1><h2><ul><ol><li><a>';
+        $allowedTags = '<p><br><strong><b><em><i><u><s><h1><h2><h3><h4><ul><ol><li><a><span><blockquote>';
         $html = strip_tags($html, $allowedTags);
+
+        // Hapus BOM dan zero-width character
+        $html = preg_replace('/[\x{FEFF}\x{200B}\x{200C}\x{200D}]/u', '', $html);
+        $html = trim($html);
 
         // Hapus atribut on* dan javascript: URL menggunakan regex dasar
         $html = preg_replace('#(<[^>]+?[\x00-\x20"\'])(on|xmlns)[^>]*+>#i', '$1>', $html);
         $html = preg_replace('#href=[\'"]?javascript:[^\'"]*[\'"]?#i', 'href="#"', $html);
 
-        return $html;
+        // Hapus paragraf/tag kosong di awal dan akhir teks
+        $emptyInner = '(?:[ \t\r\n]|<br\s*\/?>|&nbsp;|&#160;|\x{00a0}|<span>(?:[ \t\r\n]|<br\s*\/?>|&nbsp;|&#160;|\x{00a0})*<\/span>)*';
+        do {
+            $before = $html;
+            $html = preg_replace('/^(\s*<(p|div|h[1-6]|blockquote)[^>]*>' . $emptyInner . '<\/\2>\s*|<br\s*\/?>|\s)+/iu', '', $html);
+        } while ($html !== $before && !empty($html));
+
+        do {
+            $before = $html;
+            $html = preg_replace('/(\s*<(p|div|h[1-6]|blockquote)[^>]*>' . $emptyInner . '<\/\2>\s*|<br\s*\/?>|\s)+$/iu', '', $html);
+        } while ($html !== $before && !empty($html));
+
+        // Hilangkan whitespace/newline antar tag
+        $html = preg_replace('/>\s+</u', '><', $html);
+
+        return trim($html);
     }
 }

@@ -1,6 +1,37 @@
 @extends('layouts.public')
 @section('title', ($kegiatan->nama_kegiatan ?? 'Detail Kegiatan').' — Panti Asuhan Mawar Kasih')
 
+@section('extra_styles')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+<style>
+    .ql-snow .ql-editor {
+        padding: 0 !important;
+        margin: 0 !important;
+        white-space: normal !important;
+        height: auto !important;
+        min-height: 0 !important;
+        font-family: inherit;
+        font-size: 1rem;
+        line-height: 1.75;
+        color: #374151;
+    }
+    .ql-snow .ql-editor > *:first-child {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    .ql-snow .ql-editor p {
+        margin-bottom: 0.75rem;
+    }
+    .ql-snow .ql-editor p:last-child {
+        margin-bottom: 0 !important;
+    }
+    .ql-snow .ql-editor p:empty,
+    .ql-snow .ql-editor p:has(> br:only-child) {
+        display: none !important;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="bg-gray-50 py-10 lg:py-16 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -29,12 +60,12 @@
                             <span class="font-medium text-sm">{{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->translatedFormat('d F Y') }}</span>
                         </div>
 
-                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight" style="font-family:'Playfair Display',serif">
+                        <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-tight" style="font-family:'Playfair Display',serif">
                             {{ $kegiatan->nama_kegiatan }}
                         </h1>
 
-                        <div class="prose prose-lg max-w-none prose-brand text-gray-700 leading-relaxed">
-                            {!! nl2br(e($kegiatan->deskripsi)) !!}
+                        <div class="ql-snow text-gray-700 leading-relaxed">
+                            <div class="ql-editor !p-0 !min-h-0 !h-auto !whitespace-normal" style="white-space: normal !important; height: auto !important; min-height: 0 !important; padding: 0 !important; margin: 0 !important;">{!! $kegiatan->deskripsi !!}</div>
                         </div>
                         
                         <div class="mt-10 pt-6 border-t border-gray-100 text-center">

@@ -9,7 +9,7 @@ use App\Models\Galeri;
 use App\Models\Kegiatan;
 use App\Models\User;
 
-class HomeController extends Controller
+class BerandaController extends Controller
 {
     public function index()
     {
@@ -24,6 +24,6 @@ class HomeController extends Controller
 
         $fasilitas = Galeri::where('kategori', 'Fasilitas')->latest()->get();
 
-        return view('public.home', compact('stats', 'kegiatans', 'fasilitas'));
+        return view('public.beranda', compact('stats', 'kegiatans', 'fasilitas'));
     }
 }

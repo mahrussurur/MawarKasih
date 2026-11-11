@@ -25,6 +25,7 @@ Route::prefix('admin')
         Route::resource('anak-asuh', AnakAsuhController::class)->except(['destroy']);
 
         // Alumni
+        Route::get('/alumni/cetak', [AlumniController::class, 'cetak'])->name('alumni.cetak');
         Route::get('/anak-asuh/{anak_asuh_id}/jadikan-alumni', [AlumniController::class, 'create'])->name('alumni.create');
         Route::post('/anak-asuh/{anak_asuh_id}/jadikan-alumni', [AlumniController::class, 'store'])->name('alumni.store');
         Route::resource('alumni', AlumniController::class)->except(['create', 'store', 'destroy'])->parameters(['alumni' => 'alumni']);
@@ -51,6 +52,7 @@ Route::prefix('admin')
         Route::resource('galeri',  GaleriController::class);
 
         // Data Pegawai (Admin, Ketua, Bendahara, Pengasuh)
+        Route::get('/pegawai/cetak', [\App\Http\Controllers\Admin\PegawaiController::class, 'cetak'])->name('admin.pegawai.cetak');
         Route::resource('pegawai', \App\Http\Controllers\Admin\PegawaiController::class)->names('admin.pegawai');
 
         // Data Donatur

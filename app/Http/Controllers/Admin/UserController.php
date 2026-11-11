@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         $query = User::query()->latest();
 
-        if ($request->filled('role')) {
+        if ($request->filled('role') && $request->string('role')->value() !== 'semua') {
             $query->where('role', $request->string('role')->value());
         }
 

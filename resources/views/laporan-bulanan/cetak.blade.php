@@ -12,14 +12,16 @@
         .header h1 { margin: 0; font-size: 17px; font-weight: bold; text-transform: uppercase; line-height: 1.15; }
         .header h2, .header h3 { margin: 1px 0 0; font-size: 14px; font-weight: bold; text-transform: uppercase; line-height: 1.15; }
         .header p { margin: 1px 0 0; font-size: 13px; font-weight: medium; line-height: 1.15; }
-        .draft-watermark { color: red; font-size: 24px; font-weight: bold; text-align: center; border: 2px solid red; padding: 10px; margin-bottom: 20px; }
         
+        .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+        .meta-table td { border: none; padding: 2px 0; font-size: 11px; }
+
         .section-title { font-weight: bold; font-size: 14px; margin-bottom: 8px; margin-top: 20px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
         
         table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
         th { background-color: #f5f5f5; font-weight: bold; }
-        .text-right { text-align: right; }
+        .text-right { text-align: right; white-space: nowrap; }
         .text-center { text-align: center; }
         
         .summary-box { width: 48%; float: left; margin-bottom: 20px; }
@@ -35,18 +37,23 @@
 </head>
 <body>
 
-    @if(in_array($laporan->status, ['draft', 'dikembalikan']))
-    <div class="draft-watermark">
-        DRAFT / BELUM DISETUJUI
-    </div>
-    @endif
-
     <div class="header">
         <h1>LAPORAN KEUANGAN BULANAN</h1>
         <h2>LKSA Mawar Kasih</h2>
         <h3>Banyuwangi</h3>
         <p>Periode: {{ \Carbon\Carbon::create()->month($laporan->bulan)->translatedFormat('F') }} {{ $laporan->tahun }}</p>
     </div>
+
+    <table class="meta-table">
+        <tr>
+            <td>
+                <strong>Status Laporan:</strong> {{ strtoupper($laporan->status) }}
+            </td>
+            <td class="text-right">
+                <strong>Tanggal Dicetak:</strong> {{ \Carbon\Carbon::now()->locale('id')->translatedFormat('d F Y') }}
+            </td>
+        </tr>
+    </table>
 
     <div class="section-title">Ringkasan Keuangan</div>
     <table>
@@ -72,12 +79,12 @@
     <table>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Tanggal</th>
-                <th>Kategori</th>
+                <th style="width: 4%;" class="text-center">No</th>
+                <th style="width: 12%; white-space: nowrap;">Tanggal</th>
+                <th style="width: 18%;">Kategori</th>
                 <th>Keterangan</th>
-                <th class="text-right">Pemasukan</th>
-                <th class="text-right">Pengeluaran</th>
+                <th style="width: 18%; white-space: nowrap;" class="text-right">Pemasukan</th>
+                <th style="width: 18%; white-space: nowrap;" class="text-right">Pengeluaran</th>
             </tr>
         </thead>
         <tbody>
@@ -87,8 +94,8 @@
                 <td style="white-space: nowrap;">{{ \Carbon\Carbon::parse($trx->tanggal)->format('d/m/Y') }}</td>
                 <td>{{ $trx->kategori }}</td>
                 <td>{{ $trx->keterangan }}</td>
-                <td class="text-right">{{ $trx->jenis === 'pemasukan' ? 'Rp ' . number_format($trx->nominal, 0, ',', '.') : '-' }}</td>
-                <td class="text-right">{{ $trx->jenis === 'pengeluaran' ? 'Rp ' . number_format($trx->nominal, 0, ',', '.') : '-' }}</td>
+                <td class="text-right" style="white-space: nowrap;">{{ $trx->jenis === 'pemasukan' ? 'Rp ' . number_format($trx->nominal, 0, ',', '.') : '-' }}</td>
+                <td class="text-right" style="white-space: nowrap;">{{ $trx->jenis === 'pengeluaran' ? 'Rp ' . number_format($trx->nominal, 0, ',', '.') : '-' }}</td>
             </tr>
             @empty
             <tr>
@@ -101,19 +108,14 @@
     <div class="signature">
         <table>
             <tr>
+                <td></td>
                 <td>
-                    <p>Status Laporan:</p>
-                    <p style="font-weight: bold; font-size: 14px;">{{ strtoupper($laporan->status) }}</p>
-                </td>
-                <td>
+                    <p>Disetujui oleh,</p>
+                    <p style="font-weight: bold;">Ketua LKSA Mawar Kasih</p>
                     @if($laporan->status === 'disetujui')
-                        <p>Disetujui oleh:</p>
-                        <p class="name" style="margin-top: 50px;">{{ $laporan->approver->name ?? '(Admin)' }}</p>
-                        <p>Tanggal: {{ $laporan->approved_at ? $laporan->approved_at->format('d/m/Y') : '-' }}</p>
-                    @elseif($laporan->status === 'diajukan')
-                        <p>Diajukan oleh:</p>
-                        <p class="name" style="margin-top: 50px;">{{ $laporan->submitter->name ?? '(Bendahara)' }}</p>
-                        <p>Tanggal: {{ $laporan->submitted_at ? $laporan->submitted_at->format('d/m/Y') : '-' }}</p>
+                        <p class="name" style="margin-top: 50px;">{{ $laporan->approver?->nama ?? $laporan->approver?->name ?? 'Ketua LKSA' }}</p>
+                    @else
+                        <p class="name" style="margin-top: 50px; text-decoration: none;">( ................................................. )</p>
                     @endif
                 </td>
             </tr>

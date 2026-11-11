@@ -42,7 +42,7 @@
         </div>
         <div class="flex items-center gap-4 rounded-2xl border border-gray-200 bg-gradient-to-br from-blue-500 to-blue-600 p-5 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition duration-200">
             <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-white/20 text-white">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.16em] text-blue-100">Saldo Bulan Ini</p>
@@ -287,15 +287,12 @@
                     ];
                 @endphp
 
-                <!-- Content Layout: Grid 2 Kolom -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                    <!-- Kolom Kiri: Doughnut Chart + Center Overlay -->
                     <div class="lg:col-span-5 flex justify-center items-center py-2">
-                        <div class="relative w-[160px] h-[160px] sm:w-[180px] sm:h-[180px]">
-                            <canvas id="dataDistributionChart"></canvas>
-                            
-                            <!-- Teks di Tengah Doughnut -->
-                            <div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                        <div class="relative w-[160px] h-[160px] sm:w-[180px] sm:h-[180px] group">
+                            <canvas id="dataDistributionChart" class="relative z-10"></canvas>
+
+                            <div class="absolute inset-0 z-0 flex flex-col items-center justify-center text-center pointer-events-none transition-opacity duration-300 group-hover:opacity-20">
                                 <span class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
                                     {{ number_format($grandTotal) }}
                                 </span>
@@ -323,7 +320,6 @@
                                         </span>
                                     </div>
                                 </div>
-                                <!-- Mini Progress Bar -->
                                 <div class="w-full bg-gray-200/80 h-1.5 rounded-full overflow-hidden">
                                     <div class="{{ $item['bg'] }} h-full rounded-full transition-all duration-500" style="width: {{ $percentage }}%"></div>
                                 </div>
@@ -335,14 +331,12 @@
 
             <!-- Grafik Donatur Per Bulan -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 sm:p-6">
-                <!-- Header Card -->
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-gray-100 pb-4 mb-6">
                     <div>
                         <h3 class="text-base font-bold text-gray-900">Jumlah Donasi ({{ date('Y') }})</h3>
                     </div>
                 </div>
 
-                <!-- Canvas Wrapper -->
                 <div class="relative w-full h-[280px]">
                     <canvas id="monthlyDonationChart"></canvas>
                 </div>
@@ -416,10 +410,9 @@
 
         const ctxDonation = document.getElementById('monthlyDonationChart').getContext('2d');
 
-        // Gradient fill
         const gradientDonation = ctxDonation.createLinearGradient(0, 0, 0, 300);
-        gradientDonation.addColorStop(0, 'rgba(59, 130, 246, 0.35)'); // Warna atas
-        gradientDonation.addColorStop(1, 'rgba(59, 130, 246, 0.0)');  // Warna bawah (transparan)
+        gradientDonation.addColorStop(0, 'rgba(59, 130, 246, 0.35)');
+        gradientDonation.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
 
         const monthlyDonationChart = new Chart(ctxDonation, {
             type: 'line',
@@ -432,7 +425,7 @@
                     borderWidth: 3,
                     backgroundColor: gradientDonation,
                     fill: true,
-                    tension: 0.4, // Kurva halus mirip IHSG
+                    tension: 0.4,
                     pointRadius: 4,
                     pointHoverRadius: 7,
                     pointBackgroundColor: '#3b82f6',
@@ -495,7 +488,6 @@
                         bodyFont: { family: "'Inter', sans-serif", size: 13, weight: 'bold' },
                         displayColors: false,
                         callbacks: {
-                            // Format Rupiah lengkap saat hover (misal: Rp 1.500.000)
                             label: function(context) {
                                 const val = context.parsed.y || 0;
                                 const formatted = new Intl.NumberFormat('id-ID', {

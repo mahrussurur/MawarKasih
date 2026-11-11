@@ -55,14 +55,18 @@
 
                 <!-- Deskripsi Kegiatan -->
                 <section>
-                    <h3 class="flex items-center text-base font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">
+                    <h3 class="flex items-center text-base font-bold text-gray-900 mb-2 border-b border-gray-100 pb-2">
                         <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
                         </svg>
                         Deskripsi Kegiatan
                     </h3>
-                    <div class="bg-gray-50 p-5 rounded-xl border border-gray-100 text-sm text-gray-800 leading-relaxed prose prose-sm max-w-none">
-                        {!! $kegiatan->deskripsi ?? '<span class="text-gray-400 italic">Tidak ada deskripsi tersedia.</span>' !!}
+                    <div class="bg-gray-50 px-4 py-3 sm:px-5 sm:py-3.5 rounded-xl border border-gray-100 text-sm text-gray-800 leading-relaxed ql-snow">
+                        @if(!empty($kegiatan->deskripsi))
+                            <div class="ql-editor !p-0 !min-h-0 !h-auto !whitespace-normal" style="white-space: normal !important; height: auto !important; min-height: 0 !important; padding: 0 !important; margin: 0 !important;">{!! $kegiatan->deskripsi !!}</div>
+                        @else
+                            <span class="text-gray-400 italic">Tidak ada deskripsi tersedia.</span>
+                        @endif
                     </div>
                 </section>
 
@@ -129,4 +133,35 @@
 
 @push('modals')
     @include('layouts.partials.admin.modals')
+@endpush
+
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+<style>
+    .ql-snow .ql-editor {
+        padding: 0 !important;
+        margin: 0 !important;
+        white-space: normal !important;
+        height: auto !important;
+        min-height: 0 !important;
+        font-family: inherit;
+        font-size: 0.875rem;
+        line-height: 1.625;
+        color: #1f2937;
+    }
+    .ql-snow .ql-editor > *:first-child {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    .ql-snow .ql-editor p {
+        margin-bottom: 0.75rem;
+    }
+    .ql-snow .ql-editor p:last-child {
+        margin-bottom: 0 !important;
+    }
+    .ql-snow .ql-editor p:empty,
+    .ql-snow .ql-editor p:has(> br:only-child) {
+        display: none !important;
+    }
+</style>
 @endpush

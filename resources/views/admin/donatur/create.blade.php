@@ -37,8 +37,7 @@
                 </div>
                 <div>
                     <label class="mb-1.5 block text-sm font-semibold text-gray-800">No. HP</label>
-                    <input type="text" name="no_hp" value="{{ old('no_hp') }}" placeholder="Cth: 08123456789"
-                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="tel" name="no_hp" value="{{ old('no_hp') }}" placeholder="cth. 081234567890" minlength="10" maxlength="15" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
             </div>
 
@@ -61,8 +60,11 @@
                 </div>
                 <div>
                     <label class="mb-1.5 block text-sm font-semibold text-gray-800">Email <span class="text-red-500">*</span></label>
-                    <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan Email..." required autocomplete="email"
-                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="email" name="email" value="{{ old('email') }}" placeholder="cth. contoh@gmail.com" required autocomplete="email" maxlength="255" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                        class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-400 ring-1 ring-red-400 @enderror">
+                    @error('email')
+                        <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
