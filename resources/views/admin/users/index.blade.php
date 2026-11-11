@@ -3,24 +3,38 @@
 
 @section('content')
 @php
-    $roles = ['semua' => 'Semua', 'admin' => 'Admin', 'bendahara' => 'Bendahara', 'ketua' => 'Ketua', 'donatur' => 'Donatur'];
-    $currentRole = $activeRole ?? null;
+    $roles = [
+        'admin' => 'Admin',
+        'bendahara' => 'Bendahara',
+        'ketua' => 'Ketua',
+        'donatur' => 'Donatur',
+    ];
+    $activeRole = request('role', 'semua');
 @endphp
 <!-- Kotak Utama Konten -->
 <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-6">
     
     <div class="flex flex-col gap-4 border-b border-gray-200 pb-4 lg:flex-row lg:items-center lg:justify-between">
         <!-- Filter -->
-        <div class="w-full lg:w-auto">
-            <select onchange="window.location.href = this.value" class="w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm font-semibold text-gray-600 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-brand-500 lg:w-52">
-                @foreach($roles as $key => $label)
-                    <option value="{{ $key === 'semua' ? route('users.index') : route('users.index', ['role' => $key]) }}" @selected(($key === 'semua' && ! $currentRole) || $currentRole === $key)>{{ $label }}</option>
-                @endforeach
-            </select>
+        <div class="flex flex-wrap items-center gap-2">
+            <a href="{{ route('users.index', array_merge(request()->except('role', 'page'), ['role' => 'semua'])) }}"
+               class="inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-semibold transition {{ in_array($activeRole, ['semua', '', null], true) ? 'bg-gray-900 text-white border-gray-900' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
+                Semua
+            </a>
+
+            @foreach($roles as $key => $label)
+                <a href="{{ route('users.index', array_merge(request()->except('role', 'page'), ['role' => $key])) }}"
+                   class="inline-flex items-center gap-2 rounded-xl border px-3 py-1.5 text-xs font-semibold transition {{ $activeRole === $key ? 'bg-blue-600 text-white border-blue-600' : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200' }}">
+                    {{ $label }}
+                </a>
+            @endforeach
         </div>
 
         <!-- Search -->
         <form method="GET" action="{{ route('users.index') }}" class="flex w-full items-center gap-3 lg:w-auto">
+            @if(request('role') && request('role') !== 'semua')
+                <input type="hidden" name="role" value="{{ request('role') }}">
+            @endif
             <label class="relative block w-full lg:w-[260px]">
                 <span class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-gray-400">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>

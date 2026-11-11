@@ -5,7 +5,7 @@
 
             <!-- KOLOM 1: Brand -->
             <div class="lg:col-span-2 flex flex-col items-center text-center lg:items-start lg:text-left">
-                <a href="{{ route('public.home') }}" class="flex flex-col lg:flex-row items-center gap-3 mb-4">
+                <a href="{{ route('public.beranda') }}" class="flex flex-col lg:flex-row items-center gap-3 mb-4">
                     <img src="{{ asset('images/logo.webp') }}" alt="Mawar Kasih" class="h-28 sm:h-32 lg:h-11 w-auto brightness-200 object-contain">
                     <span class="brand-text flex flex-col hidden sm:flex leading-tight text-white">
                         <strong>Panti Asuhan</strong>
@@ -25,7 +25,7 @@
             <div>
                 <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Menu</h4>
                 <ul class="space-y-2.5 text-sm">
-                    <li><a href="{{ route('public.home') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Beranda</a></li>
+                    <li><a href="{{ route('public.beranda') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Beranda</a></li>
                     <li><a href="{{ route('public.kegiatan.index') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Kegiatan</a></li>
                     <li><a href="{{ route('public.donasi.rekening') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Donasi</a></li>
                     <li><a href="{{ route('register') }}" class="hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1">Registrasi</a></li>

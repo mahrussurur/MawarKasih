@@ -55,8 +55,7 @@
             text-transform: uppercase;
         }
 
-        /* BLOK 1 DATA ANAK
-        4 BLOK = 1 HALAMAN */
+        /* BLOK 1 DATA ANAK */
         .child {
             width: 100%;
             height: 57mm;
@@ -75,8 +74,7 @@
             font-weight: bold;
         }
 
-        /* FOTO 3:4
-        45 x 55 mm */
+        /* FOTO 3:4 (45 x 55 mm) DENGAN CROP CROP AUTO (BACKGROUND COVER) */
         .photo-box {
             float: left;
             width: 45mm;
@@ -84,20 +82,16 @@
             margin-right: 3%;
             overflow: hidden;
             border: 1px solid #bbb;
-            background: #f3f4f6;
+            background-color: #f3f4f6;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
             text-align: center;
         }
 
-        .photo {
-            display: block;
-            width: 45mm;
-            height: 55mm;
-            object-fit: cover;
-        }
-
         .photo-placeholder {
-            width: 45mm;
-            height: 55mm;
+            width: 100%;
+            height: 100%;
             background: #f3f4f6;
             color: #999;
             text-align: center;
@@ -161,7 +155,7 @@
         $tahunSekarang = now()->year;
     @endphp
 
-    {{-- HEADER HANYA SEKALI --}}
+    <!-- HEADER HANYA SEKALI -->
     <div class="header">
         <h1>PROFIL / BIODATA ANAK ANAK</h1>
         <h2>LKSA MAWAR KASIH</h2>
@@ -175,27 +169,23 @@
 
         <div class="child">
 
-            {{-- NOMOR --}}
+            <!-- NOMOR -->
             <div class="number">
                 {{ $loop->iteration }}
             </div>
 
-            {{-- FOTO --}}
-            <div class="photo-box">
-                @if(!empty($item->foto))
-                    <img
-                        class="photo"
-                        src="{{ public_path('storage/' . $item->foto) }}"
-                        alt="Foto {{ $item->nama }}"
-                    >
-                @else
+            <!-- FOTO (AUTO CROP / NO GEPENG) -->
+            @if(!empty($item->foto))
+                <div class="photo-box" style="background-image: url('{{ str_replace('\\', '/', public_path('storage/' . $item->foto)) }}');"></div>
+            @else
+                <div class="photo-box">
                     <div class="photo-placeholder">
                         FOTO ANAK
                     </div>
-                @endif
-            </div>
+                </div>
+            @endif
 
-            {{-- DATA --}}
+            <!-- DATA -->
             <div class="info">
 
                 <div class="row">
@@ -279,7 +269,7 @@
             </div>
         </div>
 
-        {{-- SETIAP 4 DATA = HALAMAN BARU --}}
+        <!-- SETIAP 4 DATA = HALAMAN BARU -->
         @if($loop->iteration % 4 == 0 && !$loop->last)
             <div class="page-break"></div>
         @endif

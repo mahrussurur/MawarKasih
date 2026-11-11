@@ -3,6 +3,31 @@
 @section('title', 'Beranda')
 @section('meta_desc', 'Panti Asuhan Mawar Kasih - Menebar Kasih, Merangkai Harapan. Bersama kita hadirkan cinta, pendidikan, dan masa depan yang lebih baik untuk mereka.')
 
+@section('extra_styles')
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+<style>
+    .ql-snow .ql-editor {
+        padding: 0 !important;
+        margin: 0 !important;
+        white-space: normal !important;
+        height: auto !important;
+        min-height: 0 !important;
+        font-family: inherit;
+    }
+    .ql-snow .ql-editor > *:first-child {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    .ql-snow .ql-editor p {
+        margin-bottom: 0.5rem;
+    }
+    .ql-snow .ql-editor p:empty,
+    .ql-snow .ql-editor p:has(> br:only-child) {
+        display: none !important;
+    }
+</style>
+@endsection
+
 @section('content')
 
 <!-- HERO -->
@@ -27,7 +52,7 @@
         @endforeach
     </div>
 
-    {{-- Wrapper utama hero --}}
+    <!-- Wrapper utama hero -->
     <div class="relative z-10 flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center pointer-events-none pt-24 pb-6 lg:pt-28 lg:pb-8">
         <div class="pointer-events-auto w-full max-w-xl mx-auto lg:mx-0">
 
@@ -147,7 +172,7 @@
                             </div>
                         @endif
 
-                        {{-- Floating date badge --}}
+                        <!-- Floating date badge -->
                         <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-gray-700 text-[11px] font-semibold px-3 py-1 rounded-lg shadow-sm flex items-center gap-1.5 border border-white/60">
                             <i data-lucide="clock" class="w-3.5 h-3.5 text-brand-600"></i>
                             <time datetime="{{ \Carbon\Carbon::parse($kegiatan->tanggal_pelaksanaan)->format('Y-m-d') }}">
@@ -157,15 +182,15 @@
                     </div>
 
                     <div class="p-5 sm:p-6 flex flex-col flex-grow">
-                        <h3 class="font-bold text-gray-800 text-base sm:text-lg mb-2 line-clamp-2 uppercase group-hover:text-brand-600 transition-colors leading-snug">
+                        <h3 class="font-bold text-gray-800 text-base sm:text-lg mb-1 line-clamp-2 uppercase group-hover:text-brand-600 transition-colors leading-snug">
                             <a href="{{ route('public.kegiatan.show', $kegiatan->id) }}">
                                 {{ $kegiatan->nama_kegiatan }}
                             </a>
                         </h3>
 
-                        <p class="text-xs sm:text-sm text-gray-500 line-clamp-3 mb-5 leading-relaxed text-justify">
-                            {{ $kegiatan->deskripsi }}
-                        </p>
+                        <div class="text-xs sm:text-sm text-gray-500 mb-3 leading-relaxed text-justify ql-snow">
+                            <div class="ql-editor !p-0 !min-h-0 !h-auto !whitespace-normal line-clamp-3" style="white-space: normal !important; height: auto !important; min-height: 0 !important; padding: 0 !important; margin: 0 !important;">{!! $kegiatan->deskripsi !!}</div>
+                        </div>
 
                         <div class="mt-auto pt-4 border-t border-gray-50 flex items-center justify-end">
                             <a href="{{ route('public.kegiatan.show', $kegiatan->id) }}"

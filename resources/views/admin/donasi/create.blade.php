@@ -35,7 +35,7 @@
             <!-- Email -->
             <div class="mb-5">
                 <label class="mb-1.5 block text-sm font-semibold text-gray-800">Email <span class="text-red-500">*</span></label>
-                <input type="email" name="email" value="{{ old('email') }}" placeholder="cth. contoh@gmail.com" maxlength="255" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <input type="email" name="email" value="{{ old('email') }}" placeholder="cth. contoh@gmail.com" maxlength="255" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" autocomplete="email" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-400 ring-1 ring-red-400 @enderror" required>
             </div>
             <!-- No. HP -->
             <div class="mb-5">

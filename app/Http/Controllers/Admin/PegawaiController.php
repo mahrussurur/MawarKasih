@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProfilPegawai;
 use App\Models\User;
 use App\Services\ImageService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -249,5 +250,12 @@ class PegawaiController extends Controller
 
         return redirect()->route('admin.pegawai.index')
             ->with('success', 'Data Pegawai berhasil dihapus.');
+    }
+
+    public function cetak()
+    {
+        $data = ProfilPegawai::with('user')->orderBy('nama', 'asc')->get();
+        $pdf = Pdf::loadView('admin.pegawai.cetak', compact('data'));
+        return $pdf->stream('Laporan_Data_Pegawai_Mawar_Kasih.pdf');
     }
 }

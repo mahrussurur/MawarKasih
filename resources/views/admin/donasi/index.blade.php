@@ -3,26 +3,21 @@
 
 @section('content')
 <div>
-    <!-- Summary Cards -->
     <div class="grid gap-4 grid-cols-1 md:grid-cols-3 mb-4">
-        <!-- Total Semua Donasi -->
         <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Total Donasi Keseluruhan</p>
             <p class="text-xl font-bold text-gray-900 mt-1">Rp {{ number_format($totalNominal, 0, ',', '.') }}</p>
         </div>
-        <!-- Total Donasi Donatur Tetap -->
         <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Total Donasi Donatur Tetap</p>
             <p class="text-xl font-bold text-gray-900 mt-1">Rp {{ number_format($nominalDonaturTetap ?? 0, 0, ',', '.') }}</p>
         </div>
-        <!-- Total Donasi Donatur Umum -->
         <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
             <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">Total Donasi Donatur Umum</p>
             <p class="text-xl font-bold text-gray-900 mt-1">Rp {{ number_format($nominalDonaturUmum ?? 0, 0, ',', '.') }}</p>
         </div>
     </div>
 
-    <!-- Toolbar -->
     <div class="flex justify-between mb-4">
         <div class="flex flex-wrap items-center gap-3">
             <a href="{{ route('donasi.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
@@ -80,8 +75,8 @@
 
         <!-- Table data -->
         @if($donasi->count() > 0)
-        <div class="overflow-hidden">
-            <table class="w-full text-left text-sm">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm whitespace-nowrap">
                 <thead class="bg-gray-50 border-b border-gray-200">
                     <tr>
                         <th class="px-6 py-4 font-semibold text-gray-700 text-center w-12">No</th>

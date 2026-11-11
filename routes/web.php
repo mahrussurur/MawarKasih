@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('public.home');
+    return redirect()->route('public.beranda');
 });
 
 Route::get('/dashboard', function () {

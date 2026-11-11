@@ -5,10 +5,17 @@
 @section('content')
 <div>
     <!-- Toolbar -->
-    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center justify-between mb-4">
         <a href="{{ route('admin.pegawai.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700">
             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
             Tambah Pegawai
+        </a>
+
+        <a href="{{ route('admin.pegawai.cetak') }}" target="_blank" class="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm transition hover:bg-gray-50 hover:text-gray-900" title="Cetak Data Pegawai">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            Cetak Data
         </a>
     </div>
 
@@ -114,9 +121,9 @@
         <!-- Pagination -->
         @include('layouts.partials.admin._pagination', ['paginator' => $pegawais])
         @else
-        <div class="flex min-h-[250px] flex-col items-center justify-center gap-2 text-center text-gray-500">
-            <p class="font-semibold text-gray-900">Belum ada data Pegawai</p>
-            <p class="text-sm">Tambahkan data pegawai melalui formulir yang tersedia.</p>
+        <div class="flex min-h-[300px] flex-col items-center justify-center gap-3 px-6 py-10 text-center text-gray-500">
+            <p class="text-base font-semibold text-gray-900">Belum ada data pegawai</p>
+            <span class="text-sm text-gray-500">{{ request('search') ? 'Data "'. request('search') . '" tidak ditemukan' : 'Tambahkan data pegawai' }}</span>
         </div>
         @endif
     </div>

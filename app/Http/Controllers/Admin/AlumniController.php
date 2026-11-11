@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Alumni;
 use App\Models\AnakAsuh;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -113,5 +114,12 @@ class AlumniController extends Controller
         $alumni->update($validated);
 
         return redirect()->route('alumni.index')->with('success', 'Data alumni berhasil diupdate');
+    }
+
+    public function cetak()
+    {
+        $data = Alumni::orderBy('nama', 'asc')->get();
+        $pdf = Pdf::loadView('admin.alumni.cetak', compact('data'));
+        return $pdf->stream('Laporan_Data_Alumni_Mawar_Kasih.pdf');
     }
 }

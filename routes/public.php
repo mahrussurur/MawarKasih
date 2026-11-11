@@ -8,7 +8,7 @@
 |--------------------------------------------------------------------------
 */
 
-use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\BerandaController;
 use App\Http\Controllers\Public\KegiatanPublicController;
 use App\Http\Controllers\Public\DonasiPublicController;
 use App\Http\Controllers\Public\GaleriPublicController;
@@ -17,7 +17,8 @@ use App\Http\Controllers\Public\TentangController;
 Route::prefix('')->name('public.')->group(function () {
 
     // ── Beranda ─────────────────────────────────────────────
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
+    Route::get('/home', fn() => redirect()->route('public.beranda'))->name('home');
 
     // ── Kegiatan ────────────────────────────────────────────
     Route::get('/kegiatan', [KegiatanPublicController::class, 'index'])->name('kegiatan.index');
