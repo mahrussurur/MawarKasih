@@ -1,6 +1,6 @@
 <?php
 
-uses(Tests\TestCase::class, Illuminate\Foundation\Testing\RefreshDatabase::class);
+
 
 use App\Http\Controllers\Ketua\DashboardController;
 use App\Models\Alumni;

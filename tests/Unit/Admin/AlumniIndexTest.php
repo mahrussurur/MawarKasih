@@ -1,6 +1,6 @@
 <?php
 
-uses(Tests\TestCase::class, Illuminate\Foundation\Testing\RefreshDatabase::class);
+
 
 use App\Http\Controllers\Admin\AlumniController;
 use App\Models\Alumni;
