@@ -6,7 +6,7 @@
         Masukkan password baru Anda
     </p>
 
-    <form method="POST" action="{{ request()->routeIs('public.donasi.*') ? route('public.donasi.password.update') : route('password.store') }}" class="space-y-5">
+    <form method="POST" action="{{ route('password.store') }}" class="space-y-5">
         @csrf
         <input type="hidden" name="token" value="{{ $token }}">
 
@@ -90,7 +90,7 @@
     </form>
 
     <p class="text-center text-sm text-gray-500 mt-6">
-        <a href="{{ request()->routeIs('public.donasi.*') ? route('public.donasi.login') : route('login') }}" class="text-blue-600 hover:underline font-medium">
+        <a href="{{ route('login') }}" class="text-blue-600 hover:underline font-medium">
             Kembali ke Login
         </a>
     </p>

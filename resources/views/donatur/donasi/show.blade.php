@@ -100,10 +100,10 @@
                     </h3>
                     @if($donasi->bukti_transfer)
                         <div class="relative w-full aspect-video overflow-hidden rounded-xl border border-gray-200 bg-gray-100 shadow-sm flex items-center justify-center p-2">
-                            <img src="{{ Storage::url($donasi->bukti_transfer) }}"
+                            <img src="{{ Storage::disk('public')->url($donasi->bukti_transfer) }}"
                                  alt="Bukti transfer {{ $donasi->kode_donasi }}"
                                  class="h-full w-full object-contain cursor-pointer"
-                                 onclick="openImagePreview('{{ Storage::url($donasi->bukti_transfer) }}')"
+                                 onclick="openImagePreview('{{ Storage::disk('public')->url($donasi->bukti_transfer) }}')"
                                  title="Klik untuk memperbesar">
                         </div>
                     @else

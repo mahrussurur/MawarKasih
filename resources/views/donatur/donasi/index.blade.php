@@ -76,8 +76,8 @@
                         <td class="px-6 py-4 text-gray-600">{{ ucfirst($item->metode_pembayaran ?? '-') }}</td>
                         <td class="px-6 py-4 text-center">
                             @if($item->bukti_transfer)
-                                <button type="button" onclick="openImagePreview('{{ Storage::url($item->bukti_transfer) }}')" aria-label="Lihat bukti">
-                                    <img src="{{ Storage::url($item->bukti_transfer) }}"
+                                <button type="button" onclick="openImagePreview('{{ Storage::disk('public')->url($item->bukti_transfer) }}')" aria-label="Lihat bukti">
+                                    <img src="{{ Storage::disk('public')->url($item->bukti_transfer) }}"
                                          class="h-12 w-8 rounded border border-gray-400 object-cover hover:scale-105 transition cursor-pointer"
                                          alt="Bukti transfer {{ $item->kode_donasi }}"
                                          title="Klik untuk perbesar">

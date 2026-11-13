@@ -86,7 +86,7 @@
                 <label class="mb-1.5 block text-sm font-semibold text-gray-800">Berkas Dokumen <span class="text-red-500">*</span></label>
                 <input type="file" name="file" required accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg"
                        class="w-full text-sm text-gray-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-gray-200 rounded-xl bg-gray-50 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <p class="text-xs text-gray-500 mt-2">Format berkas didukung: PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, JPEG (Maksimal 10 MB).</p>
+                <p class="text-xs text-gray-500 mt-2">Format berkas didukung: PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, JPEG (Maksimal 3 MB).</p>
             </div>
 
             <!-- Tombol Aksi Simpan / Batal -->

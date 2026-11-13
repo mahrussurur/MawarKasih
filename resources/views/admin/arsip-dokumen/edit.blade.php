@@ -90,7 +90,7 @@
                 </p>
                 <input type="file" name="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg"
                        class="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-100 file:text-amber-700 hover:file:bg-amber-200 focus:outline-none">
-                <p class="text-[11px] text-gray-400 mt-1">Format didukung: PDF, DOC, DOCX, XLS, XLSX, PNG, JPG (Maks. 10 MB).</p>
+                <p class="text-[11px] text-gray-400 mt-1">Format didukung: PDF, DOC, DOCX, XLS, XLSX, PNG, JPG (Maks. 3 MB).</p>
             </div>
 
             <!-- Tombol Aksi -->

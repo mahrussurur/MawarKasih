@@ -107,9 +107,9 @@
                             @if($item->bukti_transfer)
                                 <button type="button"
                                         class="inline-flex"
-                                        onclick="openImagePreview('{{ Storage::url($item->bukti_transfer) }}')"
+                                        onclick="openImagePreview('{{ Storage::disk('public')->url($item->bukti_transfer) }}')"
                                         aria-label="Perbesar bukti transfer {{ $item->kode_donasi }}">
-                                    <img src="{{ Storage::url($item->bukti_transfer) }}"
+                                    <img src="{{ Storage::disk('public')->url($item->bukti_transfer) }}"
                                          class="h-12 w-12 rounded border border-gray-200 object-cover transition duration-200 hover:scale-105 cursor-pointer"
                                          alt="Bukti transfer {{ $item->kode_donasi }}"
                                          title="Klik untuk perbesar">

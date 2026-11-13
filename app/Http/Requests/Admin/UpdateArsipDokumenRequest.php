@@ -23,7 +23,7 @@ class UpdateArsipDokumenRequest extends FormRequest
                 'nullable',
                 'file',
                 'mimes:pdf,doc,docx,xls,xlsx,png,jpg,jpeg',
-                'max:10240', // Maksimal 10MB
+                'max:3072', // Maksimal 3MB
             ],
         ];
     }
@@ -36,7 +36,7 @@ class UpdateArsipDokumenRequest extends FormRequest
             'kategori.required' => 'Kategori dokumen wajib dipilih atau diisi.',
             'file.file' => 'Berkas yang diunggah harus berupa file yang valid.',
             'file.mimes' => 'Format berkas tidak didukung. Format yang diizinkan: PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, JPEG.',
-            'file.max' => 'Ukuran berkas maksimal adalah 10 MB.',
+            'file.max' => 'Ukuran berkas maksimal adalah 3 MB.',
         ];
     }
 }

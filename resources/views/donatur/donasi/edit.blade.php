@@ -74,7 +74,7 @@
                     @if($donasi->bukti_transfer)
                         <div class="mb-3">
                             <p class="text-sm text-gray-500 mb-1">Bukti saat ini:</p>
-                            <img src="{{ Storage::url($donasi->bukti_transfer) }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
+                            <img src="{{ Storage::disk('public')->url($donasi->bukti_transfer) }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
                         </div>
                     @endif
 
