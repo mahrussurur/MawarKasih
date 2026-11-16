@@ -3,7 +3,7 @@
     <div class="sidebar-brand flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-3 transition-all duration-300">
         <div class="sidebar-brand-info flex items-center gap-3 overflow-hidden">
             <div class="sidebar-brand-icon flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-transparent">
-                <img src="/images/logo2.webp" alt="Logo MTK" class="h-full w-full object-contain"
+                <img src="{{ asset('images/logo2.webp') }}" alt="Logo MTK" class="h-full w-full object-contain"
                     onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'text-[11px] font-extrabold text-white/80\'>MTK</span>'">
             </div>
             <div class="sidebar-brand-text overflow-hidden whitespace-nowrap transition-all duration-200">

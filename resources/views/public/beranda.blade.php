@@ -84,7 +84,7 @@
     <!-- Statistik -->
     <div class="relative z-20 w-full mt-auto pb-10 pointer-events-auto">
         <div class="absolute -bottom-1 left-0 w-full pointer-events-none z-0 translate-y-[2px]">
-            <img src="{{ asset('images/awan.png') }}" alt="Awan Transisi" class="w-full h-auto block object-cover scale-[1.01] origin-bottom">
+            <img src="{{ asset('images/awan.webp') }}" alt="Awan Transisi" class="w-full h-auto block object-cover scale-[1.01] origin-bottom">
         </div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -273,7 +273,7 @@
 
     <!-- Awan Transisi -->
     <div class="absolute -bottom-1 left-0 w-full pointer-events-none z-0 translate-y-[2px]">
-        <img src="{{ asset('images/awan2.png') }}" alt="Awan Transisi" class="w-full h-auto block object-cover scale-[1.01] origin-bottom">
+        <img src="{{ asset('images/awan2.webp') }}" alt="Awan Transisi" class="w-full h-auto block object-cover scale-[1.01] origin-bottom">
     </div>
 </section>
 

@@ -22,11 +22,10 @@
     <!-- Logo di atas card -->
     <div class="relative z-10 mb-4">
         <img
-            src="/images/logo.webp"
-            alt="Logo Panti Asuhan Mawar Kasih"
-            class="w-20 h-20 object-contain mx-auto drop-shadow-lg"
-            onerror="this.style.display='none';"
-        >
+    		src="{{ asset('images/logo.webp') }}"
+    		alt="Logo Panti Asuhan Mawar Kasih"
+    		class="w-20 h-20 object-contain mx-auto drop-shadow-lg"
+		>
     </div>
 
     <!-- Card -->
