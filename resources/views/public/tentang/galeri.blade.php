@@ -1,5 +1,5 @@
 @extends('layouts.public')
-@section('title', 'Galeri | Panti Asuhan Mawar Kasih')
+@section('title', 'Galeri')
 
 @section('content')
 @include('components.public.page-header', ['title' => 'Galeri'])

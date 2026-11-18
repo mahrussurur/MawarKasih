@@ -19,7 +19,6 @@ Route::prefix('')->name('public.')->group(function () {
     // ── Donasi ──────────────────────────────────────────────
     Route::get('/donasi', [DonasiPublicController::class, 'form'])->name('donasi.form');
     Route::get('/donasi/rekening', [DonasiPublicController::class, 'rekening'])->name('donasi.rekening');
-    Route::get('/donasi/tutorial', [DonasiPublicController::class, 'tutorial'])->name('donasi.tutorial');
     Route::get('/donasi/validasi/{kode_donasi?}', [DonasiPublicController::class, 'validasi'])->name('donasi.validasi');
     Route::get('/donasi/validasi/{kode_donasi}/upload', fn($kode_donasi) => redirect()->route('public.donasi.validasi', ['kode_donasi' => $kode_donasi]));
     Route::post('/donasi/validasi/{kode_donasi}/upload', [DonasiPublicController::class, 'uploadBukti'])->name('donasi.validasi.upload');
@@ -30,11 +29,7 @@ Route::prefix('')->name('public.')->group(function () {
     // ── Tentang Kami ─────────────────────────────────────────
     Route::get('/tentang/profil', [TentangController::class, 'profil'])->name('tentang.profil');
     Route::get('/tentang/visi-misi', [TentangController::class, 'visiMisi'])->name('tentang.visi-misi');
-
-    // ── Galeri ───────────────────────────────────────────────
     Route::get('/galeri', [GaleriPublicController::class, 'index'])->name('galeri.index');
-    
-    // ── Kontak ───────────────────────────────────────────────
     Route::get('/kontak', [TentangController::class, 'kontak'])->name('kontak');
 
 });

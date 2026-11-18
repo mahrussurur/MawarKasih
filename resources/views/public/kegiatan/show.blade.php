@@ -1,5 +1,5 @@
 @extends('layouts.public')
-@section('title', ($kegiatan->nama_kegiatan ?? 'Detail Kegiatan').' — Panti Asuhan Mawar Kasih')
+@section('title', $kegiatan->nama_kegiatan ?? 'Detail Kegiatan')
 
 @section('extra_styles')
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />

@@ -1,5 +1,5 @@
 @extends('layouts.public')
-@section('title', 'Kegiatan | Panti Asuhan Mawar Kasih')
+@section('title', 'Kegiatan')
 
 @section('content')
 @include('components.public.page-header', ['title' => 'Artikel Kegiatan'])

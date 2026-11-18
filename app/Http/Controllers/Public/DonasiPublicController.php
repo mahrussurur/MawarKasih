@@ -24,11 +24,6 @@ class DonasiPublicController extends Controller
         return view('public.donasi.rekening');
     }
 
-    public function tutorial()
-    {
-        return view('public.donasi.tutorial');
-    }
-
     public function validasi(Request $request, $kode_donasi = null)
     {
         $kode = $kode_donasi ?? $request->input('kode_donasi');
