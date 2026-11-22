@@ -48,6 +48,6 @@ describe('Unit Test: Http/Requests/Admin/UpdateArsipDokumenRequest.php (Items 36
         expect($messages)->toHaveKey('judul.required');
         expect($messages)->toHaveKey('file.mimes');
         expect($messages['judul.required'])->toBe('Judul dokumen wajib diisi.');
-        expect($messages['file.max'])->toBe('Ukuran berkas maksimal adalah 10 MB.');
+        expect($messages['file.max'])->toBe('Ukuran berkas maksimal adalah 3 MB.');
     });
 });

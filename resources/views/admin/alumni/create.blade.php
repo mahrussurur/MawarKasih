@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('page-title', 'Jadikan Alumni')
+@section('page-title', 'Data Alumni')
 
 @section('content')
 <div class="max-w-4xl mx-auto">
@@ -10,7 +10,7 @@
         <div class="relative bg-gradient-to-r from-purple-600 to-purple-700 px-6 py-6 sm:px-8 sm:py-7">
             <div class="flex flex-row items-center justify-between gap-4">
                 <div>
-                    <h2 class="text-xl font-bold text-white sm:text-2xl">Form Alumni</h2>
+                    <h2 class="text-xl font-bold text-white sm:text-2xl">Form Jadikan Alumni</h2>
                     <p class="text-sm text-purple-100 mt-0.5">Data dasar diambil dari Anak Asuh: {{ $anakAsuh->nama }}</p>
                 </div>
                 <!-- Tombol Kembali -->

@@ -56,7 +56,10 @@
                     </div>
                     <div>
                         <label class="mb-1.5 block text-sm font-semibold text-gray-800">Tanggal Lahir</label>
-                        <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $pegawai->tanggal_lahir?->format('Y-m-d')) }}" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $pegawai->tanggal_lahir?->format('Y-m-d')) }}" max="{{ date('Y-m-d') }}" class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('tanggal_lahir') border-red-500 @enderror" />
+                        @error('tanggal_lahir')
+                            <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 

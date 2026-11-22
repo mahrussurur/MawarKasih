@@ -56,10 +56,14 @@ class PegawaiController extends Controller
             'jabatan' => ['required', 'string', 'max:255'],
             'foto' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
             'tempat_lahir' => ['nullable', 'string', 'max:255'],
-            'tanggal_lahir' => ['nullable', 'date'],
+            'tanggal_lahir' => ['nullable', 'date', 'before_or_equal:today'],
             'jenis_kelamin' => ['nullable', 'in:L,P'],
             'no_hp' => ['nullable', 'string', 'max:20'],
             'alamat' => ['nullable', 'string'],
+        ];
+
+        $messages = [
+            'tanggal_lahir.before_or_equal' => 'Tanggal lahir tidak boleh lebih dari tanggal hari ini.',
         ];
 
         // Pengasuh tidak memiliki role login, hanya sebatas pengelolaan data pegawai
@@ -72,7 +76,7 @@ class PegawaiController extends Controller
             $rules['role'] = ['required', 'in:admin,ketua,bendahara'];
         }
 
-        $validated = $request->validate($rules);
+        $validated = $request->validate($rules, $messages);
         $storedFoto = null;
 
         try {
@@ -134,7 +138,7 @@ class PegawaiController extends Controller
             'jabatan' => ['required', 'string', 'max:255'],
             'foto' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
             'tempat_lahir' => ['nullable', 'string', 'max:255'],
-            'tanggal_lahir' => ['nullable', 'date'],
+            'tanggal_lahir' => ['nullable', 'date', 'before_or_equal:today'],
             'jenis_kelamin' => ['nullable', 'in:L,P'],
             'no_hp' => ['nullable', 'string', 'max:20'],
             'alamat' => ['nullable', 'string'],
@@ -164,7 +168,9 @@ class PegawaiController extends Controller
             $rules['role'] = ['required', 'in:admin,ketua,bendahara'];
         }
 
-        $validated = $request->validate($rules);
+        $validated = $request->validate($rules, [
+            'tanggal_lahir.before_or_equal' => 'Tanggal lahir tidak boleh lebih dari tanggal hari ini.',
+        ]);
         $oldFoto = $pegawai->foto;
         $storedFoto = null;
 

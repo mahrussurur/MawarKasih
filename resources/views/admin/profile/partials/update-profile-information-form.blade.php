@@ -56,7 +56,7 @@
                 </div>
                 <div>
                     <x-input-label for="tanggal_lahir" value="Tanggal Lahir" />
-                    <x-text-input id="tanggal_lahir" name="tanggal_lahir" type="date" class="mt-1 block w-full" :value="old('tanggal_lahir', $profile?->tanggal_lahir?->format('Y-m-d'))" />
+                    <x-text-input id="tanggal_lahir" name="tanggal_lahir" type="date" max="{{ date('Y-m-d') }}" class="mt-1 block w-full" :value="old('tanggal_lahir', $profile?->tanggal_lahir?->format('Y-m-d'))" />
                     <x-input-error class="mt-2" :messages="$errors->get('tanggal_lahir')" />
                 </div>
             </div>

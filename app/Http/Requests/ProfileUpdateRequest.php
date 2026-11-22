@@ -46,7 +46,19 @@ class ProfileUpdateRequest extends FormRequest
             'jabatan' => ['nullable', 'string', 'max:255'],
             'jenis_kelamin' => ['nullable', 'in:L,P'],
             'tempat_lahir' => ['nullable', 'string', 'max:255'],
-            'tanggal_lahir' => ['nullable', 'date'],
+            'tanggal_lahir' => ['nullable', 'date', 'before_or_equal:today'],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'tanggal_lahir.before_or_equal' => 'Tanggal lahir tidak boleh lebih dari tanggal hari ini.',
         ];
     }
 }
