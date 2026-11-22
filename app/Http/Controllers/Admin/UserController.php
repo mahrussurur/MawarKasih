@@ -33,15 +33,23 @@ class UserController extends Controller
         ]);
     }
 
-    public function edit(User $user): View
+    public function edit(User $user): View|RedirectResponse
     {
+        if ($user->role === 'admin') {
+            return redirect()->route('users.index')->with('error', 'Akun admin utama dilindungi dan tidak dapat diubah.');
+        }
+
         return view('admin.users.edit', compact('user'));
     }
 
     public function update(Request $request, User $user): RedirectResponse
     {
+        if ($user->role === 'admin') {
+            return redirect()->route('users.index')->with('error', 'Akun admin utama dilindungi dan tidak dapat diubah.');
+        }
+
         $validated = $request->validate([
-            'role' => ['required', 'in:admin,bendahara,ketua,donatur'],
+            'role' => ['required', 'in:bendahara,ketua,donatur'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username,'.$user->id],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$user->id],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
@@ -69,6 +77,10 @@ class UserController extends Controller
 
     public function toggleStatus(User $user): RedirectResponse
     {
+        if ($user->role === 'admin') {
+            return back()->with('error', 'Akun admin utama dilindungi dan tidak dapat dinonaktifkan.');
+        }
+
         $user->update([
             'status' => $user->status === 'aktif' ? 'tidak_aktif' : 'aktif',
         ]);

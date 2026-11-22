@@ -43,7 +43,10 @@
                 </div>
                 <div>
                     <label class="mb-1.5 block text-sm font-semibold text-gray-800">Tanggal Lahir<span class="text-red-500">*</span></label>
-                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $anakAsuh->tanggal_lahir) }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-500" required>
+                    <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir', $anakAsuh->tanggal_lahir) }}" max="{{ date('Y-m-d') }}" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm text-gray-500 @error('tanggal_lahir') border-red-500 @enderror" required>
+                    @error('tanggal_lahir')
+                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             <div class="mb-5">

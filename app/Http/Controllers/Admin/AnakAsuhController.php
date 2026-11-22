@@ -45,7 +45,7 @@ class AnakAsuhController extends Controller
             'nama'                  => 'required|string|max:255',
             'nama_panggilan'        => 'required|string|max:255',
             'tempat_lahir'          => 'required|string|max:255',
-            'tanggal_lahir'         => 'required|date',
+            'tanggal_lahir'         => 'required|date|before_or_equal:today',
             'jenis_kelamin'         => 'required|in:L,P',
             'status_social_anak'    => 'required|string|max:255',
             'nama_ayah'             => 'nullable|string|max:255',
@@ -53,6 +53,8 @@ class AnakAsuhController extends Controller
             'tinggal_di_lksa_sejak' => 'required|string|max:255',
             'sekolah'               => 'required|string|max:255',
             'kelas'                 => 'required|string|max:255',
+        ], [
+            'tanggal_lahir.before_or_equal' => 'Tanggal lahir tidak boleh lebih dari tanggal hari ini.',
         ]);
 
         if (in_array($validated['status_social_anak'], ['Yatim', 'Yatim Piatu'])) {
@@ -87,7 +89,7 @@ class AnakAsuhController extends Controller
             'nama'                  => 'required|string|max:255',
             'nama_panggilan'        => 'required|string|max:255',
             'tempat_lahir'          => 'required|string|max:255',
-            'tanggal_lahir'         => 'required|date',
+            'tanggal_lahir'         => 'required|date|before_or_equal:today',
             'jenis_kelamin'         => 'required|in:L,P',
             'status_social_anak'    => 'nullable|string|max:255',
             'nama_ayah'             => 'nullable|string|max:255',
@@ -96,6 +98,8 @@ class AnakAsuhController extends Controller
             'sekolah'               => 'required|string|max:255',
             'kelas'                 => 'required|string|max:255',
             'foto'                  => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'tanggal_lahir.before_or_equal' => 'Tanggal lahir tidak boleh lebih dari tanggal hari ini.',
         ]);
 
         if ($request->hasFile('foto')) {

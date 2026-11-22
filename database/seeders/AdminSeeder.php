@@ -8,13 +8,9 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Buat akun admin default untuk pertama kali login.
-     * Ganti password setelah login pertama!
-     */
     public function run(): void
     {
-        $admin = User::updateOrCreate([
+        $admin = User::firstOrCreate([
             'username' => 'mawar kasih',
         ], [
             'email' => 'admin1@gmail.com',
@@ -23,7 +19,7 @@ class AdminSeeder extends Seeder
             'status' => 'aktif',
         ]);
 
-        $admin->profilPegawai()->updateOrCreate([], [
+        $admin->profilPegawai()->firstOrCreate([], [
             'nama' => 'Mawar Kasih',
             'jabatan' => 'Admin',
         ]);

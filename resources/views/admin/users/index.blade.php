@@ -69,17 +69,21 @@
                                 <span class="inline-flex rounded-md px-2 py-1 text-xs font-semibold ring-1 ring-inset {{ $user->status === 'aktif' ? 'bg-green-50 text-green-700 ring-green-600/20' : 'bg-red-50 text-red-700 ring-red-600/10' }}">{{ $user->status === 'aktif' ? 'Aktif' : 'Tidak Aktif' }}</span>
                             </td>
                             <td class="px-6 py-4 text-center">
-                                <div class="flex justify-center gap-1">
-                                    <a href="{{ route('users.edit', $user) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber-600 border border-amber-400 hover:bg-amber-500 hover:text-white transition" title="Edit Profil">
-                                        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                                    </a>
-                                    <form method="POST" action="{{ route('users.toggle-status', $user->id) }}" class="inline">
-                                        @csrf @method('PATCH')
-                                        <button type="submit" class="inline-flex h-8 w-8 items-center justify-center rounded-lg {{ $user->status === 'aktif' ? 'bg-red-50 text-red-600 border border-red-400 hover:bg-red-500' : 'bg-emerald-50 text-emerald-600 border border-emerald-400 hover:bg-emerald-500' }} hover:text-white transition" title="{{ $user->status === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}">
-                                            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
-                                        </button>
-                                    </form>
-                                </div>
+                                @if($user->role === 'admin')
+                                    <span class="text-xs text-gray-400 italic">Dikunci</span>
+                                @else
+                                    <div class="flex justify-center gap-1">
+                                        <a href="{{ route('users.edit', $user) }}" class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber-600 border border-amber-400 hover:bg-amber-500 hover:text-white transition" title="Edit Profil">
+                                            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                        </a>
+                                        <form method="POST" action="{{ route('users.toggle-status', $user->id) }}" class="inline">
+                                            @csrf @method('PATCH')
+                                            <button type="submit" class="inline-flex h-8 w-8 items-center justify-center rounded-lg {{ $user->status === 'aktif' ? 'bg-red-50 text-red-600 border border-red-400 hover:bg-red-500' : 'bg-emerald-50 text-emerald-600 border border-emerald-400 hover:bg-emerald-500' }} hover:text-white transition" title="{{ $user->status === 'aktif' ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                                <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

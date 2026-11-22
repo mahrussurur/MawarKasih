@@ -3,7 +3,7 @@
     <div class="sidebar-brand flex items-center justify-between gap-3 border-b border-white/10 px-3.5 py-3 transition-all duration-300">
         <div class="sidebar-brand-info flex items-center gap-3 overflow-hidden">
             <div class="sidebar-brand-icon flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-transparent">
-                <img src="/images/logo2.webp" alt="Logo MTK" class="h-full w-full object-contain"
+                <img src="{{ asset('images/logo2.webp') }}" alt="Logo MTK" class="h-full w-full object-contain"
                     onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'text-[11px] font-extrabold text-white/80\'>MTK</span>'">
             </div>
             <div class="sidebar-brand-text overflow-hidden whitespace-nowrap transition-all duration-200">
@@ -168,7 +168,7 @@
             <a href="{{ route('ketua.arsip-dokumen.index') }}" data-tooltip="Arsip Dokumen Administrasi" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('ketua.arsip-dokumen.*') ? 'bg-white/15 text-white font-bold' : '' }}">
                 <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('ketua.arsip-dokumen.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>
                 <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                <span class="nav-text">Arsip Dokumen Administrasi</span>
+                <span class="nav-text">Arsip Dokumen</span>
             </a>
             <a href="{{ route('ketua.laporan-bulanan.index') }}" data-tooltip="Laporan Bulanan" class="nav-item relative mb-1 flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10 hover:text-white {{ request()->routeIs('ketua.laporan-bulanan.*') ? 'bg-white/15 text-white font-bold' : '' }}">
                 <span class="absolute inset-y-1.5 left-0 w-1 rounded-r-full {{ request()->routeIs('ketua.laporan-bulanan.*') ? 'bg-blue-300' : 'bg-transparent' }}"></span>

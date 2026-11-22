@@ -1,5 +1,5 @@
 @extends('layouts.public')
-@section('title', 'Galeri | Panti Asuhan Mawar Kasih')
+@section('title', 'Galeri')
 
 @section('content')
 @include('components.public.page-header', ['title' => 'Galeri'])
@@ -46,16 +46,16 @@
             @forelse($galleries as $gallery)
                 <div class="group relative bg-slate-900 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 aspect-[16/10] sm:aspect-[4/3] md:aspect-[16/10] flex flex-col justify-end">
 
-                    <a href="{{ asset('storage/' . $gallery->foto) }}" 
+                    <a href="{{ get_webp_url($gallery->foto) }}" 
                        data-fancybox="gallery"
-                       data-filename="{{ Str::slug($gallery->judul) }}.{{ pathinfo($gallery->foto, PATHINFO_EXTENSION) }}"
+                       data-filename="{{ Str::slug($gallery->judul) }}.webp"
                        data-caption="<div class='max-w-xl mx-auto'><h4 class='font-bold text-base md:text-lg text-white mb-1 tracking-wide'>{{ $gallery->judul }}</h4>@if($gallery->deskripsi)<p class='text-xs md:text-sm text-gray-200 leading-relaxed'>{{ $gallery->deskripsi }}</p>@endif</div>"
                        class="absolute inset-0 z-10"
                        title="{{ $gallery->judul }}">
                        <span class="sr-only">Lihat Foto {{ $gallery->judul }}</span>
                     </a>
 
-                    <img src="{{ asset('storage/' . $gallery->foto) }}" 
+                    <img src="{{ get_webp_url($gallery->foto) }}" 
                          class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                          alt="{{ $gallery->judul ?? 'Galeri Mawar Kasih' }}"
                          loading="lazy">

@@ -1,5 +1,5 @@
 @extends('layouts.public')
-@section('title', 'Donasi | Panti Asuhan Mawar Kasih')
+@section('title', 'Donasi')
 
 @section('content')
 @include('components.public.page-header', ['title' => 'Formulir Donasi'])

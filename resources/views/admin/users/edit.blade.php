@@ -33,7 +33,6 @@
             <div class="mb-5">
                 <label for="role" class="mb-1.5 block text-sm font-semibold text-gray-800">Role <span class="text-red-500">*</span></label>
                 <select id="role" name="role" required class="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 @error('role') border-red-400 @enderror">
-                    <option value="admin" @selected(old('role', $user->role) === 'admin')>Admin</option>
                     <option value="bendahara" @selected(old('role', $user->role) === 'bendahara')>Bendahara</option>
                     <option value="ketua" @selected(old('role', $user->role) === 'ketua')>Ketua</option>
                     <option value="donatur" @selected(old('role', $user->role) === 'donatur')>Donatur</option>

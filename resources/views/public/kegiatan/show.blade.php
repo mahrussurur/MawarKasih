@@ -1,5 +1,5 @@
 @extends('layouts.public')
-@section('title', ($kegiatan->nama_kegiatan ?? 'Detail Kegiatan').' — Panti Asuhan Mawar Kasih')
+@section('title', $kegiatan->nama_kegiatan ?? 'Detail Kegiatan')
 
 @section('extra_styles')
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
@@ -43,7 +43,7 @@
                     <!-- Gambar Kegiatan -->
                     <div class="rounded-[24px] overflow-hidden mb-6 md:mb-8 shadow-sm border border-gray-100">
                         @if($kegiatan->foto_dokumentasi)
-                            <img src="{{ asset('storage/' . $kegiatan->foto_dokumentasi) }}" alt="{{ $kegiatan->nama_kegiatan }}" class="w-full h-80 md:h-[400px] object-cover">
+                            <img src="{{ get_webp_url($kegiatan->foto_dokumentasi) }}" alt="{{ $kegiatan->nama_kegiatan }}" class="w-full h-80 md:h-[400px] object-cover">
                         @else
                             <div class="w-full h-80 md:h-[400px] bg-gray-200 flex items-center justify-center">
                                 <svg class="w-16 h-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -102,7 +102,7 @@
                             <div class="flex gap-3 group items-center">
                                 <a href="{{ route('public.kegiatan.show', $recent->id) }}" class="flex-shrink-0 w-24 h-16 rounded-lg overflow-hidden">
                                     @if($recent->foto_dokumentasi)
-                                        <img src="{{ asset('storage/' . $recent->foto_dokumentasi) }}" class="w-full h-full object-cover" alt="{{ $recent->nama_kegiatan }}">
+                                        <img src="{{ get_webp_url($recent->foto_dokumentasi) }}" class="w-full h-full object-cover" alt="{{ $recent->nama_kegiatan }}">
                                     @else
                                         <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                                             <i data-lucide="image" class="w-5 h-5 text-gray-400"></i>

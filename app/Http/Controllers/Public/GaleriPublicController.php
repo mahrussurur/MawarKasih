@@ -12,10 +12,4 @@ class GaleriPublicController extends Controller
         $galleries = Galeri::where('kategori', 'Umum')->latest()->paginate(12);
         return view('public.tentang.galeri', compact('galleries'));
     }
-
-    public function show($id)
-    {
-        $galeri = Galeri::findOrFail($id);
-        return view('public.galeri.show', compact('galeri'));
-    }
 }

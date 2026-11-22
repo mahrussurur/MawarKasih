@@ -1,5 +1,4 @@
 @extends('layouts.public')
-
 @section('title', 'Rekening Donasi')
 
 @section('content')

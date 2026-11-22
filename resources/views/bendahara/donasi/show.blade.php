@@ -112,9 +112,9 @@
                                 <div class="mt-1">
                                     <button type="button"
                                         class="inline-flex"
-                                        onclick="openImagePreview('{{ Storage::url($donasi->bukti_transfer) }}')"
+                                        onclick="openImagePreview('{{ Storage::disk('public')->url($donasi->bukti_transfer) }}')"
                                         aria-label="Perbesar bukti transfer {{ $donasi->kode_donasi }}">
-                                        <img src="{{ Storage::url($donasi->bukti_transfer) }}"
+                                        <img src="{{ Storage::disk('public')->url($donasi->bukti_transfer) }}"
                                             alt="Bukti transfer {{ $donasi->kode_donasi }}"
                                             class="h-32 w-32 rounded-lg border-2 border-gray-200 object-cover cursor-pointer transition duration-200 hover:scale-105">
                                     </button>

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Encoders\WebpEncoder;
+use RuntimeException;
+use Throwable;
 
 class ImageService
 {
@@ -14,25 +16,51 @@ class ImageService
 
     public function __construct()
     {
+        if (! extension_loaded('gd') || ! function_exists('imagewebp')) {
+            throw new RuntimeException('Ekstensi GD dengan dukungan WebP wajib aktif untuk memproses gambar.');
+        }
+
         $this->manager = new ImageManager(new Driver());
     }
 
     public function uploadAndGenerateWebp(UploadedFile $file, string $folder): string
     {
-        $originalPath = $file->store('original/' . $folder, 'public');
+        $disk = Storage::disk('public');
+        $originalPath = null;
+        $webpRelativePath = null;
 
-        $fullPath = Storage::disk('public')->path($originalPath);
-        $image = $this->manager->decodePath($fullPath);
+        try {
+            $originalPath = $file->store('original/' . $folder, 'public');
+            if (! is_string($originalPath) || $originalPath === '') {
+                throw new RuntimeException('Gagal menyimpan gambar asli.');
+            }
 
-        $filename = pathinfo($originalPath, PATHINFO_FILENAME);
-        $webpRelativePath = 'webp/' . $folder . '/' . $filename . '.webp';
-        $webpFullPath = Storage::disk('public')->path($webpRelativePath);
+            $fullPath = $disk->path($originalPath);
+            $image = $this->manager->decodePath($fullPath);
 
-        Storage::disk('public')->makeDirectory('webp/' . $folder);
+            $filename = pathinfo($originalPath, PATHINFO_FILENAME);
+            $webpRelativePath = 'webp/' . $folder . '/' . $filename . '.webp';
+            $webpFullPath = $disk->path($webpRelativePath);
 
-        $image->encode(new WebpEncoder(85))->save($webpFullPath);
+            $disk->makeDirectory('webp/' . $folder);
+            $image->encode(new WebpEncoder(85))->save($webpFullPath);
 
-        return $originalPath;
+            if (! $disk->exists($webpRelativePath)) {
+                throw new RuntimeException('Gagal membuat gambar WebP.');
+            }
+
+            return $originalPath;
+        } catch (Throwable $exception) {
+            if ($webpRelativePath && $disk->exists($webpRelativePath)) {
+                $disk->delete($webpRelativePath);
+            }
+
+            if ($originalPath && $disk->exists($originalPath)) {
+                $disk->delete($originalPath);
+            }
+
+            throw $exception;
+        }
     }
 
     public function deleteImage(?string $originalPath)

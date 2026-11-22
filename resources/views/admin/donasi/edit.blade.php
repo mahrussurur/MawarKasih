@@ -82,7 +82,7 @@
                 @if($donasi->bukti_transfer)
                     <div class="mb-3">
                         <p class="text-xs text-gray-500 mb-1">Bukti saat ini:</p>
-                        <img src="{{ Storage::url($donasi->bukti_transfer) }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
+                        <img src="{{ Storage::disk('public')->url($donasi->bukti_transfer) }}" class="w-32 h-32 object-cover rounded-lg border border-gray-200">
                     </div>
                 @endif
                 <input type="file" name="bukti_transfer" accept="image/*" class="w-full text-sm text-gray-600 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100 cursor-pointer border border-gray-200 rounded-xl bg-gray-50">
