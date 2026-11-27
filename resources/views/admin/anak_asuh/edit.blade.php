@@ -14,7 +14,7 @@
                     <p class="text-sm text-amber-100 mt-0.5">Perbarui informasi profil anak asuh.</p>
                 </div>
                 <!-- Tombol Kembali -->
-                <a href="{{ route('anak-asuh.index') }}" 
+                <a href="{{ route('anak-asuh.index', ['page' => request('page', 1)]) }}" 
                    class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition flex-shrink-0" 
                    title="Kembali">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,6 +28,7 @@
         <form action="{{ route('anak-asuh.update', $anakAsuh->id) }}" method="POST" enctype="multipart/form-data" class="p-4 md:p-6">
             @csrf
             @method('PATCH')
+            <input type="hidden" name="page" value="{{ request('page', 1) }}">
             <div class="mb-5">
                 <label class="mb-1.5 block text-sm font-semibold text-gray-800">Nama Lengkap<span class="text-red-500">*</span></label>
                 <input type="text" name="nama" value="{{ old('nama', $anakAsuh->nama) }}" placeholder="Nama Lengkap..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm placeholder:text-gray-400" required>
@@ -115,7 +116,7 @@
                 <p class="text-xs text-gray-500 mt-2">Biarkan kosong jika tidak ingin mengubah foto. Format: JPG, PNG, JPEG. Maksimal 2MB.</p>
             </div>
             <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
-                <a href="{{ route('anak-asuh.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
+                <a href="{{ route('anak-asuh.index', ['page' => request('page', 1)]) }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
                     Batal
                 </a>
                 <button type="submit" class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">

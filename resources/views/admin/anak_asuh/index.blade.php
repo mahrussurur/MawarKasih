@@ -74,7 +74,7 @@
                         <td class="px-6 py-4 text-center">
                             <div class="flex justify-center gap-1">
                                 <!-- Tombol Lihat Detail -->
-                                <a href="{{ route('anak-asuh.show', $item->id) }}"
+                                <a href="{{ route('anak-asuh.show', $item->id) }}?page={{ $data->currentPage() }}"
                                    class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-blue-400 bg-blue-50 text-blue-600 transition hover:bg-blue-600 hover:text-white"
                                    title="Lihat Detail">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,7 +83,7 @@
                                     </svg>
                                 </a>
                                 <!-- Tombol Edit -->
-                                <a href="{{ route('anak-asuh.edit', $item->id) }}"
+                                <a href="{{ route('anak-asuh.edit', $item->id) }}?page={{ $data->currentPage() }}"
                                     class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-amber-400 bg-amber-50 text-amber-600 transition hover:bg-amber-500 hover:text-white"
                                     title="Edit">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,7 +91,7 @@
                                     </svg>
                                 </a>
                                 <!-- Tombol Jadikan Alumni -->
-                                <a href="{{ route('alumni.create', $item->id) }}"
+                                <a href="{{ route('alumni.create', $item->id) }}?page={{ $data->currentPage() }}"
                                         class="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-purple-400 bg-purple-50 text-purple-600 transition hover:bg-purple-600 hover:text-white"
                                         title="Jadikan Alumni">
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

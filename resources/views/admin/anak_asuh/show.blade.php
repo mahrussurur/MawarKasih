@@ -15,7 +15,7 @@
                 </div>
                 <div class="flex items-center gap-2 flex-shrink-0">
                     <!-- Tombol Kembali -->
-                    <a href="{{ route('anak-asuh.index') }}" class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 p-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition sm:px-3 sm:py-2" title="Kembali">
+                    <a href="{{ route('anak-asuh.index', ['page' => request('page', 1)]) }}" class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 p-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition sm:px-3 sm:py-2" title="Kembali">
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                         <span class="hidden sm:inline">Kembali</span>
                     </a>
@@ -146,13 +146,13 @@
 
                         <div class="pt-6 border-t border-gray-200 space-y-3">
                             <!-- Edit -->
-                            <a href="{{ route('anak-asuh.edit', $anakAsuh->id) }}" class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm font-semibold text-amber-500 shadow-sm transition hover:bg-amber-400 hover:text-white">
+                            <a href="{{ route('anak-asuh.edit', $anakAsuh->id) }}?page={{ request('page', 1) }}" class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-sm font-semibold text-amber-500 shadow-sm transition hover:bg-amber-400 hover:text-white">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                 Edit Anak Asuh
                             </a>
 
                             <!-- Jadikan Alumni -->
-                            <a href="{{ route('alumni.create', $anakAsuh->id) }}" class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-purple-200 bg-purple-50 px-4 py-2.5 text-sm font-semibold text-purple-600 shadow-sm transition hover:bg-purple-600 hover:text-white">
+                            <a href="{{ route('alumni.create', $anakAsuh->id) }}?page={{ request('page', 1) }}" class="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-purple-200 bg-purple-50 px-4 py-2.5 text-sm font-semibold text-purple-600 shadow-sm transition hover:bg-purple-600 hover:text-white">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v6"/></svg>
                                 Jadikan Alumni
                             </a>

@@ -14,7 +14,7 @@
                     <p class="text-sm text-purple-100 mt-0.5">Data dasar diambil dari Anak Asuh: {{ $anakAsuh->nama }}</p>
                 </div>
                 <!-- Tombol Kembali -->
-                <a href="{{ route('anak-asuh.index') }}" 
+                <a href="{{ route('anak-asuh.index', ['page' => request('page', 1)]) }}" 
                    class="inline-flex items-center gap-2 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/30 transition flex-shrink-0" 
                    title="Kembali">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -27,6 +27,7 @@
 
         <form action="{{ route('alumni.store', $anakAsuh->id) }}" method="POST" class="p-4 md:p-6">
             @csrf
+            <input type="hidden" name="page" value="{{ request('page', 1) }}">
 
             <!-- IDENTITAS ANAK ASUH (READONLY) -->
             <div class="mb-6 p-4 bg-gray-50 border border-gray-200 rounded-xl">
@@ -97,7 +98,7 @@
 
             <!-- Tombol Aksi -->
             <div class="flex justify-center items-center gap-4 pt-6 border-t border-gray-200 mt-6 pb-2">
-                <a href="{{ route('anak-asuh.index') }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
+                <a href="{{ route('anak-asuh.index', ['page' => request('page', 1)]) }}" class="rounded-xl bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 border border-gray-300 transition hover:bg-gray-300">
                     Batal
                 </a>
                 <button type="submit" class="rounded-xl bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700">

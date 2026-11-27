@@ -109,7 +109,7 @@ class AnakAsuhController extends Controller
 
         $anakAsuh->update($validated);
 
-        return redirect()->route('anak-asuh.index')->with('success', 'Data berhasil diupdate');
+        return redirect()->route('anak-asuh.index', ['page' => $request->input('page', 1)])->with('success', 'Data berhasil diupdate');
     }
 
     public function cetak()

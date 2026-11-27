@@ -34,7 +34,7 @@ class AlumniController extends Controller
         $anakAsuh = AnakAsuh::findOrFail($anak_asuh_id);
         
         if ($anakAsuh->alumni()->exists()) {
-            return redirect()->route('anak-asuh.index')->with('error', 'Anak asuh ini sudah menjadi alumni.');
+            return redirect()->route('anak-asuh.index', ['page' => request('page', 1)])->with('error', 'Anak asuh ini sudah menjadi alumni.');
         }
 
         return view('admin.alumni.create', compact('anakAsuh'));
@@ -45,7 +45,7 @@ class AlumniController extends Controller
         $anakAsuh = AnakAsuh::findOrFail($anak_asuh_id);
         
         if ($anakAsuh->alumni()->exists()) {
-            return redirect()->route('anak-asuh.index')->with('error', 'Anak asuh ini sudah menjadi alumni.');
+            return redirect()->route('anak-asuh.index', ['page' => $request->input('page', 1)])->with('error', 'Anak asuh ini sudah menjadi alumni.');
         }
 
         $validated = $request->validate([
@@ -86,7 +86,7 @@ class AlumniController extends Controller
             $anakAsuh->delete(); // Soft Delete
         });
 
-        return redirect()->route('alumni.index')->with('success', 'Anak asuh berhasil dijadikan alumni');
+        return redirect()->route('anak-asuh.index', ['page' => $request->input('page', 1)])->with('success', 'Anak asuh berhasil dijadikan alumni');
     }
 
     public function show(Alumni $alumni)

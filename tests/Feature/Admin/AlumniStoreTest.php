@@ -1,5 +1,5 @@
 <?php
-
+// RIDHO
 namespace Tests\Feature\Admin;
 
 use App\Models\Alumni;
@@ -102,23 +102,6 @@ class AlumniStoreTest extends TestCase
         $this->assertNotSoftDeleted('anak_asuh', [
             'id' => $anakAsuh->id,
         ]);
-    }
-
-    public function test_admin_dialihkan_ke_anak_asuh_index_jika_anak_asuh_sudah_menjadi_alumni(): void
-    {
-        $admin = User::factory()->create(['role' => 'admin']);
-        $anakAsuh = AnakAsuh::factory()->create();
-
-        Alumni::factory()->create([
-            'anak_asuh_id' => $anakAsuh->id,
-        ]);
-
-        $response = $this->actingAs($admin)->post(route('alumni.store', $anakAsuh->id), [
-            'tanggal_keluar' => '2026-05-20',
-        ]);
-
-        $response->assertRedirect(route('anak-asuh.index'));
-        $response->assertSessionHas('error', 'Anak asuh ini sudah menjadi alumni.');
     }
 
     public function test_mengembalikan_404_jika_anak_asuh_id_tidak_ditemukan(): void

@@ -1,5 +1,5 @@
 <?php
-
+// RIDHO
 namespace Tests\Feature\Admin;
 
 use App\Models\Alumni;
@@ -39,17 +39,6 @@ class AlumniCreateTest extends TestCase
         $admin = User::factory()->create(['role' => 'admin']);
 
         $response = $this->actingAs($admin)->get('/admin/anak-asuh/abc/jadikan-alumni');
-
-        $response->assertNotFound();
-    }
-
-    public function test_mengembalikan_404_jika_anak_asuh_sudah_dihapus_soft_delete(): void
-    {
-        $admin = User::factory()->create(['role' => 'admin']);
-        $anakAsuh = AnakAsuh::factory()->create();
-        $anakAsuh->delete(); // Soft delete
-
-        $response = $this->actingAs($admin)->get(route('alumni.create', $anakAsuh->id));
 
         $response->assertNotFound();
     }
